@@ -1,59 +1,56 @@
-# Eonian Farm
+# Web application
 
-Yield Aggregator dApp and protocol for safe and high reward liquidity mining
+This is Eonian Farm yield aggregator UI dApp.
+
+## Requirements
+
+* NodeJS v16 or higher
 
 ## Development
 
-This mono-repository contains protocol contracts and dApp code, as well as all related packages.
-
-For a list of known development issues related to Lerna monorepo, see [development.md](https://github.com/eonian-core/farm/tree/main/development.md).
-
-### Structure
-
-* `packages/contracts` - Protocol contracts.
-* `packages/web` - The dApp package.
-
-### Requirements
-
-Install required tools for development
-
-* [Foundry](https://book.getfoundry.sh/getting-started/installation.html) - The testing framework for solidity
-* [NodeJS](https://nodejs.org/) - Execution environment for JS
-
 ### First Start Guide
 
-1) Install packages from npm and forge
+Run development server
 
 ```bash
-yarn
+yarn dev
 ```
 
-2) Open the package which you want to start
-    * `cd packages/web` - Open the dApp package
-    * `cd packages/contract` - Open contracts package
+It will start
 
-3) Follow the guide of the package which you want to start
-    * [web/readme.md](https://github.com/eonian-core/farm/tree/main/packages/web#readme)
-    * [contracts/readme.md](https://github.com/eonian-core/farm/tree/main/packages/contracts#readme)
+* NextJS application at [http://localhost:3000](http://localhost:3000) and the open page automatically
+* Storybook at [http://localhost:6006](http://localhost:6006) or another port of it is busy
 
-### Commands
+### Storybook
 
-* `yarn start` - start pre-prod environment
-* `yarn dev` - start dev environment
-* `yarn test` - run tests in packages
-* `yarn build:contracts` - Build only contracts
-* `yarn test:contracts` - Test only contracts
-* `dev:contracts` - Set up a development environment for contracts. Watch file changes and rerun tests.
+For the development of components and independent screens, there used Storybook.
+To start it locally, use the following command:
 
+```bash
+yarn storybook
+```
 
+### GraphQl API
 
+For querying data from the blockchain and other services, there used GraphQL API.
 
-## Deployment
+#### Mocking Server
 
-The deployment process focused on implementing GitOps practices. Basically, it means all master (main) builds go to production directly. For a web application, PRs also deploy to a preview environment.
+The mocking server allows mocking this API for development purposes. To start it locally, use the following command:
 
-### Deployed Apps
+```bash
+yarn mock
+```
 
-* <https:/eonian.finance> - Web app deployed Eonian DAO domain.
-* <https://storybook-eonian.vercel.app> - Storybook of Web application components
+#### Generate Introspection Types
 
+To generate types for the GraphQL API, use the following command:
+
+```bash
+yarn gen:gql-types
+```
+
+### CDN
+
+* <https://vercel.com/eonian/farm-app> - Web app project in Vercel
+* <https://vercel.com/eonian/storybook> - Storybook project in Vercel
