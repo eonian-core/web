@@ -29,7 +29,7 @@ export const ResourcesLinks: ResourceMap = {
   Earn: { href: '/earn', label: 'Earn', isEnabled: showEarn },
   FAQ: { href: '/faq', label: 'FAQ', isEnabled: showFaq },
   Docs: {
-    href: 'https://eonian-1.gitbook.io/eonian-docs/ambassador-program/ambassador-program-overview',
+    href: 'https://eonian-1.gitbook.io/eonian-docs',
     label: 'Docs',
     isEnabled: showDocs,
     external: true,
