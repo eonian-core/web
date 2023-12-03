@@ -51,6 +51,11 @@ describe('formatNumberCompactWithThreshold', () => {
     expect(format(123456789n, 0)).toBe('0.123456789')
 
     expect(format(9999999n, 2, 7)).toBe('0.99')
+
+    expect(format(12000000n, 2)).toBe('0.01')
+    expect(format(22000000n, 2)).toBe('0.02')
+    expect(format(1200000n, 2)).toBe('>0.01')
+    expect(format(2200000n, 2)).toBe('>0.01')
   })
 
   it('Should format value', () => {

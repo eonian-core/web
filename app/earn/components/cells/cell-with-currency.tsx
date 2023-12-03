@@ -31,7 +31,7 @@ export const CellWithCurrency: React.FC<Props> = ({ value, valueUSD, decimals, d
 
   function TooltipContent() {
     const valueAccurate = toStringNumberFromDecimals(value, decimals)
-    const valueUSDAccurate = toStringNumberFromDecimals(valueUSD, decimals)
+    const valueUSDAccurate = toStringNumberFromDecimals(valueUSD, decimalsUSD)
     return (
       <>
         <Row justify="center">

@@ -60,7 +60,16 @@ export function formatNumberCompactWithThreshold(value: bigint,
 
         const [integerPart, fractionPart] = String(stringNumber).split('.')
         const digits = Math.min(fractionPart.length, fractionDigits)
-        return `${integerPart}.${fractionPart.slice(0, digits)}`
+        const cuttedNumber = `${integerPart}.${fractionPart.slice(0, digits)}`
+
+        // If the actual number is small (less than specified fraction point), we should show that is not a zero after all.
+        // E.g. when the actual number (value) is 0.0005, digits (fractionDigits) is 2, it will show "0.00",
+        // and in this case, we can represent it like: ">0.01"
+        if (+cuttedNumber === 0 && +stringNumber > 0) {
+          return `>0.${'0'.repeat(digits - 1)}1`
+        }
+
+        return cuttedNumber
       }
     }
   }
