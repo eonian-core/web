@@ -43,7 +43,6 @@ function Content({ vault }: Props) {
   const { symbol: assetSymbol, decimals } = vault.asset
   const balance = vaultBalances[vault.address] ?? 0n
   const { value: price, decimals: priceDecimals } = vault.asset.price
-  console.log(toUSDValue(balance, decimals, price), vault.asset.symbol)
   return (
     <CellWithCurrency
       value={balance}
