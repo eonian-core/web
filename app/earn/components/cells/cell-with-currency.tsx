@@ -12,13 +12,12 @@ interface Props {
   symbol: string
 }
 
-export const CellWithCurrency: React.FC<Props> = ({ value, decimals, symbol }) => {
-  const valueUSD = value
+export const CellWithCurrency: React.FC<Props> = ({ value, valueUSD, decimals, decimalsUSD, symbol }) => {
   return (
     <Tooltip content={<TooltipContent />}>
       <CellWithDescription
         description={
-          <ValueNumber value={valueUSD} decimals={decimals} currencyAtStart>
+          <ValueNumber value={valueUSD} decimals={decimalsUSD} currencyAtStart>
             $
           </ValueNumber>
         }
