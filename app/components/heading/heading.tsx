@@ -8,7 +8,8 @@ import { useContentToId } from './to-id'
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
-  display: 'block', // force to show font anyway
+  display: 'swap',
+  adjustFontFallback: false,
 })
 
 export interface HeaderProps {

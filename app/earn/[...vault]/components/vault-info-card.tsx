@@ -1,6 +1,6 @@
 'use client'
 
-import { Card } from '@nextui-org/react'
+import { Card, CardBody } from '@nextui-org/react'
 import React from 'react'
 
 import clsx from 'clsx'
@@ -50,12 +50,12 @@ export const VaultInfoCard: React.FC<Props> = ({ value, currentDeposit, vault, f
   const profitChange = React.useMemo(() => yearlyReward - currentYearlyReward, [yearlyReward, currentYearlyReward])
 
   return (
-    <Card.Body className={className}>
+    <CardBody className={className}>
       <header className={styles.apyInfo}>
         With the current <b>{apyPercents.toFixed(2)}% APY</b>, projected
       </header>
-      <Card variant="bordered" className={styles.info}>
-        <Card.Body>
+      <Card className={styles.info}>
+        <CardBody>
           <ul>
             <li>
               <h5>Yearly reward</h5>
@@ -66,9 +66,9 @@ export const VaultInfoCard: React.FC<Props> = ({ value, currentDeposit, vault, f
               <InfoNumber value={depositInAYear} />
             </li>
           </ul>
-        </Card.Body>
+        </CardBody>
       </Card>
-    </Card.Body>
+    </CardBody>
   )
 
   function InfoNumber(props: { value: bigint }) {

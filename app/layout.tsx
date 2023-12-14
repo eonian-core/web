@@ -4,6 +4,7 @@ import { Roboto } from 'next/font/google'
 import './globals.scss'
 import 'react-toastify/dist/ReactToastify.min.css'
 
+import clsx from 'clsx'
 import Providers from './providers/providers'
 import Footer from './components/footer/footer'
 import Navigation from './components/navigation/navigation'
@@ -17,7 +18,8 @@ import { ToastContainerWrapperDynamic } from './components'
 const roboto = Roboto({
   subsets: ['latin', 'cyrillic'],
   weight: ['300', '400', '500', '700'],
-  display: 'block', // force to show font anyway
+  display: 'swap',
+  adjustFontFallback: false,
 })
 
 export interface RootLayoutProps {
@@ -32,7 +34,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang={locale} suppressHydrationWarning>
       <GoogleAnalytics />
-      <body className={roboto.className}>
+      <body className={clsx(roboto.className, 'dark')}>
         <Providers locale={locale}>
           <PageLoaderTop />
           <Navigation />

@@ -15,7 +15,8 @@ export interface MenuProps {
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
-  display: 'block', // force to show font anyway
+  display: 'swap',
+  adjustFontFallback: false,
 })
 
 export function Menu({ children, isOpen, toggleMenu }: MenuProps) {

@@ -1,4 +1,3 @@
-import { Badge } from '@nextui-org/react'
 import React from 'react'
 import type { Vault } from '../../../api'
 import IconCoin from '../../../components/icons/icon-coin'
@@ -6,6 +5,7 @@ import { toStringNumberFromDecimals } from '../../../shared'
 import { CellWithDescription } from './cell-with-description'
 
 import styles from './vault-name-cell.module.scss'
+import { CellChip } from './cell-chip'
 
 interface Props {
   vault: Vault
@@ -20,9 +20,9 @@ export const VaultNameCell: React.FC<Props> = ({ vault }) => {
       <div className={styles.name}>
         {vault.asset.symbol}
         {currentTVL < TVL_THRESHOLD && (
-          <Badge disableOutline size="xs" variant="flat">
+          <CellChip>
             NEW
-          </Badge>
+          </CellChip>
         )}
       </div>
     </CellWithDescription>

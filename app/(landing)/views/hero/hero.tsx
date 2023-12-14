@@ -8,7 +8,8 @@ import styles from './hero.module.scss'
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
-  display: 'block', // force to show font anyway
+  display: 'swap',
+  adjustFontFallback: false,
 })
 
 export interface HeroProps {
