@@ -18,6 +18,20 @@ export default {
         // We can consider to use some *.css.ts preprocessors (like vanilla-extract) to be able to import css values here.
         // Or, just get rid of TW in the near future.
         colors: {
+          // These values are `--color-text-*` from globals.scss
+          foreground: {
+            50: 'hsl(0, 0%, 98%)',
+            100: 'hsl(240, 5%, 96%)',
+            200: 'hsl(240, 6%, 90%)',
+            300: 'hsl(240, 5%, 84%)',
+            400: 'hsl(240, 5%, 75%)',
+            500: 'hsl(240, 5%, 65%)',
+            600: 'hsl(240, 4%, 55%)',
+            700: 'hsl(240, 4%, 46%)',
+            800: 'hsl(240, 5%, 34%)',
+            900: 'hsl(240, 5%, 26%)',
+            DEFAULT: 'hsl(240, 5%, 65%)',
+          },
           // These values are `--color-dark-*` from globals.scss
           default: {
             50: 'hsl(210, 2%, 58%)',

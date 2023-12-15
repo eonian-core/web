@@ -34,7 +34,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang={locale} suppressHydrationWarning>
       <GoogleAnalytics />
-      <body className={clsx(roboto.className, 'dark')}>
+      <body className={clsx(roboto.className, 'dark text-foreground bg-background')}>
         <Providers locale={locale}>
           <PageLoaderTop />
           <Navigation />
