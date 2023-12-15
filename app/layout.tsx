@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Roboto } from 'next/font/google'
 
 import './globals.scss'
 import 'react-toastify/dist/ReactToastify.min.css'
@@ -14,13 +13,7 @@ import GoogleAnalytics from './google-analytics'
 import { store } from './store/store'
 import { setLocale } from './store/slices/localeSlice'
 import { ToastContainerWrapperDynamic } from './components'
-
-const roboto = Roboto({
-  subsets: ['latin', 'cyrillic'],
-  weight: ['300', '400', '500', '700'],
-  display: 'swap',
-  adjustFontFallback: false,
-})
+import { robotoFont } from './shared/fonts/Roboto'
 
 export interface RootLayoutProps {
   children: React.ReactNode
@@ -34,7 +27,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang={locale} suppressHydrationWarning>
       <GoogleAnalytics />
-      <body className={clsx(roboto.className, 'dark text-foreground bg-background')}>
+      <body className={clsx(robotoFont.className, 'dark text-foreground bg-background')}>
         <Providers locale={locale}>
           <PageLoaderTop />
           <Navigation />

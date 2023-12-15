@@ -14,7 +14,7 @@ export default {
   plugins: [nextui({
     themes: {
       dark: {
-        // These plugin doesn't allow to specify custom properties for theme overrides, so the only way is to inline the values.
+        // This plugin doesn't allow to specify custom properties for theme overrides, so the only way is to inline the values.
         // We can consider to use some *.css.ts preprocessors (like vanilla-extract) to be able to import css values here.
         // Or, just get rid of TW in the near future.
         colors: {

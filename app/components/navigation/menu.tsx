@@ -1,9 +1,9 @@
 import { useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
-import { Inter } from 'next/font/google'
 import clsx from 'clsx'
 import { HamburgerMenu } from '../hamburger-menu/hamburger-menu'
+import { interFont } from '../../shared/fonts/Inter'
 import styles from './navigation.module.scss'
 import { SocialMenuItem } from './menu-item'
 
@@ -12,12 +12,6 @@ export interface MenuProps {
   isOpen?: boolean
   toggleMenu?: () => void
 }
-
-const inter = Inter({
-  subsets: ['latin', 'cyrillic'],
-  display: 'swap',
-  adjustFontFallback: false,
-})
 
 export function Menu({ children, isOpen, toggleMenu }: MenuProps) {
   const nodeRef = useRef(null)
@@ -38,7 +32,7 @@ export function Menu({ children, isOpen, toggleMenu }: MenuProps) {
         }}
       >
         <div ref={nodeRef} className={styles.menuBackground}>
-          <ul className={clsx(inter.className, styles.menuList)}>
+          <ul className={clsx(interFont.className, styles.menuList)}>
             {children}
             <SocialMenuItem />
           </ul>
