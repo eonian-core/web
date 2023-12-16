@@ -2,7 +2,7 @@
 
 import React from 'react'
 import type { ButtonProps } from '@nextui-org/react'
-import { Button, Loading } from '@nextui-org/react'
+import { Button, Spinner } from '@nextui-org/react'
 
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import type { Chain } from '../../../providers/wallet/wrappers/types'
@@ -64,7 +64,7 @@ const FormButton: React.FC<Props> = ({ formAction, vaultChain, isLoading, disabl
       disabled={disabled || isLoading}
       {...restProps}
     >
-      {isLoading ? <Loading type="points-opacity" color="currentColor" size="md" /> : text}
+      {isLoading ? <Spinner color="current" size="md" /> : text}
     </Button>
   )
 }

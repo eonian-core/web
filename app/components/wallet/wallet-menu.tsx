@@ -1,8 +1,8 @@
 'use client'
 
-import { Dropdown } from '@nextui-org/react'
+import type { MenuItemProps, PopoverProps } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 import { useAuth0 } from '@auth0/auth0-react'
-import type { DropdownItemBaseProps } from '@nextui-org/react/types/dropdown/base/dropdown-item-base'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import useRouterPush from '../links/use-router-push'
@@ -11,7 +11,7 @@ import { useWindowSize } from '../resize-hooks/useWindowSize'
 import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-provider'
 import { isAuthEnabled, useLogout } from '../../providers/auth'
 
-interface ItemType extends Partial<DropdownItemBaseProps> {
+interface ItemType extends MenuItemProps {
   key: string
   text: string
 }
@@ -38,8 +38,8 @@ export function useMenuItems(): ItemType[] {
       {
         key: MenuOption.DISCONNECT,
         text: 'Disconnect',
-        color: 'error',
-        withDivider: !isOnEarn,
+        color: 'danger',
+        showDivider: !isOnEarn,
       },
     ]
 
@@ -92,9 +92,9 @@ export function useOnMenuClick() {
 const WalletMenu: React.FC<Props> = ({ children }) => {
   const { width = 0 } = useWindowSize()
 
-  const menuPlacement = React.useMemo(() => {
+  const menuPlacement: PopoverProps['placement'] = React.useMemo(() => {
     const isWideScreen = width >= ULTRA_WIDE_SCREEN
-    return isWideScreen ? 'bottom' : 'bottom-right'
+    return isWideScreen ? 'bottom' : 'bottom-end'
   }, [width])
 
   const menuItems = useMenuItems()
@@ -102,16 +102,18 @@ const WalletMenu: React.FC<Props> = ({ children }) => {
 
   return (
     <Dropdown placement={menuPlacement}>
-      <Dropdown.Button size="sm" css={{ background: '$dark' }}>
-        {children}
-      </Dropdown.Button>
-      <Dropdown.Menu onAction={handleMenuClick}>
+      <DropdownTrigger>
+        <Button size="sm">
+          {children}
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu onAction={handleMenuClick}>
         {menuItems.map(({ key, text, ...restProps }) => (
-          <Dropdown.Item key={key} {...restProps}>
+          <DropdownItem key={key} {...restProps}>
             {text}
-          </Dropdown.Item>
+          </DropdownItem>
         ))}
-      </Dropdown.Menu>
+      </DropdownMenu>
     </Dropdown>
   )
 }

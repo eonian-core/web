@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { Loading } from '@nextui-org/react'
+import { Spinner } from '@nextui-org/react'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import { useAppSelector } from '../../../store/hooks'
 import { FormAction, FormActionStep } from '../../../store/slices/vaultActionSlice'
@@ -69,7 +69,7 @@ function ToastImage() {
   const { isTransactionActive } = useAppSelector(state => state.vaultAction)
 
   if (isTransactionActive) {
-    return <Loading className={styles.image} size="md" />
+    return <Spinner className={styles.image} size="md" />
   }
 
   const size = 32 // Same size as <Loading /> component has.

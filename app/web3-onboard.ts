@@ -30,6 +30,8 @@ const chains: Partial<Record<ChainId, InitOptions['chains'][0]>> = {
 
 const supportedChains = Object.values(chains).filter(chain => !!chain.rpcUrl)
 
+const dappUrl = 'https://eonian.finance/'
+
 export default init({
   theme,
   wallets: getWallets(),
@@ -61,8 +63,8 @@ export default init({
         </svg>
     `,
     description: 'Decentralized and secure protocol for passive investments with peace of mind.',
-    gettingStartedGuide: 'https://eonian.finance/', // The url to a getting started guide for app
-    explore: 'https://eonian.finance/', // The url that points to more information about app
+    gettingStartedGuide: dappUrl, // The url to a getting started guide for app
+    explore: dappUrl, // The url that points to more information about app
   },
 })
 
@@ -76,6 +78,7 @@ function getWallets(): InitOptions['wallets'] {
         requiredChains: Object.keys(chains)
           .map(Number)
           .filter(id => id !== ChainId.SEPOLIA),
+        dappUrl,
       }),
     )
   }

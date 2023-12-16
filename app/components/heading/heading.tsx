@@ -1,15 +1,10 @@
 import React, { useContext } from 'react'
-import { Inter } from 'next/font/google'
 
 import clsx from 'clsx'
 import IconExternal from '../icons/icon-external'
+import { interFont } from '../../shared/fonts/Inter'
 import styles from './heading.module.scss'
 import { useContentToId } from './to-id'
-
-const inter = Inter({
-  subsets: ['latin', 'cyrillic'],
-  display: 'block', // force to show font anyway
-})
 
 export interface HeaderProps {
   children?: React.ReactNode
@@ -19,7 +14,7 @@ export interface HeaderProps {
 export function H1({ children, id }: HeaderProps) {
   const contentId = useContentToId(children)
   return (
-    <h1 id={id || contentId} className={clsx(styles.header1, inter.className)}>
+    <h1 id={id || contentId} className={clsx(styles.header1, interFont.className)}>
       {children}
     </h1>
   )
@@ -27,7 +22,7 @@ export function H1({ children, id }: HeaderProps) {
 export function H2({ children, id }: HeaderProps) {
   const contentId = useContentToId(children)
   return (
-    <h2 id={id || contentId} className={clsx(styles.header2, inter.className)}>
+    <h2 id={id || contentId} className={clsx(styles.header2, interFont.className)}>
       {children}
     </h2>
   )
@@ -44,7 +39,7 @@ export function H3({ children, id }: HeaderProps) {
   const contentId = useContentToId(children)
 
   return (
-    <h3 id={id || contentId} className={`${styles.header3} ${inter.className}`}>
+    <h3 id={id || contentId} className={`${styles.header3} ${interFont.className}`}>
       {children}
       {isExternalLink && <IconExternal size={12} className={styles.iconExternal} />}
     </h3>
@@ -54,7 +49,7 @@ export function H3({ children, id }: HeaderProps) {
 export function H4({ children, id }: HeaderProps) {
   const contentId = useContentToId(children)
   return (
-    <h4 id={id || contentId} className={clsx(styles.header4, inter.className)}>
+    <h4 id={id || contentId} className={clsx(styles.header4, interFont.className)}>
       {children}
     </h4>
   )

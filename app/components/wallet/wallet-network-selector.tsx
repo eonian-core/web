@@ -1,6 +1,6 @@
 'use client'
 
-import { Dropdown } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 import React from 'react'
 
 import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-provider'
@@ -20,22 +20,23 @@ function WalletNetworkSelector() {
 
   return (
     <Dropdown>
-      <Dropdown.Button light size="sm" className={styles.network}>
-        {chain!.icon}
-      </Dropdown.Button>
-      <Dropdown.Menu
-        css={{ $$dropdownMenuWidth: '320px' }}
+      <DropdownTrigger>
+        <Button size="sm" className={styles.network}>
+          {chain!.icon}
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu
         disallowEmptySelection
         selectionMode="single"
         selectedKeys={[String(chain!.id)]}
         onSelectionChange={handleSelectionChanged}
       >
         {chains.map(chain => (
-          <Dropdown.Item key={chain.id} icon={chain.icon}>
+          <DropdownItem key={chain.id} startContent={chain.icon}>
             {chain.name}
-          </Dropdown.Item>
+          </DropdownItem>
         ))}
-      </Dropdown.Menu>
+      </DropdownMenu>
     </Dropdown>
   )
 }
