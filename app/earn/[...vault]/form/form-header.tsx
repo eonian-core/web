@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import type { PressEvent } from '@nextui-org/react'
-import { Button, Card } from '@nextui-org/react'
+import { Button, CardHeader } from '@nextui-org/react'
 
 import clsx from 'clsx'
 import { FormAction } from '../../../store/slices/vaultActionSlice'
@@ -15,7 +14,7 @@ interface Props {
 
 const FormHeader: React.FC<Props> = ({ currentAction, onCurrentActionChange }) => {
   const handleClick = React.useCallback(
-    (event: PressEvent) => {
+    (event: React.MouseEvent) => {
       const target = event.target as HTMLElement
       onCurrentActionChange(target.dataset.key as FormAction)
     },
@@ -23,7 +22,7 @@ const FormHeader: React.FC<Props> = ({ currentAction, onCurrentActionChange }) =
   )
 
   return (
-    <Card.Header className={styles.header}>
+    <CardHeader className={styles.header}>
       <TabButton action={FormAction.DEPOSIT} currentAction={currentAction} text="Deposit" onClick={handleClick} />
       <TabButton action={FormAction.WITHDRAW} currentAction={currentAction} text="Withdraw" onClick={handleClick} />
 
@@ -32,7 +31,7 @@ const FormHeader: React.FC<Props> = ({ currentAction, onCurrentActionChange }) =
           [styles.moved]: currentAction === FormAction.WITHDRAW,
         })}
       />
-    </Card.Header>
+    </CardHeader>
   )
 }
 
@@ -40,7 +39,7 @@ interface TabButtonProps {
   currentAction: FormAction
   action: FormAction
   text: string
-  onClick: (event: PressEvent) => void
+  onClick: (event: React.MouseEvent) => void
 }
 
 function TabButton({ action, currentAction, text, onClick }: TabButtonProps) {
@@ -48,7 +47,7 @@ function TabButton({ action, currentAction, text, onClick }: TabButtonProps) {
     [styles.buttonActive]: currentAction === action,
   })
   return (
-    <Button data-key={action} onPress={onClick} className={classNames} size="lg" light>
+    <Button data-key={action} onClick={onClick} className={classNames} size="lg">
       {text}
     </Button>
   )

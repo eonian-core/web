@@ -1,4 +1,4 @@
-import { Loading as NextUILoading, Tooltip } from '@nextui-org/react'
+import { Tooltip } from '@nextui-org/react'
 import React from 'react'
 import type { Vault } from '../../../api'
 import Button from '../../../components/button/button'
@@ -23,22 +23,22 @@ export const VaultYouPositionCell: React.FC<Props> = ({ vault }) => {
   const isWalletConnecting = status === WalletStatus.CONNECTING
   const isWalletNotConnected = status === WalletStatus.NOT_CONNECTED
 
-  const showLoading = isPositionLoading || isWalletConnecting
-  const showError = !showLoading && !!error
-  const showConnect = !showLoading && !showError && isWalletNotConnected
-  const showContent = !showLoading && !showError && !showConnect
+  const isLoading = isPositionLoading || isWalletConnecting
+
+  const showError = !!error
+  const showConnect = !showError && isWalletNotConnected
+  const showContent = !showError && !showConnect
 
   return (
     <div className={styles.container}>
-      {showLoading && <Loading />}
       {showError && <Error error={error} />}
       {showConnect && <ConnectButton />}
-      {showContent && <Content vault={vault} />}
+      {showContent && <Content vault={vault} isLoading={isLoading} />}
     </div>
   )
 }
 
-function Content({ vault }: Props) {
+function Content({ vault, isLoading }: Props & { isLoading: boolean }) {
   const { vaultBalances } = useAppSelector(state => state.positionInfo)
   const { symbol: assetSymbol, decimals } = vault.asset
   const balance = vaultBalances[vault.address] ?? 0n
@@ -50,6 +50,7 @@ function Content({ vault }: Props) {
       valueUSD={toUSDValue(balance, decimals, price)}
       decimalsUSD={priceDecimals}
       symbol={assetSymbol}
+      isLoading={isLoading}
     />
   )
 }
@@ -67,10 +68,6 @@ function ConnectButton() {
       Connect
     </Button>
   )
-}
-
-function Loading() {
-  return <NextUILoading type="points-opacity" />
 }
 
 function Error({ error }: { error: string }) {

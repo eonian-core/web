@@ -1,8 +1,8 @@
-import { Badge } from '@nextui-org/react'
 import React from 'react'
 import type { Vault } from '../../../api'
 
 import styles from './vault-tags-cell.module.scss'
+import { CellChip } from './cell-chip'
 
 interface Props {
   vault: Vault
@@ -13,12 +13,12 @@ const STABLE_VAULTS = ['USDC', 'BUSD', 'USDT']
 
 export const VaultTagsCell: React.FC<Props> = ({ vault }) => (
   <div className={styles.container}>
-    <Badge variant="flat" disableOutline>
+    <CellChip>
       VFT
-    </Badge>
-    {STABLE_VAULTS.includes(vault.asset.symbol) && <Badge variant="flat" disableOutline>Stable</Badge>}
-    <Badge variant="flat" disableOutline>
+    </CellChip>
+    {STABLE_VAULTS.includes(vault.asset.symbol) && <CellChip>Stable</CellChip>}
+    <CellChip>
       Low risk
-    </Badge>
+    </CellChip>
   </div>
 )

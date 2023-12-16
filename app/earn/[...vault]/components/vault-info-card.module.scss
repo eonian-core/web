@@ -8,6 +8,7 @@
 }
 
 .info {
+  border: 1px solid hsl(var(--nextui-divider) / var(--nextui-divider-opacity, var(--tw-bg-opacity)));
   ul {
     color: var(--color-text-300);
     display: flex;
