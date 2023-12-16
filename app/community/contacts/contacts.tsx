@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown } from '@nextui-org/react'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 import IconDownOpen from '../../components/icons/icon-down-open'
 import ExternalLink from '../../components/links/external-link'
 import type { SocialLink } from '../../socials'
@@ -32,7 +32,7 @@ export default Contacts
 export function OtherLanguages({ otherLocales }: { otherLocales: Record<string, Array<SocialLink>> }) {
   return <div className={styles.otherLanguagesCollapse}>
     <Dropdown placement="bottom">
-      <Dropdown.Trigger>
+      <DropdownTrigger>
         <div className={styles.otherLanguagesTrigger}>
           <span>Other Languages</span>
 
@@ -40,7 +40,7 @@ export function OtherLanguages({ otherLocales }: { otherLocales: Record<string, 
             <IconDownOpen />
           </button>
         </div>
-      </Dropdown.Trigger>
+      </DropdownTrigger>
 
       <OtherLanguagesMenu otherLocales={otherLocales} />
     </Dropdown>
@@ -50,15 +50,15 @@ export function OtherLanguages({ otherLocales }: { otherLocales: Record<string, 
 function OtherLanguagesMenu({ otherLocales }: { otherLocales: Record<string, Array<SocialLink>> }) {
   const options = useOptions(otherLocales)
   return (
-    <Dropdown.Menu>
+    <DropdownMenu>
       {options.map(({ name, href, icon }) => (
-        <Dropdown.Item key={name}>
+        <DropdownItem key={name}>
           <ExternalLink className={styles.otherLanguagesLink} href={href} icon={icon}>
             {name}
           </ExternalLink>
-        </Dropdown.Item>
+        </DropdownItem>
       ))}
-    </Dropdown.Menu>
+    </DropdownMenu>
   )
 }
 

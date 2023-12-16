@@ -1,7 +1,7 @@
 'use client'
 
-import type { FormElement, InputProps } from '@nextui-org/react'
-import { Input, Loading } from '@nextui-org/react'
+import type { InputProps } from '@nextui-org/react'
+import { Input, Spinner } from '@nextui-org/react'
 import React from 'react'
 
 import IconCoin from '../../../components/icons/icon-coin'
@@ -29,7 +29,7 @@ const FormInput: React.FC<Props> = ({
   ...restProps
 }) => {
   const handleInputValueChange = React.useCallback(
-    (event: React.ChangeEvent<FormElement>) => onChange(event.target.value),
+    (event: React.ChangeEvent<HTMLInputElement>) => onChange(event.target.value),
     [onChange],
   )
 
@@ -37,13 +37,12 @@ const FormInput: React.FC<Props> = ({
     <Input
       className={styles.input}
       value={value}
-      bordered
+      variant="bordered"
       color="primary"
       placeholder="0"
-      size="xl"
-      contentLeft={<IconCoin symbol={assetSymbol} width="1.5em" height="1.5em" />}
-      contentRightStyling={false}
-      contentRight={
+      size="lg"
+      startContent={<IconCoin className={styles.asset} symbol={assetSymbol} width="1.25em" height="1.25em" />}
+      endContent={
         <InputRightContent balance={balance} isLoading={isLoading} decimals={decimals} assetSymbol={assetSymbol} />
       }
       onChange={handleInputValueChange}
@@ -60,7 +59,7 @@ function InputRightContent({
   assetSymbol,
 }: Pick<Props, 'balance' | 'isLoading' | 'decimals' | 'assetSymbol'>) {
   if (isLoading) {
-    return <Loading className={styles.loading} size="sm" />
+    return <Spinner className={styles.loading} size="sm" />
   }
 
   return (

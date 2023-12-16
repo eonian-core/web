@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { Card } from '@nextui-org/react'
+import { Card, CardBody, Divider } from '@nextui-org/react'
 import type { Vault } from '../../../api'
 import { useAppSelector } from '../../../store/hooks'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
@@ -66,13 +66,13 @@ const Form: React.FC<Props> = ({ vault, chainId }) => {
 
   return (
     <div className={styles.container}>
-      <Card variant="flat" className={styles.disclamer}>
+      <Card className={styles.disclamer}>
         <p>🛠 Alpha test application may display inaccurate APY.</p>
       </Card>
-      <Card variant="bordered">
+      <Card>
         <FormHeader currentAction={formAction} onCurrentActionChange={setFormAction} />
 
-        <Card.Divider />
+        <Divider />
 
         <VaultInfoCard
           className={styles.fragment}
@@ -82,9 +82,9 @@ const Form: React.FC<Props> = ({ vault, chainId }) => {
           formAction={formAction}
         />
 
-        <Card.Divider />
+        <Divider />
 
-        <Card.Body className={styles.fragment}>
+        <CardBody className={styles.fragment}>
           <PercentButtonGroup
             inputValue={value}
             maxValue={formBalance}
@@ -108,7 +108,7 @@ const Form: React.FC<Props> = ({ vault, chainId }) => {
             onSubmit={handleSubmit}
             isLoading={hasPendingTransactions}
           />
-        </Card.Body>
+        </CardBody>
       </Card>
       <h4>
         <VaultLink vault={vault} chainId={vaultChain.id} />
