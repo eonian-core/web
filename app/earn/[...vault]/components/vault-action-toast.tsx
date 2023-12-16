@@ -72,7 +72,7 @@ function ToastImage() {
     return <Spinner className={styles.image} size="md" />
   }
 
-  const size = 32
+  const size = 32 // Same size as <Loading /> component has.
   return (
     wallet && <Image className={styles.image} src={wallet.iconImageSrc} alt={wallet.label} width={size} height={size} />
   )

@@ -54,7 +54,7 @@ export const VaultInfoCard: React.FC<Props> = ({ value, currentDeposit, vault, f
       <header className={styles.apyInfo}>
         With the current <b>{apyPercents.toFixed(2)}% APY</b>, projected
       </header>
-      <Card className={styles.info}>
+      <Card className={styles.info} shadow="none">
         <CardBody>
           <ul>
             <li>
