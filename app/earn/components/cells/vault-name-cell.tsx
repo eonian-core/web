@@ -1,7 +1,6 @@
 import React from 'react'
 import type { Vault } from '../../../api'
 import IconCoin from '../../../components/icons/icon-coin'
-import { toStringNumberFromDecimals } from '../../../shared'
 import { CellWithDescription } from './cell-with-description'
 
 import styles from './vault-name-cell.module.scss'
