@@ -1,7 +1,7 @@
 /* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
 import React from 'react'
-import { Loading } from '@nextui-org/react'
+import { Spinner } from '@nextui-org/react'
 
 import type { FieldError } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
@@ -115,7 +115,7 @@ interface SubmitIconProps {
 }
 
 function SubmitIcon({ isSubmitting, isSubmitted }: SubmitIconProps) {
-  if (isSubmitting) { return <Loading aria-label="Loading..." /> }
+  if (isSubmitting) { return <Spinner aria-label="Loading..." /> }
 
   if (isSubmitted) { return <IconCheck width="2.5rem" height="2.5rem" /> }
 

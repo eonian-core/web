@@ -1,5 +1,9 @@
 @import './screen.scss';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /**
 * This is default theme values for whole application.
 * It includes, at least:

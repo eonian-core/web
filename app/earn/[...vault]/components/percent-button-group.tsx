@@ -36,7 +36,7 @@ export const PercentButtonGroup: React.FC<Props> = ({ inputValue, maxValue, onVa
             className={styles.button}
             color="primary"
             auto
-            bordered={!isActive}
+            variant={isActive ? 'solid' : 'bordered'}
             onPress={onPress}
             {...restProps}
           >

@@ -13,13 +13,12 @@ This is Eonian Farm yield aggregator UI dApp.
 Run development server
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 It will start
 
 * NextJS application at [http://localhost:3000](http://localhost:3000) and the open page automatically
-* Storybook at [http://localhost:6006](http://localhost:6006) or another port of it is busy
 
 ### Storybook
 
@@ -27,8 +26,10 @@ For the development of components and independent screens, there used Storybook.
 To start it locally, use the following command:
 
 ```bash
-yarn storybook
+npm run storybook
 ```
+
+Storybook will be available at [http://localhost:6006](http://localhost:6006) (or another port if it is busy).
 
 ### GraphQl API
 
@@ -54,3 +55,15 @@ yarn gen:gql-types
 
 * <https://vercel.com/eonian/farm-app> - Web app project in Vercel
 * <https://vercel.com/eonian/storybook> - Storybook project in Vercel
+
+
+### Troubleshooting
+
+#### Missing fonts
+If you have problems with fonts in local development, i.e.: `FetchError: request to *.woff2 failed`, try to install recent LTS node version and run development server with TLS checks disabled:
+- Run `nvm install --lts`
+- Run `nvm use --lts`
+- Delete `.next` folder
+- Start development server with `npm run dev:no-tls`
+
+Related github issue: https://github.com/vercel/next.js/issues/45080

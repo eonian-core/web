@@ -1,7 +1,8 @@
-import { Row, Spacer, Tooltip } from '@nextui-org/react'
+import { Spacer, Tooltip } from '@nextui-org/react'
 import React from 'react'
 import CompactNumber from '../../../components/compact-number/compact-number'
 import { toStringNumberFromDecimals } from '../../../shared'
+import { Row } from '../../../components/row/Row'
 import { CellWithDescription } from './cell-with-description'
 
 interface Props {
@@ -10,9 +11,10 @@ interface Props {
   valueUSD: bigint
   decimalsUSD: number
   symbol: string
+  isLoading?: boolean
 }
 
-export const CellWithCurrency: React.FC<Props> = ({ value, valueUSD, decimals, decimalsUSD, symbol }) => {
+export const CellWithCurrency: React.FC<Props> = ({ value, valueUSD, decimals, decimalsUSD, symbol, isLoading }) => {
   return (
     <Tooltip content={<TooltipContent />}>
       <CellWithDescription
@@ -21,6 +23,7 @@ export const CellWithCurrency: React.FC<Props> = ({ value, valueUSD, decimals, d
             $
           </ValueNumber>
         }
+        isLoading={isLoading}
       >
         <ValueNumber value={value} decimals={decimals}>
           &nbsp;{symbol}
@@ -37,7 +40,7 @@ export const CellWithCurrency: React.FC<Props> = ({ value, valueUSD, decimals, d
         <Row justify="center">
           {valueAccurate}&nbsp;{symbol}
         </Row>
-        <Spacer y={0.25} />
+        <Spacer y={0.5} />
         <Row justify="center">${valueUSDAccurate}</Row>
       </>
     )

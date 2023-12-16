@@ -6,9 +6,14 @@
   }
 }
 
-.balance,
 .loading {
   padding: 0 var(--padding-200);
+}
+
+.asset {
+  width: auto;
+  margin-right: var(--padding-200);
+  flex-shrink: 0;
 }
 
 .balance {
