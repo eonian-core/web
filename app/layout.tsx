@@ -5,10 +5,9 @@ import 'react-toastify/dist/ReactToastify.min.css'
 
 import clsx from 'clsx'
 import Providers from './providers/providers'
-import Footer from './components/footer/footer'
-import Navigation from './components/navigation/navigation'
+
+import Navigation from './components/navigation/Navigation'
 import PageLoaderTop from './components/page-loading-top/page-loader-top'
-import SlidingFooter from './components/sliding-footer/sliding-footer'
 import GoogleAnalytics from './google-analytics'
 import { store } from './store/store'
 import { setLocale } from './store/slices/localeSlice'
@@ -19,20 +18,24 @@ export interface RootLayoutProps {
   children: React.ReactNode
 }
 
+/**
+ * Black and white good looking monochrome: https://huemint.com/website-monochrome/#palette=020605-d9d5d5
+ * https://huemint.com/website-2/#palette=050601-eae4de-f2c357-d73d57
+ */
 export default function RootLayout({ children }: RootLayoutProps) {
   const locale = 'en'
 
   store.dispatch(setLocale(locale))
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning className="h-full">
       <GoogleAnalytics />
-      <body className={clsx(robotoFont.className, 'dark text-foreground bg-background')}>
+      <body className={clsx(robotoFont.className, 'purple-dark text-foreground bg-background h-full')}>
         <Providers locale={locale}>
           <PageLoaderTop />
           <Navigation />
+          {children}
           <ToastContainerWrapperDynamic />
-          <SlidingFooter footer={<Footer />}>{children}</SlidingFooter>
         </Providers>
       </body>
     </html>
