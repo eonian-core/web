@@ -3,7 +3,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { UpdateOptions } from 'react-toastify'
 import { toast } from 'react-toastify'
 import type { Vault } from '../../api'
-import { createVaultActionToast } from '../../earn/[...vault]/components'
+
+// import { createVaultActionToast } from '../../earn/[...vault]/components'
 import { parseError } from '../../shared'
 
 const TOAST_ID = 'vault-action-toast'
@@ -135,12 +136,12 @@ export const prepareVaultAction = createAsyncThunk(
 
     dispatch(initVaultAction(payload))
 
-    toast(createVaultActionToast(), {
-      closeOnClick: false,
-      toastId: TOAST_ID,
-      progress: 0,
-      autoClose: false,
-    })
+    // toast(createVaultActionToast(), {
+    //   closeOnClick: false,
+    //   toastId: TOAST_ID,
+    //   progress: 0,
+    //   autoClose: false,
+    // })
 
     const unsubscribe = toast.onChange(({ id, status }) => {
       if (id === TOAST_ID && status === 'removed') {
