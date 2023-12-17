@@ -11,7 +11,7 @@ interface SlidingFooterProps {
 }
 
 // Optional: set a default value to prevent scroll bar jitter
-const minFooterHeight = 450
+const minFooterHeight = 476
 
 const SlidingFooter: React.FC<SlidingFooterProps> = ({ children, footer }) => {
   const footerRef = React.useRef<HTMLDivElement>(null)
