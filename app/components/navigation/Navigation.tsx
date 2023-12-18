@@ -19,9 +19,8 @@ import useNavigationLinks from './useNavigationLinks'
 
 export default function Navigation() {
   const links = useNavigationLinks()
-
   return (
-    <Navbar maxWidth="xl">
+    <Navbar height="8rem" maxWidth="xl" className="fixed bg-transparent backdrop-blur-none">
       <NavbarContent>
         <NavbarMenuToggle className="sm:hidden" />
         <NavbarBrand>

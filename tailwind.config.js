@@ -16,8 +16,17 @@ export default {
       'purple-dark': {
         extend: 'dark', // <- inherit default values from dark theme
         colors: {
-          background: '#1a1a1a',
-          foreground: '#d9d5d5',
+          background: {
+            500: '#232323',
+            600: '#1d1d1d',
+            700: '#161616',
+            DEFAULT: '#232323',
+          },
+          foreground: {
+            500: '#d9d5d5',
+            600: '#b1a9a9',
+            DEFAULT: '#d9d5d5',
+          },
           primary: {
             50: '#fae4e9',
             100: '#f4bcc9',
@@ -43,6 +52,18 @@ export default {
             800: '#edae4e',
             900: '#e48a40',
             DEFAULT: '#f5e762',
+          },
+          gray: {
+            50: '#f9f9f9',
+            100: '#f2f2f2',
+            200: '#e8e8e8',
+            300: '#d8d8d8',
+            400: '#b4b4b4',
+            500: '#949494',
+            600: '#6c6c6c',
+            700: '#595959',
+            800: '#3a3a3a',
+            900: '#1a1a1a',
           },
         },
         layout: {
