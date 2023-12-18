@@ -11,8 +11,13 @@
 
 .description {
     opacity: 0;
-    transform: translateY(50%);
-    animation: slide-in-vertical 0.5s ease-out 1.4s forwards;
+    transform: translateY(15%);
+    animation: slide-in-vertical 0.3s ease-out 1.4s forwards;
+}
+
+.mouseScroll {
+    opacity: 0;
+    animation: fade-in 1s ease-in 2s forwards;
 }
 
 @keyframes fade-in {

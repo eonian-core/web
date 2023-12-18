@@ -20,40 +20,42 @@ export default function Hero() {
           <div className={clsx('transform-gpu', styles.headerFirstRow)}>
             Your <InlineHighlighter>Crypto</InlineHighlighter>.
           </div>
-          <div className={clsx('transform-gpu', styles.headerSecondRow)}>
-            {'>'} Secure It.
-          </div>
+          <div className={clsx('transform-gpu', styles.headerSecondRow)}>{'>'} Secure It.</div>
         </header>
-        <p className={clsx('mt-8 text-foreground-600 transform-gpu', styles.description)}>
-          Insure your assets from wallet hacks with <span className="text-primary-500">zero fees</span>, while earning
-          premium
-          <br />
-          on your holdings <span className="text-primary-500">passively</span>. All in the first decentralized savings
-          account.
-        </p>
-        <div className={clsx('mt-14 flex gap-8 transform-gpu', styles.description)}>
-          <Button
-            as={Link}
-            color="primary"
-            href="#"
-            variant="shadow"
-            size="lg"
-            endContent={<IconConfetti className="mb-1" />}
-          >
-            Join the waitlist
-          </Button>
-          <Button
-            as={Link}
-            href="#"
-            size="lg"
-            variant="ghost"
-            className="text-foreground-600"
-            endContent={<IconExternal />}
-          >
-            Ask our Community
-          </Button>
+        <div className={clsx('mt-8 transform-gpu', styles.description)}>
+          <p className="text-foreground-600">
+            Insure your assets from wallet hacks with <span className="text-primary-500">zero fees</span>, while earning
+            premium
+            <br />
+            on your holdings <span className="text-primary-500">passively</span>. All in the first decentralized savings
+            account.
+          </p>
+          <div className="mt-14 flex justify-center gap-8">
+            <Button
+              as={Link}
+              color="primary"
+              href="#"
+              variant="shadow"
+              size="lg"
+              endContent={<IconConfetti className="mb-1" />}
+            >
+              Join the waitlist
+            </Button>
+            <Button
+              as={Link}
+              href="#"
+              size="lg"
+              variant="ghost"
+              className="text-foreground-600"
+              endContent={<IconExternal />}
+            >
+              Ask our Community
+            </Button>
+          </div>
         </div>
-          <div className="absolute left-0 right-0 bottom-8 flex justify-center"><IconScroll /></div>
+        <div className={`absolute left-0 right-0 bottom-8 flex justify-center transform-gpu ${styles.mouseScroll}`}>
+          <IconScroll />
+        </div>
       </div>
     </LandingSection>
   )
