@@ -1,0 +1,36 @@
+.headerFirstRow {
+    opacity: 0;
+    transform: translateX(-50%);
+    animation: slide-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards;
+}
+
+.headerSecondRow {
+    opacity: 0;
+    animation: fade-in 1s ease-out 0.7s forwards;
+}
+
+.description {
+    opacity: 0;
+    transform: translateY(50%);
+    animation: slide-in-vertical 0.5s ease-out 1.4s forwards;
+}
+
+@keyframes fade-in {
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in {
+    100% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-vertical {
+    100% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}

@@ -7,6 +7,8 @@ import IconConfetti from '../../components/icons/icon-confetti'
 import IconExternal from '../../components/icons/icon-external'
 import WaveSVG from '../components/WaveSVG'
 
+import styles from './Hero.module.scss'
+
 export default function Hero() {
   return (
     <LandingSection className="relative overflow-hidden">
@@ -15,17 +17,21 @@ export default function Hero() {
       <EdgeShape className="bottom-0 right-0 w-2/3 translate-x-1/2 translate-y-1/2 text-background-600" />
       <div className="relative flex flex-col w-full h-full items-center justify-center">
         <header className="text-8xl">
-          Your <InlineHighlighter>Crypto</InlineHighlighter>.<br />
-          {'>'} Secure It.
+          <div className={clsx('transform-gpu', styles.headerFirstRow)}>
+            Your <InlineHighlighter>Crypto</InlineHighlighter>.
+          </div>
+          <div className={clsx('transform-gpu', styles.headerSecondRow)}>
+            {'>'} Secure It.
+          </div>
         </header>
-        <p className="mt-8 text-foreground-600">
+        <p className={clsx('mt-8 text-foreground-600 transform-gpu', styles.description)}>
           Insure your assets from wallet hacks with <span className="text-primary-500">zero fees</span>, while earning
           premium
           <br />
           on your holdings <span className="text-primary-500">passively</span>. All in the first decentralized savings
           account.
         </p>
-        <div className="mt-14 flex gap-8">
+        <div className={clsx('mt-14 flex gap-8 transform-gpu', styles.description)}>
           <Button
             as={Link}
             color="primary"
