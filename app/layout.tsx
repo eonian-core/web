@@ -28,9 +28,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   store.dispatch(setLocale(locale))
 
   return (
-    <html lang={locale} suppressHydrationWarning className="h-full">
+    <html lang={locale} suppressHydrationWarning className="min-h-screen">
       <GoogleAnalytics />
-      <body className={clsx(robotoFont.className, 'purple-dark text-foreground bg-background h-full')}>
+      <body className={clsx(robotoFont.className, 'purple-dark text-foreground bg-background min-h-screen')}>
         <Providers locale={locale}>
           <PageLoaderTop />
           <Navigation />
