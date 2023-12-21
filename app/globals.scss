@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: dark;
+}
+
 /**
 * This is default theme values for whole application.
 * It includes, at least:
