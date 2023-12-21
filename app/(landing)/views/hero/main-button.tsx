@@ -1,4 +1,4 @@
-import IconChevron from '../../../components/icons/icon-chevron'
+import IconConfetti from '../../../components/icons/icon-confetti'
 import IconRobot from '../../../components/icons/icon-robot'
 import { useWaitlist } from '../../../providers/waitlist'
 import HeroButton from './button-group/hero-button'
@@ -19,7 +19,7 @@ export function MainButton() {
 
   if (!isJoined) {
     return (
-            <HeroButton href="#future-of-investments-is-coming" icon={<IconChevron width="20" height="20" />}>
+            <HeroButton href="#future-of-investments-is-coming" icon={<IconConfetti />}>
                 Join the Waitlist
             </HeroButton>
     )
