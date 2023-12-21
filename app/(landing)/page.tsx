@@ -2,7 +2,7 @@
 
 import { MDXProvider } from '@mdx-js/react'
 import { H2, H3 } from '../components/heading/heading'
-import IconDiscord from '../components/icons/icon-discord'
+import IconChevron from '../components/icons/icon-chevron'
 import IconExternal from '../components/icons/icon-external'
 import IconRobot from '../components/icons/icon-robot'
 import IconTwitter from '../components/icons/icon-twitter'
@@ -44,7 +44,7 @@ const components = {
   IconTwitter,
   IconExternal,
   IconRobot,
-  IconDiscord,
+  IconChevron,
   InDevelopment,
   Target,
   WaitList,
