@@ -24,9 +24,11 @@ import Founders from './views/founders/founders'
 import FoundersList from './views/founders/founders-list'
 import Founder from './views/founders/founder'
 import { MainButton } from './views/hero/main-button'
+import HeroCaptionText from './views/hero/button-group/hero-caption-text'
 
 const components = {
   Hero,
+  HeroCaptionText,
   HeroButtonGroup,
   HeroButton,
   Mbr,
