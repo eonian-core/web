@@ -25,6 +25,7 @@ import FoundersList from './views/founders/founders-list'
 import Founder from './views/founders/founder'
 import { MainButton } from './views/hero/main-button'
 import HeroCaptionText from './views/hero/button-group/hero-caption-text'
+import LostFunds from './views/lost-funds/LostFunds'
 
 const components = {
   Hero,
@@ -49,6 +50,7 @@ const components = {
   Target,
   WaitList,
   MainButton,
+  LostFunds,
 }
 
 export default function Home() {

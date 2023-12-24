@@ -30,7 +30,7 @@ export default {
             700: 'hsl(240, 4%, 46%)',
             800: 'hsl(240, 5%, 34%)',
             900: 'hsl(240, 5%, 26%)',
-            DEFAULT: 'hsl(240, 5%, 65%)',
+            DEFAULT: 'hsl(240, 5%, 84%)',
           },
           // These values are `--color-dark-*` from globals.scss
           default: {
@@ -38,7 +38,7 @@ export default {
             100: 'hsl(200, 1%, 42%)',
             200: 'hsl(195, 2%, 35%)',
             300: 'hsl(200, 3%, 23%)',
-            400: 'hsl(200, 3%, 13%)',
+            400: 'hsl(220, 9%, 14%)',
             500: 'hsl(200, 6%, 10%)',
             600: 'hsl(210, 5%, 9%)',
             700: 'hsl(210, 6%, 7%)',

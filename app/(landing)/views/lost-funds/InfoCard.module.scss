@@ -1,0 +1,17 @@
+.container {
+  box-shadow: 1px 1px 0px 1px var(--color-shade);
+  background-color: var(--color-background-end);
+}
+
+.radial {
+  &::after {
+    content: '';
+    position: absolute;
+    background: radial-gradient(50% 50% at 50% 50%, var(--color-shade) 0, hsla(0, 0%, 50%, 0) 100%);
+    height: 720px;
+    left: calc(85% - 350.5px);
+    top: -300px;
+    width: 720px;
+    opacity: 0.5;
+  }
+}
