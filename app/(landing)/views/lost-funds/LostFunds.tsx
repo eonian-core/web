@@ -24,6 +24,7 @@ export default function LostFunds() {
   const cardOpacity = useTransform(scrollYProgress, [0.2, 0.3], [0, 1])
   const cardOffset = useTransform(scrollYProgress, [0.2, 0.3], [100, 0])
 
+  const pHeight = useTransform(scrollYProgress, [0.2, 0.3], [0, 48])
   const pOpacity = useTransform(scrollYProgress, [0.3, 0.35], [0, 1])
   const pOffset = useTransform(scrollYProgress, [0.3, 0.35], [50, 0])
 
@@ -47,7 +48,7 @@ export default function LostFunds() {
                   </span>
                 </motion.h2>
 
-                <motion.p style={{ opacity: pOpacity, translateX: pOffset }}>
+                <motion.p layout style={{ opacity: pOpacity, translateX: pOffset, height: pHeight }}>
                   Crypto Exchanges are great. They sometimes return the money
                   when hacked, but they also can lock you up, go bankrupt
                   or out of the country.
