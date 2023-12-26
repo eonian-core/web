@@ -1,0 +1,48 @@
+.frame {
+    --border-width: 4px;
+
+    margin: var(--border-width);
+
+    user-select: none;
+    pointer-events: none;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    &::after {
+        background-color: var(--color-background-start);
+        border-radius: inherit;
+    }
+
+    &::before {
+        z-index: -1;
+        margin: calc(var(--border-width) * -1);
+        background: var(--color-accent-background-gradient);
+
+        animation: animatedgradient 20s ease infinite alternate;
+        background-size: 300% 300%;
+
+        border-radius: inherit;
+    }
+
+    @keyframes animatedgradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+}

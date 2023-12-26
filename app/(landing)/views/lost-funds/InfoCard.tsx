@@ -1,6 +1,5 @@
 import type { CSSProperties } from 'react'
-import { motion } from 'framer-motion'
-import type { MotionStyle } from 'framer-motion'
+import clsx from 'clsx'
 import IconExternal from '../../../components/icons/icon-external'
 import ExternalLink from '../../../components/links/external-link'
 import { interFont } from '../../../shared/fonts/Inter'
@@ -18,8 +17,7 @@ interface Props {
   caption: string
   href: string
   color: number
-
-  style: MotionStyle
+  className?: string
 }
 
 export default function InfoCard({
@@ -27,14 +25,14 @@ export default function InfoCard({
   href,
   children,
   color,
-  style,
+  className,
   ...restProps
 }: React.PropsWithChildren<Props>) {
   const nativeStyles = { '--color-shade': colors[color] } as CSSProperties
   return (
-    <motion.div
-      className={`p-8 rounded-3xl relative overflow-hidden shadow-sm ${styles.container}`}
-      style={{ ...style, ...nativeStyles }}
+    <div
+      className={clsx(className, styles.container, 'p-8 rounded-3xl relative overflow-hidden shadow-sm')}
+      style={nativeStyles}
       {...restProps}
     >
       <div className={`z-0 absolute top-0 left-0 h-full w-full ${styles.radial}`}></div>
@@ -47,6 +45,6 @@ export default function InfoCard({
           Learn more <IconExternal />
         </ExternalLink>
       </div>
-    </motion.div>
+    </div>
   )
 }
