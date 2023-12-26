@@ -48,11 +48,11 @@ export default function SectionWallets({ scrollYProgress }: Props) {
           </div>
 
           <CardStack progress={cardStackProgress} style={{ width: cardWidth, height: cardHeight }}>
-            <InfoCard caption="$8.9B+" href="/" color={0} className="h-full">
-              Lost digital assets due Crypto Exchanges bankruptcies
+            <InfoCard caption="$100M+" href="/" color={0} className="h-full">
+              Crypto stolen from wallets through different hacks
             </InfoCard>
-            <InfoCard caption="5" href="/" color={1} className="h-full">
-              Crypto Exchanges exited US
+            <InfoCard caption="0.17%" href="/" color={1} className="h-full">
+              Part of lost assets that crypto wallet providers returned after hacks
             </InfoCard>
           </CardStack>
         </motion.div>
