@@ -1,5 +1,5 @@
 import type { MotionValue } from 'framer-motion'
-import { LayoutGroup, motion, useScroll, useTransform } from 'framer-motion'
+import { LayoutGroup, motion, useTransform } from 'framer-motion'
 import React from 'react'
 import { H2 } from '../../../../components/heading/heading'
 import { interFont } from '../../../../shared/fonts/Inter'

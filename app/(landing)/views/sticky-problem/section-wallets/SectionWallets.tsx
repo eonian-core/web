@@ -15,9 +15,9 @@ export default function SectionWallets({ scrollYProgress }: Props) {
   const blockOpacity = useTransform(scrollYProgress, [0, 0.1, 0.935, 1.0], [0, 1, 1, 0])
   const headerTranslateX = useTransform(scrollYProgress, [0, 0.1, 0.935, 1.0], [200, 0, 0, -100])
 
-  const answerHeight = useTransform(scrollYProgress, [0.1, 0.15], [0, 52])
-  const oftenOpacity = useTransform(scrollYProgress, [0.2, 0.25], [0, 1])
-  const ofterTranslateX = useTransform(scrollYProgress, [0.2, 0.25], [100, 0])
+  const answerHeight = useTransform(scrollYProgress, [0.15, 0.2], [0, 52])
+  const oftenOpacity = useTransform(scrollYProgress, [0.25, 0.3], [0, 1])
+  const oftenTranslateX = useTransform(scrollYProgress, [0.25, 0.3], [100, 0])
 
   const cardHeight = useMotionValue(300)
   const cardWidth = useTransform(scrollYProgress, [0.3, 0.4], [0, 550])
@@ -38,7 +38,7 @@ export default function SectionWallets({ scrollYProgress }: Props) {
               Were crypto wallets hacked?
               <motion.div layout style={{ height: answerHeight }} className="overflow-hidden">
                 <H2 className="inline">Yes.</H2>{' '}
-                <motion.div className="inline-block" style={{ opacity: oftenOpacity, translateX: ofterTranslateX }}>Pretty Often.</motion.div>
+                <motion.div className="inline-block" style={{ opacity: oftenOpacity, translateX: oftenTranslateX }}>Pretty Often.</motion.div>
               </motion.div>
             </motion.h2>
 
