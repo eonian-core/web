@@ -1,0 +1,7 @@
+@import "../../../../components/styles/gradient-text.mixin.scss";
+
+.heading {
+    mark {
+        @include gradient-text(var(--color-primary-gradient));
+    }
+}

@@ -8,7 +8,15 @@ export default {
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    // Breakpoints taken from screen.scss
+    screens: {
+      small: '430px',
+      mobile: '640px',
+      tablet: '768px',
+      laptop: '1024px',
+      desktop: '1280px',
+      ultra: '1536px',
+    },
   },
   darkMode: 'class',
   plugins: [nextui({

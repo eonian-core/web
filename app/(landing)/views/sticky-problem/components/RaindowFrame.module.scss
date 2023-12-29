@@ -1,8 +1,6 @@
 .frame {
     --border-width: 4px;
 
-    margin: var(--border-width);
-
     user-select: none;
     pointer-events: none;
 
@@ -19,11 +17,12 @@
     &::after {
         background-color: var(--color-background-start);
         border-radius: inherit;
+        margin: var(--border-width);
+
     }
 
     &::before {
         z-index: -1;
-        margin: calc(var(--border-width) * -1);
         background: var(--color-accent-background-gradient);
 
         animation: animatedgradient 20s ease infinite alternate;

@@ -9,7 +9,7 @@ interface Props extends HTMLMotionProps<'div'> {
 const ITEM_OPACITY = [[0, 0.2, 0.8, 1], [0, 1, 1, 0]]
 const ITEM_TRANSLATE_Y = [[0, 0.2, 0.8, 1], [100, 0, 0, -300]]
 
-export default function CardStack({ children, progress, style }: React.PropsWithChildren<Props>) {
+const CardStack = React.forwardRef<HTMLDivElement, React.PropsWithChildren<Props>>(({ children, progress, style }, ref) => {
   const total = React.Children.count(children)
 
   const items = React.Children.map(children, (element, index) => {
@@ -17,11 +17,15 @@ export default function CardStack({ children, progress, style }: React.PropsWith
   })
 
   return (
-    <motion.div layout style={style} className="relative">
+    <motion.div ref={ref} layout style={style} className="relative">
       {items}
     </motion.div>
   )
-}
+})
+
+CardStack.displayName = 'CardStack'
+
+export default CardStack
 
 interface ItemProps {
   index: number

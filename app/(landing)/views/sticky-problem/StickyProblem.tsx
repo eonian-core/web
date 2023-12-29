@@ -1,5 +1,6 @@
 import { useScroll, useTransform } from 'framer-motion'
 import React from 'react'
+import { ClientOnly } from '../../../components/client-only/client-only'
 import RainbowFrame from './components/RainbowFrame'
 import CEX from './section-cex/SectionCEX'
 import But from './section-but/SectionBut'
@@ -13,7 +14,6 @@ export default function StickyProblem() {
   const targetRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
     target: targetRef,
-    offset: ['start center', 'end end'],
   })
 
   const scrollYProgress_CEX = useTransform(scrollYProgress, CEX_PROGRESS_FRAME, [0, 1])
@@ -22,12 +22,13 @@ export default function StickyProblem() {
 
   return (
     <section ref={targetRef} className="w-full h-[500vh]">
-      <RainbowFrame scrollYProgress={scrollYProgress} />
+      <ClientOnly>
+        <RainbowFrame scrollYProgress={scrollYProgress} />
 
-      <CEX scrollYProgress={scrollYProgress_CEX} />
-      <But scrollYProgress={scrollYProgress_But} />
-      <Wallets scrollYProgress={scrollYProgress_Wallets} />
-
+        <CEX scrollYProgress={scrollYProgress_CEX} />
+        <But scrollYProgress={scrollYProgress_But} />
+        <Wallets scrollYProgress={scrollYProgress_Wallets} />
+      </ClientOnly>
     </section>
   )
 }

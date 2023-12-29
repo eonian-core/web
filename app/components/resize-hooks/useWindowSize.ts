@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+'use client'
+
+import { useLayoutEffect, useState } from 'react'
 
 /** Define general type for useWindowSize hook, which includes width and height */
 export interface Size {
@@ -24,11 +26,11 @@ export function useWindowSize(): Size {
   // Initialize state with undefined width/height so server and client renders match
   // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
   const [windowSize, setWindowSize] = useState<Size>({
-    width: undefined,
-    height: undefined,
+    width: window && window.innerWidth,
+    height: window && window.innerHeight,
   })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Handler to call on window resize
     function handleResize() {
       // Set window width/height to state

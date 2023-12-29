@@ -60,7 +60,7 @@
         letter-spacing: var(--letter-spacing-black-500);
         text-align: center;
         z-index: -1;
-        
+
         @include gradient-text(var(--title-gradient));
 
         position: relative;
@@ -96,7 +96,7 @@
         }
     }
 
-    & > p {
+    &>p {
         font-size: var(--font-size-700);
         line-height: var(--line-height-500);
         text-align: center;
@@ -216,7 +216,7 @@
             }
         }
 
-        & > p {
+        &>p {
             max-width: var(--width-500);
         }
     }
@@ -269,7 +269,7 @@
             }
         }
 
-        & > p {
+        &>p {
             font-size: var(--font-size-600);
             line-height: var(--line-height-600);
             text-align: left;
@@ -327,7 +327,7 @@
             }
         }
 
-        & > p {
+        &>p {
             font-size: var(--font-size-500);
             line-height: var(--line-height-500);
             margin-top: var(--margin-500);
@@ -379,7 +379,7 @@
             }
         }
 
-        & > p {
+        &>p {
             font-size: var(--font-size-300);
             line-height: var(--line-height-400);
             margin-top: var(--margin-400);
