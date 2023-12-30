@@ -25,10 +25,7 @@ export interface Size {
 export function useWindowSize(): Size {
   // Initialize state with undefined width/height so server and client renders match
   // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
-  const [windowSize, setWindowSize] = useState<Size>({
-    width: window && window.innerWidth,
-    height: window && window.innerHeight,
-  })
+  const [windowSize, setWindowSize] = useState<Size>(getDefaultSize())
 
   useLayoutEffect(() => {
     // Handler to call on window resize
@@ -53,4 +50,16 @@ export function useWindowSize(): Size {
   }, [])
 
   return windowSize
+}
+
+function getDefaultSize(): Size {
+  try {
+    return { width: window.innerWidth, height: window.innerWidth }
+  }
+  catch (e) {
+    if (e instanceof ReferenceError) {
+      return { width: undefined, height: undefined }
+    }
+    throw e
+  }
 }
