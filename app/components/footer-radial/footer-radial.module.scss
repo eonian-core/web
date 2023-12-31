@@ -1,14 +1,11 @@
-@import "../../screen.scss";
-@import "../styles/appear.animation.scss";
-
+@import '../../screen.scss';
+@import '../styles/appear.animation.scss';
 
 .container {
   position: absolute;
   bottom: 0;
-  right: 0;
-  left: 0;
-  margin: 0 auto;
-
+  left: 50%;
+  transform: translateX(-50%);
   width: 1600px;
   height: 1600px;
 
@@ -27,26 +24,18 @@
     height: 3500px;
 
     &::after {
-      background: radial-gradient(
-        circle at 50% 110%,
-        var(--color-background-start) 20%,
-        transparent 100%,
-      ) !important;
+      background: radial-gradient(circle at 50% 110%, var(--color-background-start) 20%, transparent 100%) !important;
     }
   }
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(
-      circle at 50% 50%,
-      transparent 0,
-      var(--color-background-start) 60%
-    );
+    background: radial-gradient(circle at 50% 50%, transparent 0, var(--color-background-start) 60%);
   }
 
   & > canvas {
