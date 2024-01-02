@@ -26,6 +26,7 @@ import Founder from './views/founders/founder'
 import { MainButton } from './views/hero/main-button'
 import HeroCaptionText from './views/hero/button-group/hero-caption-text'
 import StickyProblem from './views/sticky-problem/StickyProblem'
+import Offer from './views/offer/Offer'
 
 const components = {
   Hero,
@@ -51,6 +52,7 @@ const components = {
   WaitList,
   MainButton,
   StickyProblem,
+  Offer,
 }
 
 export default function Home() {
