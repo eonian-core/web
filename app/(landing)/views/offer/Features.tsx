@@ -22,7 +22,11 @@ const features = [
   { name: 'Keep your wallet', icon: <IconLinkedin /> },
 ]
 
-export default function Features() {
+interface Props {
+  onAnimationEnd: (finish: boolean) => void
+}
+
+export default function Features({ onAnimationEnd }: Props) {
   const [scope, animate] = useAnimate()
   const isInView = useInView(scope, { once: true })
 
@@ -33,9 +37,10 @@ export default function Features() {
     async function startAnimation() {
       await animate('li', { opacity: 1, y: [50, 0] }, { delay: stagger(0.1) })
       await animate('#litepaper-link', { opacity: 1 })
+      onAnimationEnd(true)
     }
     void startAnimation()
-  }, [animate, isInView])
+  }, [animate, isInView, onAnimationEnd])
 
   return (
     <motion.div ref={scope} className="flex flex-col gap-4">
