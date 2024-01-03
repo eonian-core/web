@@ -2,6 +2,8 @@ import { motion, stagger, useAnimate, useInView } from 'framer-motion'
 import { useEffect } from 'react'
 import Heading from '../sticky-problem/components/Heading'
 import IconLinkedin from '../../../components/icons/icon-linkedin'
+import ExternalLink from '../../../components/links/external-link'
+import IconExternal from '../../../components/icons/icon-external'
 
 const features = [
   { name: 'Save and forget', icon: <IconLinkedin /> },
@@ -25,19 +27,25 @@ export default function Features() {
   const isInView = useInView(scope, { once: true })
 
   useEffect(() => {
-    if (isInView) {
-      void animate('li', { opacity: 1, y: [50, 0] }, { delay: stagger(0.1) })
+    if (!isInView) {
+      return
     }
+    async function startAnimation() {
+      await animate('li', { opacity: 1, y: [50, 0] }, { delay: stagger(0.1) })
+      await animate('#litepaper-link', { opacity: 1 })
+    }
+    void startAnimation()
   }, [animate, isInView])
 
   return (
-    <motion.div className="flex flex-col gap-4">
+    <motion.div ref={scope} className="flex flex-col gap-4">
       <Heading tag="h3">Main Features</Heading>
-      <ul ref={scope} className="flex flex-wrap gap-4">
+      <ul className="flex flex-wrap gap-4">
         {features.map((data) => {
           return <Chip key={data.name} text={data.name} icon={data.icon} />
         })}
       </ul>
+      <LitepaperLink />
     </motion.div>
   )
 }
@@ -53,5 +61,15 @@ function Chip({ text, icon }: ChipProps) {
       {icon}
       {text}
     </motion.li>
+  )
+}
+
+function LitepaperLink() {
+  return (
+    <motion.div id="litepaper-link" className="opacity-0">
+      <ExternalLink icon={<IconExternal />} iconAtEnd href={'/'}>
+        Learn more in Litepaper
+      </ExternalLink>
+    </motion.div>
   )
 }
