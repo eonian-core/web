@@ -4,9 +4,8 @@ import React from 'react'
 import clsx from 'clsx'
 import { useIsDesktopOrSmaller } from '../../../../components/resize-hooks/screens'
 import { WrapperLink } from '../../../../components/links/wrapper-link'
-import type { Props as ButtonProps } from '../../../../components/button/button'
+import { Props as ButtonProps } from '../../../../components/button/button'
 import Button from '../../../../components/button/button'
-
 import styles from './hero-button.module.scss'
 
 interface Props extends ButtonProps {
@@ -27,8 +26,19 @@ const HeroButton: React.FC<Props> = ({
   const isDesktop = useIsDesktopOrSmaller()
 
   return (
-    <WrapperLink className={clsx(styles.button, { [styles.bold]: bold }, { [styles.dark]: !bordered })} href={href}>
-      <Button size={isDesktop ? 'md' : 'lg'} icon={icon} dark wide round bordered={bordered} {...restProps}>
+    <WrapperLink className={clsx(styles.button, { 
+      [styles.bold]: bold, 
+      [styles.dark]: !bordered 
+    })} href={href}>
+      <Button 
+        size={isDesktop ? 'md' : 'lg'} 
+        icon={icon} 
+        dark 
+        wide 
+        round 
+        bordered={bordered} 
+        iconPosition='left'
+        {...restProps}>
         {children}
       </Button>
     </WrapperLink>

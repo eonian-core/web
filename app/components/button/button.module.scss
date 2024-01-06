@@ -27,7 +27,7 @@
 
 .button {
   --button-height: 2.5rem;
-  --button-hor-padding: var(--padding-350);
+  --button-hor-padding: var(--padding-100);
   --button-min-width: min-content;
 
   color: var(--color-text-350);
@@ -91,10 +91,16 @@
   }
 }
 
-
 .icon {
   svg:last-of-type {
     margin-left: calc(var(--padding-250) / 2);
+  }
+}
+
+.iconLeft {
+  svg:first-of-type {
+    margin-left: 0;
+    margin-right: calc(var(--padding-250) / 2);
   }
 }
 
@@ -112,8 +118,8 @@
   font-size: var(--font-size-300);
 
   &.wide {
-    --button-min-width: 200px;
-    --button-hor-padding: calc(var(--padding-350) * 1.75);
+    --button-min-width: 100px;
+    --button-hor-padding: var(--padding-300);
   }
 }
 
@@ -122,12 +128,11 @@
   --button-hor-padding: var(--padding-400);
 
   border-radius: var(--border-radius-500);
-
   font-size: var(--font-size-500);
 
   &.wide {
-    --button-min-width: 230px;
-    --button-hor-padding: calc(var(--padding-400) * 1.75);
+    --button-min-width: 100px;
+    --button-hor-padding: var(--padding-300);
   }
 }
 
