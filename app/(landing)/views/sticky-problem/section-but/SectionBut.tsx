@@ -1,6 +1,5 @@
 import { type MotionValue, motion, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { interFont } from '../../../../shared/fonts/Inter'
 import { StickyContainer } from '../components/StickyContainer'
 import Heading from '../components/Heading'
 import useDimensionTransform from '../../../../shared/hooks/useDimensionTransform'

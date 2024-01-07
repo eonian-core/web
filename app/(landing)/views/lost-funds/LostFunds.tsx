@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { LayoutGroup, animate, motion, scroll, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
+import { useRef, useState } from 'react'
+import { LayoutGroup, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
 import { H2 } from '../../../components/heading/heading'
 import { interFont } from '../../../shared/fonts/Inter'
 import styles from './LostFunds.module.scss'

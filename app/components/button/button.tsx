@@ -40,6 +40,7 @@ const Button: React.FC<Props> = ({
     [styles.wide]: wide,
     [styles.round]: round,
     [styles.disabled]: disabled,
+    [styles.iconLeft]: iconPosition === 'left',
   })
   return (
     <button className={classes} {...restProps}>
