@@ -1,4 +1,4 @@
-import { type MotionValue, motion, progress, useMotionValue, useMotionValueEvent, useTransform } from 'framer-motion'
+import { type MotionValue, useMotionValueEvent } from 'framer-motion'
 import type { CSSProperties } from 'react'
 import React from 'react'
 

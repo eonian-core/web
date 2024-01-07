@@ -13,7 +13,7 @@ export default function Hero({ children }: HeroProps) {
   const isScrolled = useIsScrolled()
 
   return (
-    <div className={styles.containter}> 
+    <div className={styles.containter}>
       <Container>
         <div className={styles.hero}>
           {children}

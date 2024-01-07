@@ -16,4 +16,4 @@ export default function Mbr({ children, start = 'tablet' }: MbrProps) {
   })}>{children}</span>
 }
 
-// 
+//
