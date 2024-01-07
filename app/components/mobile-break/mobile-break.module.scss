@@ -1,6 +1,19 @@
 @import "../../screen.scss";
 
+@media (max-width: $screen-laptop) {
+    .laptopBreak {
+        display: block;
+    }
+}
+
 @media (max-width: $screen-tablet) {
+    .tabletBreak {
+        display: block;
+    }
+}
+
+
+@media (max-width: $screen-mobile) {
     .mobileBreak {
         display: block;
     }
