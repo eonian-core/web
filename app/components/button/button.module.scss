@@ -107,18 +107,19 @@
 .sm {
   --button-height: 2rem;
   --button-hor-padding: var(--padding-200);
-    border-radius: var(--border-radius-450);
-    font-size: var(--font-size-200);
+
+  border-radius: var(--border-radius-450);
+  font-size: var(--font-size-200);
 }
 
 .md {
   --button-hor-padding: var(--padding-350);
-  border-radius: var(--border-radius-450);
 
+  border-radius: var(--border-radius-450);
   font-size: var(--font-size-300);
 
   &.wide {
-    --button-min-width: 100px;
+    --button-min-width: 200px;
     --button-hor-padding: var(--padding-300);
   }
 }
@@ -131,7 +132,7 @@
   font-size: var(--font-size-500);
 
   &.wide {
-    --button-min-width: 100px;
+    --button-min-width: 200px;
     --button-hor-padding: var(--padding-300);
   }
 }

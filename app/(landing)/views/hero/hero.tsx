@@ -13,12 +13,14 @@ export default function Hero({ children }: HeroProps) {
   const isScrolled = useIsScrolled()
 
   return (
-    <Container>
-      <div className={styles.hero}>
-        {children}
+    <div className={styles.containter}> 
+      <Container>
+        <div className={styles.hero}>
+          {children}
 
-        <IconScroll className={clsx(styles.scrollIcon, { [styles.hidden]: isScrolled })} />
-      </div>
-    </Container>
+          <IconScroll className={clsx(styles.scrollIcon, { [styles.hidden]: isScrolled })} />
+        </div>
+      </Container>
+    </div>
   )
 }
