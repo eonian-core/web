@@ -1,57 +1,45 @@
 import { motion, stagger, useAnimate, useInView } from 'framer-motion'
 import { useEffect } from 'react'
+import styles from './offer.module.scss'
 import Heading from '../sticky-problem/components/Heading'
 import IconLinkedin from '../../../components/icons/icon-linkedin'
 import ExternalLink from '../../../components/links/external-link'
 import IconExternal from '../../../components/icons/icon-external'
+import FadeInChildList from '../../../components/fade-in/fade-in-child-list'
 
 const features = [
-  { name: 'Save and forget', icon: <IconLinkedin /> },
-  { name: 'Highest transparency', icon: <IconLinkedin /> },
-  { name: 'Insure from hacks', icon: <IconLinkedin /> },
+  { name: 'Save and Forget', icon: <IconLinkedin /> },
+  { name: 'Highest Transparency', icon: <IconLinkedin /> },
+  { name: 'Insure from Hacks', icon: <IconLinkedin /> },
   { name: 'Innovation', icon: <IconLinkedin /> },
-  { name: 'Your backup plan', icon: <IconLinkedin /> },
-  { name: 'Grow long-term', icon: <IconLinkedin /> },
-  { name: 'Own your money', icon: <IconLinkedin /> },
-  { name: 'Future of finance', icon: <IconLinkedin /> },
-  { name: 'Control protocol', icon: <IconLinkedin /> },
-  { name: 'Passive income', icon: <IconLinkedin /> },
-  { name: 'Stay anonymous', icon: <IconLinkedin /> },
+  { name: 'Your Backup Plan', icon: <IconLinkedin /> },
+  { name: 'Grow Long-term', icon: <IconLinkedin /> },
+  { name: 'Own Your Money', icon: <IconLinkedin /> },
+  { name: 'Future of Finance', icon: <IconLinkedin /> },
+  { name: 'Control Protocol', icon: <IconLinkedin /> },
+  { name: 'Passive Income', icon: <IconLinkedin /> },
+  { name: 'Stay Anonymous', icon: <IconLinkedin /> },
   { name: 'Decentralized', icon: <IconLinkedin /> },
-  { name: 'Easy to use', icon: <IconLinkedin /> },
-  { name: 'Keep your wallet', icon: <IconLinkedin /> },
+  { name: 'Easy to Use', icon: <IconLinkedin /> },
+  { name: 'Keep Your Wallet', icon: <IconLinkedin /> },
 ]
 
-interface Props {
-  onAnimationEnd: (finish: boolean) => void
-}
-
-export default function Features({ onAnimationEnd }: Props) {
-  const [scope, animate] = useAnimate()
-  const isInView = useInView(scope, { once: true })
-
-  useEffect(() => {
-    if (!isInView) {
-      return
-    }
-    async function startAnimation() {
-      await animate('li', { opacity: 1, y: [50, 0] }, { delay: stagger(0.1) })
-      await animate('#litepaper-link', { opacity: 1 })
-      onAnimationEnd(true)
-    }
-    void startAnimation()
-  }, [animate, isInView, onAnimationEnd])
+export default function Features() {
 
   return (
-    <motion.div ref={scope} className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <Heading tag="h3">Main Features</Heading>
-      <ul className="flex flex-wrap gap-4">
-        {features.map((data) => {
-          return <Chip key={data.name} text={data.name} icon={data.icon} />
-        })}
+
+      <ul className={styles.features}>
+        <FadeInChildList>
+          {features.map((data) => {
+            return <Chip key={data.name} text={data.name} icon={data.icon} />
+          })}
+        </FadeInChildList>
       </ul>
+
       <LitepaperLink />
-    </motion.div>
+    </div>
   )
 }
 
@@ -62,19 +50,19 @@ interface ChipProps {
 
 function Chip({ text, icon }: ChipProps) {
   return (
-    <motion.li className="px-4 py-1.5 rounded-xl opacity-0 flex items-center gap-2 text-foreground bg-default-400 border-medium border-primary text-medium">
+    <li className={styles.chip}>
       {icon}
       {text}
-    </motion.li>
+    </li>
   )
 }
 
 function LitepaperLink() {
   return (
-    <motion.div id="litepaper-link" className="opacity-0">
+    <div id="litepaper-link">
       <ExternalLink icon={<IconExternal />} iconAtEnd href={'/'}>
         Learn more in Litepaper
       </ExternalLink>
-    </motion.div>
+    </div>
   )
 }

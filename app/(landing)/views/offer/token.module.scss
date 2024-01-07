@@ -1,0 +1,135 @@
+.token {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    min-width: 20rem;
+    min-height: 30rem;
+    padding: var(--padding-300) var(--padding-400);
+
+    background: linear-gradient(
+        to bottom, 
+        var(--color-neutral-200) 35%, 
+        var(--color-dark-100) 85%);
+    border-radius: var(--border-radius-600);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    h3 {
+        color: var(--color-text-900);
+        font-size: var(--font-size-800);
+        font-weight: var(--font-bold);
+        line-height: var(--font-size-800);;
+    }
+}
+
+.symbol {
+    font-size: var(--font-size-500);
+    color: var(--color-text-400);
+}
+
+.stats {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-text-800);
+}
+
+.returns {
+
+    border-bottom: solid 1px var(--color-text-400);
+    padding-bottom: var(--padding-200);
+    margin-bottom: var(--padding-200);
+
+    .value {
+        font-size: var(--font-size-750);
+        font-weight: var(--font-bold);
+        line-height: var(--font-size-800);
+        
+        display: flex;
+        flex-direction: row;
+    }
+
+    .tag {
+        font-size: var(--font-size-500);
+        color: var(--color-text-400);
+        padding: 0 var(--padding-100);
+        border-radius: var(--border-radius-600);
+        border: solid 1px var(--color-text-400);
+        margin-left: var(--margin-100);
+        margin-top: var(--margin-50);
+        max-height: var(--line-height-300);
+        line-height: var(--line-height-300);
+        
+    }
+}
+
+.label {
+    font-size: var(--font-size-500);
+    color: var(--color-text-600);
+}
+
+.distribution {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    width: 100%;
+
+    .item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .value {
+        font-size: var(--font-size-700);
+        font-weight: var(--font-bold);
+
+        color: var(--color-text-700);
+    }
+}
+
+.action {
+
+    .insurance {
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .value {
+            font-size: var(--font-size-700);
+            font-weight: var(--font-bold);
+    
+            color: var(--color-text-700);
+            line-height: var(--line-height-500);
+        }
+    }
+
+    .development {
+        width: 100%;
+        text-align: center;
+        color: var(--color-text-600);
+        padding-top: var(--padding-50);
+    }
+}
+
+.actionButton {
+    width: 100%;
+    margin-top: var(--margin-200);
+}
+
+.insuranceInducator {
+    background: linear-gradient(to right, 
+        var(--color-success-800) 30%,
+        var(--color-success-700) 60%, 
+        var(--color-success-600) 90%, 
+        
+    ); 
+}
