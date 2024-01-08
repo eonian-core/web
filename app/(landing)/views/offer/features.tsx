@@ -6,6 +6,7 @@ import IconLinkedin from '../../../components/icons/icon-linkedin'
 import ExternalLink from '../../../components/links/external-link'
 import IconExternal from '../../../components/icons/icon-external'
 import FadeInChildList from '../../../components/fade-in/fade-in-child-list'
+import { Chip } from './chip'
 
 const features = [
   { name: 'Save and Forget', icon: <IconLinkedin /> },
@@ -32,9 +33,9 @@ export default function Features() {
 
       <ul className={styles.features}>
         <FadeInChildList>
-          {features.map((data) => {
-            return <Chip key={data.name} text={data.name} icon={data.icon} />
-          })}
+          {features.map((data) => 
+            <Chip key={data.name} text={data.name} icon={data.icon} />
+          )}
         </FadeInChildList>
       </ul>
 
@@ -43,19 +44,7 @@ export default function Features() {
   )
 }
 
-interface ChipProps {
-  text: string
-  icon: React.ReactNode
-}
 
-function Chip({ text, icon }: ChipProps) {
-  return (
-    <li className={styles.chip}>
-      {icon}
-      {text}
-    </li>
-  )
-}
 
 function LitepaperLink() {
   return (

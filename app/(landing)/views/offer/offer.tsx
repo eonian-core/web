@@ -1,7 +1,7 @@
 import React from 'react'
-import Caption from './Caption'
-import Features from './Features'
-import Tokens from './Tokens'
+import Caption from './caption'
+import Features from './features'
+import Tokens from './tokens'
 import FadeInList from '../../../components/fade-in/fade-in-list'
 import styles from './offer.module.scss'
 
