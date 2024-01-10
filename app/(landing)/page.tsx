@@ -13,9 +13,7 @@ import Mbr from '../components/mobile-break/mobile-break'
 import { Target } from '../components/card/card'
 import { WaitList } from '../components/waitlist/waitlist'
 import styles from './page.module.css'
-
 import Content from './content/en.mdx'
-
 import HeroButton from './views/hero/button-group/hero-button'
 import HeroButtonGroup from './views/hero/button-group/hero-button-group'
 import Hero from './views/hero/hero'
@@ -27,6 +25,11 @@ import { MainButton } from './views/hero/main-button'
 import HeroCaptionText from './views/hero/button-group/hero-caption-text'
 import StickyProblem from './views/sticky-problem/StickyProblem'
 import Offer from './views/offer/offer'
+import Tokens from './views/offer/tokens'
+import { TokenHeader, Tags, Tag, TokenStats, YearlyReturns, Distribution, TokenFees, TokenApy, TokenGrowth, Token } from './views/offer/token'
+import IconPalmTree from '../components/icons/icon-paml-tree'
+import IconShieldHeart from '../components/icons/icon-shield-heart'
+
 
 const components = {
   Hero,
@@ -53,6 +56,19 @@ const components = {
   MainButton,
   StickyProblem,
   Offer,
+  Tokens,
+  Token,
+  TokenHeader,
+  Tags,
+  Tag,
+  TokenStats,
+  YearlyReturns,
+  Distribution,
+  TokenFees,
+  TokenApy,
+  TokenGrowth,
+  IconShieldHeart,
+  IconPalmTree
 }
 
 export default function Home() {

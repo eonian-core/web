@@ -16,29 +16,35 @@ import { Chip } from './chip'
 export type TokenSymbol = 'ETH' | 'BTC' | 'USDT'
 
 export interface TokenProps {
-  /** Used for displaying symbol and extract stats */
-  token: TokenSymbol
-  development?: boolean
+    /** Used for displaying symbol and extract stats */
+    token: TokenSymbol
+    development?: boolean
 }
 
+import { createContext, useContext } from 'react'
+
+export const TokenContext = createContext<TokenProps>({ token: 'ETH', development: true })
+export const useToken = () => useContext(TokenContext)
+
+
 export function Token({ token, children, development }: PropsWithChildren<TokenProps>) {
-  return <div className={clsx(styles.token, styles[token])}>
-        <div className={styles.content}>
-            <Logo {...{ token }} />
+    return <div className={clsx(styles.token, styles[token])}>
+        <TokenContext.Provider value={{ token, development }}>
+            <div className={styles.content}>
+                <Logo {...{ token, development }} />
 
-            <TokenHeader {...{ token }}>{children}</TokenHeader>
+                {children}
 
-            <Tags {...{ token }} />
-
-            <TokenStats {...{ token }}/>
-
-            <Action {...{ token, development }} />
-        </div>
+                <Action {...{ token, development }} />
+            </div>
+        </TokenContext.Provider>
     </div>
 }
 
-export function TokenHeader({ token, children }: PropsWithChildren<Pick<TokenProps, 'token'>>) {
-  return <div className={clsx(styles.header, styles[token])}>
+export function TokenHeader({ children }: PropsWithChildren) {
+    const { token } = useToken()
+
+    return <div className={clsx(styles.header, styles[token])}>
         <span className={styles.symbol}>{token}</span>
 
         <h3>
@@ -47,60 +53,63 @@ export function TokenHeader({ token, children }: PropsWithChildren<Pick<TokenPro
     </div>
 }
 
-export function Tags({ token }: Pick<TokenProps, 'token'>) {
-  return <ol className={styles.tags}>
-        <li>{token === 'USDT'
-          ? (<Tag icon={<IconPalmTree />}>Earn Passively</Tag>)
-          : (<Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>)
-        }</li>
-        <li><Tag bordered >Innovation</Tag></li>
-        <li>{token !== 'USDT'
-          ? (<Tag bordered>Save and Forget</Tag>)
-          : (<Tag bordered>Zero Fee Insurance</Tag>)
-            }</li>
-
+export function Tags({ children }: PropsWithChildren) {
+    return <ol className={styles.tags}>
+        {children}
     </ol>
 }
 
-function Tag({ bordered, children, icon }: PropsWithChildren<{ bordered?: boolean; icon?: React.ReactNode }>) {
-  if (!bordered) {
-    return <Chip variant='secondary' size='small' icon={icon}>{children}</Chip>
-  }
+export function Tag({ bordered, children, icon }: PropsWithChildren<{ bordered?: boolean; icon?: React.ReactNode }>) {
+    if (!bordered) {
+        return <li><Chip variant='secondary' size='small' icon={icon}>{children}</Chip></li>
+    }
 
-  return <Chip variant='bordered' size='small' className={styles.borderedTag}>{children}</Chip>
+    return <li><Chip variant='bordered' size='small' className={styles.borderedTag}>{children}</Chip></li>
 }
 
-// eslint-disable-next-line no-empty-pattern
-export function TokenStats({}: Pick<TokenProps, 'token'>) {
-  return (
-        <div className={styles.stats}>
-            <div className={styles.returns}>
-                <span className={styles.label}>Yearly Returns</span>
-                <p className={styles.value}>+87.95%<Chip variant='bordered' size='small' className={styles.returnTag}>In USD</Chip></p>
-            </div>
+export const TokenStats = ({ children }: PropsWithChildren) => (
+    <div className={styles.stats}>
+        {children}
+    </div>
+)
 
-            <div className={styles.distribution}>
-                <div className={styles.item}>
-                    <span className={styles.label}>Fees</span>
-                    <span className={styles.value}>0%</span>
-                </div>
 
-                <div className={styles.item}>
-                    <span className={styles.label}>APY</span>
-                    <span className={styles.value}>~3%</span>
-                </div>
+export const YearlyReturns = ({ children }: PropsWithChildren) => (
+    <div className={styles.returns}>
+        <span className={styles.label}>Yearly Returns</span>
+        <p className={styles.value}>{children}<Chip variant='bordered' size='small' className={styles.returnTag}>In USD</Chip></p>
+    </div>
+)
 
-                <div className={styles.item}>
-                    <span className={styles.label}>Growth</span>
-                    <span className={styles.value}>~85%</span>
-                </div>
-            </div>
-        </div>
-  )
-}
+export const Distribution = ({ children }: PropsWithChildren) => (
+    <div className={styles.distribution}>
+        {children}
+    </div>
+) 
 
-export function Action({ token, development }: TokenProps) {
-  return (
+export const TokenFees = ({ children }: PropsWithChildren) => (
+    <div className={styles.item}>
+        <span className={styles.label}>Fees</span>
+        <span className={styles.value}>{children}</span>
+    </div>
+)
+
+export const TokenApy = ({ children }: PropsWithChildren) => (
+    <div className={styles.item}>
+        <span className={styles.label}>APY</span>
+        <span className={styles.value}>{children}</span>
+    </div>
+)
+
+export const TokenGrowth = ({ children }: PropsWithChildren) => (
+    <div className={styles.item}>
+        <span className={styles.label}>Growth</span>
+        <span className={styles.value}>{children}</span>
+    </div>
+)
+
+export function Action({ development }: TokenProps) {
+    return (
         <div className={styles.action}>
             <div className={styles.insurance}>
                 <span className={styles.label}>Insurance Coverage</span>
@@ -108,7 +117,7 @@ export function Action({ token, development }: TokenProps) {
             </div>
 
             <Progress size="sm" aria-label="Insurance" value={100} classNames={{
-              indicator: styles.insuranceInducator,
+                indicator: styles.insuranceInducator,
             }} />
 
             <Button size='lg' dark className={styles.actionButton}>
@@ -117,17 +126,18 @@ export function Action({ token, development }: TokenProps) {
 
             {development && <p className={styles.development}>Coming soon</p>}
         </div>
-  )
+    )
 }
 
+// TODO: pass image throw mdx file
 const logos = {
-  BTC: BtcImage,
-  ETH: EthImage,
-  USDT: UsdtImage,
+    BTC: BtcImage,
+    ETH: EthImage,
+    USDT: UsdtImage,
 }
 
-function Logo({ token }: Pick<TokenProps, 'token'>) {
-  return <div className={clsx(styles.logo, styles[token])}>
+function Logo({ token }: TokenProps) {
+    return <div className={clsx(styles.logo, styles[token])}>
         <Image src={logos[token]} alt={token} width={256} height={256} />
     </div>
 }
