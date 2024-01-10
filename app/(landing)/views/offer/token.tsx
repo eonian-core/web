@@ -10,6 +10,9 @@ import EthImage from './image/ETH_logo.png'
 import UsdtImage from './image/USDT_logo.png'
 import clsx from 'clsx';
 import { Chip } from './chip';
+import IconShieldHeart from '../../../components/icons/icon-shield-heart';
+import IconMicroscopeFill from '../../../components/icons/icon-microscope-fill';
+import IconPalmTree from '../../../components/icons/icon-paml-tree';
 
 export type TokenSymbol = "ETH" | "BTC" | "USDT";
 
@@ -47,19 +50,22 @@ export const TokenHeader = ({token, children}: PropsWithChildren<Pick<TokenProps
 
 export const Tags = ({token}: Pick<TokenProps, "token">) => (
     <ol className={styles.tags}>
-        {token === 'USDT' && (
-            <li><Tag>Earn Passively</Tag></li>
-        )}
-        <li><Tag bordered={token === 'USDT'}>Zero Fee Insurance</Tag></li>
-        <li><Tag bordered>Innovation</Tag></li>
-        {token !== 'USDT' && (<li><Tag bordered>Save and Forget</Tag></li>)}
+        <li>{token === 'USDT' 
+            ? (<Tag icon={<IconPalmTree />}>Earn Passively</Tag>) 
+            : (<Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>)
+        }</li>
+        <li><Tag bordered >Innovation</Tag></li>
+        <li>{token !== 'USDT' 
+            ? (<Tag bordered>Save and Forget</Tag>) 
+            : (<Tag bordered>Zero Fee Insurance</Tag>)
+            }</li>
         
     </ol>
 )
 
-const Tag = ({bordered, children}: PropsWithChildren<{bordered?: boolean}>) => {
+const Tag = ({bordered, children, icon}: PropsWithChildren<{bordered?: boolean, icon?: React.ReactNode}>) => {
     if(!bordered) {
-        return <Chip variant='secondary' size='small'>{children}</Chip>
+        return <Chip variant='secondary' size='small' icon={icon}>{children}</Chip>
     }
 
     return <Chip variant='bordered' size='small' className={styles.borderedTag}>{children}</Chip>

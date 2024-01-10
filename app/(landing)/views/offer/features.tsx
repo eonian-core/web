@@ -7,22 +7,36 @@ import ExternalLink from '../../../components/links/external-link'
 import IconExternal from '../../../components/icons/icon-external'
 import FadeInChildList from '../../../components/fade-in/fade-in-child-list'
 import { Chip } from './chip'
+import IconVault from '../../../components/icons/icon-vault'
+import IconWindowGrid from '../../../components/icons/icon-window-grid'
+import IconShieldHeart from '../../../components/icons/icon-shield-heart'
+import IconMicroscopeFill from '../../../components/icons/icon-microscope-fill'
+import IconRacingHelmet from '../../../components/icons/icon-racing-helmet'
+import IconChartLine from '../../../components/icons/icon-chart-line'
+import IconKey from '../../../components/icons/icon-key'
+import IconRocketOutline from '../../../components/icons/icon-rocket-outline'
+import IconToggleSwitch from '../../../components/icons/icon-toggle-switch'
+import IconPalmTree from '../../../components/icons/icon-paml-tree'
+import IconIncognito from '../../../components/icons/icon-incognito'
+import IconLink from '../../../components/icons/icon-link'
+import IconHeart from '../../../components/icons/icon-heart'
+import IconWallet from '../../../components/icons/icon-wallet'
 
 const features = [
-  { name: 'Save and Forget', icon: <IconLinkedin /> },
-  { name: 'Highest Transparency', icon: <IconLinkedin /> },
-  { name: 'Insure from Hacks', icon: <IconLinkedin /> },
-  { name: 'Innovation', icon: <IconLinkedin /> },
-  { name: 'Your Backup Plan', icon: <IconLinkedin /> },
-  { name: 'Grow Long-term', icon: <IconLinkedin /> },
-  { name: 'Own Your Money', icon: <IconLinkedin /> },
-  { name: 'Future of Finance', icon: <IconLinkedin /> },
-  { name: 'Control Protocol', icon: <IconLinkedin /> },
-  { name: 'Passive Income', icon: <IconLinkedin /> },
-  { name: 'Stay Anonymous', icon: <IconLinkedin /> },
-  { name: 'Decentralized', icon: <IconLinkedin /> },
-  { name: 'Easy to Use', icon: <IconLinkedin /> },
-  { name: 'Keep Your Wallet', icon: <IconLinkedin /> },
+  { name: 'Save and Forget', icon: <IconVault /> },
+  { name: 'Highest Transparency', icon: <IconWindowGrid /> },
+  { name: 'Insure from Hacks', icon: <IconShieldHeart /> },
+  { name: 'Innovation', icon: <IconMicroscopeFill /> },
+  { name: 'Your Backup Plan', icon: <IconRacingHelmet /> },
+  { name: 'Grow Long-term', icon: <IconChartLine /> },
+  { name: 'Own Your Money', icon: <IconKey /> },
+  { name: 'Future of Finance', icon: <IconRocketOutline /> },
+  { name: 'Control Protocol', icon: <IconToggleSwitch /> },
+  { name: 'Passive Income', icon: <IconPalmTree /> },
+  { name: 'Stay Anonymous', icon: <IconIncognito/> },
+  { name: 'Decentralized', icon: <IconLink /> },
+  { name: 'Easy to Use', icon: <IconHeart/> },
+  { name: 'Keep Your Wallet', icon: <IconWallet />  },
 ]
 
 export default function Features() {
