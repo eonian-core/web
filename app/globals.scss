@@ -133,6 +133,7 @@
       hsla(0, 0%, 100%, 0.502));
 
   // Text
+  --color-text-10: hsl(0, 0%, 100%);
   --color-text-50: hsl(0, 0%, 98%);
   --color-text-100: hsl(240, 5%, 96%);
   --color-text-200: hsl(240, 6%, 90%);
@@ -216,6 +217,7 @@
   --color-neutral-100: hsl(0, 0%, 96%);
   --color-neutral-200: hsl(0, 0%, 90%);
   --color-neutral-300: hsl(0, 0%, 83%);
+  --color-neutral-350: hsla(0, 1%, 27%, 0.822);
   --color-neutral-400: hsl(0, 0%, 64%);
   --color-neutral-500: hsl(0, 0%, 45%); // Default color
   --color-neutral-600: hsl(0, 0%, 32%);

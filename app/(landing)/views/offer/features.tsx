@@ -34,7 +34,9 @@ export default function Features() {
       <ul className={styles.features}>
         <FadeInChildList>
           {features.map((data) => 
-            <Chip key={data.name} text={data.name} icon={data.icon} />
+            <li key={data.name}>
+              <Chip icon={data.icon}>{data.name}</Chip>
+            </li>
           )}
         </FadeInChildList>
       </ul>

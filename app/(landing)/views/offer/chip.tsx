@@ -1,15 +1,19 @@
+import clsx from 'clsx'
 import styles from './chip.module.scss'
+import { PropsWithChildren } from 'react'
 
-export interface ChipProps {
-    text: string
-    icon: React.ReactNode
+export interface ChipProps extends PropsWithChildren<{}> {
+    icon?: React.ReactNode
+    variant?: "primary" | "secondary" | "bordered" 
+    size?: "small" | "medium"
+    className?: string
 }
 
-export function Chip({ text, icon }: ChipProps) {
+export function Chip({ children, icon, variant = "primary", size = 'medium', className }: ChipProps) {
     return (
-        <li className={styles.chip}>
+        <span className={clsx(styles.chip, styles[variant], styles[size], className)}>
             {icon}
-            {text}
-        </li>
+            {children}
+        </span>
     )
 }

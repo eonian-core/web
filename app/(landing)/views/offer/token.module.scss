@@ -16,17 +16,15 @@
 .token {
     position: relative;
 
-    width: 100%;
     height: 100%;
-    min-width: 20rem;
+    width: 20rem;
     min-height: 30rem;
 
-    background: linear-gradient(
-        to bottom, 
-        var(--color-neutral-200) 35%, 
-        var(--color-dark-100) 85%);
+    background: linear-gradient(210deg,
+            var(--color-neutral-300) 5%,
+            var(--color-neutral-100) 35%,
+            var(--color-dark-100) 85%);
     border-radius: var(--border-radius-600);
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 
     &::after {
         content: "";
@@ -39,15 +37,15 @@
         background: linear-gradient(to bottom right, #a166ab, #333399, #5073b8, #2657eb, #2657eb);
         border-radius: calc(2 * var(--border-radius-400));
         z-index: -1;
-        animation: animatedGradient 5s ease alternate infinite;
+        animation: animatedGradient 3s ease alternate infinite;
         background-size: 300% 300%;
         mix-blend-mode: screen;
-        
+
         filter: blur(2rem);
 
         transition: filter 0.5s ease;
     }
-      
+
 
     &.BTC {
         &::after {
@@ -101,9 +99,9 @@
 
     &:hover {
         &::before {
-            transform: scale(1.1);   
+            transform: scale(1.1);
         }
-    
+
     }
 }
 
@@ -137,11 +135,33 @@
     &.BTC {
         opacity: 0.2;
     }
-    
+
     &.USDT {
         opacity: 0.2;
     }
-    
+
+}
+
+.token {
+    &:hover {
+        .logo {
+            animation: bounce 3s infinite ease-in-out;
+        }
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-0.5rem);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
 }
 
 
@@ -154,30 +174,41 @@
 
     z-index: 2;
 
-    h3 {
-        --animation-color: #37FF8B;
 
-        color: transparent;
+    h3 {
         position: relative;
 
         font-size: var(--font-size-800);
         font-weight: var(--font-bold);
         line-height: var(--font-size-800);
 
-        -webkit-text-stroke: 1px rgba(255,255,255,0.6);
+        color: var(--color-text-800);
+        padding-left: var(--padding-100);
 
-        .hoverText {
+
+        &::after {
+            content: "";
             position: absolute;
-            box-sizing: border-box;
+            height: 1.6rem;
+            top: 0.15rem;
+            left: 0;
+            border-right: 3px solid rgb(144, 67, 211);
+        }
+    }
 
-            color: var(--animation-color);
-            width: 0%;
-            inset: 0;
-            border-right: 6px solid var(--animation-color);
-            overflow: hidden;
-            transition: 0.5s;
+    &.BTC {
+        h3 {
+            &::after {
+                border-right-color: var(--color-warning-400);
+            }
+        }
+    }
 
-            -webkit-text-stroke: 1px var(--animation-color);
+    &.USDT {
+        h3 {
+            &::after {
+                border-right-color: var(--color-success-600);
+            }
         }
     }
 }
@@ -185,8 +216,40 @@
 .token:hover {
     .hoverText {
         width: calc(100% + 0.5rem);
-        filter: drop-shadow(0 0 23px var(--animation-color))
+        filter: drop-shadow(0 0 23px hsl(272, 100%, 62%))
     }
+}
+
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+
+    flex-wrap: wrap;
+    z-index: 2;
+
+    margin-top: var(--margin-200);
+    padding-bottom: var(--padding-50);
+
+    span {
+        white-space: nowrap;
+    }
+
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 5rem;
+        bottom: -0.5rem;
+        left: 0;
+        border-bottom: 1px solid var(--color-neutral-400);
+    }
+}
+
+.borderedTag {
+    color: var(--color-text-700);
 }
 
 .symbol {
@@ -201,6 +264,8 @@
     color: var(--color-text-800);
 
     margin-top: auto;
+
+
 }
 
 .returns {
@@ -213,27 +278,14 @@
         font-size: var(--font-size-750);
         font-weight: var(--font-bold);
         line-height: var(--font-size-800);
-        
+
         display: flex;
         flex-direction: row;
-    }
-
-    .tag {
-        font-size: var(--font-size-500);
-        color: var(--color-text-400);
-        padding: 0 var(--padding-100);
-        border-radius: var(--border-radius-600);
-        border: solid 1px var(--color-text-400);
-        margin-left: var(--margin-100);
-        margin-top: var(--margin-50);
-        max-height: var(--line-height-300);
-        line-height: var(--line-height-300);
-        
     }
 }
 
 .label {
-    font-size: var(--font-size-500);
+    font-size: var(--font-size-400);
     color: var(--color-text-500);
 }
 
@@ -259,7 +311,7 @@
 
 .action {
 
-    margin-top: var(--margin-300);
+    margin-top: var(--margin-400);
 
     .insurance {
 
@@ -270,7 +322,7 @@
         .value {
             font-size: var(--font-size-700);
             font-weight: var(--font-bold);
-    
+
             color: var(--color-text-700);
             line-height: var(--line-height-500);
         }
@@ -290,10 +342,14 @@
 }
 
 .insuranceInducator {
-    background: linear-gradient(
-        to right, 
-        var(--color-success-800) 30%,
-        var(--color-success-700) 60%, 
-        var(--color-success-600) 90%,  
-    );
+    background: linear-gradient(to right,
+            var(--color-success-800) 30%,
+            var(--color-success-700) 60%,
+            var(--color-success-600) 90%,
+        );
+}
+
+.returnTag {
+    margin-left: var(--margin-100);
+    margin-top: var(--margin-50);
 }
