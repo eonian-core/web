@@ -7,7 +7,7 @@ export default function Caption() {
       <Heading>
         Wallet + Insurance + <mark>Income</mark> = Eonian
       </Heading>
-      
+
       <p>We combine the strengths of Exchanges and Wallets to fight their weaknesses.</p>
     </div>
   )

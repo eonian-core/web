@@ -1,12 +1,7 @@
-import { motion, stagger, useAnimate, useInView } from 'framer-motion'
-import { useEffect } from 'react'
-import styles from './offer.module.scss'
 import Heading from '../sticky-problem/components/Heading'
-import IconLinkedin from '../../../components/icons/icon-linkedin'
 import ExternalLink from '../../../components/links/external-link'
 import IconExternal from '../../../components/icons/icon-external'
 import FadeInChildList from '../../../components/fade-in/fade-in-child-list'
-import { Chip } from './chip'
 import IconVault from '../../../components/icons/icon-vault'
 import IconWindowGrid from '../../../components/icons/icon-window-grid'
 import IconShieldHeart from '../../../components/icons/icon-shield-heart'
@@ -21,6 +16,8 @@ import IconIncognito from '../../../components/icons/icon-incognito'
 import IconLink from '../../../components/icons/icon-link'
 import IconHeart from '../../../components/icons/icon-heart'
 import IconWallet from '../../../components/icons/icon-wallet'
+import styles from './offer.module.scss'
+import { Chip } from './chip'
 
 const features = [
   { name: 'Save and Forget', icon: <IconVault /> },
@@ -36,21 +33,20 @@ const features = [
   { name: 'Stay Anonymous', icon: <IconIncognito/> },
   { name: 'Decentralized', icon: <IconLink /> },
   { name: 'Easy to Use', icon: <IconHeart/> },
-  { name: 'Keep Your Wallet', icon: <IconWallet />  },
+  { name: 'Keep Your Wallet', icon: <IconWallet /> },
 ]
 
 export default function Features() {
-
   return (
     <div className="flex flex-col gap-4">
       <Heading tag="h3">Main Features</Heading>
 
       <ul className={styles.features}>
         <FadeInChildList>
-          {features.map((data) => 
+          {features.map(data =>
             <li key={data.name}>
               <Chip icon={data.icon}>{data.name}</Chip>
-            </li>
+            </li>,
           )}
         </FadeInChildList>
       </ul>
@@ -59,8 +55,6 @@ export default function Features() {
     </div>
   )
 }
-
-
 
 function LitepaperLink() {
   return (

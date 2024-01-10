@@ -1,5 +1,5 @@
 // icon:toggle-switch | Material Design Icons https://materialdesignicons.com/ | Austin Andrews
-import * as React from "react";
+import * as React from 'react'
 
 function IconToggleSwitch(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -12,7 +12,7 @@ function IconToggleSwitch(props: React.SVGProps<SVGSVGElement>) {
     >
       <path d="M17 7H7a5 5 0 00-5 5 5 5 0 005 5h10a5 5 0 005-5 5 5 0 00-5-5m0 8a3 3 0 01-3-3 3 3 0 013-3 3 3 0 013 3 3 3 0 01-3 3z" />
     </svg>
-  );
+  )
 }
 
-export default IconToggleSwitch;
+export default IconToggleSwitch

@@ -1,5 +1,5 @@
 // icon:heart | Tabler Icons https://tablericons.com/ | Csaba Kissi
-import * as React from "react";
+import * as React from 'react'
 
 function IconHeart(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -17,7 +17,7 @@ function IconHeart(props: React.SVGProps<SVGSVGElement>) {
       <path stroke="none" d="M0 0h24v24H0z" />
       <path d="M19.5 12.572L12 20l-7.5-7.428m0 0A5 5 0 1112 6.006a5 5 0 117.5 6.572" />
     </svg>
-  );
+  )
 }
 
-export default IconHeart;
+export default IconHeart

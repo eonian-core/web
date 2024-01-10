@@ -1,5 +1,5 @@
 // icon:rocket-outline | Ionicons https://ionicons.com/ | Ionic Framework
-import * as React from "react";
+import * as React from 'react'
 
 function IconRocketOutline(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -27,7 +27,7 @@ function IconRocketOutline(props: React.SVGProps<SVGSVGElement>) {
         d="M109.64 352a45.06 45.06 0 00-26.35 12.84C65.67 382.52 64 448 64 448s65.52-1.67 83.15-19.31A44.73 44.73 0 00160 402.32"
       />
     </svg>
-  );
+  )
 }
 
-export default IconRocketOutline;
+export default IconRocketOutline

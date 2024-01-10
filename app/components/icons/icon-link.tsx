@@ -1,5 +1,5 @@
 // icon:link | Tabler Icons https://tablericons.com/ | Csaba Kissi
-import * as React from "react";
+import * as React from 'react'
 
 function IconLink(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -18,7 +18,7 @@ function IconLink(props: React.SVGProps<SVGSVGElement>) {
       <path d="M10 14a3.5 3.5 0 005 0l4-4a3.5 3.5 0 00-5-5l-.5.5" />
       <path d="M14 10a3.5 3.5 0 00-5 0l-4 4a3.5 3.5 0 005 5l.5-.5" />
     </svg>
-  );
+  )
 }
 
-export default IconLink;
+export default IconLink
