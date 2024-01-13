@@ -34,6 +34,7 @@ import Founders from './views/founders/founders'
 import FoundersList from './views/founders/founders-list'
 import Founder from './views/founders/founder'
 import { MainButton } from './views/hero/main-button'
+import Warning from './views/hero/warning'
 
 const components = {
   Card,
@@ -67,6 +68,7 @@ const components = {
   ul: FeaturesList,
   WaitList,
   MainButton,
+  Warning,
   UsdtIcon: () => <IconCoin symbol={CoinIcon.USDT} width={18} height={18} />,
 }
 
