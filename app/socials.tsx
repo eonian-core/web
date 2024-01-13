@@ -38,11 +38,11 @@ export const socials: LocalesSocials = {
       icon: <IconTwitter />,
       href: 'https://twitter.com/EonianFinance',
     },
-    {
-      name: 'Discord',
-      icon: <IconDiscord />,
-      href: 'https://discord.gg/8mcUPPYJmj',
-    },
+    // {
+    //   name: 'Discord',
+    //   icon: <IconDiscord />,
+    //   href: 'https://discord.gg/8mcUPPYJmj',
+    // },
     {
       name: 'YouTube',
       icon: <IconYoutube />,
