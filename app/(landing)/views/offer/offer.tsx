@@ -9,7 +9,7 @@ import styles from './offer.module.scss'
 export default function Offer({ children }: PropsWithChildren) {
   return (
     <Container className={styles.container}>
-      <FadeInList className={styles.innerContainer} amount={0.3}>
+      <FadeInList className={styles.innerContainer} amount={0.05}>
         <Caption />
 
         <Features />

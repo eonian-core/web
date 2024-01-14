@@ -5,6 +5,7 @@
 
     // To decrease the empty gap between previous sticky section and the container.
     margin-top: calc(var(--margin-1000) * -1);
+    margin-bottom: var(--margin-900);
 }
 
 .innerContainer {
