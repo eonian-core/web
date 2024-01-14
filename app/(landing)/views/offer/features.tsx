@@ -30,9 +30,9 @@ const features = [
   { name: 'Future of Finance', icon: <IconRocketOutline /> },
   { name: 'Control Protocol', icon: <IconToggleSwitch /> },
   { name: 'Passive Income', icon: <IconPalmTree /> },
-  { name: 'Stay Anonymous', icon: <IconIncognito/> },
+  { name: 'Stay Anonymous', icon: <IconIncognito /> },
   { name: 'Decentralized', icon: <IconLink /> },
-  { name: 'Easy to Use', icon: <IconHeart/> },
+  { name: 'Easy to Use', icon: <IconHeart /> },
   { name: 'Keep Your Wallet', icon: <IconWallet /> },
 ]
 
@@ -43,11 +43,11 @@ export default function Features() {
 
       <ul className={styles.features}>
         <FadeInChildList>
-          {features.map(data =>
+          {features.map(data => (
             <li key={data.name}>
               <Chip icon={data.icon}>{data.name}</Chip>
-            </li>,
-          )}
+            </li>
+          ))}
         </FadeInChildList>
       </ul>
 
