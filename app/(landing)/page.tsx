@@ -14,6 +14,7 @@ import { Target } from '../components/card/card'
 import { WaitList } from '../components/waitlist/waitlist'
 import IconPalmTree from '../components/icons/icon-paml-tree'
 import IconShieldHeart from '../components/icons/icon-shield-heart'
+import IconCoin, { CoinIcon } from '../components/icons/icon-coin'
 import styles from './page.module.css'
 import Content from './content/en.mdx'
 import HeroButton from './views/hero/button-group/hero-button'
@@ -28,7 +29,19 @@ import HeroCaptionText from './views/hero/button-group/hero-caption-text'
 import StickyProblem from './views/sticky-problem/StickyProblem'
 import Offer from './views/offer/offer'
 import Tokens from './views/offer/tokens'
-import { Distribution, Tag, Tags, Token, TokenApy, TokenFees, TokenGrowth, TokenHeader, TokenStats, YearlyReturns } from './views/offer/token'
+import {
+  Distribution,
+  Tag,
+  Tags,
+  Token,
+  TokenApy,
+  TokenFees,
+  TokenGrowth,
+  TokenHeader,
+  TokenStats,
+  YearlyReturns,
+} from './views/offer/token'
+import Warning from './views/hero/warning'
 
 const components = {
   Hero,
@@ -68,6 +81,8 @@ const components = {
   TokenGrowth,
   IconShieldHeart,
   IconPalmTree,
+  Warning,
+  UsdtIcon: () => <IconCoin symbol={CoinIcon.USDT} width={18} height={18} />,
 }
 
 export default function Home() {
