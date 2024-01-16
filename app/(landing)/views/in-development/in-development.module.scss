@@ -28,14 +28,16 @@
 }
 
 .inDevelopmentChild {
-  & > p {
+  width: 100%;
+
+  &>p {
     font-size: var(--font-size-600);
     line-height: var(--line-height-600);
     margin-bottom: var(--margin-200);
   }
 
-  & > p,
-  & > a {
+  &>p,
+  &>a {
     max-width: var(--width-600);
   }
 }
