@@ -1,14 +1,16 @@
-import Heading from '../sticky-problem/components/Heading'
+import { PropsWithChildren } from 'react'
 import styles from './offer.module.scss'
 
-export default function Caption() {
+interface CaptionProps extends PropsWithChildren{
+  header?: React.ReactNode;
+}
+
+
+export default function Caption({header, children}: CaptionProps) {
   return (
     <div className={styles.caption}>
-      <Heading>
-        Wallet + Insurance + <mark>Income</mark> = Eonian
-      </Heading>
-
-      <p>We combine the strengths of Exchanges and Wallets to fight their weaknesses.</p>
+      <h2>{header}</h2>
+      {children}
     </div>
   )
 }

@@ -1,0 +1,38 @@
+@import "../../../screen.scss";
+@import "../../../components/styles/gradient-text.mixin.scss";
+
+.problem {
+
+    width: 100%;
+    height: 500vh;
+
+    mark {
+        @include gradient-text(var(--color-primary-gradient));
+    }
+
+    h2 {
+        font-size: var(--font-size-850);;
+        line-height: var(--line-height-750);
+        font-weight: var(--font-bold);
+        color: var(--color-text-300);
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+}
+
+@media (max-width: $screen-laptop) {
+    .container {
+        h2 {
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+    }
+}

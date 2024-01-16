@@ -105,6 +105,7 @@
   --line-height-500: 1.75rem; // Default size, by default equal 16px 
   --line-height-600: 2rem;
   --line-height-700: 2.25rem;
+  --line-height-750: 2.5rem;
   --line-height-800: 2.875rem;
   --line-height-900: 3.25rem;
   --line-height-1000: 4rem;
@@ -339,6 +340,7 @@
   --width-1000: calc(10 * var(--width-column) + 9 * var(--width-gap));
   --width-1100: calc(11 * var(--width-column) + 10 * var(--width-gap));
   --width-1200: calc(12 * var(--width-column) + 11 * var(--width-gap));
+  --width-1300: calc(13 * var(--width-column) + 12 * var(--width-gap));
 
   --max-width: calc(1360px + 2 * var(--width-gap)); // must be lower than ultra wide and bigger than desctop screen
 

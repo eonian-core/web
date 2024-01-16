@@ -25,10 +25,24 @@ import FoundersList from './views/founders/founders-list'
 import Founder from './views/founders/founder'
 import { MainButton } from './views/hero/main-button'
 import HeroCaptionText from './views/hero/button-group/hero-caption-text'
-import StickyProblem from './views/sticky-problem/StickyProblem'
+import Problem from './views/problem/problem'
 import Offer from './views/offer/offer'
 import Tokens from './views/offer/tokens'
 import { Distribution, Tag, Tags, Token, TokenApy, TokenFees, TokenGrowth, TokenHeader, TokenStats, YearlyReturns } from './views/offer/token'
+import Caption from './views/offer/caption'
+import Features, { Feature, FeaturesList } from './views/offer/features'
+import IconChartLine from '../components/icons/icon-chart-line'
+import IconHeart from '../components/icons/icon-heart'
+import IconIncognito from '../components/icons/icon-incognito'
+import IconKey from '../components/icons/icon-key'
+import IconLink from '../components/icons/icon-link'
+import IconMicroscopeFill from '../components/icons/icon-microscope-fill'
+import IconRacingHelmet from '../components/icons/icon-racing-helmet'
+import IconRocketOutline from '../components/icons/icon-rocket-outline'
+import IconToggleSwitch from '../components/icons/icon-toggle-switch'
+import IconVault from '../components/icons/icon-vault'
+import IconWallet from '../components/icons/icon-wallet'
+import IconWindowGrid from '../components/icons/icon-window-grid'
 
 const components = {
   Hero,
@@ -53,7 +67,7 @@ const components = {
   Target,
   WaitList,
   MainButton,
-  StickyProblem,
+  Problem,
   Offer,
   Tokens,
   Token,
@@ -68,6 +82,22 @@ const components = {
   TokenGrowth,
   IconShieldHeart,
   IconPalmTree,
+  Caption,
+  Features,
+  FeaturesList,
+  Feature,
+  IconVault,
+  IconWindowGrid,
+  IconMicroscopeFill,
+  IconRacingHelmet,
+  IconChartLine,
+  IconKey,
+  IconRocketOutline,
+  IconToggleSwitch,
+  IconIncognito,
+  IconLink,
+  IconHeart,
+  IconWallet
 }
 
 export default function Home() {

@@ -14,14 +14,12 @@ const colors = [
 ]
 
 interface Props {
-  caption: string
   href: string
   color: number
   className?: string
 }
 
 export default function InfoCard({
-  caption,
   href,
   children,
   color,
@@ -31,16 +29,17 @@ export default function InfoCard({
   const nativeStyles = { '--color-shade': colors[color] } as CSSProperties
   return (
     <div
-      className={clsx(className, styles.container, 'p-8 rounded-3xl relative overflow-hidden shadow-sm')}
+      className={clsx(className, styles.container)}
       style={nativeStyles}
       {...restProps}
     >
-      <div className={`z-0 absolute top-0 left-0 h-full w-full ${styles.radial}`}></div>
-      <div className="z-10 relative h-full flex flex-col justify-between">
-        <div>
-          <h1 className={`text-7xl mb-6 ${interFont.className}`}>{caption}</h1>
+      <div className={styles.radial}></div>
+      
+      <div className={styles.content}>
+        <div className={styles.text}>
           {children}
         </div>
+        
         <ExternalLink href={href} className="justify-self-end">
           Learn more <IconExternal />
         </ExternalLink>

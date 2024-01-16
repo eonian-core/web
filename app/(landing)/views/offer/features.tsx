@@ -1,4 +1,3 @@
-import Heading from '../sticky-problem/components/Heading'
 import ExternalLink from '../../../components/links/external-link'
 import IconExternal from '../../../components/icons/icon-external'
 import FadeInChildList from '../../../components/fade-in/fade-in-child-list'
@@ -17,51 +16,27 @@ import IconLink from '../../../components/icons/icon-link'
 import IconHeart from '../../../components/icons/icon-heart'
 import IconWallet from '../../../components/icons/icon-wallet'
 import styles from './offer.module.scss'
-import { Chip } from './chip'
+import { Chip, ChipProps } from './chip'
+import { PropsWithChildren } from 'react'
 
-const features = [
-  { name: 'Save and Forget', icon: <IconVault /> },
-  { name: 'Highest Transparency', icon: <IconWindowGrid /> },
-  { name: 'Insure from Hacks', icon: <IconShieldHeart /> },
-  { name: 'Innovation', icon: <IconMicroscopeFill /> },
-  { name: 'Your Backup Plan', icon: <IconRacingHelmet /> },
-  { name: 'Grow Long-term', icon: <IconChartLine /> },
-  { name: 'Own Your Money', icon: <IconKey /> },
-  { name: 'Future of Finance', icon: <IconRocketOutline /> },
-  { name: 'Control Protocol', icon: <IconToggleSwitch /> },
-  { name: 'Passive Income', icon: <IconPalmTree /> },
-  { name: 'Stay Anonymous', icon: <IconIncognito/> },
-  { name: 'Decentralized', icon: <IconLink /> },
-  { name: 'Easy to Use', icon: <IconHeart/> },
-  { name: 'Keep Your Wallet', icon: <IconWallet /> },
-]
-
-export default function Features() {
+export default function Features({children}: PropsWithChildren) {
   return (
-    <div className="flex flex-col gap-4">
-      <Heading tag="h3">Main Features</Heading>
-
-      <ul className={styles.features}>
-        <FadeInChildList>
-          {features.map(data =>
-            <li key={data.name}>
-              <Chip icon={data.icon}>{data.name}</Chip>
-            </li>,
-          )}
-        </FadeInChildList>
-      </ul>
-
-      <LitepaperLink />
+    <div className={styles.features}>
+      {children}
     </div>
   )
 }
 
-function LitepaperLink() {
-  return (
-    <div id="litepaper-link">
-      <ExternalLink icon={<IconExternal />} iconAtEnd href={'/'}>
-        Learn more in Litepaper
-      </ExternalLink>
-    </div>
-  )
-}
+export const FeaturesList = ({children}: PropsWithChildren) => (
+  <ul className={styles.featuresList}>
+    <FadeInChildList>
+      {children}
+    </FadeInChildList>
+  </ul>
+)
+
+export const Feature = (props: ChipProps) => (
+  <li>
+    <Chip {...props} />
+  </li>
+)

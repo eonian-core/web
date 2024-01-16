@@ -1,10 +1,31 @@
+@import "../../../screen.scss";
+@import "../../../components/styles/gradient-text.mixin.scss";
+
 .container {
     display: flex;
     flex-direction: column;
     gap: 3.5rem; 
+
+    mark {
+        @include gradient-text(var(--color-primary-gradient));
+    }
+
+    h2 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 700;
+        color: var(--color-text-300);
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+
 }
 
 .caption {
+
     p {
         margin-top: var(--margin-200);
         font-size: var(--font-size-600);
@@ -12,7 +33,23 @@
     }
 }
 
-.features { 
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin-300);
+
+    a {
+        text-decoration: none; 
+        color: var(--color-text-300);
+
+        &:hover {
+            color: var(--color-text-100);
+        }
+    
+    }
+}
+
+.featuresList { 
     display: flex; 
     flex-wrap: wrap; 
     gap: 1rem; 
@@ -21,9 +58,9 @@
     div {
         display: inline;
     }
+
+
 }
-
-
 
 .tokens {
     display: flex; 
@@ -36,3 +73,16 @@
 
 }
 
+@media (max-width: $screen-laptop) {
+    .container {
+        h2 {
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+    }
+}

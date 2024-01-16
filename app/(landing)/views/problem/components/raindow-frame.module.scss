@@ -1,0 +1,66 @@
+@import "../../../../screen.scss";
+
+.frame {
+    --border-width: 4px;
+    --max-width: var(--width-1100);
+    --max-height: 40rem;
+
+    width: calc(100vw - var(--width-gap) * 2);
+    max-width: var(--max-width);
+    
+    left: max(calc(50% - var(--max-width) / 2), var(--width-gap));
+
+    height: 90vh;
+    max-height: var(--max-height);
+
+    --height: min(90vh, var(--max-height));
+
+    top: calc(50% - var(--height) / 2); 
+    margin-bottom: var(--margin-1000);
+    
+    position: sticky; 
+    border-radius: calc(2 * var(--border-radius-400));
+
+    overflow: hidden;
+    padding: var(--border-width);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    &::before {
+        z-index: -1;
+        background: var(--color-accent-background-gradient);
+
+        animation: animatedgradient 5s ease infinite alternate;
+        background-size: 300% 300%;
+
+        border-radius: inherit;
+    }
+
+    @keyframes animatedgradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .content {
+        background-color: var(--color-background-start);
+        border-radius: inherit;
+        max-height: calc(var(--height) - 2 * var(--border-width));
+    }
+}
+

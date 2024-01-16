@@ -1,13 +1,11 @@
 import type { HTMLMotionProps, MotionValue } from 'framer-motion'
 import { motion, useTransform } from 'framer-motion'
 import React from 'react'
+import styles from './card-stack.module.scss'
 
 interface Props extends HTMLMotionProps<'div'> {
   progress: MotionValue<number>
 }
-
-const ITEM_OPACITY = [[0, 0.2, 0.8, 1], [0, 1, 1, 0]]
-const ITEM_TRANSLATE_Y = [[0, 0.2, 0.8, 1], [100, 0, 0, -300]]
 
 const CardStack = React.forwardRef<HTMLDivElement, React.PropsWithChildren<Props>>(({ children, progress, style }, ref) => {
   const total = React.Children.count(children)
@@ -17,7 +15,7 @@ const CardStack = React.forwardRef<HTMLDivElement, React.PropsWithChildren<Props
   })
 
   return (
-    <motion.div ref={ref} layout style={style} className="relative">
+    <motion.div ref={ref} layout style={style} className={styles.cardStack}>
       {items}
     </motion.div>
   )
@@ -34,14 +32,26 @@ interface ItemProps {
 }
 
 function Item({ children, progress, index, total }: React.PropsWithChildren<ItemProps>) {
-  const [opacityInput, opacityOutput] = ITEM_OPACITY
-  const opacity = useTransform(progress, transformInputRange(opacityInput, index, total), opacityOutput)
+  const opacity = useTransform(
+    progress, 
+    !index ? [0, 0.2, 0.5, 1]: [0, 0.2, 0.8, 1], 
+    !index ? [1, 0.8, 0, 0] : [0, 1, 1, 1]
+  )
 
-  const [translateYInput, translateYOutput] = ITEM_TRANSLATE_Y
-  const translateY = useTransform(progress, transformInputRange(translateYInput, index, total), translateYOutput)
+  const scale = useTransform(
+    progress, 
+    [0, 0.3, 0.8, 1], 
+    !index ? [1, 0.8, 0.6, 0.6] : [1, 1, 1, 1]
+  )
+
+  const translateY = useTransform(
+    progress, 
+    !index ?  [0, 0.3, 0.8, 1] : [0, 0.5, 0.8, 1],
+    !index ? [0, -30, -60, -60] : [300, 0, 0, 0]
+  )
 
   return (
-    <motion.div style={{ opacity, translateY }} className={`${index === 0 ? '!relative' : '!absolute'} top-0 left-0 w-full h-full`}>
+    <motion.div style={{ opacity, translateY, scale }} className={`${index === 0 ? '!relative' : '!absolute'} top-0 left-0 w-full h-full`}>
       {children}
     </motion.div>
   )
