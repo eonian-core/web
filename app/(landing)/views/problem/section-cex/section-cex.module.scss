@@ -1,0 +1,32 @@
+@import '../../../../components/styles/scrolling-text.mixin.scss';
+
+.scrollingCex {
+    top: 0.3rem;
+    @include scrolling-text(var(--font-size-850), 10rem, 'cex');
+}
+
+.cardHeader {
+    @include scrolling-text(var(--line-height-1120), 10rem, 'cex-card');
+
+    &>span {
+        animation: none;
+
+        top: calc(-1 * var(--line-height-1120));
+    }
+
+    &.scrolled {
+        &>span {
+            animation: goUp 1s forwards;
+        }
+    }
+
+    @keyframes goUp {
+        0% {
+            top: calc(-1 * var(--line-height-1120));
+        }
+    
+        100% {
+            top: 0;
+        }
+    }
+}

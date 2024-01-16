@@ -1,0 +1,48 @@
+@import '../../../../components/styles/scrolling-text.mixin.scss';
+
+h3.lostHeader {
+    position: relative;
+    top: -1rem;
+    margin-bottom: 0 !important;
+}
+
+.cardHeader {
+
+    top: 0.7rem;
+
+    @include scrolling-text(var(--line-height-1120), 2.5rem, 'wallet-card');
+
+    &>span {
+        animation: none;
+
+        top: calc(-1 * var(--line-height-1120));
+    }
+
+    &.scrolled {
+        &>span {
+            animation: ease-in-out tryToGoUp 2s forwards;
+        }
+    }
+
+    @keyframes tryToGoUp {
+        0% {
+            top: calc(-1 * var(--line-height-1120));
+        }
+
+        25% {
+            top: calc(-0.8 * var(--line-height-1120));
+        }
+
+        50% {
+            top: calc(-0.5 * var(--line-height-1120));
+        }
+
+        75% {
+            top: calc(-0.2 * var(--line-height-1120));
+        }
+    
+        100% {
+            top: calc(-1 * var(--line-height-1120));
+        }
+    }
+}

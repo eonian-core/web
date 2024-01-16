@@ -1,13 +1,13 @@
 import type { MotionValue } from 'framer-motion'
-import { LayoutGroup, motion, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { useTransform } from 'framer-motion'
 import { Heading, StickyContainer } from '../components/sticky-container'
-import useDimensionTransform from '../../../../shared/hooks/useDimensionTransform'
-import CardStack from '../components/card-stack'
 import InfoCard from '../../lost-funds/InfoCard'
 import { useIsMobileOrSmaller } from '../../../../components/resize-hooks/screens'
 import { Column } from '../components/column'
 import { ScrollItem } from '../components/scroll-item'
+import styles from './section-wallet.module.scss'
+import { useSwitchOnScroll } from '../components/use-hide-on-scroll'
+import clsx from 'clsx'
 
 interface Props {
   scrollYProgress: MotionValue<number>
@@ -21,6 +21,8 @@ export default function SectionWallets({ scrollYProgress }: Props) {
   const translateY = useTransform(scrollYProgress, [0, 0.2], [100, 0])
   
   const cardStackProgress = useTransform(scrollYProgress, [0.2, 1.0], [0.0, 1.0])
+
+  const {isVisible: animateLost} = useSwitchOnScroll(scrollYProgress, 0.5, false)
 
   return (
     <StickyContainer style={{ opacity, translateY }}>
@@ -54,12 +56,19 @@ export default function SectionWallets({ scrollYProgress }: Props) {
         <ScrollItem
           progress={cardStackProgress}
           className="!absolute"
-          opacity={{ from: [0, 0.2, 0.8, 1], to: [0, 1, 1, 1] }}
           scale={{ from: [0, 0.3, 0.8, 1], to: [1, 1, 1, 1] }}
           translateY={{ from: [0, 0.5, 0.8, 1], to: [300, 0, 0, 0] }}
         >
           <InfoCard href="/" color={1} className="h-full">
-            <h3>0.17%</h3>
+            <h3 className={styles.lostHeader}>0.1
+              <div className={clsx(styles.cardHeader, {
+                  [styles.scrolled]: !animateLost
+                })}>
+                <span>
+                  8<br />
+                  7
+                </span>
+              </div>%</h3>
             <p>Part of lost assets that crypto wallet providers returned after hacks</p>
           </InfoCard>
         </ScrollItem>

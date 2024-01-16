@@ -11,28 +11,29 @@
     }
 
     h2 {
-        font-size: var(--font-size-850);;
+        font-size: var(--font-size-850);
         line-height: var(--line-height-750);
         font-weight: var(--font-bold);
         color: var(--color-text-300);
     }
 
     h3 {
-        font-size: 1.5rem;
-        line-height: 2rem;
+        font-size: var(--font-size-750);
+        line-height: var(--line-height-600);
+        font-weight: var(--font-bold);
     }
 }
 
 @media (max-width: $screen-laptop) {
     .container {
         h2 {
-            font-size: 1.5rem;
-            line-height: 2rem;
+            font-size: var(--font-size-750);
+            line-height: var(--line-height-600);
         }
 
         h3 {
-            font-size: 1.25rem;
-            line-height: 1.75rem;
+            font-size: var(--font-size-700);
+            line-height: var(--line-height-500);
         }
     }
 }

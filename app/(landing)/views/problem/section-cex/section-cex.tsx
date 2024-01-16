@@ -7,7 +7,9 @@ import { useIsMobileOrSmaller } from '../../../../components/resize-hooks/screen
 
 import { Column } from '../components/column'
 import { ScrollItem } from '../components/scroll-item'
-import { useHideOnScroll } from '../components/use-hide-on-scroll'
+import { useSwitchOnScroll } from '../components/use-hide-on-scroll'
+import styles from './section-cex.module.scss'
+import clsx from 'clsx'
 
 interface Props {
   scrollYProgress: MotionValue<number>
@@ -22,7 +24,8 @@ export default function SectionCEX({ scrollYProgress }: Props) {
   const opacity = useTransform(scrollYProgress, [0, 0.8, 1.0], [1, 1, 0])
   const translateY = useTransform(scrollYProgress, [0, 0.8, 1.0], [0, 0, -100])
 
-  const {isVisible} = useHideOnScroll(scrollYProgress)
+  const {isVisible} = useSwitchOnScroll(scrollYProgress, 1)
+  const {isVisible: animateBankrupt} = useSwitchOnScroll(scrollYProgress, 0.3, true)
 
   return (
     <StickyContainer style={{display: isVisible ? 'block' : 'none', opacity, translateY}} >
@@ -34,7 +37,16 @@ export default function SectionCEX({ scrollYProgress }: Props) {
         >
           <Heading>
             <h2>
-              Where’s Your Money <br /> If <mark>Binance</mark> Goes Bankrupt?
+              Where’s Your Money <br /> 
+              If <div className={styles.scrollingCex}>
+                <span>
+                  <mark>Kraken</mark><br/>
+                  <mark>Binance</mark><br/>
+                  <mark>Coinbase</mark><br/>
+                  <mark>CEX</mark>
+                </span>
+              </div>
+              <br /> Goes Bankrupt?
             </h2>
 
             <p>
@@ -75,12 +87,20 @@ export default function SectionCEX({ scrollYProgress }: Props) {
         <ScrollItem
           progress={cardStackProgress}
           className="!absolute"
-          opacity={{ from: [0, 0.2, 0.8, 1], to: [0, 1, 1, 1] }}
           scale={{ from: [0, 0.3, 0.8, 1], to: [1, 1, 1, 1] }}
           translateY={{ from: [0, 0.5, 0.8, 1], to: [300, 0, 0, 0] }}
         >
           <InfoCard href="/" color={1} className="h-full">
-            <h3>5</h3>
+            <h3>
+              <div className={clsx(styles.cardHeader, {
+                [styles.scrolled]: !animateBankrupt
+              })}>
+                <span>
+                  5<br />
+                  4
+                </span>
+              </div>
+            </h3>
             <p>Crypto Exchanges exited US</p>
           </InfoCard>
         </ScrollItem>
