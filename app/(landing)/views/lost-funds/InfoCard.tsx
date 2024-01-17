@@ -2,7 +2,6 @@ import type { CSSProperties } from 'react'
 import clsx from 'clsx'
 import IconExternal from '../../../components/icons/icon-external'
 import ExternalLink from '../../../components/links/external-link'
-import { interFont } from '../../../shared/fonts/Inter'
 
 import styles from './InfoCard.module.scss'
 
@@ -29,20 +28,22 @@ export default function InfoCard({
   const nativeStyles = { '--color-shade': colors[color] } as CSSProperties
   return (
     <div
-      className={clsx(className, styles.container)}
+      className={clsx(className, styles.wrapper)}
       style={nativeStyles}
       {...restProps}
     >
-      <div className={styles.radial}></div>
-      
-      <div className={styles.content}>
-        <div className={styles.text}>
-          {children}
-        </div>
+      <div className={styles.container} >
+        <div className={styles.radial}></div>
         
-        <ExternalLink href={href} className="justify-self-end">
-          Learn more <IconExternal />
-        </ExternalLink>
+        <div className={styles.content}>
+          <div className={styles.text}>
+            {children}
+          </div>
+          
+          <ExternalLink href={href} className="justify-self-end">
+            Learn more <IconExternal />
+          </ExternalLink>
+        </div>
       </div>
     </div>
   )

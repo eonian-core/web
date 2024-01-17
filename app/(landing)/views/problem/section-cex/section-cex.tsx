@@ -1,5 +1,5 @@
 import type { MotionValue } from 'framer-motion'
-import { useTransform } from 'framer-motion'
+import { useMotionValueEvent, useTransform } from 'framer-motion'
 import React, { useRef } from 'react'
 import InfoCard from '../../lost-funds/InfoCard'
 import { Heading, StickyContainer } from '../components/sticky-container'
@@ -25,8 +25,8 @@ export default function SectionCEX({ scrollYProgress }: Props) {
   const translateY = useTransform(scrollYProgress, [0, 0.8, 1.0], [0, 0, -100])
 
   const {isVisible} = useSwitchOnScroll(scrollYProgress, 1)
-  const {isVisible: animateBankrupt} = useSwitchOnScroll(scrollYProgress, 0.3, true)
-
+  const {isVisible: animateBankrupt} = useSwitchOnScroll(scrollYProgress, 0.2, true)
+  
   return (
     <StickyContainer style={{display: isVisible ? 'block' : 'none', opacity, translateY}} >
       <Column>
@@ -78,7 +78,7 @@ export default function SectionCEX({ scrollYProgress }: Props) {
           scale={{ from: [0, 0.3, 0.8, 1], to: [1, 0.8, 0.6, 0.6] }}
           translateY={{ from: [0, 0.3, 0.8, 1], to: [0, -30, -60, -60] }}
         >
-          <InfoCard href="/" color={0} className="h-full">
+          <InfoCard href="/" color={0}>
             <h3>$8.9B+</h3>
             <p>Lost digital assets due <br />Crypto Exchanges bankruptcies</p>
           </InfoCard>
@@ -90,7 +90,9 @@ export default function SectionCEX({ scrollYProgress }: Props) {
           scale={{ from: [0, 0.3, 0.8, 1], to: [1, 1, 1, 1] }}
           translateY={{ from: [0, 0.5, 0.8, 1], to: [300, 0, 0, 0] }}
         >
-          <InfoCard href="/" color={1} className="h-full">
+          <InfoCard href="/" color={1} className={clsx({
+            [styles.animateBackground]: !animateBankrupt
+          })}>
             <h3>
               <div className={clsx(styles.cardHeader, {
                 [styles.scrolled]: !animateBankrupt

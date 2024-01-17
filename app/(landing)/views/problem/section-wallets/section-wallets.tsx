@@ -29,7 +29,8 @@ export default function SectionWallets({ scrollYProgress }: Props) {
       <Column>
         <Heading>
           <h2>
-            Were crypto wallets hacked? <br /> <mark>Yes.</mark> Pretty Often.
+            Were crypto wallets hacked? <br />
+            <mark>Yes.</mark> Pretty Often.
           </h2>
 
           <p>
@@ -47,7 +48,7 @@ export default function SectionWallets({ scrollYProgress }: Props) {
           scale={{ from: [0, 0.3, 0.8, 1], to: [1, 0.8, 0.6, 0.6] }}
           translateY={{ from: [0, 0.3, 0.8, 1], to: [0, -30, -60, -60] }}
         >
-          <InfoCard href="/" color={0} className="h-full">
+          <InfoCard href="/" color={0}>
             <h3>$100M+</h3>
             <p>Crypto stolen from wallets through different hacks</p>
           </InfoCard>
@@ -59,7 +60,9 @@ export default function SectionWallets({ scrollYProgress }: Props) {
           scale={{ from: [0, 0.3, 0.8, 1], to: [1, 1, 1, 1] }}
           translateY={{ from: [0, 0.5, 0.8, 1], to: [300, 0, 0, 0] }}
         >
-          <InfoCard href="/" color={1} className="h-full">
+          <InfoCard href="/" color={1} className={clsx({
+            [styles.animateBackground]: !animateLost
+          })}>
             <h3 className={styles.lostHeader}>0.1
               <div className={clsx(styles.cardHeader, {
                   [styles.scrolled]: !animateLost

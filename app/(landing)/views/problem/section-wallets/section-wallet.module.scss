@@ -46,3 +46,53 @@ h3.lostHeader {
         }
     }
 }
+
+.animateBackground {
+    // base styles set in info-card.module.scss
+    &::after {
+        animation: glow-effect 2s ease-in-out;
+    }
+}
+
+
+@keyframes glow-effect {
+    0% {
+        transform: scale(0.5);
+        background-position: 100% 50%;
+    }
+
+    15% {
+        transform: scale(1);
+        background-position: 100% 50%;
+    }
+
+    30% {
+        transform: scale(1);
+        background-position: 0% 50%;
+    }
+
+    50% {
+        transform: scale(1);
+        background-position: -100% 50%;
+    }
+
+    75% {
+        transform: scale(1);
+        background-position: -100% 50%;
+    }
+
+    75% {
+        transform: scale(1);
+        background-position: -100% 50%;
+    }
+
+    90% {
+        transform: scale(1);
+        background-position: 0% 50%;
+    }
+
+    100% {
+        transform: scale(0.5);
+        background-position: 100% 50%;
+    }
+}
