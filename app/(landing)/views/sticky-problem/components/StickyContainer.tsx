@@ -23,7 +23,12 @@ export function StickyContainer({ children, scrollYProgress }: React.PropsWithCh
   }
 
   return (
-    <div style={style} className="sticky w-full h-screen top-0 left-0 overflow-hidden flex flex-col justify-center items-center p-6">{children}</div>
+    <div
+      style={style}
+      className="sticky w-full h-screen top-0 left-0 overflow-hidden flex flex-col justify-center items-center p-6 max-w-[100vw]"
+    >
+      {children}
+    </div>
   )
 }
 
