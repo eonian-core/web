@@ -117,10 +117,8 @@
   --line-height-1180: 9rem;
   --line-height-1200: 11.5rem;
 
-
-
+  
   // Colors
-
   --callout-rgb: 20, 20, 20;
   --callout-border-rgb: 108, 108, 108;
 
@@ -135,6 +133,7 @@
       hsla(0, 0%, 100%, 0.502));
 
   // Text
+  --color-text-10: hsl(0, 0%, 100%);
   --color-text-50: hsl(0, 0%, 98%);
   --color-text-100: hsl(240, 5%, 96%);
   --color-text-200: hsl(240, 6%, 90%);
@@ -218,6 +217,7 @@
   --color-neutral-100: hsl(0, 0%, 96%);
   --color-neutral-200: hsl(0, 0%, 90%);
   --color-neutral-300: hsl(0, 0%, 83%);
+  --color-neutral-350: hsla(0, 1%, 27%, 0.822);
   --color-neutral-400: hsl(0, 0%, 64%);
   --color-neutral-500: hsl(0, 0%, 45%); // Default color
   --color-neutral-600: hsl(0, 0%, 32%);
@@ -283,7 +283,7 @@
   --color-success-600: hsl(142, 76%, 36%);
   --color-success-700: hsl(142, 72%, 29%);
   --color-success-800: hsl(143, 64%, 24%);
-  --color-success-900: hsl(144, 61%, 20%);
+  --color-success-900: hsl(180, 8%, 3%);
 
   // margin
   --margin-10: 3px;
@@ -355,6 +355,7 @@
   --border-radius-500: 10px;
   --border-radius-550: 12px;
   --border-radius-600: 15px;
+  --border-radius-700: 4rem;
 
   // border width
   --border-width-400: 2px;

@@ -12,10 +12,11 @@ import { LinkInText } from '../components/links/link-in-text'
 import Mbr from '../components/mobile-break/mobile-break'
 import { Target } from '../components/card/card'
 import { WaitList } from '../components/waitlist/waitlist'
+import IconPalmTree from '../components/icons/icon-paml-tree'
+import IconShieldHeart from '../components/icons/icon-shield-heart'
+import IconCoin, { CoinIcon } from '../components/icons/icon-coin'
 import styles from './page.module.css'
-
 import Content from './content/en.mdx'
-
 import HeroButton from './views/hero/button-group/hero-button'
 import HeroButtonGroup from './views/hero/button-group/hero-button-group'
 import Hero from './views/hero/hero'
@@ -26,7 +27,21 @@ import Founder from './views/founders/founder'
 import { MainButton } from './views/hero/main-button'
 import HeroCaptionText from './views/hero/button-group/hero-caption-text'
 import StickyProblem from './views/sticky-problem/StickyProblem'
-import Offer from './views/offer/Offer'
+import Offer from './views/offer/offer'
+import Tokens from './views/offer/tokens'
+import {
+  Distribution,
+  Tag,
+  Tags,
+  Token,
+  TokenApy,
+  TokenFees,
+  TokenGrowth,
+  TokenHeader,
+  TokenStats,
+  YearlyReturns,
+} from './views/offer/token'
+import Warning from './views/hero/warning'
 
 const components = {
   Hero,
@@ -53,6 +68,21 @@ const components = {
   MainButton,
   StickyProblem,
   Offer,
+  Tokens,
+  Token,
+  TokenHeader,
+  Tags,
+  Tag,
+  TokenStats,
+  YearlyReturns,
+  Distribution,
+  TokenFees,
+  TokenApy,
+  TokenGrowth,
+  IconShieldHeart,
+  IconPalmTree,
+  Warning,
+  UsdtIcon: () => <IconCoin symbol={CoinIcon.USDT} width={18} height={18} />,
 }
 
 export default function Home() {
