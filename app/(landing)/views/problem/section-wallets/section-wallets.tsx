@@ -1,5 +1,5 @@
 import type { MotionValue } from 'framer-motion'
-import { useTransform } from 'framer-motion'
+import { useMotionValueEvent, useTransform } from 'framer-motion'
 import { Heading, StickyContainer } from '../components/sticky-container'
 import InfoCard from '../../lost-funds/InfoCard'
 import { useIsMobileOrSmaller } from '../../../../components/resize-hooks/screens'
@@ -22,7 +22,7 @@ export default function SectionWallets({ scrollYProgress }: Props) {
   
   const cardStackProgress = useTransform(scrollYProgress, [0.2, 1.0], [0.0, 1.0])
 
-  const {isVisible: animateLost} = useSwitchOnScroll(scrollYProgress, 0.5, false)
+  const {isVisible: animateLost} = useSwitchOnScroll(scrollYProgress, 1, false)
 
   return (
     <StickyContainer style={{ opacity, translateY }}>
