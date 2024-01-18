@@ -44,9 +44,9 @@ export default function SectionWallets({ scrollYProgress }: Props) {
         <ScrollItem
           progress={cardStackProgress}
           className="!relative"
-          opacity={{ from: [0, 0.2, 0.5, 1], to: [1, 0.8, 0, 0] }}
-          scale={{ from: [0, 0.3, 0.8, 1], to: [1, 0.8, 0.6, 0.6] }}
-          translateY={{ from: [0, 0.3, 0.8, 1], to: [0, -30, -60, -60] }}
+          opacity={{ from: [0, 0.4, 1], to: [1, 0.8, 0] }}
+          scale={{ from: [0, 0.5, 1], to: [1, 0.8, 0.6] }}
+          translateY={{ from: [0, 0.5, 1], to: [0, -30, -60] }}
         >
           <InfoCard href="/" color={0}>
             <h3>$100M+</h3>
@@ -57,8 +57,7 @@ export default function SectionWallets({ scrollYProgress }: Props) {
         <ScrollItem
           progress={cardStackProgress}
           className="!absolute"
-          scale={{ from: [0, 0.3, 0.8, 1], to: [1, 1, 1, 1] }}
-          translateY={{ from: [0, 0.5, 0.8, 1], to: [300, 0, 0, 0] }}
+          translateY={{ from: [0, 1], to: [300, 0] }}
         >
           <InfoCard href="/" color={1} className={clsx({
             [styles.animateBackground]: !animateLost

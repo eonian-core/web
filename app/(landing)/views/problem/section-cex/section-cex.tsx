@@ -28,7 +28,7 @@ export default function SectionCEX({ scrollYProgress }: Props) {
   const {isVisible: animateBankrupt} = useSwitchOnScroll(scrollYProgress, 0.2, true)
   
   return (
-    <StickyContainer style={{display: isVisible ? 'block' : 'none', opacity, translateY}} >
+    <StickyContainer style={{position: isVisible ? 'static' : 'absolute', opacity, translateY}} >
       <Column>
         <ScrollItem
           progress={headingProgress}
