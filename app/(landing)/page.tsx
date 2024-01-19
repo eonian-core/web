@@ -43,6 +43,9 @@ import IconToggleSwitch from '../components/icons/icon-toggle-switch'
 import IconVault from '../components/icons/icon-vault'
 import IconWallet from '../components/icons/icon-wallet'
 import IconWindowGrid from '../components/icons/icon-window-grid'
+import SectionCEX, { CexFirstCard, CexHeader, CexHeaderBut, CexSecondCard, CexSecondCardHeader, ScrollingCexHeader } from './views/problem/section-cex/section-cex'
+import SectionWallets, { WalletFirstCard, WalletHeader, WalletScrolledHeader, WalletSecondCard, WalletSecondCardHeader } from './views/problem/section-wallets/section-wallets'
+import { Column } from './views/problem/components/column'
 
 const components = {
   Hero,
@@ -68,6 +71,20 @@ const components = {
   WaitList,
   MainButton,
   Problem,
+  SectionCEX,
+  ScrollingCexHeader,
+  Column,
+  CexHeader,
+  CexHeaderBut,
+  CexFirstCard,
+  CexSecondCard,
+  CexSecondCardHeader,
+  SectionWallets,
+  WalletHeader,
+  WalletFirstCard,
+  WalletSecondCard,
+  WalletSecondCardHeader,
+  WalletScrolledHeader,
   Offer,
   Tokens,
   Token,

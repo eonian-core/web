@@ -1,24 +1,37 @@
-import { useScroll, useTransform } from 'framer-motion'
+import { MotionValue, useScroll, useTransform } from 'framer-motion'
 import React from 'react'
 import RainbowFrame from './components/rainbow-frame'
-import CEX from './section-cex/section-cex'
-import Wallets from './section-wallets/section-wallets'
 import styles from './problem.module.scss'
 
-export default function Problem() {
+interface ScrollContextState {
+  scroll: MotionValue<number>;
+  cex: MotionValue<number>;
+  wallet: MotionValue<number>;
+}
+
+export const ScrollContext = React.createContext<Partial<ScrollContextState>>({ });
+
+export const useScrollContext = () => React.useContext(ScrollContext) as ScrollContextState
+
+export default function Problem({children}: React.PropsWithChildren) {
   const targetRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
     target: targetRef,
   })
 
-  const scrollYProgress_CEX = useTransform(scrollYProgress, [0, 0.7], [0, 1])
-  const scrollYProgress_Wallets = useTransform(scrollYProgress, [0.7, 1], [0, 1])
+  const cex = useTransform(scrollYProgress, [0, 0.7], [0, 1])
+  const wallet = useTransform(scrollYProgress, [0.7, 1], [0, 1])
 
   return (
     <section ref={targetRef} className={styles.problem}>
       <RainbowFrame>
-        <CEX scrollYProgress={scrollYProgress_CEX} />
-        <Wallets scrollYProgress={scrollYProgress_Wallets} />
+        <ScrollContext.Provider value={{ 
+          scroll: scrollYProgress,
+          cex,
+          wallet,
+         }}>
+          {children}
+        </ScrollContext.Provider>
       </RainbowFrame>
     </section>
   )
