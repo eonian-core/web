@@ -10,12 +10,9 @@ export function StickyContainer({ children, style }: React.PropsWithChildren<Sti
   return (
     <motion.div {...{ style }} className={styles.container}>
       <LayoutGroup>
-        <motion.div
-          layout
-          className={styles.content}
-        >
+        <div className={styles.content}>
           {children}
-        </motion.div>
+        </div>
       </LayoutGroup>
     </motion.div>
   )
