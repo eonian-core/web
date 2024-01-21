@@ -29,9 +29,18 @@
 }
 
 @media (max-width: $screen-tablet) {
+    .container {
+        padding: var(--width-gap);
+    }
+
     .content {
+        position: relative;
         flex-direction: column;
         align-items: center; 
+
+        & > div {
+            position: absolute;
+        }
     }
 }
 

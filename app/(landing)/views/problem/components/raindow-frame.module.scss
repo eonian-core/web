@@ -5,7 +5,7 @@
     --max-width: var(--width-1100);
     --max-height: 40rem;
 
-    width: calc(100vw - var(--width-gap) * 2);
+    width: calc(100% - var(--width-gap) * 2);
     max-width: var(--max-width);
     
     left: max(calc(50% - var(--max-width) / 2), var(--width-gap));
@@ -58,8 +58,10 @@
     }
 
     .content {
+        overflow: hidden;
         background-color: var(--color-background-start);
         border-radius: inherit;
+        height: 100%;
         max-height: calc(var(--height) - 2 * var(--border-width));
     }
 }

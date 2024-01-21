@@ -3,7 +3,7 @@ import { useMotionValueEvent, useTransform } from 'framer-motion'
 import React, { PropsWithChildren, useRef } from 'react'
 import InfoCard from '../../lost-funds/InfoCard'
 import { Heading, StickyContainer } from '../components/sticky-container'
-import { useIsMobileOrSmaller } from '../../../../components/resize-hooks/screens'
+import { useIsMobileOrSmaller, useIsTabletOrSmaller } from '../../../../components/resize-hooks/screens'
 
 import { Column } from '../components/column'
 import { ScrollItem } from '../components/scroll-item'
@@ -14,18 +14,17 @@ import { useScrollContext } from '../problem'
 
 
 interface CexScrollContextState {
+  scroll: MotionValue<number>;
   cardStack: MotionValue<number>;
   heading: MotionValue<number>;
   animateBankrupt: boolean;
 }
 
-export const CexScrollContext = React.createContext<Partial<CexScrollContextState>>({ });
-
+export const CexScrollContext = React.createContext<Partial<CexScrollContextState>>({});
 export const useCexScrollContext = () => React.useContext(CexScrollContext) as CexScrollContextState
 
 export default function SectionCEX({ children }: PropsWithChildren) {
-  const isMobile = useIsMobileOrSmaller()
-  const {cex: scrollYProgress} = useScrollContext()
+  const { cex: scrollYProgress } = useScrollContext()
 
   const cardStackProgress = useTransform(scrollYProgress, [0, 0.4], [0.0, 1.0])
   const headingProgress = useTransform(scrollYProgress, [0.4, 0.8], [0.0, 1.0])
@@ -33,16 +32,17 @@ export default function SectionCEX({ children }: PropsWithChildren) {
   const opacity = useTransform(scrollYProgress, [0, 0.8, 1.0], [1, 1, 0])
   const translateY = useTransform(scrollYProgress, [0, 0.8, 1.0], [0, 0, -100])
 
-  const {isVisible} = useSwitchOnScroll(scrollYProgress, 1)
-  const {isVisible: animateBankrupt} = useSwitchOnScroll(scrollYProgress, 0.2, true)
-  
+  const { isVisible } = useSwitchOnScroll(scrollYProgress, 1)
+  const { isVisible: animateBankrupt } = useSwitchOnScroll(scrollYProgress, 0.2, true)
+
   return (
-    <StickyContainer style={{position: isVisible ? 'static' : 'absolute', opacity, translateY}} >
-      <CexScrollContext.Provider value={{ 
+    <StickyContainer style={{ position: isVisible ? 'static' : 'absolute', opacity, translateY }} >
+      <CexScrollContext.Provider value={{
+        scroll: scrollYProgress,
         cardStack: cardStackProgress,
         heading: headingProgress,
         animateBankrupt,
-       }}>
+      }}>
         {children}
       </CexScrollContext.Provider>
     </StickyContainer>
@@ -50,17 +50,36 @@ export default function SectionCEX({ children }: PropsWithChildren) {
 }
 
 export const CexHeader = ({ children }: PropsWithChildren) => {
-  const {heading: headingProgress} = useCexScrollContext()
+  const isTablet = useIsTabletOrSmaller()
+  const { heading: headingProgress, cardStack } = useCexScrollContext()
+
+  if(isTablet){
+    return (
+      <ScrollItem
+        progress={cardStack}
+        className="!relative"
+        opacity={{ from: [0, 0.5, 0.6, 1], to: [1, 0.5, 0, 0] }}
+        scale={{ from: [0, 0.8, 1], to: [1, 0.9, 0.9] }}
+        translateY={{ from: [0, 0.8, 1], to: [0, -10, -10] }}
+      >
+        <Heading>
+          {children}
+        </Heading>
+      </ScrollItem>
+    )
+  }
+
+  // desktop version
   return (
     <ScrollItem
-    progress={headingProgress}
-    className="!relative"
-    translateY={{ from: [0, 0.8, 1], to: [0, -400, -400] }}
-  >
-    <Heading>
-      {children}
-    </Heading>
-  </ScrollItem>
+      progress={headingProgress}
+      className="!relative"
+      translateY={{ from: [0, 0.8, 1], to: [0, -400, -400] }}
+    >
+      <Heading>
+        {children}
+      </Heading>
+    </ScrollItem>
   )
 }
 
@@ -73,11 +92,29 @@ export const ScrollingCexHeader = ({ children }: PropsWithChildren) => (
 )
 
 export const CexHeaderBut = ({ children }: PropsWithChildren) => {
-  const {heading: headingProgress} = useCexScrollContext()
+  const isTablet = useIsTabletOrSmaller()
+  const { heading: headingProgress, scroll} = useCexScrollContext()
+
+  if (isTablet) {
+    return (
+      <ScrollItem
+        progress={scroll}
+        className={clsx("!absolute", styles.cexHeaderBut)}
+        opacity={{ from: [0, 0.3, 0.4, 1], to: [0, 0, 1, 1] }}
+        translateY={{ from: [0, 0.2, 0.4, 0.5, 0.7], to: [600, 600, 300, 300, 0] }}
+      >
+        <Heading>
+          {children}
+        </Heading>
+      </ScrollItem>
+    )
+  }
+
+  // desktop version
   return (
     <ScrollItem
       progress={headingProgress}
-      className="!absolute"
+      className={clsx("!absolute", styles.cexHeaderBut)}
       opacity={{ from: [0, 0.2, 0.8, 1], to: [0, 1, 1, 1] }}
       translateY={{ from: [0, 0.8, 1], to: [400, 0, 0] }}
     >
@@ -89,7 +126,26 @@ export const CexHeaderBut = ({ children }: PropsWithChildren) => {
 }
 
 export const CexFirstCard = ({ children }: PropsWithChildren) => {
-  const {cardStack: cardStackProgress} = useCexScrollContext()
+  const isTablet = useIsTabletOrSmaller()
+  const { cardStack: cardStackProgress } = useCexScrollContext()
+
+  if (isTablet) {
+    return (
+      <ScrollItem
+        progress={cardStackProgress}
+        className="!relative"
+        opacity={{ from: [0, 0.5, 0.9, 1], to: [1, 1, 0.8, 0] }}
+        scale={{ from: [0, 0.5, 1], to: [1, 1, 0.6] }}
+        translateY={{ from: [0, 0.5, 1], to: [300, 0, -60] }}
+      >
+        <InfoCard href="/" color={0}>
+          {children}
+        </InfoCard>
+      </ScrollItem>
+    )
+  }
+  
+  // desktop version
   return (
     <ScrollItem
       progress={cardStackProgress}
@@ -106,7 +162,27 @@ export const CexFirstCard = ({ children }: PropsWithChildren) => {
 }
 
 export const CexSecondCard = ({ children }: PropsWithChildren) => {
-  const {cardStack: cardStackProgress, animateBankrupt} = useCexScrollContext()
+  const isTablet = useIsTabletOrSmaller()
+  const { cardStack: cardStackProgress, animateBankrupt, scroll } = useCexScrollContext()
+  
+  if (isTablet) {
+    return (
+      <ScrollItem
+        progress={scroll}
+        className="!absolute"
+        opacity={{ from: [0, 0.5, 0.7], to: [1, 1, 0] }}
+        translateY={{ from: [0, 0.2, 0.4, 0.5, 0.9], to: [600, 300, 0, 0, -600] }}
+      >
+        <InfoCard href="/" color={1} className={clsx({
+          [styles.animateBackground]: !animateBankrupt
+        })}>
+          {children}
+        </InfoCard>
+      </ScrollItem>
+    )
+  }
+
+  // desktop version
   return (
     <ScrollItem
       progress={cardStackProgress}
@@ -124,10 +200,10 @@ export const CexSecondCard = ({ children }: PropsWithChildren) => {
 }
 
 export const CexSecondCardHeader = ({ children }: PropsWithChildren) => {
-  const { animateBankrupt} = useCexScrollContext()
+  const { animateBankrupt } = useCexScrollContext()
 
   return (
-    <h3>
+    <h3 className={styles.secondCardHeader}>
       <div className={clsx(styles.cardHeader, {
         [styles.scrolled]: !animateBankrupt
       })}>

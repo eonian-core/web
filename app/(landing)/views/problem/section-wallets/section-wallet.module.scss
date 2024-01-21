@@ -1,4 +1,5 @@
 @import '../../../../components/styles/scrolling-text.mixin.scss';
+@import "../../../../screen.scss";
 
 h3.lostHeader {
     position: relative;
@@ -54,6 +55,11 @@ h3.lostHeader {
     }
 }
 
+@media (max-width: $screen-laptop) {
+    .cardHeader {
+        top: 1rem;
+    }
+}
 
 @keyframes glow-effect {
     0% {

@@ -1,9 +1,8 @@
 import type { MotionValue } from 'framer-motion'
-import { useMotionValueEvent, useTransform } from 'framer-motion'
+import { useTransform } from 'framer-motion'
 import { Heading, StickyContainer } from '../components/sticky-container'
 import InfoCard from '../../lost-funds/InfoCard'
-import { useIsMobileOrSmaller } from '../../../../components/resize-hooks/screens'
-import { Column } from '../components/column'
+import { useIsMobileOrSmaller, useIsTabletOrSmaller } from '../../../../components/resize-hooks/screens'
 import { ScrollItem } from '../components/scroll-item'
 import styles from './section-wallet.module.scss'
 import { useSwitchOnScroll } from '../components/use-hide-on-scroll'
@@ -20,9 +19,7 @@ export const WalletScrollContext = createContext<Partial<WalletScrollContextStat
 export const useWalletScrollContext = () => useContext(WalletScrollContext) as WalletScrollContextState
 
 export default function SectionWallets({ children }: PropsWithChildren) {
-  const isMobile = useIsMobileOrSmaller()
-
-  const { scroll: scrollYProgress } = useScrollContext()
+  const { wallet: scrollYProgress } = useScrollContext()
 
   const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1])
   const translateY = useTransform(scrollYProgress, [0, 0.2], [100, 0])
@@ -43,12 +40,60 @@ export default function SectionWallets({ children }: PropsWithChildren) {
   )
 }
 
-export const WalletHeader = ({ children }: PropsWithChildren) => (
-  <Heading>{children}</Heading>
-)
+export const WalletHeader = ({ children }: PropsWithChildren) => {
+  const isTablet = useIsTabletOrSmaller()
+  const { cardStack } = useWalletScrollContext()
+
+  if(isTablet){
+    return (
+      <ScrollItem
+        progress={cardStack}
+        className="!relative"
+        opacity={{ from: [0, 0.5, 0.6, 1], to: [1, 0.5, 0, 0] }}
+        scale={{ from: [0, 0.8, 1], to: [1, 0.9, 0.9] }}
+        translateY={{ from: [0, 0.8, 1], to: [0, -10, -10] }}
+      >
+        <Heading>
+          {children}
+        </Heading>
+      </ScrollItem>
+    )
+  }
+
+  // desktop version
+  return (
+    <ScrollItem
+      progress={cardStack}
+      className="!relative"
+    >
+      <Heading>
+        {children}
+      </Heading>
+    </ScrollItem>
+  )
+}
 
 export const WalletFirstCard = ({ children }: PropsWithChildren) => {
+  const isTablet = useIsTabletOrSmaller()
   const { cardStack: cardStackProgress } = useWalletScrollContext()
+
+  if (isTablet) {
+    return (
+      <ScrollItem
+        progress={cardStackProgress}
+        className="!relative"
+        opacity={{ from: [0, 0.5, 0.9, 1], to: [1, 1, 0.8, 0] }}
+        scale={{ from: [0, 0.5, 1], to: [1, 1, 0.6] }}
+        translateY={{ from: [0, 0.5, 1], to: [300, 0, -60] }}
+      >
+        <InfoCard href="/" color={0}>
+          {children}
+        </InfoCard>
+      </ScrollItem>
+    )
+  }
+
+  // desktop version
   return (
     <ScrollItem
       progress={cardStackProgress}
@@ -65,7 +110,25 @@ export const WalletFirstCard = ({ children }: PropsWithChildren) => {
 }
 
 export const WalletSecondCard = ({ children }: PropsWithChildren) => {
+  const isTablet = useIsTabletOrSmaller()
   const { cardStack: cardStackProgress, animateLost } = useWalletScrollContext()
+
+
+  if (isTablet) {
+    return (
+      <ScrollItem
+        progress={cardStackProgress}
+        className="!absolute"
+        translateY={{ from: [0, 0.5, 1], to: [600, 300, 0,] }}
+      >
+        <InfoCard href="/" color={1} className={clsx({
+          [styles.animateBackground]: !animateLost
+        })}>
+          {children}
+        </InfoCard>
+      </ScrollItem>
+    )
+  }
 
   return (
     <ScrollItem

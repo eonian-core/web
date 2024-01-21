@@ -18,8 +18,8 @@ export function ScrollItem({
     children, 
     progress,
     className, 
-    opacity, 
-    scale, 
+    opacity = { from: [0, 1], to: [1, 1] }, 
+    scale = { from: [0, 1], to: [1, 1] }, 
     translateY 
 }: React.PropsWithChildren<ItemProps>) {
     return (
