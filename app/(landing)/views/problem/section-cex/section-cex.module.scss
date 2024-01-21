@@ -57,6 +57,12 @@
     }
 }
 
+@media (max-width: $screen-tablet) {
+    .scrollingCex {
+        top: 0.4rem;
+    }
+}
+
 @keyframes glow-effect {
     0% {
         transform: scale(0.5);

@@ -3,6 +3,7 @@ import { useScroll, useTransform } from 'framer-motion'
 import React from 'react'
 import RainbowFrame from './components/rainbow-frame'
 import styles from './problem.module.scss'
+import { useIsTabletOrSmaller } from '../../../components/resize-hooks/screens'
 
 interface ScrollContextState {
   scroll: MotionValue<number>
@@ -20,8 +21,12 @@ export default function Problem({ children }: React.PropsWithChildren) {
     target: targetRef,
   })
 
-  const cex = useTransform(scrollYProgress, [0, 0.6], [0, 1])
-  const wallet = useTransform(scrollYProgress, [0.6, 1], [0, 1])
+
+  const isTablet = useIsTabletOrSmaller()
+  const cex = useTransform(scrollYProgress, !isTablet ? [0, 0.7] : [0, 0.6], [0, 1])
+  const wallet = useTransform(scrollYProgress, !isTablet ? [0.7, 1] : [0.6, 0.9], [0, 1])
+
+  /** offset by 0.2 cardStackProgress at the end (some kind of bug) */
 
   return (
     <section ref={targetRef} className={styles.problem}>
