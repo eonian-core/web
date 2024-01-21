@@ -1,16 +1,14 @@
-
-import React from 'react';
-import styles from './column.module.scss';
+import React from 'react'
+import styles from './column.module.scss'
 
 interface ColumnProps {
-    children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export const Column: React.FC<ColumnProps> = ({ children }) => {
-    return (
+  return (
         <div className={styles.column}>
             {children}
         </div>
-    );
+  )
 }
-

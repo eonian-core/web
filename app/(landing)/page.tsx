@@ -14,8 +14,19 @@ import { Target } from '../components/card/card'
 import { WaitList } from '../components/waitlist/waitlist'
 import IconPalmTree from '../components/icons/icon-paml-tree'
 import IconShieldHeart from '../components/icons/icon-shield-heart'
-import styles from './page.module.css'
-import Content from './content/en.mdx'
+import IconChartLine from '../components/icons/icon-chart-line'
+import IconHeart from '../components/icons/icon-heart'
+import IconIncognito from '../components/icons/icon-incognito'
+import IconKey from '../components/icons/icon-key'
+import IconLink from '../components/icons/icon-link'
+import IconMicroscopeFill from '../components/icons/icon-microscope-fill'
+import IconRacingHelmet from '../components/icons/icon-racing-helmet'
+import IconRocketOutline from '../components/icons/icon-rocket-outline'
+import IconToggleSwitch from '../components/icons/icon-toggle-switch'
+import IconVault from '../components/icons/icon-vault'
+import IconWallet from '../components/icons/icon-wallet'
+import IconWindowGrid from '../components/icons/icon-window-grid'
+
 import HeroButton from './views/hero/button-group/hero-button'
 import HeroButtonGroup from './views/hero/button-group/hero-button-group'
 import Hero from './views/hero/hero'
@@ -31,21 +42,13 @@ import Tokens from './views/offer/tokens'
 import { Distribution, Tag, Tags, Token, TokenApy, TokenFees, TokenGrowth, TokenHeader, TokenStats, YearlyReturns } from './views/offer/token'
 import Caption from './views/offer/caption'
 import Features, { Feature, FeaturesList } from './views/offer/features'
-import IconChartLine from '../components/icons/icon-chart-line'
-import IconHeart from '../components/icons/icon-heart'
-import IconIncognito from '../components/icons/icon-incognito'
-import IconKey from '../components/icons/icon-key'
-import IconLink from '../components/icons/icon-link'
-import IconMicroscopeFill from '../components/icons/icon-microscope-fill'
-import IconRacingHelmet from '../components/icons/icon-racing-helmet'
-import IconRocketOutline from '../components/icons/icon-rocket-outline'
-import IconToggleSwitch from '../components/icons/icon-toggle-switch'
-import IconVault from '../components/icons/icon-vault'
-import IconWallet from '../components/icons/icon-wallet'
-import IconWindowGrid from '../components/icons/icon-window-grid'
+
 import SectionCEX, { CexFirstCard, CexHeader, CexHeaderBut, CexSecondCard, CexSecondCardHeader, ScrollingCexHeader } from './views/problem/section-cex/section-cex'
 import SectionWallets, { WalletFirstCard, WalletHeader, WalletScrolledHeader, WalletSecondCard, WalletSecondCardHeader } from './views/problem/section-wallets/section-wallets'
 import { Column } from './views/problem/components/column'
+
+import styles from './page.module.css'
+import Content from './content/en.mdx'
 
 const components = {
   Hero,
@@ -114,7 +117,7 @@ const components = {
   IconIncognito,
   IconLink,
   IconHeart,
-  IconWallet
+  IconWallet,
 }
 
 export default function Home() {

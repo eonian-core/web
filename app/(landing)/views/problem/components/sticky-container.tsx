@@ -1,5 +1,6 @@
 import React from 'react'
-import { LayoutGroup, MotionStyle, motion } from 'framer-motion'
+import type { MotionStyle } from 'framer-motion'
+import { LayoutGroup, motion } from 'framer-motion'
 import styles from './sticky-container.module.scss'
 
 interface StickyContainerProps {
@@ -18,6 +19,6 @@ export function StickyContainer({ children, style }: React.PropsWithChildren<Sti
   )
 }
 
-export const Heading = ({ children }: React.PropsWithChildren) => (
-  <div className={styles.heading}>{children}</div>
-)
+export function Heading({ children }: React.PropsWithChildren) {
+  return <div className={styles.heading}>{children}</div>
+}

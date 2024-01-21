@@ -34,12 +34,12 @@ export default function InfoCard({
     >
       <div className={styles.container} >
         <div className={styles.radial}></div>
-        
+
         <div className={styles.content}>
           <div className={styles.text}>
             {children}
           </div>
-          
+
           <ExternalLink href={href} className="justify-self-end">
             Learn more <IconExternal />
           </ExternalLink>

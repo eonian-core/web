@@ -1,24 +1,25 @@
 import type { MotionValue } from 'framer-motion'
 import { useTransform } from 'framer-motion'
-import React, { PropsWithChildren } from 'react'
+import type { PropsWithChildren } from 'react'
+import React from 'react'
+import clsx from 'clsx'
 import InfoCard from '../../lost-funds/InfoCard'
 import { Heading, StickyContainer } from '../components/sticky-container'
 import { useIsTabletOrSmaller } from '../../../../components/resize-hooks/screens'
 
 import { ScrollItem } from '../components/scroll-item'
 import { useSwitchOnScroll } from '../components/use-hide-on-scroll'
-import styles from './section-cex.module.scss'
-import clsx from 'clsx'
 import { useScrollContext } from '../problem'
+import styles from './section-cex.module.scss'
 
 interface CexScrollContextState {
-  scroll: MotionValue<number>;
-  cardStack: MotionValue<number>;
-  heading: MotionValue<number>;
-  animateBankrupt: boolean;
+  scroll: MotionValue<number>
+  cardStack: MotionValue<number>
+  heading: MotionValue<number>
+  animateBankrupt: boolean
 }
 
-export const CexScrollContext = React.createContext<Partial<CexScrollContextState>>({});
+export const CexScrollContext = React.createContext<Partial<CexScrollContextState>>({})
 export const useCexScrollContext = () => React.useContext(CexScrollContext) as CexScrollContextState
 
 export default function SectionCEX({ children }: PropsWithChildren) {
@@ -49,11 +50,11 @@ export default function SectionCEX({ children }: PropsWithChildren) {
   )
 }
 
-export const CexHeader = ({ children }: PropsWithChildren) => {
+export function CexHeader({ children }: PropsWithChildren) {
   const isTablet = useIsTabletOrSmaller()
   const { heading: headingProgress, cardStack } = useCexScrollContext()
 
-  if(isTablet){
+  if (isTablet) {
     return (
       <ScrollItem
         progress={cardStack}
@@ -83,23 +84,23 @@ export const CexHeader = ({ children }: PropsWithChildren) => {
   )
 }
 
-export const ScrollingCexHeader = ({ children }: PropsWithChildren) => (
-  <div className={styles.scrollingCex}>
+export function ScrollingCexHeader({ children }: PropsWithChildren) {
+  return <div className={styles.scrollingCex}>
     <span>
       {children}
     </span>
   </div>
-)
+}
 
-export const CexHeaderBut = ({ children }: PropsWithChildren) => {
+export function CexHeaderBut({ children }: PropsWithChildren) {
   const isTablet = useIsTabletOrSmaller()
-  const { heading: headingProgress, scroll} = useCexScrollContext()
+  const { heading: headingProgress, scroll } = useCexScrollContext()
 
   if (isTablet) {
     return (
       <ScrollItem
         progress={scroll}
-        className={clsx("!absolute", styles.cexHeaderBut)}
+        className={clsx('!absolute', styles.cexHeaderBut)}
         opacity={{ from: [0, 0.3, 0.4, 1], to: [0, 0, 1, 1] }}
         translateY={{ from: [0, 0.2, 0.4, 0.5, 0.7], to: [600, 600, 300, 300, 0] }}
       >
@@ -114,7 +115,7 @@ export const CexHeaderBut = ({ children }: PropsWithChildren) => {
   return (
     <ScrollItem
       progress={headingProgress}
-      className={clsx("!absolute", styles.cexHeaderBut)}
+      className={clsx('!absolute', styles.cexHeaderBut)}
       opacity={{ from: [0, 0.2, 0.8, 1], to: [0, 1, 1, 1] }}
       translateY={{ from: [0, 0.8, 1], to: [400, 0, 0] }}
     >
@@ -125,7 +126,7 @@ export const CexHeaderBut = ({ children }: PropsWithChildren) => {
   )
 }
 
-export const CexFirstCard = ({ children }: PropsWithChildren) => {
+export function CexFirstCard({ children }: PropsWithChildren) {
   const isTablet = useIsTabletOrSmaller()
   const { cardStack: cardStackProgress } = useCexScrollContext()
 
@@ -144,7 +145,7 @@ export const CexFirstCard = ({ children }: PropsWithChildren) => {
       </ScrollItem>
     )
   }
-  
+
   // desktop version
   return (
     <ScrollItem
@@ -161,10 +162,10 @@ export const CexFirstCard = ({ children }: PropsWithChildren) => {
   )
 }
 
-export const CexSecondCard = ({ children }: PropsWithChildren) => {
+export function CexSecondCard({ children }: PropsWithChildren) {
   const isTablet = useIsTabletOrSmaller()
   const { cardStack: cardStackProgress, animateBankrupt, scroll } = useCexScrollContext()
-  
+
   if (isTablet) {
     return (
       <ScrollItem
@@ -174,7 +175,7 @@ export const CexSecondCard = ({ children }: PropsWithChildren) => {
         translateY={{ from: [0, 0.2, 0.4, 0.5, 0.9], to: [600, 300, 0, 0, -600] }}
       >
         <InfoCard href="/" color={1} className={clsx({
-          [styles.animateBackground]: !animateBankrupt
+          [styles.animateBackground]: !animateBankrupt,
         })}>
           {children}
         </InfoCard>
@@ -191,7 +192,7 @@ export const CexSecondCard = ({ children }: PropsWithChildren) => {
       translateY={{ from: [0, 0.5, 0.8, 1], to: [300, 0, 0, 0] }}
     >
       <InfoCard href="/" color={1} className={clsx({
-        [styles.animateBackground]: !animateBankrupt
+        [styles.animateBackground]: !animateBankrupt,
       })}>
         {children}
       </InfoCard>
@@ -199,13 +200,13 @@ export const CexSecondCard = ({ children }: PropsWithChildren) => {
   )
 }
 
-export const CexSecondCardHeader = ({ children }: PropsWithChildren) => {
+export function CexSecondCardHeader({ children }: PropsWithChildren) {
   const { animateBankrupt } = useCexScrollContext()
 
   return (
     <h3 className={styles.secondCardHeader}>
       <div className={clsx(styles.cardHeader, {
-        [styles.scrolled]: !animateBankrupt
+        [styles.scrolled]: !animateBankrupt,
       })}>
         <span>
           {children}

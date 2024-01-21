@@ -1,22 +1,23 @@
 import type { MotionValue } from 'framer-motion'
 import { useTransform } from 'framer-motion'
+import clsx from 'clsx'
+import type { PropsWithChildren } from 'react'
+import { createContext, useContext } from 'react'
 import { Heading, StickyContainer } from '../components/sticky-container'
 import InfoCard from '../../lost-funds/InfoCard'
 import { useIsTabletOrSmaller } from '../../../../components/resize-hooks/screens'
 import { ScrollItem } from '../components/scroll-item'
-import styles from './section-wallet.module.scss'
 import { useSwitchOnScroll } from '../components/use-hide-on-scroll'
-import clsx from 'clsx'
-import { PropsWithChildren, createContext, useContext } from 'react'
 import { useScrollContext } from '../problem'
+import styles from './section-wallet.module.scss'
 
 interface WalletScrollContextState {
-  scroll: MotionValue<number>;
-  cardStack: MotionValue<number>;
-  animateLost: boolean;
+  scroll: MotionValue<number>
+  cardStack: MotionValue<number>
+  animateLost: boolean
 }
 
-export const WalletScrollContext = createContext<Partial<WalletScrollContextState>>({});
+export const WalletScrollContext = createContext<Partial<WalletScrollContextState>>({})
 export const useWalletScrollContext = () => useContext(WalletScrollContext) as WalletScrollContextState
 
 export default function SectionWallets({ children }: PropsWithChildren) {
@@ -43,14 +44,14 @@ export default function SectionWallets({ children }: PropsWithChildren) {
   )
 }
 
-/** offset by 0.2 cardStackProgress at the end (some kind of bug)*/ 
+/** offset by 0.2 cardStackProgress at the end (some kind of bug) */
 const mobileEndOffset = 0.25
 
-export const WalletHeader = ({ children }: PropsWithChildren) => {
+export function WalletHeader({ children }: PropsWithChildren) {
   const isTablet = useIsTabletOrSmaller()
   const { cardStack } = useWalletScrollContext()
 
-  if(isTablet){
+  if (isTablet) {
     return (
       <ScrollItem
         progress={cardStack}
@@ -79,9 +80,7 @@ export const WalletHeader = ({ children }: PropsWithChildren) => {
   )
 }
 
-
-
-export const WalletFirstCard = ({ children }: PropsWithChildren) => {
+export function WalletFirstCard({ children }: PropsWithChildren) {
   const isTablet = useIsTabletOrSmaller()
   const { cardStack: cardStackProgress } = useWalletScrollContext()
 
@@ -117,21 +116,19 @@ export const WalletFirstCard = ({ children }: PropsWithChildren) => {
   )
 }
 
-
-
-export const WalletSecondCard = ({ children }: PropsWithChildren) => {
+export function WalletSecondCard({ children }: PropsWithChildren) {
   const isTablet = useIsTabletOrSmaller()
   const { cardStack: cardStackProgress, animateLost, scroll } = useWalletScrollContext()
 
-  if (isTablet) {    
+  if (isTablet) {
     return (
       <ScrollItem
         progress={cardStackProgress}
         className="!absolute"
-        translateY={{ from: [0, 0.5 - mobileEndOffset, 1 - mobileEndOffset], to: [600, 300, 0,] }}
+        translateY={{ from: [0, 0.5 - mobileEndOffset, 1 - mobileEndOffset], to: [600, 300, 0] }}
       >
         <InfoCard href="/" color={1} className={clsx({
-          [styles.animateBackground]: !animateLost
+          [styles.animateBackground]: !animateLost,
         })}>
           {children}
         </InfoCard>
@@ -146,7 +143,7 @@ export const WalletSecondCard = ({ children }: PropsWithChildren) => {
       translateY={{ from: [0, 1], to: [300, 0] }}
     >
       <InfoCard href="/" color={1} className={clsx({
-        [styles.animateBackground]: !animateLost
+        [styles.animateBackground]: !animateLost,
       })}>
         {children}
       </InfoCard>
@@ -154,18 +151,18 @@ export const WalletSecondCard = ({ children }: PropsWithChildren) => {
   )
 }
 
-export const WalletSecondCardHeader = ({ children }: PropsWithChildren) => {
+export function WalletSecondCardHeader({ children }: PropsWithChildren) {
   return (
     <h3 className={styles.lostHeader}>{children}</h3>
   )
 }
 
-export const WalletScrolledHeader = ({ children }: PropsWithChildren) => {
+export function WalletScrolledHeader({ children }: PropsWithChildren) {
   const { animateLost } = useWalletScrollContext()
 
   return (
     <div className={clsx(styles.cardHeader, {
-      [styles.scrolled]: !animateLost
+      [styles.scrolled]: !animateLost,
     })}>
       <span>
         {children}

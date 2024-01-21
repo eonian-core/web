@@ -33,21 +33,21 @@ interface ItemProps {
 
 function Item({ children, progress, index, total }: React.PropsWithChildren<ItemProps>) {
   const opacity = useTransform(
-    progress, 
-    !index ? [0, 0.2, 0.5, 1]: [0, 0.2, 0.8, 1], 
-    !index ? [1, 0.8, 0, 0] : [0, 1, 1, 1]
+    progress,
+    !index ? [0, 0.2, 0.5, 1] : [0, 0.2, 0.8, 1],
+    !index ? [1, 0.8, 0, 0] : [0, 1, 1, 1],
   )
 
   const scale = useTransform(
-    progress, 
-    [0, 0.3, 0.8, 1], 
-    !index ? [1, 0.8, 0.6, 0.6] : [1, 1, 1, 1]
+    progress,
+    [0, 0.3, 0.8, 1],
+    !index ? [1, 0.8, 0.6, 0.6] : [1, 1, 1, 1],
   )
 
   const translateY = useTransform(
-    progress, 
-    !index ?  [0, 0.3, 0.8, 1] : [0, 0.5, 0.8, 1],
-    !index ? [0, -30, -60, -60] : [300, 0, 0, 0]
+    progress,
+    !index ? [0, 0.3, 0.8, 1] : [0, 0.5, 0.8, 1],
+    !index ? [0, -30, -60, -60] : [300, 0, 0, 0],
   )
 
   return (

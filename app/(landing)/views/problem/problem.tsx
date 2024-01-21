@@ -1,19 +1,20 @@
-import { MotionValue, useScroll, useTransform } from 'framer-motion'
+import type { MotionValue } from 'framer-motion'
+import { useScroll, useTransform } from 'framer-motion'
 import React from 'react'
 import RainbowFrame from './components/rainbow-frame'
 import styles from './problem.module.scss'
 
 interface ScrollContextState {
-  scroll: MotionValue<number>;
-  cex: MotionValue<number>;
-  wallet: MotionValue<number>;
+  scroll: MotionValue<number>
+  cex: MotionValue<number>
+  wallet: MotionValue<number>
 }
 
-export const ScrollContext = React.createContext<Partial<ScrollContextState>>({ });
+export const ScrollContext = React.createContext<Partial<ScrollContextState>>({ })
 
 export const useScrollContext = () => React.useContext(ScrollContext) as ScrollContextState
 
-export default function Problem({children}: React.PropsWithChildren) {
+export default function Problem({ children }: React.PropsWithChildren) {
   const targetRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -25,11 +26,11 @@ export default function Problem({children}: React.PropsWithChildren) {
   return (
     <section ref={targetRef} className={styles.problem}>
       <RainbowFrame>
-        <ScrollContext.Provider value={{ 
+        <ScrollContext.Provider value={{
           scroll: scrollYProgress,
           cex,
           wallet,
-         }}>
+        }}>
           {children}
         </ScrollContext.Provider>
       </RainbowFrame>
