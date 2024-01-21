@@ -26,7 +26,7 @@ export default function SectionWallets({ children }: PropsWithChildren) {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1])
   const translateY = useTransform(scrollYProgress, [0, 0.2], [100, 0])
   const cardStackProgress = useTransform(scrollYProgress, [0.2, 1.0], [0.0, 1.0])
-  
+
   const { isVisible: animateLost } = useSwitchOnScroll(scrollYProgress, 1, false)
 
   return (
@@ -41,7 +41,6 @@ export default function SectionWallets({ children }: PropsWithChildren) {
     </StickyContainer>
   )
 }
-
 
 export function WalletHeader({ children }: PropsWithChildren) {
   const isTablet = useIsTabletOrSmaller()

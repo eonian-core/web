@@ -1,9 +1,11 @@
 import type { MotionValue } from 'framer-motion'
 import { useScroll, useTransform } from 'framer-motion'
 import React from 'react'
+
+import { useIsTabletOrSmaller } from '../../../components/resize-hooks/screens'
+
 import RainbowFrame from './components/rainbow-frame'
 import styles from './problem.module.scss'
-import { useIsTabletOrSmaller } from '../../../components/resize-hooks/screens'
 
 interface ScrollContextState {
   scroll: MotionValue<number>
@@ -20,7 +22,6 @@ export default function Problem({ children }: React.PropsWithChildren) {
   const { scrollYProgress } = useScroll({
     target: targetRef,
   })
-
 
   const isTablet = useIsTabletOrSmaller()
   const cex = useTransform(scrollYProgress, !isTablet ? [0, 0.7] : [0, 0.6], [0, 1])
