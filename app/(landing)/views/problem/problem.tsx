@@ -19,8 +19,8 @@ export default function Problem({children}: React.PropsWithChildren) {
     target: targetRef,
   })
 
-  const cex = useTransform(scrollYProgress, [0, 0.7], [0, 1])
-  const wallet = useTransform(scrollYProgress, [0.7, 1], [0, 1])
+  const cex = useTransform(scrollYProgress, [0, 0.6], [0, 1])
+  const wallet = useTransform(scrollYProgress, [0.6, 1], [0, 1])
 
   return (
     <section ref={targetRef} className={styles.problem}>

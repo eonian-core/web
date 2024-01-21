@@ -5,15 +5,16 @@
     --max-width: var(--width-1100);
     --max-height: 40rem;
 
-    width: calc(100% - var(--width-gap) * 2);
+    --margin: var(--width-gap); // padding and margin are the same
+
+    width: calc(100% - var(--margin) * 2);
     max-width: var(--max-width);
     
-    left: max(calc(50% - var(--max-width) / 2), var(--width-gap));
-
-    height: 90vh;
-    max-height: var(--max-height);
-
+    left: max(calc(50% - var(--max-width) / 2), var(--margin));
+    
     --height: min(90vh, var(--max-height));
+    height: var(--height);
+    max-height: var(--max-height);
 
     top: calc(50% - var(--height) / 2); 
     margin-bottom: var(--margin-1000);
@@ -66,3 +67,12 @@
     }
 }
 
+@media (max-width: $screen-mobile) {
+    .frame {
+        --margin: var(--padding-300);
+
+        --height: calc(100vh - 2 * var(--margin));
+        height: var(--height);
+        max-height: 100vh;
+    }
+}

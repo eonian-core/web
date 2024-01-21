@@ -1,17 +1,15 @@
 import type { MotionValue } from 'framer-motion'
-import { useMotionValueEvent, useTransform } from 'framer-motion'
-import React, { PropsWithChildren, useRef } from 'react'
+import { useTransform } from 'framer-motion'
+import React, { PropsWithChildren } from 'react'
 import InfoCard from '../../lost-funds/InfoCard'
 import { Heading, StickyContainer } from '../components/sticky-container'
-import { useIsMobileOrSmaller, useIsTabletOrSmaller } from '../../../../components/resize-hooks/screens'
+import { useIsTabletOrSmaller } from '../../../../components/resize-hooks/screens'
 
-import { Column } from '../components/column'
 import { ScrollItem } from '../components/scroll-item'
 import { useSwitchOnScroll } from '../components/use-hide-on-scroll'
 import styles from './section-cex.module.scss'
 import clsx from 'clsx'
 import { useScrollContext } from '../problem'
-
 
 interface CexScrollContextState {
   scroll: MotionValue<number>;
@@ -33,7 +31,9 @@ export default function SectionCEX({ children }: PropsWithChildren) {
   const translateY = useTransform(scrollYProgress, [0, 0.8, 1.0], [0, 0, -100])
 
   const { isVisible } = useSwitchOnScroll(scrollYProgress, 1)
-  const { isVisible: animateBankrupt } = useSwitchOnScroll(scrollYProgress, 0.2, true)
+
+  const isTablet = useIsTabletOrSmaller()
+  const { isVisible: animateBankrupt } = useSwitchOnScroll(scrollYProgress, !isTablet ? 0.2 : 0.4, true)
 
   return (
     <StickyContainer style={{ position: isVisible ? 'static' : 'absolute', opacity, translateY }} >

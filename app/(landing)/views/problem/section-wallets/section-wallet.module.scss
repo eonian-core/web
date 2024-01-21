@@ -61,6 +61,18 @@ h3.lostHeader {
     }
 }
 
+@media (max-width: $screen-mobile) {
+    h3.lostHeader {
+        max-height: var(--font-size-1000);
+        top: -2.5rem;
+    }
+
+    .cardHeader {
+        top: 1.25rem;
+        max-width: var(--font-size-800);
+    }
+}
+
 @keyframes glow-effect {
     0% {
         transform: scale(0.5);

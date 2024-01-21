@@ -30,7 +30,8 @@
 
 @media (max-width: $screen-tablet) {
     .container {
-        padding: var(--width-gap);
+        // from rainbow container
+        padding: var(--margin);
     }
 
     .content {
@@ -42,6 +43,15 @@
             position: absolute;
         }
     }
+}
+
+@media (max-width: $screen-mobile) {
+
+    .container {
+        padding-top: var(--padding-200);
+        padding-bottom: var(--padding-200);
+    }
+
 }
 
 .heading {
