@@ -39,16 +39,26 @@ import HeroCaptionText from './views/hero/button-group/hero-caption-text'
 import Problem from './views/problem/problem'
 import Offer from './views/offer/offer'
 import Tokens from './views/offer/tokens'
-import { Distribution, Tag, Tags, Token, TokenApy, TokenFees, TokenGrowth, TokenHeader, TokenStats, YearlyReturns } from './views/offer/token'
 import Caption from './views/offer/caption'
 import Features, { Feature, FeaturesList } from './views/offer/features'
-
 import SectionCEX, { CexFirstCard, CexHeader, CexHeaderBut, CexSecondCard, CexSecondCardHeader, ScrollingCexHeader } from './views/problem/section-cex/section-cex'
 import SectionWallets, { WalletFirstCard, WalletHeader, WalletScrolledHeader, WalletSecondCard, WalletSecondCardHeader } from './views/problem/section-wallets/section-wallets'
 import { Column } from './views/problem/components/column'
-
 import styles from './page.module.css'
 import Content from './content/en.mdx'
+import {
+  Distribution,
+  Tag,
+  Tags,
+  Token,
+  TokenApy,
+  TokenFees,
+  TokenGrowth,
+  TokenHeader,
+  TokenStats,
+  YearlyReturns,
+} from './views/offer/token'
+import Warning from './views/hero/warning'
 
 const components = {
   Hero,
@@ -88,6 +98,8 @@ const components = {
   WalletSecondCard,
   WalletSecondCardHeader,
   WalletScrolledHeader,
+  Feature,
+  FeaturesList,
   Offer,
   Tokens,
   Token,
@@ -104,8 +116,6 @@ const components = {
   IconPalmTree,
   Caption,
   Features,
-  FeaturesList,
-  Feature,
   IconVault,
   IconWindowGrid,
   IconMicroscopeFill,
@@ -118,6 +128,7 @@ const components = {
   IconLink,
   IconHeart,
   IconWallet,
+  Warning,
 }
 
 export default function Home() {

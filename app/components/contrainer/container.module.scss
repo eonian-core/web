@@ -10,7 +10,12 @@
 
     max-width: var(--max-width);
     padding: 0 var(--width-gap);
+
+    @media (max-width: $screen-small-mobile) {
+        padding: 0 calc(var(--width-gap) / 2);
+    }
 }
+
 
 
 @media (max-width: $screen-mobile) {

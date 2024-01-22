@@ -2,6 +2,16 @@
 @import "../../../components/styles/gradient-text.mixin.scss";
 
 .container {
+    // To prevent the effect of the section below to overlap the container.
+    position: relative;
+    z-index: 1;
+
+    // To decrease the empty gap between previous sticky section and the container.
+    margin-top: calc(var(--margin-1000) * -1);
+    margin-bottom: var(--margin-900);
+}
+
+.innerContainer {
     display: flex;
     flex-direction: column;
     gap: 3.5rem; 
@@ -63,11 +73,11 @@
 }
 
 .tokens {
-    display: flex; 
+    display: flex;
     flex-direction: row;
-    flex-wrap: wrap; 
-    gap: 2rem; 
-    justify-content: center; 
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
 
     width: 100%;
 
