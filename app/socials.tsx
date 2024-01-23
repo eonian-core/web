@@ -1,4 +1,4 @@
-// import IconDiscord from './components/icons/icon-discord'
+import IconDiscord from './components/icons/icon-discord'
 import IconGithub from './components/icons/icon-github'
 import IconMedium from './components/icons/icon-medium'
 import IconTelegram from './components/icons/icon-telegram'
@@ -38,11 +38,11 @@ export const socials: LocalesSocials = {
       icon: <IconTwitter />,
       href: 'https://twitter.com/EonianFinance',
     },
-    // {
-    //   name: 'Discord',
-    //   icon: <IconDiscord />,
-    //   href: 'https://discord.gg/8mcUPPYJmj',
-    // },
+    {
+      name: 'Discord',
+      icon: <IconDiscord />,
+      href: 'https://discord.gg/eonian-dao-1038654076533092422',
+    },
     {
       name: 'YouTube',
       icon: <IconYoutube />,
