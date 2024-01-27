@@ -6,23 +6,24 @@ import { interFont } from '../../shared/fonts/Inter'
 import styles from './heading.module.scss'
 import { useContentToId } from './to-id'
 
-export interface HeaderProps {
+export interface HeaderProps extends React.HTMLProps<HTMLHeadingElement> {
   children?: React.ReactNode
   id?: string
+  noGradient?: boolean
 }
 
-export function H1({ children, id }: HeaderProps) {
+export function H1({ children, id, className, noGradient, ...restProps }: HeaderProps) {
   const contentId = useContentToId(children)
   return (
-    <h1 id={id || contentId} className={clsx(styles.header1, interFont.className)}>
+    <h1 id={id || contentId} className={clsx(styles.header1, interFont.className, { [styles.gradient]: !noGradient }, className)} {...restProps}>
       {children}
     </h1>
   )
 }
-export function H2({ children, id }: HeaderProps) {
+export function H2({ children, id, className, noGradient, ...restProps }: HeaderProps) {
   const contentId = useContentToId(children)
   return (
-    <h2 id={id || contentId} className={clsx(styles.header2, interFont.className)}>
+    <h2 id={id || contentId} className={clsx(styles.header2, interFont.className, { [styles.gradient]: !noGradient }, className)} {...restProps}>
       {children}
     </h2>
   )

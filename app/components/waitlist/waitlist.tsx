@@ -6,11 +6,13 @@ import { WaitlistForm } from './waitlist-form'
 export interface WaitlistProps {
   /** content of the block, expected to have: h2, p for Card which will be shown after user joined */
   children: React.ReactNode
+
+  frictionRemover: React.ReactNode
 }
 
 const SHOW_DASHBOARD_BUTTON_DELAY = 3000
 
-export function WaitList({ children }: WaitlistProps) {
+export function WaitList({ children, frictionRemover }: WaitlistProps) {
   const [isJustSubmited, setIsJustSubmited] = useState(false)
   const { join, isJoined, openDashboard } = useWaitlist()
 
@@ -23,11 +25,11 @@ export function WaitList({ children }: WaitlistProps) {
 
   if (isJoined && !isJustSubmited) {
     return (
-            <Card onClick={openDashboard}>
-                {children}
-            </Card>
+        <Card onClick={openDashboard}>
+            {children}
+        </Card>
     )
   }
 
-  return <WaitlistForm onSubmit={joinAndTrack} />
+  return <WaitlistForm onSubmit={joinAndTrack} frictionRemover={frictionRemover} />
 }

@@ -1,58 +1,63 @@
-@import "../../../screen.scss";
+@import '../../../screen.scss';
+
+.pageContainer {
+  width: 100%;
+  align-items: flex-start;
+}
 
 .inDevelopmentWrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    position: relative;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
 }
 
 .inDevelopment {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 
-    max-width: var(--width-700);
+  max-width: var(--width-700);
 
-
-
-    z-index: 1;
+  z-index: 1;
 }
 
 .inDevelopmentChild {
-    & > p {
-        color: var(--color-text-400);
-        font-size: var(--font-size-600);
-        line-height: var(--line-height-600);
-        margin-bottom: var(--margin-200);
-    }
+  width: 100%;
 
-    & > p, & > a {
-        max-width: var(--width-600);
-    }
+  &>p {
+    font-size: var(--font-size-600);
+    line-height: var(--line-height-600);
+    margin-bottom: var(--margin-200);
+  }
+
+  &>p,
+  &>a {
+    max-width: var(--width-600);
+  }
 }
 
 @media (max-width: $screen-tablet) {
-    .inDevelopmentWrapper {
-        flex-direction: column;
-        align-items: center;
-    }
+  .inDevelopmentWrapper {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .inDevelopment {
-        max-width: var(--width-600);
-    }
+  .inDevelopment {
+    max-width: var(--width-600);
+  }
 }
 
 @media (max-width: $screen-mobile) {
-    .inDevelopmentChild {
-        p {
-            font-size: var(--font-size-500);
-            line-height: var(--line-height-500);
-        }
+  .inDevelopmentChild {
+    p {
+      font-size: var(--font-size-500);
+      line-height: var(--line-height-500);
     }
+  }
 }
