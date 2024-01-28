@@ -1,154 +1,192 @@
 <Hero>
-    # Make Crypto <br/> Work <Mbr>for You</Mbr>
+    <HeroCaptionText>Your Crypto. <br/> Secure It.</HeroCaptionText>
 
-    We build passive investment strategies <Mbr>that cares about your money.</Mbr>
+    Insure your assets from wallet hacks with zero fees, 
+    <Mbr start="laptop">while earning premium <br/> on your holdings passively.</Mbr>
+    All in the first decentralized savings account.
 
     <HeroButtonGroup>
-
         <MainButton />
 
         <HeroButton href="https://discord.gg/8mcUPPYJmj" bordered icon={<IconDiscord />}>
-            Join Discord
+            Ask our Community
         </HeroButton>
 
     </HeroButtonGroup>
 </Hero>
 
-<EonianIs>
+<Problem> 
+  <SectionCEX>
+    <Column>
+      <CexHeader>
+        <h2>Where's Your Money <br /> If <ScrollingCexHeader>
+            <mark>Kraken</mark><br />
+            <mark>Binance</mark><br />
+            <mark>Coinbase</mark><br />
+            <mark>CEX</mark>
+        </ScrollingCexHeader><br /> Goes Bankrupt?</h2>
 
-    ## Eonian is a Decentralized <br /> Yield Aggregator
+        Crypto Exchanges are great. They sometimes return the money when hacked,
+        but they also can lock you up, go bankrupt or out of the country.
 
-    The protocol generates [real yield](/faq#what-is-real-yield) rewards by distributing liquidity 
-    to the most profitable and secure projects on the blockchain. 
-    It uses multiple smart contracts to collect and reinvest rewards in a way that maximizes your profit 
-    and decrease the time you spend on investments.
+      </CexHeader>
 
-</EonianIs>
+      <CexHeaderBut>
+        {/* Need use h2 tag directly */}
+        <h2>On the other hand, you can use crypto wallets, <AppearMark delay={0.5}>but...</AppearMark> </h2>
+      </CexHeaderBut>
+    </Column>
 
-<StableProfit>
+    <Column>
+      <CexFirstCard href="https://docs.eonian.finance/resources/open-statistics#lost-digital-assets-because-of-cexes-bankruptcies">
+        ### $8.9B+
 
-    ## Stable and High Yield
+        Lost digital assets due <br />Crypto Exchanges bankruptcies
+      </CexFirstCard>
 
-    Our focus is on not only achieving high returns but also ensuring
-    stability in our work and investment strategies. While a high [APY](/faq#what-is-apy) may be
-    attractive, it is important to consider the sustainability and
-    consistency of the results.
+      <CexSecondCard href="https://docs.eonian.finance/resources/open-statistics#cexes-exited-us">
+        <CexSecondCardHeader>
+          5<br />
+          4
+        </CexSecondCardHeader>
 
-    * ### Stable Rewards
-        We diversify the investments across multiple protocols and continuously
-        monitor their rewards to ensure stability in your profits.
-    * ### High Rewards
-        We continuously enhance our investment strategies with the knowledge of
-        crypto experts to generate the highest possible rewards in DeFi space.
-    * ### Lower Fees
-        We minimize fees for our clients by combining transactions from multiple
-        users and reducing interactions with other protocols.
-    * ### Effective Strategies
-        Before investment, we thoroughly evaluate protocols to identify any
-        hidden fees and optimize our strategies to minimize them.
-    * ### Real Yield
-        We provide rewards exclusively in the form of the tokens in which you
-        have invested. In addition, to mitigate the effects of inflation, we sell tokens
-        issued by the underlying protocols.
-    * ### Real APY
-        Other protocols may show you big numbers to entice you to invest while
-        we provide a realistic estimate of the returns you can expect.
+        Crypto Exchanges exited the US
+      </CexSecondCard>
+    </Column>
+  </SectionCEX>
 
-</StableProfit>
+  <SectionWallets>
+    <Column>
+      <WalletHeader>
+        {/* Need use h2 tag directly */}
+        <h2>Were crypto wallets hacked? <br />
+          <AppearMark delay={1}>Yes. Pretty often.</AppearMark></h2>
 
-<SafeInvestments>
+        Wallets are great. They cannot lock your funds. <br /> 
+        But they rarely return your money when hacked.
+      </WalletHeader>
+    </Column>
 
-    ## Safe Investments
+    <Column>
+      <WalletFirstCard href="https://docs.eonian.finance/resources/open-statistics#assets-stolen-from-crypto-wallets">
+        ### $120M+
 
-    We bring our expertise in enterprise-grade software development to the cryptocurrency industry.
-    Utilizing proven [SecOps](/faq#what-is-secops) and [SSDLC](/faq#what-is-ssdlc) monitoring and testing methods,
-    we strive to deliver the safest solution possible.
+        Crypto stolen from wallets through different hacks
+      </WalletFirstCard>
 
-    * ### Hacks Protection
-        We constantly monitor DeFi-related hacks in other protocols and
-        develop defense mechanisms to keep our contracts safe from potential threats.
-    * ### Vertical Safety Integration
-        We collaborate with the teams of investment protocols to proactively identify and address
-        vulnerabilities to prevent potential abuse.
-    * ### Independent Audits
-        We conduct independent 95-point audits of investment protocols to thoroughly
-        evaluate their security and ensure that we only select the safest options for our clients.
-    * ### Fraud Monitoring
-        We continuously monitor the transactions of investment protocols and
-        take action to ensure the security of our clients' investments by promptly
-        withdrawing funds in case of any suspicious activity.
-    * ### Permissionless Protocol
-        Our protocol is decentralized and operates on a permissionless model.
-        Our smart contracts are designed to ensure that only you have access to your tokens.
+      <WalletSecondCard href="https://docs.eonian.finance/resources/open-statistics#assets-crypto-wallets-returned-to-their-users">
+        <WalletSecondCardHeader>0.1<WalletScrolledHeader>5<br />4</WalletScrolledHeader>%</WalletSecondCardHeader>
+      
+        Part of the lost assets that crypto wallet providers returned after hacks
+      </WalletSecondCard>
+    
+    </Column>
+  
+  </SectionWallets>
+</Problem>
 
-</SafeInvestments>
+<Offer>
+    <Caption header={<span>Wallet <Mbr start="mobile">+ Insurance</Mbr>  <Mbr start="mobile"><AppearMarkOnScroll>+&nbsp;Income</AppearMarkOnScroll> = Eonian</Mbr></span>}>
+      We combine the strengths of Exchanges and Wallets to fight their weaknesses.
+    </Caption>
 
-<HowItWorks>
+    <Features header={<span>Main Features</span>}>
 
-    ## How It Works
+     <FeaturesList>
+      <Feature icon={<IconVault />}>Save and Forget</Feature>
+      <Feature icon={<IconMicroscopeFill />}>Innovation</Feature>
+      <Feature icon={<IconPalmTree />}>Passive Income</Feature>
+      <Feature icon={<IconWindowGrid />}>Highest Transparency</Feature>
+      <Feature icon={<IconShieldHeart />}>Insure from Hacks</Feature>
+      <Feature icon={<IconRacingHelmet />}>Your Backup Plan</Feature>
+      <Feature icon={<IconChartLine />}>Grow Long-term</Feature>
+      <Feature icon={<IconKey />}>Own Your Money</Feature>
+      <Feature icon={<IconRocketOutline />}>Future of Finance</Feature>
+      <Feature icon={<IconToggleSwitch />}>Control Protocol</Feature>
+      <Feature icon={<IconIncognito/>}>Stay Anonymous</Feature>
+      <Feature icon={<IconLink />}>Decentralized</Feature>
+      <Feature icon={<IconHeart/>}>Easy to Use</Feature>
+      <Feature icon={<IconWallet />}>Keep Your Wallet</Feature>
+     </FeaturesList>
 
-    <FlowDiagramContextListener />
+     [Learn more in docs <IconExternal />](https://docs.eonian.finance/)
 
-    <FlowSlider>
-        <FlowSliderItem stepLabel="Deposit">
-            Deposit your tokens into the Eonian protocol and watch your yield
-            increase every second.
-        </FlowSliderItem>
-        <FlowSliderItem stepLabel="Find Options">
-            Eonian automatically picks the high-yielding protocols and investment
-            strategies in the DeFi space.
-        </FlowSliderItem>
-        <FlowSliderItem stepLabel="Allocation">
-            Our protocol diversifies deposited token amounts across profitable
-            protocols, minimizing risk and maximizing expected yield.
-        </FlowSliderItem>
-        <FlowSliderItem stepLabel="Investment">
-            Eonian invests in selected protocols, allocating funds in proportions
-            determined in the previous step.
-        </FlowSliderItem>
-        <FlowSliderItem stepLabel="Aggregation">
-            Automatically collects rewards from all existing strategies at the
-            optimal time and exchanges them for the desired token.
-        </FlowSliderItem>
-        <FlowSliderItem stepLabel="Reinvestment">
-            While you sleep, the protocol reinvests rewards back into the
-            underlying protocols, choosing the most favorable market conditions.
-        </FlowSliderItem>
-        <FlowSliderItem stepLabel="Monitoring">
-            Eonian constantly monitors all changes and events related to the
-            protocols in which it has invested, preventing a decrease in yields
-            and protecting against the loss of funds due to potential hacks.
-        </FlowSliderItem>
-        <FlowSliderItem stepLabel="Withdraw">
-            Withdraw your invested funds effortlessly, anytime you need, without
-            any limitations.
-        </FlowSliderItem>
+    </Features>
 
-    </FlowSlider>
+    <Tokens>
+        <Token token="ETH" development>
+          <TokenHeader>Ethereum Vault</TokenHeader>
 
-</HowItWorks>
+          <Tags>
+            <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
+            <Tag bordered>Innovation</Tag>
+            <Tag bordered>Save and Forget</Tag>
+          </Tags>
+
+          <TokenStats>
+            <YearlyReturns>+87.95%</YearlyReturns>
+            <Distribution>
+              <TokenFees>0%</TokenFees>
+              <TokenApy>~3%</TokenApy>
+              <TokenGrowth>~85%</TokenGrowth>
+            </Distribution>
+          </TokenStats>
+        </Token>
+
+        <Token token="BTC" development>
+          <TokenHeader>Bitcoin Vault</TokenHeader>
+
+          <Tags>
+            <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
+            <Tag bordered>Innovation</Tag>
+            <Tag bordered>Save and Forget</Tag>
+          </Tags>
+
+          <TokenStats>
+            <YearlyReturns>+159.94%</YearlyReturns>
+            <Distribution>
+              <TokenFees>0%</TokenFees>
+              <TokenApy>~3%</TokenApy>
+              <TokenGrowth>~155%</TokenGrowth>
+            </Distribution>
+          </TokenStats>
+        </Token>
+
+        <Token token="USDT" development>
+          <TokenHeader>Tether Vault</TokenHeader>
+
+          <Tags>
+            <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
+            <Tag bordered>Innovation</Tag>
+            <Tag bordered>Zero Fee Insurance</Tag>
+          </Tags>
+
+          <TokenStats>
+            <YearlyReturns>+9.59%</YearlyReturns>
+            <Distribution>
+              <TokenFees>0%</TokenFees>
+              <TokenApy>~9%</TokenApy>
+              <TokenGrowth>~0%</TokenGrowth>
+            </Distribution>
+          </TokenStats>
+        </Token>
+    </Tokens>
+</Offer>
 
 <InDevelopment>
-    ## Future of Investments is Coming
+    ## Get Exclusive <Mbr>Early Access</Mbr> to Savings Account
 
-    We're currently in the alpha stage of our innovative protocol, and we're excited to invite you to join us on this journey.
-    Be among the first to experience our innovative protocol. 
-    By joining our early access waitlist, you'll gain access to our application ahead of the general public. 
-    Your feedback and suggestions will be invaluable in shaping the future of our project.
-
-    <WaitList 
-        joinForm={
-            <>
-                ### Ready to join us?
-
-                Leave your email below to be notified when you've been added to the waitlist.
-            </>
-        }>
-            
+    Join the waitlist to receive access sooner. 
+    Only 100 spots are left for the beta test. 
+    We will notify you when your turn will come.
+    
+    <WaitList frictionRemover={
+        <span>Receive higher returns as a beta tester reward.</span>      
+    }>
         ### Thank You for Joining!
 
         You are now in our queue for early access. 
-        You can open the dashboard to see your place in the queue. 
+        you can open the dashboard to see your place in the queue. 
         Share your unique link with friends to move up in the queue and gain access sooner.
 
         <Target isExternal={false}>Open Dashboard</Target>

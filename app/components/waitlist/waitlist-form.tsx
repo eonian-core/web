@@ -34,13 +34,15 @@ export interface WaitlistFormProps {
 
   isSubmiting?: boolean
   isSubmitted?: boolean
+
+  frictionRemover: React.ReactNode
 };
 
 interface WaitlistInputs {
   email: string
 }
 
-export function WaitlistForm({ onSubmit, value, ...props }: WaitlistFormProps) {
+export function WaitlistForm({ onSubmit, value, frictionRemover, ...props }: WaitlistFormProps) {
   const { register, handleSubmit, watch, formState } = useForm<WaitlistInputs>({
     defaultValues: {
       email: value,
@@ -63,6 +65,7 @@ export function WaitlistForm({ onSubmit, value, ...props }: WaitlistFormProps) {
   })
 
   return (
+    <div className={styles.wrapper}>
         <form
             {...hoverProps}
             className={clsx(styles.form, {
@@ -100,6 +103,9 @@ export function WaitlistForm({ onSubmit, value, ...props }: WaitlistFormProps) {
                 </Button>
             </div>
         </form>
+
+        <div className={styles.frictionRemover}>{frictionRemover}</div>
+      </div>
   )
 }
 

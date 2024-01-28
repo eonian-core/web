@@ -1,0 +1,74 @@
+@import "../../../../screen.scss";
+
+.frame {
+    --border-width: 4px;
+    --max-width: var(--width-1100);
+    --max-height: 42rem; // based on card height + padding
+
+    --margin: var(--width-gap); // padding and margin are the same
+
+    width: calc(100% - var(--margin) * 2);
+    max-width: var(--max-width);
+    
+    left: max(calc(50% - var(--max-width) / 2), var(--margin));
+    
+    --height: min(90vh, var(--max-height));
+    height: var(--height);
+    max-height: var(--max-height);
+
+    top: calc(50% - var(--height) / 2); 
+    margin-bottom: var(--margin-1000);
+    
+    position: sticky; 
+    border-radius: calc(2 * var(--border-radius-400));
+
+    overflow: hidden;
+    padding: var(--border-width);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    &::before {
+        z-index: -1;
+        background: var(--color-accent-background-gradient);
+
+        animation: animatedgradient 5s ease infinite alternate;
+        background-size: 300% 300%;
+
+        border-radius: inherit;
+    }
+
+    @keyframes animatedgradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .content {
+        overflow: hidden;
+        background-color: var(--color-background-start);
+        border-radius: inherit;
+        height: 100%;
+        max-height: calc(var(--height) - 2 * var(--border-width));
+    }
+}
+
+@media (max-width: $screen-mobile) {
+    .frame {
+        --margin: var(--padding-300);
+    }
+}

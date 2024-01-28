@@ -1,0 +1,116 @@
+@import '../../../../components/styles/scrolling-text.mixin.scss';
+@import "../../../../screen.scss";
+
+h3.lostHeader {
+    position: relative;
+    top: -1rem;
+    margin-bottom: 0 !important;
+}
+
+.cardHeader {
+
+    top: 0.7rem;
+
+    @include scrolling-text(var(--line-height-1120), 2.5rem, 'wallet-card');
+
+    &>span {
+        animation: none;
+
+        top: calc(-1 * var(--line-height-1120));
+    }
+
+    &.scrolled {
+        &>span {
+            animation: ease-in-out tryToGoUp 2s forwards;
+        }
+    }
+
+    @keyframes tryToGoUp {
+        0% {
+            top: calc(-1 * var(--line-height-1120));
+        }
+
+        25% {
+            top: calc(-0.8 * var(--line-height-1120));
+        }
+
+        50% {
+            top: calc(-0.5 * var(--line-height-1120));
+        }
+
+        75% {
+            top: calc(-0.2 * var(--line-height-1120));
+        }
+    
+        100% {
+            top: calc(-1 * var(--line-height-1120));
+        }
+    }
+}
+
+.animateBackground {
+    // base styles set in info-card.module.scss
+    &::after {
+        animation: glow-effect 2s ease-in-out;
+    }
+}
+
+@media (max-width: $screen-laptop) {
+    .cardHeader {
+        top: 1rem;
+    }
+}
+
+@media (max-width: $screen-mobile) {
+    h3.lostHeader {
+        max-height: var(--font-size-1000);
+        top: -2.5rem;
+    }
+
+    .cardHeader {
+        top: 1.25rem;
+        max-width: var(--font-size-800);
+    }
+}
+
+@keyframes glow-effect {
+    0% {
+        transform: scale(0.5);
+        background-position: 100% 50%;
+    }
+
+    15% {
+        transform: scale(1);
+        background-position: 100% 50%;
+    }
+
+    30% {
+        transform: scale(1);
+        background-position: 0% 50%;
+    }
+
+    50% {
+        transform: scale(1);
+        background-position: -100% 50%;
+    }
+
+    75% {
+        transform: scale(1);
+        background-position: -100% 50%;
+    }
+
+    75% {
+        transform: scale(1);
+        background-position: -100% 50%;
+    }
+
+    90% {
+        transform: scale(1);
+        background-position: 0% 50%;
+    }
+
+    100% {
+        transform: scale(0.5);
+        background-position: 100% 50%;
+    }
+}
