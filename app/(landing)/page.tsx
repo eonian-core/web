@@ -132,6 +132,8 @@ const components = {
   Warning,
   AppearMarkOnScroll,
   AppearMark,
+  Warning,
+  UsdtIcon: () => <IconCoin symbol={CoinIcon.USDT} width={18} height={18} />,
 }
 
 export default function Home() {
