@@ -132,7 +132,7 @@ const components = {
   Warning,
   AppearMarkOnScroll,
   AppearMark,
-  Warning
+  Warning,
 }
 
 export default function Home() {
