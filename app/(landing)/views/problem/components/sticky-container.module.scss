@@ -1,0 +1,65 @@
+@import "../../../../components/styles/gradient-text.mixin.scss";
+@import "../../../../screen.scss";
+
+.container {
+    --padding: var(--padding-700);
+
+    display: flex; 
+    top: 0; 
+    left: 0; 
+
+    
+    padding: var(--padding); 
+    flex-direction: column; 
+    width: 100%; 
+
+    // inherit from rainbow frame
+    --real-height: calc(var(--height) - 2 * var(--border-width) - 2 * var(--padding));
+}
+
+.content {
+    display: flex; 
+    flex-direction: row; 
+    gap: var(--padding-600); 
+    align-items: flex-start; 
+
+    height: 100%;
+    // inherit from sticky container
+    min-height: var(--real-height);
+}
+
+@media (max-width: $screen-tablet) {
+    .container {
+        // from rainbow container
+        padding: var(--margin);
+    }
+
+    .content {
+        position: relative;
+        flex-direction: column;
+        align-items: center; 
+
+        & > div {
+            position: absolute;
+        }
+    }
+}
+
+@media (max-width: $screen-mobile) {
+
+    .container {
+        padding-top: var(--padding-400);
+        padding-bottom: var(--padding-400);
+    }
+
+}
+
+.heading {
+    display: flex; 
+    flex-direction: column; 
+
+    p {
+        margin-top: var(--margin-200);
+        max-width: var(--width-500); 
+    }
+}

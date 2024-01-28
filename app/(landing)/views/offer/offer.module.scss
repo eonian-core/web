@@ -1,0 +1,182 @@
+@import "../../../screen.scss";
+@import "../../../components/styles/gradient-text.mixin.scss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin-800);
+
+    // To prevent the effect of the section below to overlap the container.
+    position: relative;
+    z-index: 1;
+    margin-bottom: var(--margin-900);
+
+    padding: 0 var(--width-gap);
+
+    @media (max-width: $screen-mobile) {
+        width: 100%;
+        gap: var(--margin-700);
+    }
+}
+
+@media (max-width: $screen-mobile) {
+    .container {
+        padding: 0;
+
+        // To prevent the container from overflowing with glow 
+        // and the horizontal scroll bar from appearing
+        overflow: hidden;
+        margin-bottom: 0;
+        padding-bottom: var(--padding-900);
+    }
+
+    .caption,
+    .features>* {
+        padding: 0 calc(var(--width-gap) / 2);
+    }
+}
+
+
+.innerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+
+    mark {
+        @include gradient-text(var(--color-primary-gradient));
+    }
+
+    h2 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 700;
+        color: var(--color-text-300);
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+
+}
+
+.caption {
+
+    p {
+        margin-top: var(--margin-200);
+        font-size: var(--font-size-600);
+        color: var(--color-text-350);
+    }
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin-300);
+
+    a {
+        text-decoration: none;
+        color: var(--color-text-300);
+
+        &:hover {
+            color: var(--color-text-100);
+        }
+
+    }
+}
+
+.featuresList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-width: var(--width-1000);
+}
+
+// Place features chips in one scrollable line (for mobile)
+@media (max-width: $screen-mobile) {
+    .features {
+        gap: var(--margin-200);
+        overflow: hidden;
+    }
+    
+    .featuresListWrapper {
+        position: relative;
+        padding-right: 0;
+        padding-left: 0;
+
+        &::before {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: calc(var(--width-gap) / 2);
+            background: linear-gradient(to left, rgba(0,0,0,0), var(--color-background-start));
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 3rem;
+            background: linear-gradient(to right, rgba(0,0,0,0), var(--color-background-start));
+        }
+    }
+
+    .featuresListContent {
+        overflow-x: scroll;
+    }
+
+    .featuresList {
+        min-width: 28rem;    
+        padding: 0 calc(var(--width-gap) / 2);
+        padding-bottom: var(--padding-200);
+
+        &>* {
+            flex-shrink: 0;
+        }
+    }
+}
+
+.tokens {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+// Stack tokens
+@media (max-width: $screen-mobile) {
+    .tokens {
+        display: grid;
+        grid-template-columns: 1fr;
+
+        &>* {
+            grid-row-start: 1;
+            grid-column-start: 1;
+
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+}
+
+@media (max-width: $screen-laptop) {
+    .container {
+        h2 {
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+    }
+}

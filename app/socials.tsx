@@ -41,7 +41,7 @@ export const socials: LocalesSocials = {
     {
       name: 'Discord',
       icon: <IconDiscord />,
-      href: 'https://discord.gg/8mcUPPYJmj',
+      href: 'https://discord.gg/eonian-dao-1038654076533092422',
     },
     {
       name: 'YouTube',

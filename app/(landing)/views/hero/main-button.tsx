@@ -1,3 +1,4 @@
+import IconBxsMessageRoundedCheck from '../../../components/icons/icon-bxs-message-rounded-check'
 import IconRobot from '../../../components/icons/icon-robot'
 import { useWaitlist } from '../../../providers/waitlist'
 import HeroButton from './button-group/hero-button'
@@ -10,23 +11,23 @@ export function MainButton() {
 
   if (process.env.NEXT_PUBLIC_FEATURE_EARN_PAGE === 'true') {
     return (
-            <HeroButton href="/earn" bold>
-                Earn
-            </HeroButton>
+      <HeroButton href="/earn" bold>
+        Earn
+      </HeroButton>
     )
   }
 
   if (!isJoined) {
     return (
-            <HeroButton href="#future-of-investments-is-coming" icon={<IconRobot />}>
-                Join the Waitlist
-            </HeroButton>
+      <HeroButton href="#future-of-investments-is-coming" icon={<IconBxsMessageRoundedCheck />}>
+        Join the Waitlist
+      </HeroButton>
     )
   }
 
   return (
-        <HeroButton onClick={openDashboard} icon={<IconRobot />}>
-            Open Dashboard
-        </HeroButton>
+    <HeroButton onClick={openDashboard} icon={<IconRobot />}>
+      Open Dashboard
+    </HeroButton>
   )
 }

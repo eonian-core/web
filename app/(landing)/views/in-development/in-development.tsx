@@ -1,3 +1,4 @@
+import { ClientOnly } from '../../../components/client-only/client-only'
 import Container from '../../../components/contrainer/container'
 import FadeInList from '../../../components/fade-in/fade-in-list'
 import { useIsTabletOrSmaller } from '../../../components/resize-hooks/screens'
@@ -15,7 +16,9 @@ export function InDevelopment({ children }: ContainerProps) {
   return (
     <Container className={styles.pageContainer}>
       <div className={styles.inDevelopmentWrapper}>
-        <InDevelopmentParallax />
+        <ClientOnly>
+          <InDevelopmentParallax />
+        </ClientOnly>
 
         <FadeInList
           className={styles.inDevelopment}
