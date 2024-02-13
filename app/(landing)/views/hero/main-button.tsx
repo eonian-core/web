@@ -19,7 +19,7 @@ export function MainButton() {
 
   if (!isJoined) {
     return (
-      <HeroButton href="#future-of-investments-is-coming" icon={<IconBxsMessageRoundedCheck />}>
+      <HeroButton href="#get-exclusive-to-savings-account" icon={<IconBxsMessageRoundedCheck />}>
         Join the Waitlist
       </HeroButton>
     )
