@@ -28,8 +28,8 @@
     "node": ">=18.17.1 <19.0.0"
   },
   "dependencies": {
-    "@apollo/client": "3.8.0-rc.0",
-    "@apollo/experimental-nextjs-app-support": "0.3.4",
+    "@apollo/client": "3.10.4",
+    "@apollo/experimental-nextjs-app-support": "0.10.1",
     "@auth0/auth0-react": "^2.1.1",
     "@mdx-js/loader": "2.3.0",
     "@mdx-js/react": "2.3.0",
