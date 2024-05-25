@@ -17,8 +17,7 @@ const BackgroundTextScreenMap = {
 
 export function SolutionParallax() {
   const screen = useScreenName()
-  const position = BackgroundTextScreenMap[screen || ScreenName.DESKTOP]
-
+  const position = BackgroundTextScreenMap[screen || ScreenName.SMALL_MOBILE]
   return (
     <ParallaxContainer className={styles.solutionParalax}>
       <ParallaxBlock

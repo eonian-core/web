@@ -1,0 +1,29 @@
+@import "../../../../components/styles/gradient-text.mixin.scss";
+@import "../../../../screen.scss";
+
+h2.heading,
+h3.heading {
+    font-size: var(--font-size-850);
+    line-height: var(--line-height-750);
+    font-weight: var(--font-bold);
+    color: var(--color-text-300);
+
+    mark {
+        @include gradient-text(var(--color-primary-gradient));
+    }
+}
+
+h3.heading {
+    font-size: var(--font-size-700);
+}
+
+
+@media (max-width: $screen-mobile) {
+    h2.heading {
+        font-size: var(--font-size-800);
+    }
+
+    h3.heading {
+        line-height: var(--line-height-600);
+    }
+}

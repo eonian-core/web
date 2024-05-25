@@ -14,6 +14,17 @@ $border-radius: 9999px;
 	}
 }
 
+.wrapper {
+    margin-top: var(--margin-500);
+    margin-bottom: var(--margin-800);
+    max-width: var(--width-500);
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
 .form {
     position: relative;
 
@@ -26,12 +37,17 @@ $border-radius: 9999px;
     padding: var(--padding-10);
 
     transition: all 1s;
-    margin-top: var(--margin-500);
-    margin-bottom: var(--margin-1200);
+
+    background-color: rgba(102, 32, 194, 0.726);
 
     label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
         position: absolute;
-        top: 30%;
+        top: 50%;
+        transform: translateY(-50%);
         left: var(--padding-650);
         transition: 0.3s;
         transition-delay: 0.1s;
@@ -60,18 +76,10 @@ $border-radius: 9999px;
             font-size: var(--font-size-200);
             top: calc(var(--padding-350) * -1);
             left: var(--padding-100);
+            transform: translateY(-15%);
             box-shadow: 3px -2px 3px 1px var(--color-background-start), -3px -2px 3px 1px var(--color-background-start);
         }
     }
-
-    background: linear-gradient(to right bottom,
-        hsla(0, 0%, 100%, 0.502),
-        hsla(0, 0%, 100%, 0.251),
-        hsla(0, 0%, 100%, 0.527),
-        hsla(0, 0%, 100%, 0.541),
-        hsla(0, 0%, 100%, 0.205),
-        hsla(0, 0%, 100%, 0.301),
-        hsla(0, 0%, 100%, 0.502));
 
     &:before {
         content: "";
@@ -244,6 +252,11 @@ $border-radius: 9999px;
 
 }
 
+.frictionRemover {
+    margin-top: var(--margin-50);
+    color: var(--color-text-400);
+}
+
 @keyframes ripple {
     0% {
       transform: scale(0, 0);
@@ -327,12 +340,21 @@ $border-radius: 9999px;
     animation: fadeInWidth 1s;
 }
 
+@media (max-width: $screen-tablet) {
+    .wrapper {
+        margin-bottom: var(--margin-1000);
+    }
+}
+
 
 
 @media (max-width: $screen-mobile) {
 
-    .form {
+    .wrapper {
         margin-bottom: var(--margin-500);
+    }
+
+    .form {
 
         label {
             font-size: var(--font-size-200);

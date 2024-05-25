@@ -13,4 +13,9 @@
 
     font-size: var(--font-size-700);
     color: var(--color-text-350);
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:focus {
+      transition: background-color 0s 600000s, color 0s 600000s;
+    }
 }

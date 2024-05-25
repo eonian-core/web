@@ -11,7 +11,7 @@ interface SlidingFooterProps {
 }
 
 // Optional: set a default value to prevent scroll bar jitter
-const minFooterHeight = 450
+const minFooterHeight = 476
 
 const SlidingFooter: React.FC<SlidingFooterProps> = ({ children, footer }) => {
   const footerRef = React.useRef<HTMLDivElement>(null)
@@ -21,7 +21,8 @@ const SlidingFooter: React.FC<SlidingFooterProps> = ({ children, footer }) => {
   // Set content's margin as footer's height
   useOnResizeEffect(() => {
     const { current: footer } = footerRef
-    setMargin(Math.max(footer?.offsetHeight ?? 0, minFooterHeight))
+    const margin = Math.max(footer?.offsetHeight ?? 0, minFooterHeight)
+    setMargin(margin - 1) // Substract 1 to eliminate 1 pixel gap between footer and content container
   }, [])
 
   return (

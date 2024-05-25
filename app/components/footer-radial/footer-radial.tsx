@@ -16,7 +16,11 @@ export const LandingOnlyRadial: React.FC<FooterRadialProps> = (props) => {
     return null
   }
 
-  return <FooterRadial {...props} />
+  return (
+    <div className="absolute bottom-0 overflow-hidden w-full h-screen -z-10">
+      <FooterRadial {...props} />
+    </div>
+  )
 }
 
 export default LandingOnlyRadial

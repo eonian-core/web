@@ -1,0 +1,36 @@
+
+@mixin scrolling-text($line-height, $width, $unique-id) {
+    display: inline-block;
+    height: $line-height;
+    line-height: $line-height;
+    position: relative;
+    overflow: hidden;
+    width: $width;
+
+    &>span {
+        position: absolute;
+        top: 0;
+        animation: slide-#{$unique-id} 7s infinite;
+        font-weight: bold;
+    
+    }
+
+    @keyframes slide-#{$unique-id} {
+        0% {
+            top: 0;
+        }
+    
+        25% {
+            top: calc(-1 * $line-height);
+        }
+    
+        50% {
+            top: calc(-2 * $line-height);
+        }
+    
+        75% {
+            top: calc(-3 * $line-height);
+        }
+    }
+}
+

@@ -14,9 +14,9 @@ import styles from './in-development-parallax.module.scss'
 import Neon64Pic from './assets/neon-46.png'
 
 const BackgroundTextScreenMap = {
-  [ScreenName.ULTRA_WIDE]: { x: 0.3, y: -1.4 },
-  [ScreenName.DESKTOP]: { x: 0.3, y: -1.5 },
-  [ScreenName.LAPTOP]: { x: 0.3, y: -1.5 },
+  [ScreenName.ULTRA_WIDE]: { x: 0.3, y: -2 },
+  [ScreenName.DESKTOP]: { x: 0.3, y: -2 },
+  [ScreenName.LAPTOP]: { x: 0.4, y: -1.7 },
   [ScreenName.TABLET]: { x: 0.25, y: -1.55 },
   [ScreenName.MOBILE]: { x: 0.1, y: '-60rem' },
   [ScreenName.SMALL_MOBILE]: { x: -0.05, y: '-27rem' },

@@ -59,10 +59,12 @@ export function ParallaxBlock({
 }
 
 /** Use scroll progress to calculate new y position of parallax block */
-export function useParallaxProgress(scrollYProgress: MotionValue<number>,
+export function useParallaxProgress(
+  scrollYProgress: MotionValue<number>,
   halfSize: number,
   scale: number,
-  spring: Motion.SpringOptions = {}) {
+  spring: Motion.SpringOptions = {},
+) {
   const diff = halfSize * scale * 10
 
   const transform = useTransform(scrollYProgress, [1, 0], [-diff, diff])

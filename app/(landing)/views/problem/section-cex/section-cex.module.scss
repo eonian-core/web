@@ -1,0 +1,91 @@
+@import '../../../../components/styles/scrolling-text.mixin.scss';
+@import '../../../../components/styles/ripple.animation.scss';
+@import "../../../../screen.scss";
+
+.scrollingCex {
+    top: 0.3rem;
+    @include scrolling-text(var(--font-size-850), 10rem, 'cex');
+}
+
+.cardHeader {
+    @include scrolling-text(var(--line-height-1120), 10rem, 'cex-card');
+
+    &>span {
+        animation: none;
+
+        top: calc(-1 * var(--line-height-1120));
+    }
+
+    &.scrolled {
+        &>span {
+            animation: goUp 1s forwards;
+            animation-delay: 0.5s;
+        }
+    }
+
+    @keyframes goUp {
+        0% {
+            top: calc(-1 * var(--line-height-1120));
+        }
+    
+        100% {
+            top: 0;
+        }
+    }
+}
+
+.animateBackground {
+    // base styles set in info-card.module.scss
+    &::after {
+        animation: glow-effect 2s cubic-bezier(.65, 0, .34, 1);
+    }
+}
+
+.cexHeaderBut {
+    @media (max-width: $screen-tablet) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media (max-width: $screen-laptop) {
+    .secondCardHeader {
+        font-size: var(--font-size-1120) !important;
+        max-height: var(--line-height-1000);
+    }
+}
+
+@media (max-width: $screen-tablet) {
+    .scrollingCex {
+        top: 0.4rem;
+    }
+}
+
+@keyframes glow-effect {
+    0% {
+        transform: scale(0.5);
+        background-position: 100% 50%;
+    }
+
+    15% {
+        transform: scale(1);
+        background-position: 100% 50%;
+    }
+
+    30% {
+        transform: scale(1);
+        background-position: 0% 50%;
+    }
+
+    75% {
+        transform: scale(1);
+        background-position: -100% 50%;
+    }
+
+    100% {
+        transform: scale(0.5);
+        background-position: 0% 50%;
+    }
+}
