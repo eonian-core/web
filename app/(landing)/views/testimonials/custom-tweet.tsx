@@ -1,7 +1,6 @@
 import type { Tweet } from 'react-tweet/api'
 import {
   QuotedTweet,
-  TweetActions,
   TweetBody,
   TweetContainer,
   TweetHeader,
@@ -56,7 +55,6 @@ function TweetComponent({ tweet: simpleTweet, components }: TweetComponentProps)
       {tweet.mediaDetails?.length ? <TweetMedia tweet={tweet} components={components} /> : null}
       {tweet.quoted_tweet && <QuotedTweet tweet={tweet.quoted_tweet} />}
       <TweetInfo tweet={tweet} />
-      {/* <TweetActions tweet={tweet} /> */}
     </TweetContainer>
   )
 }

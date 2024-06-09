@@ -1,6 +1,5 @@
-import React, { useEffect, useLayoutEffect } from 'react'
+import React from 'react'
 
-import { motion, useTime } from 'framer-motion'
 import { useIsDesktopOrSmaller } from '../../../components/resize-hooks/screens'
 import IconChevron from '../../../components/icons/icon-chevron'
 import Button from '../../../components/button/button'
