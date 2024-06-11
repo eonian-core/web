@@ -6,6 +6,7 @@ import Button from '../../../components/button/button'
 import { WrapperLink } from '../../../components/links/wrapper-link'
 import type { LinkWithIconProps } from '../../../components/links/links'
 import Container from '../../../components/contrainer/container'
+import { showEarn } from '../../../features'
 import styles from './testimonials.module.scss'
 import CustomTweet from './custom-tweet'
 import StaticContent from './static-content'
@@ -18,6 +19,9 @@ export default function Testimonials({ children }: React.PropsWithChildren<Props
 
 Testimonials.CTA = function CTA({ children, href }: React.PropsWithChildren<LinkWithIconProps>) {
   const isDesktop = useIsDesktopOrSmaller()
+  if (!showEarn) {
+    return null
+  }
   return (
     <WrapperLink href={href}>
       <Button size={isDesktop ? 'md' : 'lg'} icon={<IconChevron />} dark wide round bordered iconPosition="right">

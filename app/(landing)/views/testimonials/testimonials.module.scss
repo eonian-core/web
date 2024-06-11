@@ -57,8 +57,12 @@
     animation: scroll-vertical 40s linear infinite;
   }
 
+  .ribbon {
+    animation-delay: -20s;
+  }
+
   .ribbonMirror {
-    animation-delay: 20s;
+    animation-delay: 0s;
   }
 }
 
