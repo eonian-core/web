@@ -38,9 +38,7 @@
 
 .ribbonContainer {
   flex: 1;
-
   display: grid;
-  place-content: center;
 
   > * {
     grid-area: 1 / 1;
