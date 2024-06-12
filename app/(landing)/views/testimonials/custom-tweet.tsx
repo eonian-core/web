@@ -12,7 +12,6 @@ import {
   type TwitterComponents,
   enrichTweet,
 } from 'react-tweet'
-import { unstable_cache } from 'next/cache'
 import { Suspense } from 'react'
 import { getTweet } from './get-tweet'
 
