@@ -13,14 +13,12 @@ import {
   enrichTweet,
 } from 'react-tweet'
 import { unstable_cache } from 'next/cache'
-import { getTweet as _getTweet } from 'react-tweet/api'
 import { Suspense } from 'react'
+import { getTweet } from './get-tweet'
 
 interface Props {
   id: string
 }
-
-const getTweet = unstable_cache(async (id: string) => _getTweet(id), ['tweet'], { revalidate: 3600 * 24 })
 
 export default function CustomTweet({ id }: Props) {
   return (
