@@ -1,10 +1,10 @@
-# Web application
+# Eonian WEB App
 
-This is Eonian Farm yield aggregator UI dApp.
+This is a repository for [the Eonian](https://eonian.finance) lending site and savings account application.
 
 ## Requirements
 
-* NodeJS v16 or higher
+* NodeJS v18 or higher
 
 ## Development
 
@@ -29,7 +29,7 @@ To start it locally, use the following command:
 npm run storybook
 ```
 
-Storybook will be available at [http://localhost:6006](http://localhost:6006) (or another port if it is busy).
+The Storybook will be available at [http://localhost:6006](http://localhost:6006) (or another port if it is busy).
 
 ### GraphQl API
 
