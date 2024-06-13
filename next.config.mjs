@@ -5,7 +5,7 @@ import createMDX from '@next/mdx'
 const nextConfig = {
   // Adds mdx support
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     // https://github.com/WalletConnect/walletconnect-monorepo/issues/1908#issue-1559239983
     config.externals.push('pino-pretty', 'lokijs')
 
@@ -14,13 +14,6 @@ const nextConfig = {
       'utf-8-validate': 'commonjs utf-8-validate',
       'bufferutil': 'commonjs bufferutil',
     })
-
-    if (!isServer) {
-      config.resolve = {
-        ...config.resolve,
-        fallback: { fs: false, path: false },
-      }
-    }
 
     return config
   },

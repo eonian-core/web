@@ -60,7 +60,6 @@ import {
   YearlyReturns,
 } from './views/offer/token'
 import Warning from './views/hero/warning'
-import Testimonials from './views/testimonials/testimonials'
 
 const components = {
   Hero,
@@ -133,7 +132,6 @@ const components = {
   Warning,
   AppearMarkOnScroll,
   AppearMark,
-  Testimonials,
 }
 
 export default function Home() {
