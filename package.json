@@ -100,7 +100,6 @@
     "logrocket-cli": "^0.13.1",
     "opener": "^1.5.2",
     "postcss": "^8.4.32",
-    "react-tweet": "^3.2.1",
     "rehype-external-links": "^2.0.1",
     "sass": "^1.60.0",
     "serve": "^14.2.0",
