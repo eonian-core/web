@@ -1,8 +1,8 @@
-import React from 'react';
-import styles from './social-proof.module.scss';
+import React from 'react'
+import styles from './social-proof.module.scss'
 
 interface socialProofHeaderProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const SocialProofHeader: React.FC<socialProofHeaderProps> = ({ children }) => {
@@ -10,7 +10,7 @@ const SocialProofHeader: React.FC<socialProofHeaderProps> = ({ children }) => {
     <div className={`${styles.socialProofHeader}`}>
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default SocialProofHeader;
+export default SocialProofHeader
