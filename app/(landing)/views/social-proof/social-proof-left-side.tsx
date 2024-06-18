@@ -1,8 +1,8 @@
-import React from 'react';
-import styles from './social-proof.module.scss';
+import React from 'react'
+import styles from './social-proof.module.scss'
 
 interface SocialProofLeftSideProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const SocialProofLeftSide: React.FC<SocialProofLeftSideProps> = ({ children }) => {
@@ -10,7 +10,7 @@ const SocialProofLeftSide: React.FC<SocialProofLeftSideProps> = ({ children }) =
     <div className={`${styles.socialProofLeftSide}`}>
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default SocialProofLeftSide;
+export default SocialProofLeftSide

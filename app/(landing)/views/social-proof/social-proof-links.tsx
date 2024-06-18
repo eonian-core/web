@@ -1,6 +1,6 @@
-import { useLocalSocials } from '../../../socials' 
+import { useLocalSocials } from '../../../socials'
 import ExternalLink from '../../../components/links/external-link'
-import styles from './social-proof.module.scss';
+import styles from './social-proof.module.scss'
 
 const SocialProofLinks: React.FC = () => {
   const socials = useLocalSocials()
@@ -16,4 +16,4 @@ const SocialProofLinks: React.FC = () => {
   </div>
 }
 
-export default SocialProofLinks;
+export default SocialProofLinks
