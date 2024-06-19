@@ -21,7 +21,8 @@
 }
 
 .content {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); // fix https://stackoverflow.com/questions/47601564/equal-width-columns-in-css-grid
   width: 100%;
   min-height: 70vw;
   margin-top: var(--margin-400);
@@ -39,6 +40,8 @@
 .ribbonContainer {
   flex: 1;
   display: grid;
+
+  justify-content: center;
 
   > * {
     grid-area: 1 / 1;
@@ -74,6 +77,21 @@
   }
 }
 
+.tweetContainer {
+  max-width: var(--width-500);
+}
+
+@media (max-width: $screen-desktop) { 
+  .content {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ribbonContainer:nth-child(3) {
+    display: none;
+  }
+}
+
+
 @media (max-width: $screen-tablet) {
   .testimonials {
     height: auto;
@@ -81,6 +99,7 @@
   }
 
   .content {
+    display: flex;
     flex-direction: column;
     mask-image: linear-gradient(
       to left,
@@ -112,6 +131,10 @@
       transform: translateX(-100%);
       animation-direction: reverse;
     }
+  }
+
+  .ribbonContainer:nth-child(3) {
+    display: grid;
   }
 
   .tweetContainer {
