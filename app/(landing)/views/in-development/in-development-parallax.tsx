@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import clsx from 'clsx'
 
 import ParallaxContainer from '../../../components/parallax/parallax-container'
 import {
@@ -57,6 +56,7 @@ export function InDevelopmentParallax() {
 
 export default InDevelopmentParallax
 
+/** Neon image */
 export function NeonImage() {
   return <div className={styles.imageContainer}>
     <Image src={Neon64Pic} alt="Abstract neon cicrle" placeholder="blur" />
