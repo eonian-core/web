@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import clsx from 'clsx'
 
 import ParallaxContainer from '../../../components/parallax/parallax-container'
 import {
