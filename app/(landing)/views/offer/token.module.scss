@@ -1,20 +1,5 @@
 @import '../../../screen.scss';
 
-@keyframes animatedGradient {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-
 .token {
     position: relative;
 
@@ -39,12 +24,9 @@
         background: linear-gradient(to bottom right, #a166ab, #333399, #5073b8, #2657eb, #2657eb);
         border-radius: calc(2 * var(--border-radius-400));
         z-index: -1;
-        animation: animatedGradient 3s ease alternate infinite;
         background-size: 300% 300%;
         mix-blend-mode: screen;
-
-        filter: blur(2rem);
-
+        filter: blur(2em);
         transition: filter 0.5s ease;
     }
 
@@ -311,7 +293,7 @@
 }
 
 .borderedTag {
-    background-color: rgba(#fff, 0.5);
+    background-color: rgba(#fff, 0.15);
     color: var(--color-text-700);
     font-weight: var(--font-medium);
 }
