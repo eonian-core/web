@@ -12,7 +12,7 @@ import { useAppDispatch } from '../../store/hooks'
 import { fetchPositionInfo } from '../../store/slices/positionInfoSlice'
 import styles from './vault-grid.module.scss'
 import { NetworkSelector } from './network-selector'
-import { VaultCard } from './vault-card/vault-card'
+import { BaseVaultCard, VaultCard } from './vault-card/vault-card'
 
 export type VaultsByChain = Record<ChainId, Vault[]>
 
@@ -38,11 +38,19 @@ export function VaultGrid({ vaultsByChain }: Props) {
         <NetworkSelector value={chainId} onChange={setChainId} />
       </div>
       <div className={styles.cards}>
-        {vaults.map((vault) => {
-          return <VaultCard chainName={chainName} key={vault.address} vault={vault} />
-        })}
+        {vaults.map(vault => <VaultCard chainName={chainName} key={vault.address} vault={vault} />)}
+        {chainId === ChainId.BSC_MAINNET && <ComingSoonBNBVaults />}
       </div>
     </div>
+  )
+}
+
+function ComingSoonBNBVaults() {
+  return (
+    <>
+      <BaseVaultCard symbol="BNB" apy={3} growth={143.50} buttonLabel="Coming soon" />
+      <BaseVaultCard symbol="DAI" apy={10} growth={0} buttonLabel="Coming soon" />
+    </>
   )
 }
 

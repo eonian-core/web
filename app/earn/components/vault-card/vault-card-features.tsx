@@ -31,6 +31,7 @@ export function getYearPastPriceUSD(vault: Vault): number {
   const price: Record<TokenSymbol, number> = {
     ETH: 2121,
     BTC: 34500,
+    BNB: 251,
     USDT: 1,
     USDC: 1,
     DAI: 1,
@@ -53,6 +54,7 @@ export function getVaultName(symbol: TokenSymbol): string {
     USDT: 'Tether Vault',
     USDC: 'USD Coin Vault',
     DAI: 'DAI Vault',
+    BNB: 'BNB Vault',
   }
   return vaultName[symbol]
 }
@@ -68,6 +70,14 @@ export function getTags(symbol: TokenSymbol): React.ReactNode {
         </>
       )
     case 'BTC':
+      return (
+        <>
+          <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
+          <Tag bordered>Blue-chip</Tag>
+          <Tag bordered>Save and Forget</Tag>
+        </>
+      )
+    case 'BNB':
       return (
         <>
           <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>

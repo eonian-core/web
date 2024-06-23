@@ -68,6 +68,13 @@
         }
     }
 
+
+    &.BNB, &.DAI {
+        &::after {
+            background: none;
+        } 
+    }
+
     &:hover {
         &::after {
             filter: blur(3rem);
@@ -136,6 +143,15 @@
     }
 }
 
+.BNB, .DAI {
+    opacity: 0.75;
+    .content {
+        &::before {
+            background: none;
+        }
+    }
+}
+
 .logo {
     position: absolute;
     width: 15rem;
@@ -156,6 +172,10 @@
 
     &.USDT {
         opacity: 0.2;
+    }
+
+    &.DAI {
+        opacity: 0.3;
     }
 
 }
@@ -237,6 +257,22 @@
             }
         }
     }
+
+    &.BNB {
+        h3 {
+            &::after {
+                border-right-color: #f0b90b;
+            }
+        }
+    }
+
+    &.DAI {
+        h3 {
+            &::after {
+                border-right-color: #f5ae34;
+            }
+        }
+    }
 }
 
 .token:hover {
@@ -275,7 +311,9 @@
 }
 
 .borderedTag {
+    background-color: rgba(#fff, 0.5);
     color: var(--color-text-700);
+    font-weight: var(--font-medium);
 }
 
 .symbol {

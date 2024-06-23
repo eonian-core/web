@@ -1,3 +1,4 @@
+import type { TokenSymbol } from '../../../(landing)/views/offer/token'
 import {
   Distribution,
   Tags,
@@ -24,9 +25,22 @@ export function VaultCard({ chainName, vault }: Props) {
   const apy = calculateVaultAPY(vault, 100)
   const growth = getGrowthPercent(vault)
   const href = `/earn/${chainName}/${vault.symbol}`
+  return <BaseVaultCard href={href} symbol={symbol} balance={<VaultUserBalance vault={vault} />} apy={apy} growth={growth} />
+}
+
+interface BaseProps {
+  symbol: TokenSymbol
+  balance?: React.ReactNode
+  apy: number
+  growth: number
+  href?: string
+  buttonLabel?: string
+}
+
+export function BaseVaultCard({ symbol, balance, href, apy, growth, buttonLabel }: BaseProps) {
   return (
     <div>
-      <Token token={symbol} balance={<VaultUserBalance vault={vault} />} href={href}>
+      <Token token={symbol} balance={balance} href={href} buttonLabel={buttonLabel}>
         <TokenHeader>{getVaultName(symbol)}</TokenHeader>
         <Tags>{getTags(symbol)}</Tags>
         <TokenStats>

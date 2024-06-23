@@ -12,9 +12,11 @@ import BtcImage from './image/BTC_logo.png'
 import EthImage from './image/ETH_logo.png'
 import UsdtImage from './image/USDT_logo.png'
 import UsdcImage from './image/USDC_logo.png'
+import BnbImage from './image/BNB_logo.png'
+import DaiImage from './image/DAI_logo.png'
 import { Chip } from './chip'
 
-export type TokenSymbol = 'ETH' | 'BTC' | 'USDT' | 'USDC' | 'DAI'
+export type TokenSymbol = 'ETH' | 'BTC' | 'USDT' | 'USDC' | 'DAI' | 'BNB'
 
 export interface TokenProps {
   /** Used for displaying symbol and extract stats */
@@ -22,12 +24,13 @@ export interface TokenProps {
   development?: boolean
   balance?: React.ReactNode
   href?: string
+  buttonLabel?: string
 }
 
 export const TokenContext = createContext<TokenProps>({ token: 'ETH', development: true })
 export const useToken = () => useContext(TokenContext)
 
-export function Token({ token, children, development, balance, href }: PropsWithChildren<TokenProps>) {
+export function Token({ token, children, development, balance, href, buttonLabel }: PropsWithChildren<TokenProps>) {
   return (
     <div className={clsx(styles.token, styles[token])}>
       <TokenContext.Provider value={{ token, development }}>
@@ -36,7 +39,7 @@ export function Token({ token, children, development, balance, href }: PropsWith
 
           {children}
 
-          <Action {...{ token, development, balance, href }} />
+          <Action {...{ token, development, balance, href, buttonLabel }} />
         </div>
       </TokenContext.Provider>
     </div>
@@ -128,7 +131,7 @@ export function TokenGrowth({ children }: PropsWithChildren) {
   )
 }
 
-export function Action({ development, balance, href }: TokenProps) {
+export function Action({ development, balance, href, buttonLabel }: TokenProps) {
   return (
     <div className={styles.action}>
       {balance && (
@@ -165,7 +168,7 @@ export function Action({ development, balance, href }: TokenProps) {
   function CTAButton() {
     return (
       <Button size="lg" dark className={styles.actionButton}>
-        {development ? 'Join the Waitlist' : 'Save'}
+        {buttonLabel || (development ? 'Join the Waitlist' : 'Save')}
       </Button>
     )
   }
@@ -177,7 +180,8 @@ const logos = {
   ETH: EthImage,
   USDT: UsdtImage,
   USDC: UsdcImage,
-  DAI: UsdcImage,
+  DAI: DaiImage,
+  BNB: BnbImage,
 }
 
 function Logo({ token }: TokenProps) {
