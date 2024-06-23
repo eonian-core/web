@@ -1,7 +1,7 @@
 const path = require('path')
 
 const buildEslintCommand = (filenames) =>
-  `next lint -c ./.eslintrc.cjs --fix --file ${filenames
+  `npm run format -- --file ${filenames
     .map((f) => `"${path.relative(process.cwd(), f)}"`)
     .join(' --file ')}`
  
