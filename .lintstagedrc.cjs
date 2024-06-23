@@ -1,7 +1,7 @@
 const path = require('path')
 
 const buildEslintCommand = (filenames) =>
-  `npm run format`
+  `npm run format -- ${buildFilesOptions(filenames)}`
  
 const buildFilesOptions = (filenames) =>
   `--file ${filenames
