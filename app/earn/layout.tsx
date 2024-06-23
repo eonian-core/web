@@ -2,6 +2,7 @@ import React from 'react'
 import type { Metadata } from 'next'
 
 import { overrideMetadata } from '../meta'
+import {clsx} from 'clsx'
 import styles from './layout.module.scss'
 
 export default function EarnLayout({ children }: React.PropsWithChildren) {

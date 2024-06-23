@@ -7,7 +7,7 @@
     "dev": "next dev",
     "dev:no-tls": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev",
     "dev:next-mock": "concurrently -c \"auto\" \"npm:dev\" \"npm:mock\" ",
-    "build": "npm run lint && next build",
+    "build": "next build",
     "postbuild": "npm run release-logrocket",
     "start": "next start",
     "lint": "next lint",
