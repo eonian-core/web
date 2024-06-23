@@ -1,6 +1,10 @@
-@import "../screen.scss";
+@import '../screen.scss';
 
 .main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   min-height: 100vh;
   width: 100%;
 
@@ -12,7 +16,8 @@
   }
 }
 
-.loading, .error {
+.loading,
+.error {
   display: flex;
   flex-direction: column;
   align-items: center;

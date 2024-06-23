@@ -21,7 +21,6 @@ export default async function Page() {
   return (
     <div className={styles.page}>
       <VaultGrid vaultsByChain={vaultsByChain} />
-      {/* <VaultList vaultsByChain={vaultsByChain} /> */}
     </div>
   )
 }
