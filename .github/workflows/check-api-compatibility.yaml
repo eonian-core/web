@@ -30,18 +30,18 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "18"
-          cache: "yarn"
+          cache: "npm"
 
       - name: Install dependencies
-        run: yarn --ignore-scripts
+        run: npm i --ignore-scripts
 
       - name: Generate types
         run: |-
           cd packages/web
-          yarn gen:gql-types
+          npm run gen:gql-types
 
       - name: Build dApp
         run: |-
           cd packages/web
-          yarn build
+          npm run build
 
