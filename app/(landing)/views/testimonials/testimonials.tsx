@@ -44,14 +44,14 @@ Testimonials.Ribbon = function Ribbon({ children }: React.PropsWithChildren) {
   )
 }
 
-const TestimonialsList = ({className, testimonials}: {className: string, testimonials: Array<any>}) => (
-  <ul className={className}>
+function TestimonialsList({ className, testimonials }: { className: string; testimonials: Array<any> }) {
+  return <ul className={className}>
     {testimonials.map((child, index) => (
       <li className={styles.tweetContainer} key={index} data-index={index}>
         <StaticContent>{child}</StaticContent>
       </li>
     ))}
   </ul>
-)
+}
 
 Testimonials.Tweet = CustomTweet
