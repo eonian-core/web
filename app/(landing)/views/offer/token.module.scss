@@ -52,16 +52,19 @@
     &.BTC {
         &::after {
             background: linear-gradient(to bottom right, #f79533, #f37055, hsl(31, 97%, 72%), #ef4e7b);
-            background-size: 300% 300%;
-            animation: animatedGradient 5s ease alternate infinite;
         }
     }
 
     &.USDT {
         &::after {
             background: linear-gradient(to bottom right, hsl(142, 71%, 45%), hsl(141, 79%, 85%), hsl(144, 61%, 20%));
-            background-size: 300% 300%;
-            animation: animatedGradient 5s ease alternate infinite;
+
+        }
+    }
+
+    &.USDC {
+        &::after {
+            background: linear-gradient(to bottom right, #a166ab, #333399, #5073b8, #2657eb, #2657eb);
         }
     }
 
@@ -119,6 +122,16 @@
     .content {
         &::before {
             background-color: hsla(142, 71%, 45%, 60%);
+        }
+    }
+}
+
+.USDC {
+    .content {
+        &::before {
+            background-color: #2276CB;
+            filter: blur(5rem);
+            transform: scale(1.5);
         }
     }
 }
@@ -213,6 +226,14 @@
         h3 {
             &::after {
                 border-right-color: var(--color-success-600);
+            }
+        }
+    }
+
+    &.USDC {
+        h3 {
+            &::after {
+                border-right-color: #2276CB;
             }
         }
     }
