@@ -24,8 +24,8 @@
 
     background: linear-gradient(210deg,
             var(--color-neutral-300) 5%,
-            var(--color-neutral-100) 35%,
-            var(--color-dark-100) 85%);
+            var(--color-neutral-200) 35%,
+            var(--color-neutral-100) 85%);
     border-radius: var(--border-radius-600);
 
     &::after {
@@ -344,6 +344,10 @@
 .actionButton {
     width: 100%;
     margin-top: var(--margin-200);
+
+    &:last-child {
+        margin-bottom: var(--margin-200);
+    }
 }
 
 .insuranceInducator {

@@ -10,9 +10,10 @@ import styles from './token.module.scss'
 import BtcImage from './image/BTC_logo.png'
 import EthImage from './image/ETH_logo.png'
 import UsdtImage from './image/USDT_logo.png'
+import UsdcImage from './image/USDC_logo.png'
 import { Chip } from './chip'
 
-export type TokenSymbol = 'ETH' | 'BTC' | 'USDT'
+export type TokenSymbol = 'ETH' | 'BTC' | 'USDT' | 'USDC' | 'DAI'
 
 export interface TokenProps {
   /** Used for displaying symbol and extract stats */
@@ -129,6 +130,8 @@ const logos = {
   BTC: BtcImage,
   ETH: EthImage,
   USDT: UsdtImage,
+  USDC: UsdcImage,
+  DAI: UsdcImage,
 }
 
 function Logo({ token }: TokenProps) {

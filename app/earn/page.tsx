@@ -8,6 +8,7 @@ import type { VaultsByChain } from './components'
 import { VaultList } from './components'
 
 import styles from './page.module.scss'
+import { VaultGrid } from './components/vault-grid'
 
 export const revalidate = 30
 
@@ -19,7 +20,8 @@ export default async function Page() {
   const vaultsByChain = await fetchVaults()
   return (
     <div className={styles.page}>
-      <VaultList vaultsByChain={vaultsByChain} />
+      <VaultGrid vaultsByChain={vaultsByChain} />
+      {/* <VaultList vaultsByChain={vaultsByChain} /> */}
     </div>
   )
 }
