@@ -14,7 +14,6 @@ import FadeIn from '../../../components/fade-in/fade-in'
 import styles from './in-development-parallax.module.scss'
 import Neon64Pic from './assets/neon-46.png'
 
-/** Background text position map */
 const BackgroundTextScreenMap = {
   [ScreenName.ULTRA_WIDE]: { x: 0.3, y: -2 },
   [ScreenName.DESKTOP]: { x: 0.3, y: -2 },
