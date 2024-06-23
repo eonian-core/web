@@ -23,9 +23,8 @@ export function useVaultUserInfo(vault: Vault, params: Params = {}) {
   const { address: assetAddress } = asset
 
   const refetch = React.useMemo(() => {
-    if (!walletAddress || !multicallAddress || !provider) {
+    if (!walletAddress || !multicallAddress || !provider)
       return null
-    }
 
     return async () => {
       const params = {
@@ -50,9 +49,8 @@ export function useVaultUserInfo(vault: Vault, params: Params = {}) {
    * Resets vault-user data when wallet is disconnected.
    */
   useEffect(() => {
-    if (status === WalletStatus.NOT_CONNECTED) {
+    if (status === WalletStatus.NOT_CONNECTED)
       dispatch(reset())
-    }
   }, [status, dispatch])
 
   /**
@@ -70,9 +68,9 @@ export function useVaultUserInfo(vault: Vault, params: Params = {}) {
    * Only if {@link autoUpdateInterval} is specified.
    */
   React.useEffect(() => {
-    if (isLoading || !autoUpdateInterval) {
+    if (isLoading || !autoUpdateInterval)
       return
-    }
+
     return executeAfter(autoUpdateInterval, () => {
       void refetch?.()
     })

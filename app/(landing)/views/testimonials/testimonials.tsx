@@ -15,11 +15,11 @@ export default function Testimonials({ children }: React.PropsWithChildren) {
   return <Container className={styles.testimonials}>{children}</Container>
 }
 
-Testimonials.CTA = function CTA({ children, href }: React.PropsWithChildren<LinkWithIconProps>) {
+function CTA({ children, href }: React.PropsWithChildren<LinkWithIconProps>) {
   const isDesktop = useIsDesktopOrSmaller()
-  if (!showEarn) {
+  if (!showEarn)
     return null
-  }
+
   return (
     <WrapperLink href={href}>
       <Button size={isDesktop ? 'md' : 'lg'} icon={<IconChevron />} dark wide round bordered iconPosition="right">
@@ -28,12 +28,14 @@ Testimonials.CTA = function CTA({ children, href }: React.PropsWithChildren<Link
     </WrapperLink>
   )
 }
+Testimonials.CTA = CTA
 
-Testimonials.Content = function Content({ children }: React.PropsWithChildren) {
+function Content({ children }: React.PropsWithChildren) {
   return <div className={styles.content}>{children}</div>
 }
+Testimonials.Content = Content
 
-Testimonials.Ribbon = function Ribbon({ children }: React.PropsWithChildren) {
+function Ribbon({ children }: React.PropsWithChildren) {
   const array = React.Children.toArray(children)
 
   return (
@@ -43,6 +45,7 @@ Testimonials.Ribbon = function Ribbon({ children }: React.PropsWithChildren) {
     </div>
   )
 }
+Testimonials.Ribbon = Ribbon
 
 function TestimonialsList({ className, testimonials }: { className: string; testimonials: Array<any> }) {
   return <ul className={className}>

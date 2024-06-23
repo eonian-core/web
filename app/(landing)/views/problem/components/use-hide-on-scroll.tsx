@@ -11,9 +11,8 @@ export function useSwitchOnScroll(scrollYProgress: MotionValue<number>, onValue 
       return
     }
 
-    if (!maintainEndState) {
+    if (!maintainEndState)
       setVisible(true)
-    }
   }, [setVisible, onValue, maintainEndState])
 
   useMotionValueEvent(scrollYProgress, 'change', (value) => {

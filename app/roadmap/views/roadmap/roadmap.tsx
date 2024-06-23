@@ -62,9 +62,8 @@ export default class Roadmap extends PureComponent<RoadmapProps, RoadmapState> {
 
   static getDerivedStateFromProps({ children }: RoadmapProps, state: RoadmapState) {
     const { centeredCheckpointIndex: currentIndex } = state
-    if (currentIndex >= 0) {
+    if (currentIndex >= 0)
       return null
-    }
 
     const firstUndoneCheckpointIndex = (
       Children.toArray(children) as Array<ReactElement<RoadmapCheckpointProps>>
@@ -134,9 +133,8 @@ export default class Roadmap extends PureComponent<RoadmapProps, RoadmapState> {
     this.wavesRef.current?.animate(progress)
     this.stripRef.current?.animate(progress)
 
-    if (delta < this.transitionDuration) {
+    if (delta < this.transitionDuration)
       this.transitionFrameId = requestAnimationFrame(this.animate)
-    }
   }
 
   /**

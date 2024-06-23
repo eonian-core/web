@@ -32,9 +32,8 @@ class MetaMaskLoginChecker implements WalletLoginChecker {
   }
 
   isConnected = async (): Promise<boolean> => {
-    if (!this.provider) {
+    if (!this.provider)
       return false
-    }
 
     const accounts = await this.provider.listAccounts()
     return accounts.length > 0

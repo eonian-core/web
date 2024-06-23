@@ -16,7 +16,15 @@ interface Props {
 
 export const CellWithCurrency: React.FC<Props> = ({ value, valueUSD, decimals, decimalsUSD, symbol, isLoading }) => {
   return (
-    <Tooltip content={<TooltipContent />}>
+    <Tooltip content={<TooltipContent
+      {...{
+        value,
+        decimals,
+        valueUSD,
+        decimalsUSD,
+        symbol,
+      }}
+    />}>
       <CellWithDescription
         description={
           <ValueNumber value={valueUSD} decimals={decimalsUSD} currencyAtStart>
@@ -31,20 +39,28 @@ export const CellWithCurrency: React.FC<Props> = ({ value, valueUSD, decimals, d
       </CellWithDescription>
     </Tooltip>
   )
+}
 
-  function TooltipContent() {
-    const valueAccurate = toStringNumberFromDecimals(value, decimals)
-    const valueUSDAccurate = toStringNumberFromDecimals(valueUSD, decimalsUSD)
-    return (
-      <>
-        <Row justify="center">
-          {valueAccurate}&nbsp;{symbol}
-        </Row>
-        <Spacer y={0.5} />
-        <Row justify="center">${valueUSDAccurate}</Row>
-      </>
-    )
-  }
+export interface TooltipContentProps {
+  value: bigint
+  decimals: number
+  valueUSD: bigint
+  decimalsUSD: number
+  symbol: string
+}
+
+function TooltipContent({ value, decimals, valueUSD, decimalsUSD, symbol }: TooltipContentProps) {
+  const valueAccurate = toStringNumberFromDecimals(value, decimals)
+  const valueUSDAccurate = toStringNumberFromDecimals(valueUSD, decimalsUSD)
+  return (
+    <>
+      <Row justify="center">
+        {valueAccurate}&nbsp;{symbol}
+      </Row>
+      <Spacer y={0.5} />
+      <Row justify="center">${valueUSDAccurate}</Row>
+    </>
+  )
 }
 
 interface ValueNumberProps extends React.PropsWithChildren {

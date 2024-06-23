@@ -69,15 +69,13 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
 
   const connect = React.useCallback(async () => {
     const success = await W3O.connect(onboardConnect)
-    if (success) {
+    if (success)
       await W3O.autoSelectProperChain(chain, chains, setOnboardChain)
-    }
   }, [chain, chains, onboardConnect, setOnboardChain])
 
   const disconnect = React.useCallback(async () => {
-    if (wallet) {
+    if (wallet)
       await W3O.disconnect(wallet.label, onboardDisconnect)
-    }
   }, [onboardDisconnect, wallet])
 
   const setCurrentChain = React.useCallback(
@@ -93,9 +91,9 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    if (!wallet) {
+    if (!wallet)
       return
-    }
+
     const { address, label } = wallet
     identify(address, { address, label })
   }, [identify, wallet])
