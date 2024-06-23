@@ -388,7 +388,7 @@
 }
 
 .actionButton {
-    width: 100%;
+    width: 100% !important;
     margin-top: var(--margin-200);
 
     &:last-child {
