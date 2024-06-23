@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Do not use husky, instead use git hooks directly. Husky quite unstable, espesialy with VSCode.
+# Do not modify .git/hooks/pre-commit directly. Instead, modify .hooks/pre-commit.
+
+# Run npx lint-staged
+echo "Running npx lint-staged..."
+npx lint-staged
+
+# Capture the exit status of lint-staged
+LINT_EXIT_CODE=$?
+
+# Check the exit status
+if [ $LINT_EXIT_CODE -ne 0 ]; then
+  echo "Linting failed, aborting commit."
+  exit 1
+fi
+
+# Exit with a zero status if linting was successful
+exit 0

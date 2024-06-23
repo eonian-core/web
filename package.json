@@ -22,7 +22,8 @@
     "jest": "node --experimental-vm-modules --experimental-specifier-resolution=node ./node_modules/.bin/jest",
     "mock": "ts-node --esm ./apollo/mocks/apollo-mock.ts",
     "gen:gql-types": "graphql-codegen --config ./apollo/codegen.ts",
-    "release-logrocket": "node release-logrocket.cjs"
+    "release-logrocket": "node release-logrocket.cjs",
+    "postinstall": "cp .hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit"
   },
   "engines": {
     "node": ">=18.17.1 <19.0.0"
