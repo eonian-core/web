@@ -23,6 +23,7 @@ const BackgroundTextScreenMap = {
   [ScreenName.SMALL_MOBILE]: { x: -0.05, y: '-27rem' },
 }
 
+/** Parallax for development section */
 export function InDevelopmentParallax() {
   const screen = useScreenName()
   const position = BackgroundTextScreenMap[screen || ScreenName.DESKTOP]
