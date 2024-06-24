@@ -119,14 +119,13 @@
     .content {
         &::before {
             background-color: #2276CB;
-            filter: blur(5rem);
+            filter: blur(4rem);
             transform: scale(1.5);
         }
     }
 }
 
 .BNB, .DAI {
-    opacity: 0.75;
     .content {
         &::before {
             background: none;

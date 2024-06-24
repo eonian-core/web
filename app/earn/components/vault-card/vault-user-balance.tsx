@@ -13,19 +13,19 @@ interface Props {
 
 export function VaultUserBalance({ vault }: Props) {
   const { status: walletStatus } = useWalletWrapperContext()
-  const { vaultBalances, isLoading } = useAppSelector(state => state.positionInfo)
+  const { vaultBalances, isLoading, errors } = useAppSelector(state => state.positionInfo)
   const { symbol: assetSymbol, decimals } = vault.asset
   const balance = vaultBalances[vault.address] ?? 0n
   const { value: price, decimals: priceDecimals } = vault.asset.price
   const threshold = BigInt(1e6) * 10n ** BigInt(decimals)
-
+  const error = typeof errors === 'string' ? errors : errors[vault.address]
   return (
-    (walletStatus === WalletStatus.CONNECTING || isLoading) ? <Loader /> : <Value />
+    (walletStatus === WalletStatus.CONNECTING || isLoading || error) ? <Loader /> : <Value />
   )
 
   function Value() {
     if (walletStatus === WalletStatus.NOT_CONNECTED) {
-      return '-'
+      return null
     }
 
     return (

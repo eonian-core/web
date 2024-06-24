@@ -16,7 +16,8 @@ import BnbImage from './image/BNB_logo.png'
 import DaiImage from './image/DAI_logo.png'
 import { Chip } from './chip'
 
-export type TokenSymbol = 'ETH' | 'BTC' | 'USDT' | 'USDC' | 'DAI' | 'BNB'
+export const TokenOrder = ['BTC', 'ETH', 'USDT', 'USDC', 'DAI', 'BNB'] as const
+export type TokenSymbol = typeof TokenOrder[number]
 
 export interface TokenProps {
   /** Used for displaying symbol and extract stats */
@@ -137,7 +138,7 @@ export function Action({ development, balance, href, buttonLabel }: TokenProps) 
       {balance && (
         <>
           <div className={styles.balance}>
-            <span className={styles.label}>Your Deposit</span>
+            <span className={styles.label}>Balance</span>
             <span className={styles.value}>{balance}</span>
           </div>
           <div className={styles.divider} />
