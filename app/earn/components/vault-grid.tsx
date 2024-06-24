@@ -56,8 +56,8 @@ function sortVaults(vaults: Vault[]): Vault[] {
 function ComingSoonBNBVaults() {
   return (
     <>
-      <BaseVaultCard symbol="BNB" apy={3} growth={143.5} buttonLabel="Coming soon" />
-      <BaseVaultCard symbol="DAI" apy={10} growth={0} buttonLabel="Coming soon" />
+      <BaseVaultCard symbol="BNB" apy={3} growth={143.5} buttonLabel="Coming soon" buttonDisabled />
+      <BaseVaultCard symbol="DAI" apy={10} growth={0} buttonLabel="Coming soon" buttonDisabled />
     </>
   )
 }

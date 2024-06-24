@@ -35,12 +35,13 @@ interface BaseProps {
   growth: number
   href?: string
   buttonLabel?: string
+  buttonDisabled?: boolean
 }
 
-export function BaseVaultCard({ symbol, balance, href, apy, growth, buttonLabel }: BaseProps) {
+export function BaseVaultCard({ symbol, balance, href, apy, growth, buttonLabel, buttonDisabled }: BaseProps) {
   return (
     <div>
-      <Token token={symbol} balance={balance} href={href} buttonLabel={buttonLabel}>
+      <Token token={symbol} balance={balance} href={href} buttonLabel={buttonLabel} buttonDisabled={buttonDisabled}>
         <TokenHeader>{getVaultName(symbol)}</TokenHeader>
         <Tags>{getTags(symbol)}</Tags>
         <TokenStats>

@@ -26,12 +26,13 @@ export interface TokenProps {
   balance?: React.ReactNode
   href?: string
   buttonLabel?: string
+  buttonDisabled?: boolean;
 }
 
 export const TokenContext = createContext<TokenProps>({ token: 'ETH', development: true })
 export const useToken = () => useContext(TokenContext)
 
-export function Token({ token, children, development, balance, href, buttonLabel }: PropsWithChildren<TokenProps>) {
+export function Token({ token, children, development, balance, href, buttonLabel, buttonDisabled }: PropsWithChildren<TokenProps>) {
   return (
     <div className={clsx(styles.token, styles[token])}>
       <TokenContext.Provider value={{ token, development }}>
@@ -40,7 +41,7 @@ export function Token({ token, children, development, balance, href, buttonLabel
 
           {children}
 
-          <Action {...{ token, development, balance, href, buttonLabel }} />
+          <Action {...{ token, development, balance, href, buttonLabel, buttonDisabled }} />
         </div>
       </TokenContext.Provider>
     </div>
@@ -132,7 +133,7 @@ export function TokenGrowth({ children }: PropsWithChildren) {
   )
 }
 
-export function Action({ development, balance, href, buttonLabel }: TokenProps) {
+export function Action({ development, balance, href, buttonLabel, buttonDisabled }: TokenProps) {
   return (
     <div className={styles.action}>
       {balance && (
@@ -168,7 +169,7 @@ export function Action({ development, balance, href, buttonLabel }: TokenProps) 
 
   function CTAButton() {
     return (
-      <Button size="lg" dark className={styles.actionButton}>
+      <Button disabled={buttonDisabled} size="lg" dark className={styles.actionButton}>
         {buttonLabel || (development ? 'Join the Waitlist' : 'Save')}
       </Button>
     )

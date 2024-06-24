@@ -185,10 +185,11 @@
 }
 
 .disabled {
-  background: var(--color-neutral-600);
-  color: var(--color-text-200);
+  background: var(--color-neutral-600) !important;
+  color: var(--color-text-200) !important;
+  pointer-events: none;
 
   &.bordered {
-    border-color: var(--color-neutral-600);
+    border-color: var(--color-neutral-600) !important;
   }
 }
