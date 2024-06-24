@@ -24,10 +24,6 @@ export function VaultUserBalance({ vault }: Props) {
   )
 
   function Value() {
-    if (walletStatus === WalletStatus.NOT_CONNECTED) {
-      return null
-    }
-
     return (
       <Tooltip content={<TooltipContent />}>
         <div>
