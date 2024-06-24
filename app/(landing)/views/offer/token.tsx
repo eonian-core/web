@@ -26,7 +26,7 @@ export interface TokenProps {
   balance?: React.ReactNode
   href?: string
   buttonLabel?: string
-  buttonDisabled?: boolean;
+  buttonDisabled?: boolean
 }
 
 export const TokenContext = createContext<TokenProps>({ token: 'ETH', development: true })
