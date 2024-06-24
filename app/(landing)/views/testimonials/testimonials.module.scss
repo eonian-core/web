@@ -21,7 +21,8 @@
 }
 
 .content {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); // fix https://stackoverflow.com/questions/47601564/equal-width-columns-in-css-grid
   width: 100%;
   min-height: 70vw;
   margin-top: var(--margin-400);
@@ -38,23 +39,29 @@
 
 .ribbonContainer {
   flex: 1;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  justify-content: center;
 
   > * {
     grid-area: 1 / 1;
   }
 
-  .ribbon {
-    padding-bottom: var(--margin-400);
-  }
-
   .ribbon,
   .ribbonMirror {
+    padding-bottom: var(--margin-400);
+    padding-top: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+
     display: flex;
     flex-direction: column;
     gap: var(--margin-400);
     transform: translateY(100%);
     animation: scroll-vertical 40s linear infinite;
+    position: absolute;
   }
 
   .ribbon {
@@ -74,6 +81,21 @@
   }
 }
 
+.tweetContainer {
+  max-width: var(--width-500);
+}
+
+@media (max-width: $screen-desktop) { 
+  .content {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ribbonContainer:nth-child(3) {
+    display: none;
+  }
+}
+
+
 @media (max-width: $screen-tablet) {
   .testimonials {
     height: auto;
@@ -81,6 +103,7 @@
   }
 
   .content {
+    display: flex;
     flex-direction: column;
     mask-image: linear-gradient(
       to left,
@@ -93,6 +116,7 @@
 
   .ribbonContainer {
     flex: none;
+    display: grid;
   
     .ribbon {
       padding: 0 var(--margin-400);
@@ -103,6 +127,7 @@
       flex-direction: row;
       transform: translateX(100%);
       animation-name: scroll-horizontal;
+      position: relative;
     }
   }
 
@@ -112,6 +137,10 @@
       transform: translateX(-100%);
       animation-direction: reverse;
     }
+  }
+
+  .ribbonContainer:nth-child(3) {
+    display: grid;
   }
 
   .tweetContainer {

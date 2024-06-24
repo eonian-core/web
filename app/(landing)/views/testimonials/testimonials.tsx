@@ -11,9 +11,7 @@ import styles from './testimonials.module.scss'
 import CustomTweet from './custom-tweet'
 import StaticContent from './static-content'
 
-interface Props {}
-
-export default function Testimonials({ children }: React.PropsWithChildren<Props>) {
+export default function Testimonials({ children }: React.PropsWithChildren) {
   return <Container className={styles.testimonials}>{children}</Container>
 }
 
@@ -38,22 +36,22 @@ Testimonials.Content = function Content({ children }: React.PropsWithChildren) {
 Testimonials.Ribbon = function Ribbon({ children }: React.PropsWithChildren) {
   const array = React.Children.toArray(children)
 
-  const list = (className: string) => (
-    <ul className={className}>
-      {array.map((child, index) => (
-        <li className={styles.tweetContainer} key={index} data-index={index}>
-          <StaticContent>{child}</StaticContent>
-        </li>
-      ))}
-    </ul>
-  )
-
   return (
     <div className={styles.ribbonContainer}>
-      {list(styles.ribbon)}
-      {list(styles.ribbonMirror)}
+      <TestimonialsList className={styles.ribbon} testimonials={array} />
+      <TestimonialsList className={styles.ribbonMirror} testimonials={array} />
     </div>
   )
+}
+
+function TestimonialsList({ className, testimonials }: { className: string; testimonials: Array<any> }) {
+  return <ul className={className}>
+    {testimonials.map((child, index) => (
+      <li className={styles.tweetContainer} key={index} data-index={index}>
+        <StaticContent>{child}</StaticContent>
+      </li>
+    ))}
+  </ul>
 }
 
 Testimonials.Tweet = CustomTweet
