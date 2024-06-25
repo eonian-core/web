@@ -142,7 +142,6 @@ export function Action({ development, balance, href, buttonLabel, buttonDisabled
             <span className={styles.label}>Balance</span>
             <span className={styles.value}>{balance}</span>
           </div>
-          <div className={styles.divider} />
         </>
       )}
       <div className={styles.insurance}>
