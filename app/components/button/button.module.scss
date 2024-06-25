@@ -75,7 +75,7 @@
 
   &.dark {
     box-shadow: 0 1px 2px 0 var(--color-neutral-850);
-    color: var(--color-text-400);
+    color: var(--color-text-200);
     background-color: var(--color-neutral-875);
 
   }
@@ -154,13 +154,13 @@
 
   &.dark {
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
-    color: var(--color-text-400);
+    color: var(--color-text-300);
     background-color: transparent;
-    border-color: var(--color-text-500);
+    border-color: var(--color-text-400);
     border: 0 solid;
 
     outline: 1px solid;
-    outline-color: var(--color-text-500);
+    outline-color: var(--color-text-400);
     outline-offset: 0px;
 
     transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.5s cubic-bezier(0.19, 1, 0.22, 1);
@@ -185,10 +185,11 @@
 }
 
 .disabled {
-  background: var(--color-neutral-600);
-  color: var(--color-text-200);
+  background: var(--color-neutral-600) !important;
+  color: var(--color-text-200) !important;
+  pointer-events: none;
 
   &.bordered {
-    border-color: var(--color-neutral-600);
+    border-color: var(--color-neutral-600) !important;
   }
 }

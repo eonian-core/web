@@ -1,0 +1,36 @@
+@import '../../screen.scss';
+
+@media (max-width: $screen-mobile) {
+  .header {
+    flex-direction: column;
+
+    & > button {
+      margin-top: var(--margin-500);
+    }
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    margin-bottom: var(--margin-100);
+  }
+
+  h3 {
+    font-size: var(--font-size-600);
+    margin-bottom: 0;
+  }
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: var(--margin-800) 0;
+  gap: 2rem;
+  justify-content: center;
+  display: flex;
+}

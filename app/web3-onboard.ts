@@ -23,7 +23,7 @@ const chains: Partial<Record<ChainId, InitOptions['chains'][0]>> = {
   [ChainId.BSC_MAINNET]: {
     id: ChainId.toHex(ChainId.BSC_MAINNET),
     token: 'BNB',
-    label: 'BSC Mainnet',
+    label: 'BNB Chain',
     rpcUrl: getRPCEndpoint(ChainId.BSC_MAINNET),
   },
 }

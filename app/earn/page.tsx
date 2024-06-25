@@ -4,10 +4,10 @@ import { getClient, getVaults } from '../api'
 import { showEarn } from '../features'
 import type { ChainId } from '../providers/wallet/wrappers/helpers'
 import { supportedChainsIds } from '../web3-onboard'
-import type { VaultsByChain } from './components'
-import { VaultList } from './components'
 
 import styles from './page.module.scss'
+import type { VaultsByChain } from './components/vault-grid'
+import { VaultGrid } from './components/vault-grid'
 
 export const revalidate = 30
 
@@ -19,7 +19,7 @@ export default async function Page() {
   const vaultsByChain = await fetchVaults()
   return (
     <div className={styles.page}>
-      <VaultList vaultsByChain={vaultsByChain} />
+      <VaultGrid vaultsByChain={vaultsByChain} />
     </div>
   )
 }
