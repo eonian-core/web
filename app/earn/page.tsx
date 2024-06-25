@@ -12,9 +12,8 @@ import styles from './page.module.scss'
 export const revalidate = 30
 
 export default async function Page() {
-  if (!showEarn) {
+  if (!showEarn)
     redirect('/')
-  }
 
   const vaultsByChain = await fetchVaults()
   return (

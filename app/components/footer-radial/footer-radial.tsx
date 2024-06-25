@@ -12,9 +12,8 @@ interface FooterRadialProps {
 export const LandingOnlyRadial: React.FC<FooterRadialProps> = (props) => {
   const pathname = usePathname()
 
-  if (pathname !== '/') {
+  if (pathname !== '/')
     return null
-  }
 
   return (
     <div className="absolute bottom-0 overflow-hidden w-full h-screen -z-10">

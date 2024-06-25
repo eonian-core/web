@@ -56,9 +56,8 @@ export function Tags({ children }: PropsWithChildren) {
 }
 
 export function Tag({ bordered, children, icon }: PropsWithChildren<{ bordered?: boolean; icon?: React.ReactNode }>) {
-  if (!bordered) {
+  if (!bordered)
     return <li><Chip variant='secondary' size='small' icon={icon}>{children}</Chip></li>
-  }
 
   return <li><Chip variant='bordered' size='small' className={styles.borderedTag}>{children}</Chip></li>
 }

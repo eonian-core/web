@@ -82,9 +82,8 @@ export default class Waves extends Component<Props> {
 
   private init() {
     const { current: canvas } = this.ref
-    if (!canvas) {
+    if (!canvas)
       return
-    }
 
     this.ctx = canvas.getContext('2d')!
 

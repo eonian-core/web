@@ -34,9 +34,8 @@ export default function GoogleAnalytics({
 }: WithPageView | WithIgnoreHashChange): JSX.Element | null {
   const _gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? gaMeasurementId
 
-  if (!_gaMeasurementId) {
+  if (!_gaMeasurementId)
     return null
-  }
 
   return (
     <>

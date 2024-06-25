@@ -32,13 +32,11 @@ export async function generateStaticParams(): Promise<RouteSegment[]> {
 export default async function Page({ params }: Params) {
   const { vault: vaultRoute = [] } = params
 
-  if (!showEarn) {
+  if (!showEarn)
     redirect('/')
-  }
 
-  if (vaultRoute.length !== 2) {
+  if (vaultRoute.length !== 2)
     redirect('/earn/')
-  }
 
   const [chainName, vaultSymbol] = vaultRoute
   const chainId = ChainId.getByName(chainName)

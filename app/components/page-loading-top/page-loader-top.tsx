@@ -16,9 +16,8 @@ function PageLoaderTop() {
 
   React.useEffect(() => {
     const { current: loader } = ref
-    if (!loader) {
+    if (!loader)
       return
-    }
 
     const loaderProgress = [
       { width: '0', opacity: 0.5 },
@@ -36,9 +35,8 @@ function PageLoaderTop() {
   }, [])
 
   React.useEffect(() => {
-    if (!pageLoading || !animation) {
+    if (!pageLoading || !animation)
       return
-    }
 
     const isLoadingInitiated = pageLoading !== pathname
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

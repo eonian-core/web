@@ -24,9 +24,8 @@ const cachedIcons: Record<string, string> = {}
  */
 export function getWallet(onboardWallet: WalletState | null): Wallet | null {
   const account = onboardWallet?.accounts?.[0]
-  if (!account) {
+  if (!account)
     return null
-  }
 
   return {
     label: onboardWallet.label,
@@ -40,15 +39,14 @@ export function getWallet(onboardWallet: WalletState | null): Wallet | null {
  * @returns Wallet status.
  */
 export function getStatus(isConnected: boolean, isConnecting: boolean): WalletStatus {
-  if (isConnected) {
+  if (isConnected)
     return WalletStatus.CONNECTED
-  }
-  else if (isConnecting) {
+
+  else if (isConnecting)
     return WalletStatus.CONNECTING
-  }
-  else {
+
+  else
     return WalletStatus.NOT_CONNECTED
-  }
 }
 
 /**
@@ -74,9 +72,8 @@ export function getAvailableChains(onboardChains: ChainArgs[0]['chains']): Chain
  * @returns Object of the selected chain.
  */
 export function getCurrentChain(chains: Chain[], chainId?: string): Chain | null {
-  if (!chainId) {
+  if (!chainId)
     return null
-  }
 
   const id = ChainId.parse(chainId)
   return chains.find(chain => chain.id === id) ?? getDummyChain(id, iconSize)
@@ -98,9 +95,8 @@ export async function connect(onboardConnect: (options?: ConnectOptions) => Prom
   try {
     const [wallet] = await onboardConnect()
     const walletLabel = wallet?.label
-    if (!walletLabel) {
+    if (!walletLabel)
       return false
-    }
 
     WalletPersistance.saveWalletLabel(walletLabel)
   }
@@ -117,9 +113,8 @@ export async function connect(onboardConnect: (options?: ConnectOptions) => Prom
  */
 export async function autoSelectProperChain(chain: Chain | null, chains: Chain[], setOnboardChain: ChainArgs[1]) {
   // Skip if the current active chain is supported.
-  if (chain?.isSupported) {
+  if (chain?.isSupported)
     return
-  }
 
   const lastActiveChainId = WalletPersistance.getLastActiveChain()
   const chainId = lastActiveChainId !== ChainId.UNKNOWN ? ChainId.parse(lastActiveChainId) : getDefaultChain(chains).id
@@ -133,15 +128,13 @@ export async function autoSelectProperChain(chain: Chain | null, chains: Chain[]
 export async function reconnect(onboardConnect: (options?: ConnectOptions) => Promise<WalletState[]>): Promise<void> {
   // Do not reconnect if there is no information about the last connected wallet
   const walletLabel = WalletPersistance.getWalletLabel()
-  if (!walletLabel) {
+  if (!walletLabel)
     return
-  }
 
   // Do not try to connect to the wallet if the user is not logged in.
   const isLoggedIn = await isLoggedInWallet(walletLabel)
-  if (!isLoggedIn) {
+  if (!isLoggedIn)
     return
-  }
 
   await onboardConnect({
     autoSelect: { label: walletLabel, disableModals: true },
@@ -153,9 +146,8 @@ export async function reconnect(onboardConnect: (options?: ConnectOptions) => Pr
  */
 export async function disconnect(walletLabel: string | null,
   onboardDisconnect: (wallet: DisconnectOptions) => Promise<WalletState[]>): Promise<void> {
-  if (walletLabel) {
+  if (walletLabel)
     await onboardDisconnect({ label: walletLabel })
-  }
 
   WalletPersistance.removeWalletlabel()
 }
@@ -166,16 +158,14 @@ export async function disconnect(walletLabel: string | null,
  */
 export async function setCurrentChain(chainId: ChainId, setOnboardChain: ChainArgs[1]): Promise<void> {
   const success = await setOnboardChain({ chainId: ChainId.toHex(chainId) })
-  if (success) {
+  if (success)
     WalletPersistance.saveLastActiveChain(chainId)
-  }
 }
 
 function getWalletIconSrc(iconContent: string) {
   const cachedIconSrc = cachedIcons[iconContent]
-  if (cachedIconSrc) {
+  if (cachedIconSrc)
     return cachedIconSrc
-  }
 
   const svg = new Blob([iconContent], { type: 'image/svg+xml' })
   return (cachedIcons[iconContent] = URL.createObjectURL(svg))
@@ -183,9 +173,8 @@ function getWalletIconSrc(iconContent: string) {
 
 export function getDefaultChain(chains: Chain[]): Chain {
   const chain = chains.find(chain => chain.isDefault)
-  if (!chain) {
+  if (!chain)
     throw new Error('There must be at least one default chain')
-  }
 
   return chain
 }

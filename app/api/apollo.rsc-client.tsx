@@ -25,9 +25,8 @@ const clientGetters: Record<Exclude<ChainId, ChainId.UNKNOWN>, ReturnType<typeof
 }
 
 export function getClient(chainId: ChainId) {
-  if (chainId === ChainId.UNKNOWN) {
+  if (chainId === ChainId.UNKNOWN)
     throw new Error('Unknown chain id')
-  }
 
   return clientGetters[chainId]()
 }

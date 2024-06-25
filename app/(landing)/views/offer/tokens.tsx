@@ -45,9 +45,9 @@ export default function Tokens({ children }: PropsWithChildren) {
   }
 
   const handleDragEnd = (_event: MouseEvent) => {
-    if (dragStartXRef.current > MAX_OFFSET_TO_SCROLL) {
+    if (dragStartXRef.current > MAX_OFFSET_TO_SCROLL)
       moveToEnd()
-    }
+
     dragStartXRef.current = 0
   }
 

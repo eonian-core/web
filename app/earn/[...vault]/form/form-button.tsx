@@ -29,9 +29,8 @@ const FormButton: React.FC<Props> = ({ formAction, vaultChain, isLoading, disabl
       case WalletStatus.CONNECTING:
         return 'Connecting to a wallet...'
       case WalletStatus.CONNECTED: {
-        if (isOnDifferentChain) {
+        if (isOnDifferentChain)
           return `Switch to ${vaultChain.name}`
-        }
 
         return formAction === FormAction.DEPOSIT ? 'Deposit' : 'Withdraw'
       }

@@ -29,9 +29,8 @@ export default function FadeInChildList({
     <>
       {Children.map(children, (child, i) => {
         // fix for rendering li items
-        if (!child || child === '\n') {
+        if (!child || child === '\n')
           return
-        }
 
         return (
           <div
