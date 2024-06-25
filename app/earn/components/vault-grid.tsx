@@ -3,15 +3,18 @@
 import React from 'react'
 import { JsonRpcProvider } from 'ethers'
 import type { Vault } from '../../api'
+import { H2, H3 } from '../../components/heading/heading'
 import { ChainId, getRPCEndpoint } from '../../providers/wallet/wrappers/helpers'
 import { defaultChain } from '../../web3-onboard'
-import { fetchPositionInfo } from '../../store/slices/positionInfoSlice'
+
 import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-provider'
 import { useAppDispatch } from '../../store/hooks'
+import { fetchPositionInfo } from '../../store/slices/positionInfoSlice'
+import { TokenOrder } from '../../(landing)/views/offer/token'
+import styles from './vault-grid.module.scss'
 import { NetworkSelector } from './network-selector'
-import { VaultTable } from './vault-table'
-
-import styles from './vault-list.module.scss'
+import { BaseVaultCard, VaultCard } from './vault-card/vault-card'
+import { getAssetSymbol } from './vault-card/vault-card-features'
 
 export type VaultsByChain = Record<ChainId, Vault[]>
 
@@ -19,20 +22,42 @@ interface Props {
   vaultsByChain: VaultsByChain
 }
 
-export function VaultList({ vaultsByChain }: Props) {
+export function VaultGrid({ vaultsByChain }: Props) {
   const defaultChainId = ChainId.parse(defaultChain.id)
   const [chainId, setChainId] = React.useState(defaultChainId)
   const chainName = ChainId.getName(chainId).toLowerCase()
-  const vaults = vaultsByChain[chainId]
+  const vaults = sortVaults(vaultsByChain[chainId])
 
   useFetchPositionInfo(chainId, vaults)
 
   return (
-    <>
+    <div>
       <div className={styles.header}>
+        <div>
+          <H2>Select Cryptocurrency</H2>
+          <H3>Choose an asset to save and generate passive income</H3>
+        </div>
         <NetworkSelector value={chainId} onChange={setChainId} />
       </div>
-      <VaultTable vaults={vaults} chainName={chainName} />
+      <div className={styles.cards}>
+        {vaults.map(vault => (
+          <VaultCard chainName={chainName} key={vault.address} vault={vault} />
+        ))}
+        {chainId === ChainId.BSC_MAINNET && <ComingSoonBNBVaults />}
+      </div>
+    </div>
+  )
+}
+
+function sortVaults(vaults: Vault[]): Vault[] {
+  return [...vaults].sort((a, b) => TokenOrder.indexOf(getAssetSymbol(a)) - TokenOrder.indexOf(getAssetSymbol(b)))
+}
+
+function ComingSoonBNBVaults() {
+  return (
+    <>
+      <BaseVaultCard symbol="BNB" apy={3} growth={143.5} buttonLabel="Coming soon" buttonDisabled />
+      <BaseVaultCard symbol="DAI" apy={10} growth={0} buttonLabel="Coming soon" buttonDisabled />
     </>
   )
 }
