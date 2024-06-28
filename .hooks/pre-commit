@@ -15,6 +15,7 @@ if ! command -v node >/dev/null 2>&1; then
     exit 0
   fi
   . "$NVM_DIR/nvm.sh"  # Source nvm.sh to setup node environment
+  nvm use 18
 fi
 echo "Expect node to be available"
 node -v
