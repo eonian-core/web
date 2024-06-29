@@ -39,6 +39,7 @@ async function fetchVault(chainId: ChainId): Promise<Vault[]> {
     return data.vaults as Vault[]
   }
   catch (e) {
+    console.warn('Failed to fetch vaults for chain:', chainId, '\nError:', e)
     return []
   }
 }
