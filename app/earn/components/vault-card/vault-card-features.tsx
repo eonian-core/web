@@ -41,9 +41,9 @@ export function getYearPastPriceUSD(vault: Vault): number {
 
 export function getAssetSymbol(vault: Vault): TokenSymbol {
   const name = vault.asset.symbol
-  if (name === 'BTCB') {
+  if (name === 'BTCB')
     return 'BTC'
-  }
+
   return name as TokenSymbol
 }
 

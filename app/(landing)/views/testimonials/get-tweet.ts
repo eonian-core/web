@@ -13,14 +13,12 @@ export const getTweet = unstable_cache(async (id: string) => {
   fileCache ??= await import('./tweets.json') as unknown as Partial<Record<string, Tweet>>
 
   let tweet = fileCache[id]
-  if (tweet) {
+  if (tweet)
     return tweet
-  }
 
   tweet = await _getTweet(id)
-  if (tweet) {
+  if (tweet)
     fileCache[tweet.id_str] = tweet
-  }
 
   if (process.env.NODE_ENV === 'development') {
     clearTimeout(cacheFlushTimeout)

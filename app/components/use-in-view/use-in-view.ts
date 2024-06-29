@@ -17,9 +17,8 @@ export function useInView(ref: RefObject<Element>, { root, margin, amount, once 
   const [isInView, setInView] = useState(false)
 
   useEffect(() => {
-    if (!ref.current || (once && isInView)) {
+    if (!ref.current || (once && isInView))
       return
-    }
 
     const onEnter = () => {
       setInView(true)

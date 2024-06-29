@@ -57,9 +57,9 @@ function getDefaultSize(): Size {
     return { width: window.screen.width, height: window.screen.height }
   }
   catch (e) {
-    if (e instanceof ReferenceError) {
+    if (e instanceof ReferenceError)
       return { width: undefined, height: undefined }
-    }
+
     throw e
   }
 }

@@ -1,5 +1,8 @@
 {
     "[typescriptreact]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "files.exclude": {
+        "**/.git": false
     }
 }
