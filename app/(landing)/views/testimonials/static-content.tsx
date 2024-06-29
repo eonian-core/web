@@ -8,9 +8,8 @@ function useStaticContent() {
     // check if the innerHTML is empty as client side navigation
     // need to render the component without server-side backup
     const isEmpty = ref.current?.innerHTML === ''
-    if (isEmpty) {
+    if (isEmpty)
       setRender(true)
-    }
   }, [])
 
   return [render, ref]

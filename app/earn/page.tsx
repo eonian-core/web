@@ -12,9 +12,8 @@ import { VaultGrid } from './components/vault-grid'
 export const revalidate = 30
 
 export default async function Page() {
-  if (!showEarn) {
+  if (!showEarn)
     redirect('/')
-  }
 
   const vaultsByChain = await fetchVaults()
   return (
@@ -40,6 +39,7 @@ async function fetchVault(chainId: ChainId): Promise<Vault[]> {
     return data.vaults as Vault[]
   }
   catch (e) {
+    console.warn('Failed to fetch vaults for chain:', chainId, '\nError:', e)
     return []
   }
 }

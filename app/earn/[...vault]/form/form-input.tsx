@@ -58,9 +58,8 @@ function InputRightContent({
   decimals,
   assetSymbol,
 }: Pick<Props, 'balance' | 'isLoading' | 'decimals' | 'assetSymbol'>) {
-  if (isLoading) {
+  if (isLoading)
     return <Spinner className={styles.loading} size="sm" />
-  }
 
   return (
     <span className={styles.balance}>
