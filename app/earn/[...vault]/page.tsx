@@ -7,6 +7,8 @@ import { showEarn } from '../../features'
 import Form from './form/form'
 
 import styles from './page.module.scss'
+import { Header } from './header'
+import { TokenGradient } from './token-gradient'
 
 export const revalidate = 10
 
@@ -43,8 +45,12 @@ export default async function Page({ params }: Params) {
   const client = getClient(chainId)
   const { data } = await getVaultBySymbol(client, vaultSymbol)
   return (
-    <div className={styles.page}>
-      <Form vault={data.vaults[0] as Vault} chainId={chainId} />
-    </div>
+    <>
+      <TokenGradient />
+      <div className={styles.page}>
+        <Header />
+        <Form vault={data.vaults[0] as Vault} chainId={chainId} />
+      </div>
+    </>
   )
 }

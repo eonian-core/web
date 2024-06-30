@@ -201,8 +201,9 @@
 
 
   // Background
+  --color-background-hsl: 220, 9%, 14%;
 
-  --color-background-start: hsl(220, 9%, 14%);
+  --color-background-start: hsl(var(--color-background-hsl));
   --color-background-end: var(--color-dark-500);
   --color-background-highlight: hsl(180, 7%, 17%);
   --color-neutral-background-gradient: linear-gradient(to bottom,
