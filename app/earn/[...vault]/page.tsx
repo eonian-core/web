@@ -4,6 +4,7 @@ import { getClient, getVaultBySymbol, getVaultsSymbols } from '../../api'
 import { ChainId } from '../../providers/wallet/wrappers/helpers'
 import { defaultChain } from '../../web3-onboard'
 import { showEarn } from '../../features'
+import { getAssetSymbol } from '../components/vault-card/vault-card-features'
 import Form from './form/form'
 
 import styles from './page.module.scss'
@@ -44,12 +45,13 @@ export default async function Page({ params }: Params) {
   const chainId = ChainId.getByName(chainName)
   const client = getClient(chainId)
   const { data } = await getVaultBySymbol(client, vaultSymbol)
+  const vault = data.vaults[0] as Vault
   return (
     <>
-      <TokenGradient />
+      <TokenGradient symbol={getAssetSymbol(vault)} />
       <div className={styles.page}>
         <Header />
-        <Form vault={data.vaults[0] as Vault} chainId={chainId} />
+        <Form vault={vault} chainId={chainId} />
       </div>
     </>
   )

@@ -1,6 +1,7 @@
+'use client'
+
 import type { PropsWithChildren } from 'react'
 import { Progress } from '@nextui-org/react'
-import Image from 'next/image'
 
 import clsx from 'clsx'
 import { createContext, useContext } from 'react'

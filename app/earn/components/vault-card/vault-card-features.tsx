@@ -2,7 +2,7 @@ import { Tag } from '../../../(landing)/views/offer/token'
 import type { Vault } from '../../../api'
 import IconPalmTree from '../../../components/icons/icon-paml-tree'
 import IconShieldHeart from '../../../components/icons/icon-shield-heart'
-import type { TokenSymbol } from '@/types'
+import { TokenOrder, type TokenSymbol } from '@/types'
 
 export function getYearlyROI(apy: number, growth: number): number {
   const value = ((1 + growth / 100) * (apy / 100 + 1) - 1) * 100
@@ -43,6 +43,9 @@ export function getAssetSymbol(vault: Vault): TokenSymbol {
   const name = vault.asset.symbol
   if (name === 'BTCB')
     return 'BTC'
+
+  if (!TokenOrder.includes(name as TokenSymbol))
+    throw new Error(`Unknown asset symbol: ${name}`)
 
   return name as TokenSymbol
 }
