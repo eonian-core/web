@@ -1,8 +1,8 @@
-import type { TokenSymbol } from '../../../(landing)/views/offer/token'
 import { Tag } from '../../../(landing)/views/offer/token'
 import type { Vault } from '../../../api'
 import IconPalmTree from '../../../components/icons/icon-paml-tree'
 import IconShieldHeart from '../../../components/icons/icon-shield-heart'
+import type { TokenSymbol } from '@/types'
 
 export function getYearlyROI(apy: number, growth: number): number {
   const value = ((1 + growth / 100) * (apy / 100 + 1) - 1) * 100

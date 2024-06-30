@@ -1,4 +1,3 @@
-import type { TokenSymbol } from '../../../(landing)/views/offer/token'
 import {
   Distribution,
   Tags,
@@ -16,6 +15,7 @@ import { WalletStatus } from '../../../providers/wallet/wrappers/types'
 import { calculateVaultAPY } from '../../../shared/projections/calculate-apy'
 import { getAssetSymbol, getGrowthPercent, getTags, getVaultName, getYearlyROI } from './vault-card-features'
 import { VaultUserBalance } from './vault-user-balance'
+import type { TokenSymbol } from '@/types'
 
 interface Props {
   chainName: string

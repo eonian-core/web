@@ -10,11 +10,11 @@ import { defaultChain } from '../../web3-onboard'
 import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-provider'
 import { useAppDispatch } from '../../store/hooks'
 import { fetchPositionInfo } from '../../store/slices/positionInfoSlice'
-import { TokenOrder } from '../../(landing)/views/offer/token'
 import styles from './vault-grid.module.scss'
 import { NetworkSelector } from './network-selector'
 import { BaseVaultCard, VaultCard } from './vault-card/vault-card'
 import { getAssetSymbol } from './vault-card/vault-card-features'
+import { TokenOrder } from '@/types'
 
 export type VaultsByChain = Record<ChainId, Vault[]>
 

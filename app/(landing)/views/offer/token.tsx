@@ -8,16 +8,9 @@ import Button from '../../../components/button/button'
 import { InternalLink } from '../../../components/links/links'
 import styles from './token.module.scss'
 
-import BtcImage from './image/BTC_logo.png'
-import EthImage from './image/ETH_logo.png'
-import UsdtImage from './image/USDT_logo.png'
-import UsdcImage from './image/USDC_logo.png'
-import BnbImage from './image/BNB_logo.png'
-import DaiImage from './image/DAI_logo.png'
 import { Chip } from './chip'
-
-export const TokenOrder = ['BTC', 'ETH', 'USDT', 'USDC', 'DAI', 'BNB'] as const
-export type TokenSymbol = typeof TokenOrder[number]
+import type { TokenSymbol } from '@/types'
+import { TokenImage } from '@/components/token-image/TokenImage'
 
 export interface TokenProps {
   /** Used for displaying symbol and extract stats */
@@ -175,20 +168,10 @@ export function Action({ development, balance, href, buttonLabel, buttonDisabled
   }
 }
 
-// TODO: pass image throw mdx file
-const logos = {
-  BTC: BtcImage,
-  ETH: EthImage,
-  USDT: UsdtImage,
-  USDC: UsdcImage,
-  DAI: DaiImage,
-  BNB: BnbImage,
-}
-
 function Logo({ token }: TokenProps) {
   return (
     <div className={clsx(styles.logo, styles[token])}>
-      <Image src={logos[token]} alt={token} width={256} height={256} />
+      <TokenImage symbol={token} width={256} height={256} />
     </div>
   )
 }
