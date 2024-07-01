@@ -26,7 +26,7 @@ export const GraphQLEndpoints: GraphQLEndpointsMap = {
 }
 
 /** Important to use process.env.[name] directly, because it replaced during build time */
-function checkEnvVar(name: string, value: string | undefined): string {
+export function checkEnvVar(name: string, value: string | undefined): string {
   if (!value)
     throw new Error(`Environment variable "${name}" not found`)
 
