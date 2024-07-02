@@ -2,10 +2,8 @@ $main-seciton-width: 70%;
 $secondary-seciton-width: calc(100% - $main-seciton-width);
 
 .container {
-    background-color: #fff;
-    padding: var(--padding-900) var(--width-gap);
+    padding: 0 var(--width-gap);
     text-align: left;
-    color: #333;
     width: 100%;
 }
 
@@ -24,29 +22,15 @@ $secondary-seciton-width: calc(100% - $main-seciton-width);
         font-size: var(--font-size-600);
         font-weight: var(--font-normal);
         line-height: var(--line-height-600);
-        color: var(--color-text-500);
         margin-bottom: var(--margin-100);
         text-align: left;
-    }
-
-    h2 {
-        font-size: var(--font-size-900);
-        line-height: var(--line-height-750);
-        font-weight: var(--font-medium);
-        margin-bottom: var(--margin-300);
-        color: var(--color-text-800);
-        text-align: left;
-        max-width: $main-seciton-width;
-        @media (max-width: 1000px) {
-            max-width: 100%;
-        }
     }
 
     p {
         font-size: var(--font-size-600);
         line-height: var(--line-height-600);
-        color: var(--color-text-500);
         text-align: left;
+        margin-bottom: 10px;
     }
 }
 
@@ -59,12 +43,10 @@ $secondary-seciton-width: calc(100% - $main-seciton-width);
     .number {
         font-size: var(--font-size-1130);
         line-height: 1;
-        color: var(--color-text-700);
         font-weight: var(--font-black);
     }
     .description {
         font-size: var(--font-size-600);
-        color: var(--color-text-500);
         font-weight: var(--font-normal);
     }
 }
@@ -101,15 +83,6 @@ $secondary-seciton-width: calc(100% - $main-seciton-width);
     justify-content: flex-start;
     flex-wrap: wrap;
     margin-top: 1rem;
-    a {
-      color: var(--color-dark-200);
-      font-size: 1.5rem;
-      transition: color 0.3s;
-
-      &:hover {
-        color: var(--color-dark-700);
-      }
-    }
     svg {
         width: var(--font-size-750);
         height: var(--font-size-750);
