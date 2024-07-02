@@ -14,6 +14,10 @@
   @media (max-width: $screen-mobile) {
     padding: 0;
   }
+
+  // Used for the indication of positive/negative price changes
+  --color-positive: #91E873;
+  --color-negative: #FF7F7F;
 }
 
 .loading,

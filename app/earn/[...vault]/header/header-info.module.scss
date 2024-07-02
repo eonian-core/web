@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--margin-300);
+}
+
+.tags {
+  display: flex;
+  align-items: center;
+  gap: var(--margin-200);
+}
+
+.tag {
+  border-color: var(--color-text-400);
+  border-width: 1px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: var(--margin-200);
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-text-200);
+
+    h1 {
+      font-size: var(--font-size-700);
+      font-weight: var(--font-medium);
+    }
+
+    h2 {
+      color: var(--color-text-400);
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--margin-200);
+
+  button svg {
+    fill: var(--color-text-300);
+  }
+}

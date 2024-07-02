@@ -4,34 +4,23 @@ import IconEthereum from './icon-ethereum'
 import IconBitcoin from './icon-bitcoin'
 import IconTether from './icon-tether'
 import IconUSDC from './icon-usdc'
-import IconBUSD from './icon-busd'
-
-export enum CoinIcon {
-  BNB = 'BNB',
-  ETH = 'ETH',
-  USDT = 'USDT',
-  BUSD = 'BUSD',
-  USDC = 'USDC',
-  BTC = 'BTC',
-}
+import type { TokenSymbol } from '@/types'
 
 interface Props extends React.SVGProps<SVGSVGElement> {
-  symbol: CoinIcon | string
+  symbol: TokenSymbol
 }
 
 const IconCoin: React.FC<Props> = ({ symbol, ...svgProps }) => {
   switch (symbol) {
-    case CoinIcon.BNB:
+    case 'BNB':
       return <IconBNB {...svgProps} />
-    case CoinIcon.ETH:
+    case 'ETH':
       return <IconEthereum {...svgProps} />
-    case CoinIcon.USDT:
+    case 'USDT':
       return <IconTether {...svgProps} />
-    case CoinIcon.USDC:
+    case 'USDC':
       return <IconUSDC {...svgProps} />
-    case CoinIcon.BUSD:
-      return <IconBUSD {...svgProps} />
-    case CoinIcon.BTC:
+    case 'BTC':
     default:
       return <IconBitcoin {...svgProps} />
   }

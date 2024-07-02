@@ -8,8 +8,9 @@ import { getAssetSymbol } from '../components/vault-card/vault-card-features'
 import Form from './form/form'
 
 import styles from './page.module.scss'
-import { Header } from './header'
+import { Header } from './header/header'
 import { TokenGradient } from './token-gradient'
+import { getYearPriceHistorical } from '@/api/coin-gecko'
 
 export const revalidate = 10
 
@@ -46,11 +47,15 @@ export default async function Page({ params }: Params) {
   const client = getClient(chainId)
   const { data } = await getVaultBySymbol(client, vaultSymbol)
   const vault = data.vaults[0] as Vault
+
+  const symbol = getAssetSymbol(vault)
+  const yearlyPriceData = await getYearPriceHistorical(symbol)
+
   return (
     <>
-      <TokenGradient symbol={getAssetSymbol(vault)} />
+      <TokenGradient symbol={symbol} />
       <div className={styles.page}>
-        <Header />
+        <Header symbol={symbol} yearlyPriceData={yearlyPriceData} />
         <Form vault={vault} chainId={chainId} />
       </div>
     </>

@@ -8,12 +8,13 @@ import IconCoin from '../../../components/icons/icon-coin'
 import CompactNumber from '../../../components/compact-number/compact-number'
 import { FractionPartView } from '../../../shared'
 import styles from './form-input.module.scss'
+import type { TokenSymbol } from '@/types'
 
 interface Props extends Partial<Omit<InputProps, 'value' | 'onChange'>> {
   value: string
   balance: bigint
   decimals: number
-  assetSymbol: string
+  assetSymbol: TokenSymbol
   onChange: (value: string) => void
   isLoading: boolean
 }

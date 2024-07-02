@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: var(--margin-300);
+}
+
+.priceInfo {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--padding-400);
+
+  color: var(--color-text-100);
+
+  h3 {
+    margin-bottom: var(--margin-50);
+  }
+
+  h2 {
+    font-weight: var(--font-bold);
+  }
+}
+
+.priceChange {
+  font-size: var(--font-size-300);
+}

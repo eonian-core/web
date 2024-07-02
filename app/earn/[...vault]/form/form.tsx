@@ -16,6 +16,7 @@ import FormInput from './form-input'
 import FormButton from './form-button'
 import FormHeader from './form-header'
 import styles from './form.module.scss'
+import { getAssetSymbol } from '@/earn/components/vault-card/vault-card-features'
 
 interface Props {
   vault: Vault
@@ -92,7 +93,7 @@ const Form: React.FC<Props> = ({ vault, chainId }) => {
             disabled={hasPendingTransactions}
           />
           <FormInput
-            assetSymbol={vault.asset.symbol}
+            assetSymbol={getAssetSymbol(vault)}
             decimals={vault.asset.decimals}
             value={displayValue}
             balance={formBalance}
