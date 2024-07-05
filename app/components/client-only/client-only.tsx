@@ -8,9 +8,8 @@ export function ClientOnly({ children }: React.PropsWithChildren) {
     setHasMounted(true)
   }, [])
 
-  if (!hasMounted) {
+  if (!hasMounted)
     return null
-  }
 
   return <>{children}</>
 }

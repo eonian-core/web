@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# Do not modify .git/hooks/pre-commit directly. Instead, modify .hooks/pre-commit.
+
+# We do not use husky, instead use git hooks directly. 
+# Husky quite unstable, espesialy with VSCode.
+
+echo "Check if node is available"
+if ! command -v node >/dev/null 2>&1; then
+  export NVM_DIR="$HOME/.nvm"
+
+  echo "Node not found, attempt to set up nvm"
+  if [ ! -s "$NVM_DIR/nvm.sh" ]; then
+    echo "nvm is not installed, and node is not available. Will skip linting step."
+    exit 0
+  fi
+  . "$NVM_DIR/nvm.sh"  # Source nvm.sh to setup node environment
+  nvm use 18
+fi
+echo "Expect node to be available"
+node -v
+
+# Run npx lint-staged
+echo "Running npx lint-staged..."
+npx lint-staged
+
+# Capture the exit status of lint-staged
+LINT_EXIT_CODE=$?
+
+# Check the exit status
+if [ $LINT_EXIT_CODE -ne 0 ]; then
+  echo "Linting failed, aborting commit."
+  exit 1
+fi
+
+# Exit with a zero status if linting was successful
+exit 0

@@ -11,9 +11,8 @@ export const ULTRA_WIDE_SCREEN = 1536 // or TV
 /** Return true if current screen is smaller or equal given size, or undefined if rendered on server */
 export function useIsScreenSmallerOrEqual(size: number): boolean | undefined {
   const { width } = useWindowSize()
-  if (!width) {
+  if (!width)
     return undefined
-  }
 
   return width <= size
 }
@@ -45,29 +44,23 @@ export enum ScreenName {
 /** Return current screen name */
 export function useScreenName(): ScreenName | undefined {
   const { width } = useWindowSize()
-  if (!width) {
+  if (!width)
     return undefined
-  }
 
-  if (width <= SMALL_MOBILE_SCREEN) {
+  if (width <= SMALL_MOBILE_SCREEN)
     return ScreenName.SMALL_MOBILE
-  }
 
-  if (width <= MOBILE_SCREEN) {
+  if (width <= MOBILE_SCREEN)
     return ScreenName.MOBILE
-  }
 
-  if (width <= TABLET_SCREEN) {
+  if (width <= TABLET_SCREEN)
     return ScreenName.TABLET
-  }
 
-  if (width <= LAPTOP_SCREEN) {
+  if (width <= LAPTOP_SCREEN)
     return ScreenName.LAPTOP
-  }
 
-  if (width <= DESKTOP_SCREEN) {
+  if (width <= DESKTOP_SCREEN)
     return ScreenName.DESKTOP
-  }
 
   return ScreenName.ULTRA_WIDE
 }

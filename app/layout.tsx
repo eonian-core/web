@@ -19,9 +19,9 @@ export interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
-  const locale = 'en'
+const locale = 'en'
 
+export default function RootLayout({ children }: RootLayoutProps) {
   store.dispatch(setLocale(locale))
 
   return (

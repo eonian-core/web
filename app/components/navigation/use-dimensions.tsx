@@ -25,9 +25,8 @@ export function useDimensions(ref: MutableRefObject<HTMLElement>): DimensionalSt
 }
 
 export function calculateDimensions(el?: HTMLElement): DimensionalState | null {
-  if (!el || !el.getBoundingClientRect()) {
+  if (!el || !el.getBoundingClientRect())
     return null
-  }
 
   const { x, y } = el.getBoundingClientRect()
 

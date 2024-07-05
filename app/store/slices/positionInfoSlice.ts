@@ -22,12 +22,12 @@ export const fetchPositionInfo = createAsyncThunk(
     const { data, errors } = responses.reduce(
       (map, response, index) => {
         const address = vaultAddresses[index]
-        if (response.success) {
+        if (response.success)
           map.data[address] = responses[index].data as bigint
-        }
-        else {
+
+        else
           map.errors[address] = getError(response.data)
-        }
+
         return map
       },
       {
