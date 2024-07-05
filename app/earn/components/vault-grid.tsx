@@ -74,14 +74,12 @@ function useFetchPositionInfo(chainId: ChainId, vaults: Vault[]) {
   const dispatch = useAppDispatch()
 
   const callback = () => {
-    if (!multicallAddress || !walletAddress || !provider || vaults.length === 0) {
+    if (!multicallAddress || !walletAddress || !provider || vaults.length === 0)
       return
-    }
 
     const endpoint = getRPCEndpoint(chainId)
-    if (!endpoint) {
+    if (!endpoint)
       return
-    }
 
     void dispatch(
       fetchPositionInfo({

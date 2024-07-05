@@ -35,9 +35,9 @@ export default function Accordion({ expanded, children }: Props) {
    * Scrolls to the accordion item if its ID is specified in url's hash.
    */
   React.useEffect(() => {
-    if (typeof hash !== 'string') {
+    if (typeof hash !== 'string')
       return
-    }
+
     const element = document.getElementById(hash)
     if (element) {
       setScrollTo(hash)
@@ -49,9 +49,9 @@ export default function Accordion({ expanded, children }: Props) {
    * Opens accordion item (specified via url's "#hash") after scroll ends.
    */
   React.useEffect(() => {
-    if (!scrollTo) {
+    if (!scrollTo)
       return
-    }
+
     let scrollTimeout: number | undefined
 
     const handler = () => {
@@ -59,9 +59,9 @@ export default function Accordion({ expanded, children }: Props) {
       scrollTimeout = window.setTimeout(() => {
         setScrollTo(null)
         setExpandedKeys((keys) => {
-          if (typeof keys !== 'string') {
+          if (typeof keys !== 'string')
             keys.add(scrollTo)
-          }
+
           return new Set(keys)
         })
       }, 100)

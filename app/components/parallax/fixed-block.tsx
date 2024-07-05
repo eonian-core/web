@@ -63,9 +63,8 @@ export default FixedBlock
 export function useFixedParallaxProgress(scrollYProgress: MotionValue<number>, threshold = 0.5, height?: number) {
   return useTransform(scrollYProgress, [0, 1], [0, height || 1000], {
     mixer: (from, to) => (value) => {
-      if (value <= threshold) {
+      if (value <= threshold)
         return value * to
-      }
 
       return to * threshold
     },
@@ -76,9 +75,8 @@ export function useFixedParallaxProgress(scrollYProgress: MotionValue<number>, t
 export function useOpacityProgress(scrollYProgress: MotionValue<number>, threshold = 0.5) {
   return useTransform(scrollYProgress, [0, 1], [0, 1], {
     mixer: (from, to) => (value) => {
-      if (value < threshold) {
+      if (value < threshold)
         return value / threshold
-      }
 
       return to
     },
@@ -92,9 +90,8 @@ export function useScaleProgress(scrollYProgress: MotionValue<number>,
   accselerator = 0.6) {
   return useTransform(scrollYProgress, [0, 1], [0, 1], {
     mixer: (from, to) => (value) => {
-      if (value < threshold) {
+      if (value < threshold)
         return value * multiplier + accselerator
-      }
 
       return to
     },

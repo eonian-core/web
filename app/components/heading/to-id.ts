@@ -14,9 +14,8 @@ export function useContentToId(children?: React.ReactNode) {
 
 /** Make text html id friendly */
 export function toId(slug?: string) {
-  if (typeof slug !== 'string') {
+  if (typeof slug !== 'string')
     return undefined
-  }
 
   const resutl = slug
     .trim()

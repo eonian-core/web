@@ -8,9 +8,8 @@ export function useLocationHash() {
     // window must be inside effect to not trigger on SSR
     const handleHashChange = () => {
       const hash = window?.location.hash
-      if (typeof hash !== 'string') {
+      if (typeof hash !== 'string')
         setHash(null)
-      }
 
       // remove # from hash
       setHash(hash.slice(1))

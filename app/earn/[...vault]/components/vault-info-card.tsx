@@ -59,43 +59,66 @@ export const VaultInfoCard: React.FC<Props> = ({ value, currentDeposit, vault, f
           <ul>
             <li>
               <h5>Yearly reward</h5>
-              <InfoNumber value={yearlyReward} />
+              <InfoNumber
+                value={yearlyReward}
+                decimals={vault.asset.decimals}
+                {...{
+                  assetSymbol,
+                  threshold,
+                  profitChange,
+                }}
+                />
             </li>
             <li>
               <h5>Deposit in a year</h5>
-              <InfoNumber value={depositInAYear} />
+              <InfoNumber
+                value={depositInAYear}
+                decimals={vault.asset.decimals}
+                {...{
+                  assetSymbol,
+                  threshold,
+                  profitChange,
+                }}
+                />
             </li>
           </ul>
         </CardBody>
       </Card>
     </CardBody>
   )
+}
 
-  function InfoNumber(props: { value: bigint }) {
-    return (
-      <div className={styles.infoNumberWrapper}>
-        <CompactNumber
-          value={props.value}
-          decimals={vault.asset.decimals}
-          threshold={threshold}
-          fractionDigits={2}
-          className={styles.infoNumber}
-          tooltipContent={value => `${value} ${assetSymbol}`}
-        >
-          <span className={styles.asset}>{assetSymbol}</span>
-          <ProfitChangeIndicator profitChange={profitChange} />
-        </CompactNumber>
-      </div>
-    )
-  }
+export interface InfoNumberProps {
+  value: bigint
+  profitChange: bigint
+  assetSymbol: string
+  threshold: bigint
+  decimals: number
+}
+
+function InfoNumber({ value, profitChange, assetSymbol, threshold, decimals }: InfoNumberProps) {
+  return (
+    <div className={styles.infoNumberWrapper}>
+      <CompactNumber
+        value={value}
+        decimals={decimals}
+        threshold={threshold}
+        fractionDigits={2}
+        className={styles.infoNumber}
+        tooltipContent={value => `${value} ${assetSymbol}`}
+      >
+        <span className={styles.asset}>{assetSymbol}</span>
+        <ProfitChangeIndicator profitChange={profitChange} />
+      </CompactNumber>
+    </div>
+  )
 }
 
 function ProfitChangeIndicator({ profitChange }: { profitChange: bigint }) {
   const direction = React.useMemo(() => (profitChange > 0 ? 'top' : 'bottom'), [profitChange])
 
-  if (!profitChange) {
+  if (!profitChange)
     return null
-  }
 
   const className = clsx({
     [styles.positiveChange]: profitChange > 0n,

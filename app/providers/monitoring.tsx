@@ -34,9 +34,9 @@ export function MonitoringProvider({ children }: React.PropsWithChildren) {
   }, [])
 
   const identify = React.useCallback((uid: string, properties: Record<string, any>) => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production')
       return
-    }
+
     LogRocket.identify(uid, properties)
     console.debug('User identification is set')
   }, [])

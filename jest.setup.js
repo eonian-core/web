@@ -4,3 +4,7 @@
 // Used for __tests__/testing-library.js
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect'
+
+// Setup test environment for endpoints.ts
+process.env.NEXT_PUBLIC_BSC_GRAPH_URL = 'test value'
+process.env.NEXT_PUBLIC_ENVIRONMENT = 'DEVELOPMENT'

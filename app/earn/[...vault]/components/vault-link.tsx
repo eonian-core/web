@@ -15,9 +15,8 @@ interface Props {
 
 export function VaultLink({ vault, chainId }: Props) {
   const href = getChainExplorer(chainId)
-  if (!href) {
+  if (!href)
     return <VaultLinkContent vault={vault} />
-  }
 
   return (
     <ExternalLink

@@ -18,9 +18,8 @@ export const fetchVaultUserData = createAsyncThunk(
     const multicall = new Multicall(multicallAddress, provider, requests)
     const responses = await multicall.makeRequest()
     const errorIndex = responses.findIndex(response => !response.success)
-    if (errorIndex >= 0) {
+    if (errorIndex >= 0)
       throw new Error(`Error occured when requesting: ${JSON.stringify(requests[errorIndex])}`)
-    }
 
     return {
       // Redux doesn't allow to store BigInt(s) in the store (https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data)

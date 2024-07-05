@@ -72,9 +72,8 @@ export function InternalLink({ href, className, onClick, ...props }: LinkWithIco
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       onClick?.(e)
-      if (!e.defaultPrevented && !isSamePageLink) {
+      if (!e.defaultPrevented && !isSamePageLink)
         dispatch(setPageLoading(href.toString()))
-      }
     },
     [onClick, dispatch, href, isSamePageLink],
   )

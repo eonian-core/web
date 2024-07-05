@@ -20,9 +20,9 @@ export type CardProps = LinkCardProps | ButtonCardProps
 export const isLinkedCardProps = (props: CardProps): props is LinkCardProps => (props as LinkCardProps).href !== undefined
 
 export function Card(props: CardProps) {
-  if (isLinkedCardProps(props)) {
+  if (isLinkedCardProps(props))
     return <LinkCard {...props} />
-  }
+
   return <ButtonCard {...props} />
 }
 
@@ -55,9 +55,8 @@ export function ButtonCard({ onClick, children, disabled = false }: ButtonCardPr
   const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault()
 
-    if (!disabled) {
+    if (!disabled)
       onClick()
-    }
   }, [disabled, onClick])
 
   return (

@@ -7,41 +7,31 @@ export enum ChainEnvironment {
   PRODUCTION = 'PRODUCTION',
 }
 
-export function getGraphQLEndpoint(chainId: ChainId): string {
-  const chainEnvironment = getChainEnvironment()
-  switch (chainId) {
-    case ChainId.BSC_MAINNET:
-      return getBNBChainEndpoint(chainEnvironment)
-    case ChainId.SEPOLIA:
-      return process.env.NEXT_PUBLIC_GRAPH_URL || 'http://localhost:4000/'
-    case ChainId.UNKNOWN:
-      throw new Error('Chain is unknown')
-  }
+const NEXT_PUBLIC_ENVIRONMENT = checkEnvVar('NEXT_PUBLIC_ENVIRONMENT', process.env.NEXT_PUBLIC_ENVIRONMENT) as ChainEnvironment
+const isExist = Object.values<string>(ChainEnvironment).includes(NEXT_PUBLIC_ENVIRONMENT)
+if (!isExist)
+  throw new Error('Unknown chain environment')
+
+export interface GraphQLEndpointsMap {
+  [ChainId.BSC_MAINNET]: string
+  [ChainId.SEPOLIA]: string
+  [ChainId.UNKNOWN]: undefined
 }
 
-function getBNBChainEndpoint(chainEnvironment: ChainEnvironment): string {
-  switch (chainEnvironment) {
-    case ChainEnvironment.LOCAL:
-      return 'http://localhost:4000/'
-    case ChainEnvironment.DEVELOPMENT:
-      return 'https://api.thegraph.com/subgraphs/name/eonian-core/eonian-bsc-development'
-    case ChainEnvironment.STAGING:
-      return 'https://api.thegraph.com/subgraphs/name/eonian-core/eonian-bsc-staging'
-    default:
-      return process.env.NEXT_PUBLIC_GRAPH_URL || 'http://localhost:4000/'
-  }
+export const GraphQLEndpoints: GraphQLEndpointsMap = {
+  [ChainId.BSC_MAINNET]: checkEnvVar('NEXT_PUBLIC_BSC_GRAPH_URL', process.env.NEXT_PUBLIC_BSC_GRAPH_URL),
+  // Optional variable
+  [ChainId.SEPOLIA]: checkEnvVar('NEXT_PUBLIC_SEPOLIA_GRAPH_URL', process.env.NEXT_PUBLIC_SEPOLIA_GRAPH_URL || 'http://localhost:4000/'),
+  [ChainId.UNKNOWN]: undefined,
 }
 
-export function getChainEnvironment(): ChainEnvironment {
-  const environment = process.env.NEXT_PUBLIC_ENVIRONMENT
-  if (!environment) {
-    return ChainEnvironment.DEVELOPMENT
-  }
+/** Important to use process.env.[name] directly, because it replaced during build time */
+export function checkEnvVar(name: string, value: string | undefined): string {
+  if (!value)
+    throw new Error(`Environment variable "${name}" not found`)
 
-  const isExist = Object.values<string>(ChainEnvironment).includes(environment)
-  if (!isExist) {
-    throw new Error('Unknown chain environment')
-  }
+  // eslint-disable-next-line no-console
+  console.log(name, value)
 
-  return ChainEnvironment[environment as keyof typeof ChainEnvironment]
+  return value
 }
