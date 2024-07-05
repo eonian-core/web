@@ -52,7 +52,7 @@ function Actions({ symbol }: Props) {
       </ExternalLink>
       <ExternalLink href="https://docs.eonian.finance/basics/how-eonian-works">
         <Button size="sm" variant="flat" radius="md" endContent={<IconExternal width="1em" height="1em" />}>
-          How vault works
+          How it works?
         </Button>
       </ExternalLink>
     </div>
