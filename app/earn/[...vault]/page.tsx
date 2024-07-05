@@ -9,7 +9,8 @@ import Form from './form/form'
 
 import styles from './page.module.scss'
 import { Header } from './header/header'
-import { TokenGradient } from './token-gradient'
+import { TokenGradient } from './header/token-gradient'
+import { Portfolio } from './portfolio/portfolio'
 import { getYearPriceHistorical } from '@/api/coin-gecko'
 
 export const revalidate = 10
@@ -56,7 +57,10 @@ export default async function Page({ params }: Params) {
       <TokenGradient symbol={symbol} />
       <div className={styles.page}>
         <Header symbol={symbol} yearlyPriceData={yearlyPriceData} />
-        <Form vault={vault} chainId={chainId} />
+        <div className={styles.content}>
+          <Form vault={vault} chainId={chainId} />
+          <Portfolio vault={vault} />
+        </div>
       </div>
     </>
   )
