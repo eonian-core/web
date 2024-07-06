@@ -12,6 +12,7 @@ import { useExecuteTransaction, useNumberInputValue, useVaultUserInfo } from '..
 import { FormAction, FormActionStep } from '../../../store/slices/vaultActionSlice'
 import { getActiveStepSelector } from '../../../store'
 import type { ChainId } from '../../../providers/wallet/wrappers/helpers'
+import { useVaultInputContext } from '../hooks/use-vault-input-context'
 import FormInput from './form-input'
 import FormButton from './form-button'
 import FormHeader from './form-header'
@@ -34,7 +35,7 @@ const Form: React.FC<Props> = ({ vault, chainId }) => {
 
   const [formAction, setFormAction] = React.useState<FormAction>(FormAction.DEPOSIT)
 
-  const [value, displayValue, handleValueChange] = useInputValue(vault)
+  const { inputValue: value, displayValue, onValueChange: handleValueChange } = useVaultInputContext()
 
   const balances = useBalance()
   const formBalance = formAction === FormAction.DEPOSIT ? balances.inWallet : balances.inVault
@@ -116,10 +117,6 @@ const Form: React.FC<Props> = ({ vault, chainId }) => {
       </h4>
     </div>
   )
-}
-
-function useInputValue(vault: Vault) {
-  return useNumberInputValue(0n, vault.asset.decimals)
 }
 
 export interface Balance {

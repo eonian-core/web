@@ -5,12 +5,11 @@ import { ChainId } from '../../providers/wallet/wrappers/helpers'
 import { defaultChain } from '../../web3-onboard'
 import { showEarn } from '../../features'
 import { getAssetSymbol } from '../components/vault-card/vault-card-features'
-import Form from './form/form'
 
 import styles from './page.module.scss'
 import { Header } from './header/header'
 import { TokenGradient } from './header/token-gradient'
-import { Portfolio } from './portfolio/portfolio'
+import { Content } from './content'
 import { getYearPriceHistorical } from '@/api/coin-gecko'
 
 export const revalidate = 10
@@ -57,10 +56,7 @@ export default async function Page({ params }: Params) {
       <TokenGradient symbol={symbol} />
       <div className={styles.page}>
         <Header symbol={symbol} yearlyPriceData={yearlyPriceData} />
-        <div className={styles.content}>
-          <Form vault={vault} chainId={chainId} />
-          <Portfolio vault={vault} />
-        </div>
+        <Content vault={vault} chainId={chainId} />
       </div>
     </>
   )

@@ -1,3 +1,38 @@
 .container {
+  min-width: 384px;
 
+  --color-vault: #b77eff;
+  --color-wallet: #fece26;
+  --color-coverage: #8e8cdf;
 }
+
+.legend {
+  list-style-type: none;
+
+  li {
+    display: flex;
+    align-items: center;
+
+    &:before {
+      $size: 8px;
+      content: '';
+      border-radius: 50%;
+      margin-right: var(--margin-100);
+      height: $size;
+      width: $size;
+    }
+
+    &.vault:before {
+      background-color: var(--color-vault);
+    }
+
+    &.wallet:before {
+      background-color: var(--color-wallet);
+    }
+
+    &.coverage:before {
+      background-color: var(--color-coverage);
+    }
+  }
+}
+
