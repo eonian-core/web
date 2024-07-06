@@ -9,7 +9,7 @@ interface Props {
 export function Portfolio({ vault }: Props) {
   return (
     <div id="portfolio" className={styles.container}>
-      <PortfolioChart vault={vault} size={128} />
+      <PortfolioChart vault={vault} size={160} />
       <ul className={styles.legend}>
         <li className={styles.wallet}>
           <span className={styles.label}>Wallet</span>

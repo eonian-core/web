@@ -1,5 +1,5 @@
 .container {
-  min-width: 384px;
+  min-width: 300px;
 
   --color-vault: #b77eff;
   --color-wallet: #fece26;
@@ -33,6 +33,10 @@
     &.coverage:before {
       background-color: var(--color-coverage);
     }
+  }
+
+  .value {
+    margin-left: auto;
   }
 }
 

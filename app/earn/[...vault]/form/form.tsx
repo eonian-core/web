@@ -33,9 +33,7 @@ const Form: React.FC<Props> = ({ vault, chainId }) => {
 
   const { isLoading, lastRequestForWallet } = useAppSelector(state => state.vaultUser)
 
-  const [formAction, setFormAction] = React.useState<FormAction>(FormAction.DEPOSIT)
-
-  const { inputValue: value, displayValue, onValueChange: handleValueChange } = useVaultInputContext()
+  const { inputValue: value, displayValue, onValueChange: handleValueChange, formAction, setFormAction } = useVaultInputContext()
 
   const balances = useBalance()
   const formBalance = formAction === FormAction.DEPOSIT ? balances.inWallet : balances.inVault
