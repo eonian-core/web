@@ -19,15 +19,18 @@ export function PortfolioChart({ vault, size }: Props) {
 
   const inputDelta = +ethers.formatUnits(inputValue, decimals)
   const walletBalance = +ethers.formatUnits(walletBalanceBN, decimals)
-  const vaultBalance = +ethers.formatUnits(vaultBalanceBN, decimals)
+  const vaultBalance = 0 ?? +ethers.formatUnits(vaultBalanceBN, decimals)
 
   const vaultDelta = vaultBalance + inputDelta
   const walletDelta = Math.max(walletBalance - inputDelta, 0)
   const proportion = vaultDelta / (vaultDelta + walletDelta)
+
   useChart({
     canvas: canvasRef.current!,
-    size: 128,
-    value: proportion,
+    size: 196,
+    lineWidth: 10,
+    animationStep: 0.01,
+    value: +proportion.toFixed(2),
   })
 
   return (
@@ -40,10 +43,12 @@ export function PortfolioChart({ vault, size }: Props) {
 interface DrawIntent {
   canvas: HTMLCanvasElement
   size: number
+  lineWidth: number
+  animationStep: number
   value: number
 }
 
-function useChart({ canvas, size, value }: DrawIntent) {
+function useChart({ canvas, size, value, lineWidth, animationStep }: DrawIntent) {
   const lastProgressesRef = useRef({ outer: 0, inner: 0 })
 
   useLayoutEffect(() => {
@@ -55,10 +60,12 @@ function useChart({ canvas, size, value }: DrawIntent) {
     const outerColorA = computedStyle.getPropertyValue('--color-vault')
     const outerColorB = computedStyle.getPropertyValue('--color-wallet')
 
-    return draw({
+    const stop = draw({
       canvas,
       size,
       value,
+      lineWidth,
+      animationStep,
       outerStartProgress: lastProgressesRef.current.outer,
       innerStartProgress: lastProgressesRef.current.inner,
       onOuterLastProgress: progress => (lastProgressesRef.current.outer = progress),
@@ -67,7 +74,8 @@ function useChart({ canvas, size, value }: DrawIntent) {
       outerColorA,
       outerColorB,
     })
-  }, [canvas, size, value])
+    return () => stop()
+  }, [animationStep, canvas, lineWidth, size, value])
 }
 
 interface DrawOptions extends DrawIntent {
@@ -84,6 +92,8 @@ function draw({
   canvas,
   size,
   value,
+  lineWidth,
+  animationStep,
   outerStartProgress,
   innerStartProgress,
   onInnerLastProgress,
@@ -96,13 +106,14 @@ function draw({
 
   normalizeRatio(canvas, size)
 
-  const offset = Math.PI * 1.425
-  const gap = Math.PI * 0.03
-  const animationStep = 0.0125
-  const lineWidth = 8
   const radius = size / 2 - lineWidth / 2
   const x = radius + lineWidth / 2
   const y = radius + lineWidth / 2
+
+  /**
+   * The gap angle is the space (margin) between the two arcs of the same chart (circle).
+   */
+  const gapAngle = lineWidth * 1.5 / radius
 
   let innerProgress = innerStartProgress
   let outerProgress = outerStartProgress
@@ -119,30 +130,69 @@ function draw({
   }
 
   function drawOuterChart(): boolean {
-    const startA = offset
-    const endA = Math.max(Math.min(outerProgress, 0.97), 0.03) * Math.PI * 2 + offset
+    const startA = 0
+    const endA = Math.max(
+      Math.min(
+        Math.PI * 2 - gapAngle * 2,
+        outerProgress * Math.PI * 2 - gapAngle,
+      ),
+      0,
+    )
 
-    const startB = endA
-    const endB = Math.PI * 2 + offset
+    const startB = endA + gapAngle
+    const endB = Math.PI * 2 - gapAngle
 
-    drawArc(outerColorB, startB + gap, endB - gap)
-    drawArc(outerColorA, startA + gap, endA - gap)
+    drawArc(outerColorB, startB, endB)
+    drawArc(outerColorA, startA, endA)
+
+    let reachTarget = false
+    if (outerStartProgress < value)
+      reachTarget = outerProgress >= value
+    else if (outerStartProgress > value)
+      reachTarget = outerProgress <= value
 
     outerProgress += animationStep * (outerStartProgress < value ? 1 : -1)
-    return Math.abs(outerProgress - value) <= animationStep
+    outerProgress = +outerProgress.toFixed(2)
+
+    if (outerStartProgress < value)
+      outerProgress = outerProgress >= value ? value : outerProgress
+    else if (outerStartProgress > value)
+      outerProgress = outerProgress <= value ? value : outerProgress
+
+    outerProgress = Math.min(Math.max(outerProgress, 0), 1)
+
+    return reachTarget
   }
 
   function drawInnerChart(): boolean {
-    const start = offset
-    const end = Math.max(Math.min(innerProgress, 1), 0.03) * Math.PI * 2 + offset
+    /**
+     * The distance between two circles is dependent on the line width.
+     */
+    const innerRadius = radius - lineWidth * 1.5
 
-    const innerRadius = radius - lineWidth - gap * 55
+    /**
+     * We need to recalculate the gap angle for the inner chart because the radius is different.
+     * Otherwise, the gap proportion will be different between the inner and outer charts.
+     */
+    const innerGapAngle = gapAngle * (radius / innerRadius)
+
+    /**
+     * Slightly rotate the inner chart by ~2.5 degrees (depends on the size) to match the outer chart.
+     * The magic number 128 is the initial size of the chart on which the rotation was calibrated.
+     */
+    const shift = (2.5 * 128 / size) * Math.PI / 180
+    const start = shift
+    const end = innerProgress * Math.PI * 2 - innerGapAngle + shift
+
     const innerOffset = size / 2
 
-    drawArc(innerColor, start + gap * 1.25, end - gap * 1.25, innerOffset, innerOffset, innerRadius)
+    drawArc(innerColor, start, end, innerOffset, innerOffset, innerRadius)
 
-    innerProgress += animationStep
-    return innerProgress >= 1
+    const reachTarget = innerProgress >= 1
+
+    innerProgress = Math.min(innerProgress + animationStep, 1)
+
+    return reachTarget
   }
 
   function drawOpacityGradientOverlay() {
@@ -154,6 +204,12 @@ function draw({
   }
 
   function animate() {
+    ctx.save()
+
+    ctx.translate(size / 2, size / 2)
+    ctx.rotate(-100 * Math.PI / 180)
+    ctx.translate(-size / 2, -size / 2)
+
     ctx.clearRect(0, 0, size, size)
     ctx.lineWidth = lineWidth
 
@@ -163,6 +219,8 @@ function draw({
 
     ctx.globalCompositeOperation = 'destination-in'
     drawOpacityGradientOverlay()
+
+    ctx.restore()
 
     const isAnimationDone = isOuterChartDone && isInnerChartDone
     if (isAnimationDone)
@@ -174,9 +232,9 @@ function draw({
   animate()
 
   return () => {
+    cancelAnimationFrame(handler)
     onOuterLastProgress(outerProgress)
     onInnerLastProgress(innerProgress)
-    cancelAnimationFrame(handler)
   }
 }
 
