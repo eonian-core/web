@@ -53,7 +53,7 @@ function AmountChangeInfo({ vault, size }: Omit<Props, 'proportion'>) {
 
     const scale = Math.min((size * 0.6) / maxWidth, 1)
     setScale(scale)
-  }, [size, inputValue])
+  }, [size, inputValue, formAction])
 
   const [amount, amountChange] = useAmountChange(inputValue, formAction)
   const { decimals, price, symbol: assetSymbol } = vault.asset
@@ -119,7 +119,7 @@ function TokenAmount({ value, decimals, vault, change }: TokenAmountProps) {
     <div className={styles.tokenAmount}>
       <CompactNumber value={value} decimals={decimals} threshold={threshold} fractionDigits={2} hideTooltip>
         <span className={styles.asset}>{assetSymbol}</span>
-        {!!change && <ChangeIndicator change={value} />}
+        {!!change && <ChangeIndicator change={change} />}
       </CompactNumber>
     </div>
   )

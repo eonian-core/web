@@ -11,7 +11,7 @@ interface Props {
 export function PortfolioLegend({ proportion, className }: Props) {
   const { status: walletStatus } = useWalletWrapperContext()
 
-  const vault = Math.round(proportion * 100)
+  const vault = Math.max(Math.round(proportion * 100), 0)
   const wallet = 100 - vault
 
   const classNames = clsx(styles.container, className)
