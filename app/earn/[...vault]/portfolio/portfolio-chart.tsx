@@ -15,23 +15,11 @@ import { Row } from '@/components/row/Row'
 interface Props {
   vault: Vault
   size: number
+  proportion: number
 }
 
-export function PortfolioChart({ vault, size }: Props) {
-  const { decimals } = vault.asset
-
-  const { inputValue, formAction } = useVaultInputContext()
-  const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
-
+export function PortfolioChart({ vault, size, proportion }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  const inputDelta = +ethers.formatUnits(inputValue, decimals)
-  const walletBalance = +ethers.formatUnits(walletBalanceBN, decimals)
-  const vaultBalance = 0 ?? +ethers.formatUnits(vaultBalanceBN, decimals)
-
-  const vaultDelta = vaultBalance + inputDelta
-  const walletDelta = Math.max(walletBalance - inputDelta, 0)
-  const proportion = vaultDelta / (vaultDelta + walletDelta)
 
   useChart({
     canvas: canvasRef.current!,
@@ -43,20 +31,16 @@ export function PortfolioChart({ vault, size }: Props) {
 
   return (
     <div className={styles.container}>
-      <AmountChangeInfo vault={vault} size={size} inputValue={inputValue} formAction={formAction} />
+      <AmountChangeInfo vault={vault} size={size} />
       <canvas ref={canvasRef} width={size} height={size} />
     </div>
   )
 }
 
-interface AmountChangeInfoProps extends Props {
-  inputValue: bigint
-  formAction: FormAction
-}
-
-function AmountChangeInfo({ vault, size, inputValue, formAction }: AmountChangeInfoProps) {
+function AmountChangeInfo({ vault, size }: Omit<Props, 'proportion'>) {
   const ref = useRef<HTMLDivElement>(null)
 
+  const { inputValue, formAction } = useVaultInputContext()
   const [scale, setScale] = useState(1)
 
   useLayoutEffect(() => {
