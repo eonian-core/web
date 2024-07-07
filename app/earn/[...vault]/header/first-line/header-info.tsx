@@ -3,8 +3,6 @@ import styles from './header-info.module.scss'
 import type { TokenSymbol } from '@/types'
 import IconCoin from '@/components/icons/icon-coin'
 import { getVaultName } from '@/earn/components/vault-card/vault-card-features'
-import ExternalLink from '@/components/links/external-link'
-import IconExternal from '@/components/icons/icon-external'
 import { interFont } from '@/shared/fonts/Inter'
 
 interface Props {
@@ -16,7 +14,6 @@ export function HeaderInfo({ symbol }: Props) {
     <div className={styles.container}>
       <Tags />
       <Info symbol={symbol} />
-      <Actions symbol={symbol} />
     </div>
   )
 }
@@ -30,31 +27,6 @@ function Info({ symbol }: Props) {
         <h1 className={interFont.className}>{getVaultName(symbol)}</h1>
         <h2>{symbol}</h2>
       </div>
-    </div>
-  )
-}
-
-function Actions({ symbol }: Props) {
-  const cmcPathLookup: Record<TokenSymbol, string> = {
-    BTC: 'bitcoin',
-    ETH: 'ethereum',
-    USDT: 'tether',
-    USDC: 'usd-coin',
-    DAI: 'multi-collateral-dai',
-    BNB: 'bnb',
-  }
-  return (
-    <div className={styles.actions}>
-      <ExternalLink href={`https://coinmarketcap.com/currencies/${cmcPathLookup[symbol]}/`}>
-        <Button size="sm" variant="flat" radius="md" endContent={<IconExternal width="1em" height="1em" />}>
-          Coin info
-        </Button>
-      </ExternalLink>
-      <ExternalLink href="https://docs.eonian.finance/basics/how-eonian-works">
-        <Button size="sm" variant="flat" radius="md" endContent={<IconExternal width="1em" height="1em" />}>
-          How it works?
-        </Button>
-      </ExternalLink>
     </div>
   )
 }

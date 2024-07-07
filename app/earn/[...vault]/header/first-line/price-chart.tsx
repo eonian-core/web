@@ -37,7 +37,15 @@ function PriceChange({ yearlyPriceData }: Omit<ChartProps, 'symbol'>) {
   )
 
   function TooltipContent() {
-    return <>Change (last year): <b>{prefix}{formatUSD(getChangeDelta(yearlyPriceData))}</b></>
+    return (
+      <>
+        Change (last year):{' '}
+        <b>
+          {prefix}
+          {formatUSD(getChangeDelta(yearlyPriceData))}
+        </b>
+      </>
+    )
   }
 }
 

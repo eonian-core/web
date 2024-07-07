@@ -1,12 +1,11 @@
 import { ethers } from 'ethers'
-import { useMemo } from 'react'
 import { useVaultInputContext } from '../hooks/use-vault-input-context'
+import { SectionHeader, SectionSubHeader } from '../components/section-header'
 import styles from './portfolio.module.scss'
 import { PortfolioChart } from './portfolio-chart'
 import { PortfolioLegend } from './portfolio-legend'
 import type { Vault } from '@/api'
 import { useAppSelector } from '@/store/hooks'
-import { toStringNumberFromDecimals } from '@/shared'
 import CompactNumber from '@/components/compact-number/compact-number'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 
@@ -28,10 +27,9 @@ export function Portfolio({ vault }: Props) {
 
   return (
     <div id="portfolio" className={styles.container}>
-      <div className={styles.header}>
-        <h2>Your Portfolio</h2>
+      <SectionHeader title="Your Portfolio">
         <SubHeader />
-      </div>
+      </SectionHeader>
       <PortfolioChart vault={vault} size={160} proportion={proportion} />
       <PortfolioLegend className={styles.legend} proportion={proportion} />
     </div>
@@ -53,12 +51,12 @@ export function Portfolio({ vault }: Props) {
     }
 
     return (
-      <h3>
+      <SectionSubHeader>
         After a {action} of&nbsp;
         <CompactNumber value={value} decimals={decimals} threshold={threshold} fractionDigits={2} hideTooltip>
           &nbsp;<span className={styles.asset}>{symbol}</span>
         </CompactNumber>
-      </h3>
+      </SectionSubHeader>
     )
   }
 }
