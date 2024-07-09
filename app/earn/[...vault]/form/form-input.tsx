@@ -67,6 +67,7 @@ function InputRightContent({
       <CompactNumber
         value={balance}
         decimals={decimals}
+        threshold={0n}
         fractionDigits={2}
         fractionPartView={FractionPartView.CUT}
         tooltipContent={value => `${value} ${assetSymbol}`}

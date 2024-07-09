@@ -1,177 +1,108 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Area, AreaChart, ComposedChart, Line, ResponsiveContainer } from 'recharts'
+import { useMemo, useState } from 'react'
+import { Button, Tooltip } from '@nextui-org/react'
 import { SectionHeader, SectionSubHeader } from '../components/section-header'
-import { useVaultInputContext } from '../hooks/use-vault-input-context'
+import { useVaultDepositUSD } from '../hooks/use-vault-deposit-change'
+import { PercentagePriceChange } from '../components/percentage-price-change'
 import styles from './returns.module.scss'
+import { ReturnsChart } from './returns-chart'
 import type { Vault } from '@/api'
 import type { PriceData } from '@/types'
-import { getGrowthPercent } from '@/earn/components/vault-card/vault-card-features'
+import { getGrowthPercent, getYearlyROI } from '@/earn/components/vault-card/vault-card-features'
 import { calculateVaultAPY } from '@/shared/projections/calculate-apy'
-import { reducePriceData } from '@/shared/charts/reduce-price-data'
+import CompactNumber from '@/components/compact-number/compact-number'
+import clsx from 'clsx'
 
 interface Props {
   vault: Vault
   yearlyPriceData: PriceData[]
 }
 
-type Timeframe = 'WEEK' | 'MONTH' | 'YEAR'
+type Timeframe = 'Week' | 'Month' | 'Year'
 
 const timeLookupMap: Record<Timeframe, number> = {
-  WEEK: 7,
-  MONTH: 30,
-  YEAR: 365,
+  Week: 7,
+  Month: 30,
+  Year: 365,
 }
 
 export function Returns({ vault, yearlyPriceData }: Props) {
-  const [timeframe, setTimeframe] = useState<Timeframe>('YEAR')
+  const [timeframe, setTimeframe] = useState<Timeframe>('Year')
+  const days = timeLookupMap[timeframe]
   return (
     <div className={styles.container}>
       <SectionHeader title="Projected Returns">
         <SectionSubHeader>Based on last {timeframe.toLowerCase()} APY</SectionSubHeader>
       </SectionHeader>
-      <ChartWithReturns
-        days={timeLookupMap[timeframe]}
-        vault={vault}
-        yearlyPriceData={yearlyPriceData}
-        width="100%"
-        height={160}
-        colorGrowth="var(--color-growth)"
-        colorPremium="var(--color-premium)"
-      />
+      <div className={styles.chart}>
+        <ReturnsChart
+          days={days}
+          vault={vault}
+          yearlyPriceData={yearlyPriceData}
+          width="100%"
+          height={160}
+          colorGrowth="var(--color-growth)"
+          colorPremium="var(--color-premium)"
+        />
+        <AmountOfReturns vault={vault} days={days} yearPriceData={yearlyPriceData} />
+      </div>
+      <TimeframePicker />
     </div>
   )
+
+  function TimeframePicker() {
+    return (
+      <div className={styles.timeframe}>
+        {Object.keys(timeLookupMap).map(key => (
+          <Button
+            key={key}
+            variant={timeframe === key ? 'flat' : 'light'}
+            className={clsx(styles.button, { [styles.active]: timeframe === key })}
+            size="sm"
+            onClick={() => setTimeframe(key as Timeframe)}
+          >
+            {key}
+          </Button>
+        ))}
+      </div>
+    )
+  }
 }
 
-interface ChartProps extends Props {
+interface AmountOfReturnsProps {
+  vault: Vault
   days: number
-  width: number | string
-  height: number | string
-  colorGrowth: string
-  colorPremium: string
+  yearPriceData: PriceData[]
 }
 
-interface PriceDataWithPremium extends PriceData {
-  priceWithPremium: number
-  returnAmount: number
-  returnAmountWithPremium: number
-}
+function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
+  const { depositInUSD, decimals } = useVaultDepositUSD(vault)
 
-function ChartWithReturns({ days, vault, yearlyPriceData, colorGrowth, colorPremium, width, height }: ChartProps) {
-  const data = useChartData({ days, yearlyPriceData, vault })
-  const animationDuration = 300
-  return (
-    <ResponsiveContainer width={width} height={height}>
-      <ComposedChart data={data}>
-        <defs>
-          <linearGradient id="growth-bg-color" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor={colorGrowth} stopOpacity={0.8} />
-            <stop offset="95%" stopColor={colorGrowth} stopOpacity={0} />
-          </linearGradient>
-          <linearGradient id="premium-bg-color" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor={colorPremium} stopOpacity={0.7} />
-            <stop offset="95%" stopColor={colorPremium} stopOpacity={0} />
-          </linearGradient>
-        </defs>
-        <Area
-          type="monotone"
-          dataKey="returnAmountWithPremium"
-          stroke="transparent"
-          fillOpacity={1}
-          fill="url(#premium-bg-color)"
-          animationDuration={animationDuration}
-        />
-        <Line
-          type="monotone"
-          dataKey="returnAmountWithPremium"
-          stroke={colorPremium}
-          strokeWidth={1.5}
-          strokeDasharray="5 5"
-          dot={false}
-          animationDuration={animationDuration}
-        />
-        <Area
-          type="monotone"
-          dataKey="returnAmount"
-          stroke={colorGrowth}
-          fillOpacity={1}
-          fill="url(#growth-bg-color)"
-          animationDuration={animationDuration}
-        />
-      </ComposedChart>
-    </ResponsiveContainer>
-  )
-}
+  const currentPrice = yearPriceData[yearPriceData.length - 1]?.price
+  const previousPrice = yearPriceData[yearPriceData.length - days]?.price
 
-function useChartData({ days, yearlyPriceData, vault }: Pick<ChartProps, 'days' | 'yearlyPriceData' | 'vault'>) {
   const apy = calculateVaultAPY(vault, 100)
+  const growth = getGrowthPercent(vault)
 
-  const inputValue = useDebouncedInputValue()
+  const depositWithROI = useMemo(() => {
+    const yearlyROI = getYearlyROI(apy, growth)
+    const forPeriod = (yearlyROI / timeLookupMap.Year) * days
+    const rounded = Math.round(forPeriod * 100)
 
-  return useMemo(() => {
-    const compactTo = 48
+    const nominator = 10n ** BigInt(decimals)
+    const denominator = 10n ** BigInt(decimals + 4)
+    const scaled = BigInt(rounded) * nominator
 
-    let data = yearlyPriceData
+    return depositInUSD + (depositInUSD * scaled) / denominator
+  }, [apy, growth, decimals, depositInUSD, days])
 
-    /**
-     * Reduce the amount of data points to be displayed (from 365 to 48), for performance reasons and smoother chart.
-     */
-    if (days > compactTo)
-      data = reducePriceData(yearlyPriceData, compactTo)
-
-    const result = data.slice(-days).reduce((result, data, index) => {
-      result.push({
-        ...data,
-        priceWithPremium: data.price,
-        returnAmount: inputValue * data.price,
-        returnAmountWithPremium: inputValue * data.price,
-      })
-
-      if (index === 0)
-        return result
-
-      /**
-       * Take minimum APY of 15% to make noticable difference on the chart
-       */
-      const dailyAPY = Math.max(apy * 0.01, 0.15) / compactTo
-      const growth = result[index].price / result[index - 1].price
-
-      const previous = result[index - 1]
-      const priceWithPremium = previous.priceWithPremium * growth * (1 + dailyAPY)
-      result[index] = {
-        ...result[index],
-        priceWithPremium,
-        returnAmountWithPremium: priceWithPremium * inputValue,
-      }
-
-      return result
-    }, [] as PriceDataWithPremium[])
-
-    /**
-     * Normalize the data to make the chart more readable.
-     */
-    const minPremium = result.reduce((min, data) => Math.min(min, data.priceWithPremium), Number.POSITIVE_INFINITY)
-    const minDefault = result.reduce((min, data) => Math.min(min, data.price), Number.POSITIVE_INFINITY)
-    return result.map(data => ({
-      ...data,
-      price: data.price - minDefault / 3,
-      priceWithPremium: data.priceWithPremium - minPremium / 3,
-    }))
-  }, [days, yearlyPriceData, apy, inputValue])
-}
-
-function useDebouncedInputValue(debounce = 100) {
-  const { displayValue } = useVaultInputContext()
-  /**
-   * Ensure input is in range [0.001, 2 ** 31) to properly form a shape of the chart
-   */
-  const cap = (value: number) => Math.max(Math.min(value, 2 ** 31 - 1), 0.001)
-  const input = cap(+displayValue)
-  const [result, setResult] = useState(input)
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => setResult(input), debounce)
-    return () => clearTimeout(timeoutId)
-  }, [input, debounce])
-
-  return result
+  return (
+    <div className={styles.returns}>
+      <div className={styles.amount}>
+        <CompactNumber value={depositWithROI} decimals={decimals} fractionDigits={2} childrenAtStart hideTooltip>
+          <>$</>
+        </CompactNumber>
+      </div>
+      <PercentagePriceChange className={styles.percent} currentPrice={currentPrice} previousPrice={previousPrice} />
+    </div>
+  )
 }

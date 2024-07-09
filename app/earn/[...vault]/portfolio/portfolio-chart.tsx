@@ -2,13 +2,11 @@
 
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Spacer, Tooltip } from '@nextui-org/react'
-import { useVaultInputContext } from '../hooks/use-vault-input-context'
+import { useVaultDeposit } from '../hooks/use-vault-deposit-change'
 import styles from './portfolio-chart.module.scss'
 import { useChart } from './use-chart'
 import { ChangeIndicator } from './components/change-indicator'
-import { useAppSelector } from '@/store/hooks'
 import type { Vault } from '@/api'
-import { FormAction } from '@/store/slices/vaultActionSlice'
 import { toStringNumberFromDecimals, toUSDValue } from '@/shared'
 import CompactNumber from '@/components/compact-number/compact-number'
 import { Row } from '@/components/row/Row'
@@ -38,8 +36,12 @@ export function PortfolioChart({ vault, size, proportion }: Props) {
 function AmountChangeInfo({ vault, size }: Omit<Props, 'proportion'>) {
   const ref = useRef<HTMLDivElement>(null)
 
-  const { inputValue, formAction } = useVaultInputContext()
   const [scale, setScale] = useState(1)
+
+  const [total, change] = useVaultDeposit()
+  const { decimals, price, symbol: assetSymbol } = vault.asset
+  const { value: tokenPrice, decimals: priceDecimals } = price
+  const priceInUSD = toUSDValue(total, decimals, tokenPrice)
 
   useLayoutEffect(() => {
     const { current } = ref
@@ -51,24 +53,19 @@ function AmountChangeInfo({ vault, size }: Omit<Props, 'proportion'>) {
 
     const scale = Math.min((size * 0.6) / maxWidth, 1)
     setScale(scale)
-  }, [size, inputValue, formAction])
-
-  const [amount, amountChange] = useAmountChange(inputValue, formAction)
-  const { decimals, price, symbol: assetSymbol } = vault.asset
-  const { value: tokenPrice, decimals: priceDecimals } = price
-  const priceInUSD = toUSDValue(amount, decimals, tokenPrice)
+  }, [size, total, change])
 
   return (
     <Tooltip content={<TooltipContent />}>
       <div className={styles.info} ref={ref} style={{ transform: `scale(${scale})` }}>
-        <TokenAmount vault={vault} value={amount} change={amountChange} decimals={decimals} />
+        <TokenAmount vault={vault} value={total} change={change} decimals={decimals} />
         <Price value={priceInUSD} decimals={priceDecimals} />
       </div>
     </Tooltip>
   )
 
   function TooltipContent() {
-    const valueAccurate = toStringNumberFromDecimals(amount, decimals)
+    const valueAccurate = toStringNumberFromDecimals(total, decimals)
     const valueUSDAccurate = toStringNumberFromDecimals(priceInUSD, priceDecimals)
     return (
       <>
@@ -88,13 +85,11 @@ interface PriceProps {
 }
 
 function Price({ value, decimals }: PriceProps) {
-  const threshold = useMemo(() => BigInt(1e6) * 10n ** BigInt(decimals), [decimals])
   return (
     <div className={styles.priceInUSD}>
       <CompactNumber
         value={value}
         decimals={decimals}
-        threshold={threshold}
         fractionDigits={2}
         hideTooltip
         childrenAtStart
@@ -112,27 +107,12 @@ interface TokenAmountProps extends PriceProps {
 
 function TokenAmount({ value, decimals, vault, change }: TokenAmountProps) {
   const { symbol: assetSymbol } = vault.asset
-  const threshold = useMemo(() => BigInt(1e6) * 10n ** BigInt(decimals), [decimals])
   return (
     <div className={styles.tokenAmount}>
-      <CompactNumber value={value} decimals={decimals} threshold={threshold} fractionDigits={2} hideTooltip>
+      <CompactNumber value={value} decimals={decimals} fractionDigits={2} hideTooltip>
         <span className={styles.asset}>{assetSymbol}</span>
         {!!change && <ChangeIndicator change={change} />}
       </CompactNumber>
     </div>
   )
-}
-
-function useAmountChange(inputValue: bigint, formAction: FormAction) {
-  const { vaultBalanceBN } = useAppSelector(state => state.vaultUser)
-  const currentDeposit = BigInt(vaultBalanceBN)
-  const total = useMemo(() => {
-    switch (formAction) {
-      case FormAction.DEPOSIT:
-        return currentDeposit + inputValue
-      case FormAction.WITHDRAW:
-        return currentDeposit < inputValue ? 0n : currentDeposit - inputValue
-    }
-  }, [currentDeposit, inputValue, formAction])
-  return [total, total - currentDeposit] as const
 }

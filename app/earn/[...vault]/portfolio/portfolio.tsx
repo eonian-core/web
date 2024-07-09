@@ -37,7 +37,6 @@ export function Portfolio({ vault }: Props) {
 
   function SubHeader() {
     const { symbol, decimals } = vault.asset
-    const threshold = BigInt(1e6) * 10n ** BigInt(decimals)
 
     let value = inputValue
     let action = 'deposit'
@@ -53,7 +52,7 @@ export function Portfolio({ vault }: Props) {
     return (
       <SectionSubHeader>
         After a {action} of&nbsp;
-        <CompactNumber value={value} decimals={decimals} threshold={threshold} fractionDigits={2} hideTooltip>
+        <CompactNumber value={value} decimals={decimals} fractionDigits={2} hideTooltip>
           &nbsp;<span className={styles.asset}>{symbol}</span>
         </CompactNumber>
       </SectionSubHeader>

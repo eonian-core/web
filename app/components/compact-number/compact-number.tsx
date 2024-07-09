@@ -30,6 +30,8 @@ const CompactNumber: React.FC<Props> = ({
   hideTooltip,
   tooltipContent = value => value,
 }) => {
+  threshold = threshold ?? BigInt(1e6) * 10n ** BigInt(decimals)
+
   const locale = useAppSelector(state => state.locale.current)
 
   const formattedValue = formatNumberCompactWithThreshold(value, decimals, {

@@ -17,7 +17,6 @@ export function VaultUserBalance({ vault }: Props) {
   const { symbol: assetSymbol, decimals } = vault.asset
   const balance = vaultBalances[vault.address] ?? 0n
   const { value: price, decimals: priceDecimals } = vault.asset.price
-  const threshold = BigInt(1e6) * 10n ** BigInt(decimals)
   const error = typeof errors === 'string' ? errors : errors[vault.address]
   return (
     (walletStatus === WalletStatus.CONNECTING || isLoading || error) ? <Loader /> : <Value />
@@ -30,7 +29,6 @@ export function VaultUserBalance({ vault }: Props) {
           <CompactNumber
             value={balance}
             decimals={decimals}
-            threshold={threshold}
             fractionDigits={2}
             hideTooltip
             childrenAtStart={false}

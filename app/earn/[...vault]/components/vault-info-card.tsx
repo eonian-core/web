@@ -24,8 +24,6 @@ interface Props {
 export const VaultInfoCard: React.FC<Props> = ({ value, currentDeposit, vault, formAction, className }) => {
   const { symbol: assetSymbol } = vault.asset
 
-  const threshold = React.useMemo(() => BigInt(1e6) * 10n ** BigInt(vault.asset.decimals), [vault.asset.decimals])
-
   const [apyPercents, apy, apyD] = React.useMemo(() => {
     const bps = 1e6
     const apy = calculateVaultAPY(vault)
@@ -64,7 +62,6 @@ export const VaultInfoCard: React.FC<Props> = ({ value, currentDeposit, vault, f
                 decimals={vault.asset.decimals}
                 {...{
                   assetSymbol,
-                  threshold,
                   profitChange,
                 }}
                 />
@@ -76,7 +73,6 @@ export const VaultInfoCard: React.FC<Props> = ({ value, currentDeposit, vault, f
                 decimals={vault.asset.decimals}
                 {...{
                   assetSymbol,
-                  threshold,
                   profitChange,
                 }}
                 />
@@ -92,17 +88,15 @@ export interface InfoNumberProps {
   value: bigint
   profitChange: bigint
   assetSymbol: string
-  threshold: bigint
   decimals: number
 }
 
-function InfoNumber({ value, profitChange, assetSymbol, threshold, decimals }: InfoNumberProps) {
+function InfoNumber({ value, profitChange, assetSymbol, decimals }: InfoNumberProps) {
   return (
     <div className={styles.infoNumberWrapper}>
       <CompactNumber
         value={value}
         decimals={decimals}
-        threshold={threshold}
         fractionDigits={2}
         className={styles.infoNumber}
         tooltipContent={value => `${value} ${assetSymbol}`}

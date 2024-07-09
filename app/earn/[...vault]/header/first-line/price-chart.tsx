@@ -1,9 +1,10 @@
 import { Area, AreaChart } from 'recharts'
 import { useMemo } from 'react'
-import { Tooltip } from '@nextui-org/react'
+import { PercentagePriceChange, getChange, getChangeColor } from '../../components/percentage-price-change'
 import styles from './price-chart.module.scss'
 import { reducePriceData } from '@/shared/charts/reduce-price-data'
 import type { PriceData, TokenSymbol } from '@/types'
+import { formatUSD } from '@/shared/humanize/format-currency'
 
 interface ChartProps {
   symbol: TokenSymbol
@@ -11,46 +12,27 @@ interface ChartProps {
 }
 
 export function PriceChart({ symbol, yearlyPriceData }: ChartProps) {
-  const currentPrice = formatUSD(yearlyPriceData[yearlyPriceData.length - 1].price)
+  const currentPrice = yearlyPriceData[yearlyPriceData.length - 1].price
+  const previousPrice = yearlyPriceData[0].price
+  const currentPriceUSD = formatUSD(currentPrice)
   return (
     <div className={styles.container}>
       <div className={styles.priceInfo}>
         <h3>{symbol} Price</h3>
-        <h2>{currentPrice}</h2>
-        <PriceChange yearlyPriceData={yearlyPriceData} />
+        <h2>{currentPriceUSD}</h2>
+        <PercentagePriceChange currentPrice={currentPrice} previousPrice={previousPrice}>
+          &nbsp;YoY
+        </PercentagePriceChange>
       </div>
       <Chart yearlyPriceData={yearlyPriceData} />
     </div>
   )
 }
 
-function PriceChange({ yearlyPriceData }: Omit<ChartProps, 'symbol'>) {
-  const change = getChange(yearlyPriceData)
-  const prefix = change > 0 ? '+' : '-'
-  return (
-    <Tooltip content={<TooltipContent />}>
-      <div className={styles.priceChange} style={{ color: getChangeColor(yearlyPriceData) }}>
-        {prefix}
-        {Math.abs(change).toFixed(2)}% YoY
-      </div>
-    </Tooltip>
-  )
-
-  function TooltipContent() {
-    return (
-      <>
-        Change (last year):{' '}
-        <b>
-          {prefix}
-          {formatUSD(Math.abs(getChangeDelta(yearlyPriceData)))}
-        </b>
-      </>
-    )
-  }
-}
-
 function Chart({ yearlyPriceData }: Omit<ChartProps, 'symbol'>) {
-  const color = getChangeColor(yearlyPriceData)
+  const change = getChange(yearlyPriceData[yearlyPriceData.length - 1].price, yearlyPriceData[0].price)
+  const color = getChangeColor(change)
+
   // Reduce the amount of data points to be displayed (from 365 to 48), for performance reasons and smoother chart.
   const data = useMemo(() => reducePriceData(yearlyPriceData, 48), [yearlyPriceData])
   return (
@@ -64,22 +46,4 @@ function Chart({ yearlyPriceData }: Omit<ChartProps, 'symbol'>) {
       <Area type="monotone" dataKey="price" stroke={color} fillOpacity={1} fill="url(#chart-bg-color)" />
     </AreaChart>
   )
-}
-
-function getChange(yearlyPriceData: PriceData[]): number {
-  return (getChangeDelta(yearlyPriceData) / yearlyPriceData[0].price) * 100
-}
-
-function getChangeDelta(yearlyPriceData: PriceData[]): number {
-  const firstPrice = yearlyPriceData[0].price
-  const lastPrice = yearlyPriceData[yearlyPriceData.length - 1].price
-  return lastPrice - firstPrice
-}
-
-function getChangeColor(yearlyPriceData: PriceData[]): string {
-  return `var(${getChange(yearlyPriceData) > 0 ? '--color-positive' : '--color-negative'})`
-}
-
-function formatUSD(value: number): string {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)
 }
