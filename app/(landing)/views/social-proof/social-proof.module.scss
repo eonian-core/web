@@ -1,3 +1,5 @@
+@import "../../../screen.scss";
+
 $main-seciton-width: 70%;
 $secondary-seciton-width: calc(100% - $main-seciton-width);
 
@@ -30,7 +32,7 @@ $secondary-seciton-width: calc(100% - $main-seciton-width);
         font-size: var(--font-size-600);
         line-height: var(--line-height-600);
         text-align: left;
-        margin-bottom: 10px;
+        margin-bottom: 2rem;
     }
 }
 
@@ -39,11 +41,20 @@ $secondary-seciton-width: calc(100% - $main-seciton-width);
     flex-wrap: wrap;
     justify-content: space-between;
     flex-direction: column;
-    margin-bottom: var(--margin-500);
+    margin-bottom: 3rem;
+
+    @media (max-width: $screen-laptop) {
+        margin-bottom: 2rem;
+    }
+
     .number {
         font-size: var(--font-size-1130);
         line-height: 1;
         font-weight: var(--font-black);
+
+        @media (max-width: $screen-laptop) {
+            font-size: var(--font-size-1050);
+        }
     }
     .description {
         font-size: var(--font-size-600);
@@ -59,7 +70,7 @@ $secondary-seciton-width: calc(100% - $main-seciton-width);
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: $main-seciton-width;
-    @media (max-width: 1000px) {
+    @media (max-width: $screen-laptop) {
         flex-basis: 100%;
     }
 }
@@ -70,10 +81,11 @@ $secondary-seciton-width: calc(100% - $main-seciton-width);
     flex-basis: $secondary-seciton-width;
     text-align: right; 
 
-    @media (max-width: 1000px) {
+    @media (max-width: $screen-laptop) {
         display: flex;
         flex-basis: 100%;
         justify-content: space-between;
+        text-align: left;
     }
 }
 
