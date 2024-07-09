@@ -1,3 +1,9 @@
 .container {
-    display: flex;
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+  width: 100%;
+
+  justify-content: space-evenly;
+  justify-items: center;
+  align-content: space-evenly;
 }

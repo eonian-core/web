@@ -42,7 +42,7 @@ function PriceChange({ yearlyPriceData }: Omit<ChartProps, 'symbol'>) {
         Change (last year):{' '}
         <b>
           {prefix}
-          {formatUSD(getChangeDelta(yearlyPriceData))}
+          {formatUSD(Math.abs(getChangeDelta(yearlyPriceData)))}
         </b>
       </>
     )

@@ -1,4 +1,5 @@
-import { ethers } from 'ethers'
+'use client'
+
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Spacer, Tooltip } from '@nextui-org/react'
 import { useVaultInputContext } from '../hooks/use-vault-input-context'
@@ -19,10 +20,7 @@ interface Props {
 }
 
 export function PortfolioChart({ vault, size, proportion }: Props) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
   useChart({
-    canvas: canvasRef.current!,
     size,
     lineWidth: 10,
     animationStep: 0.01,
@@ -32,7 +30,7 @@ export function PortfolioChart({ vault, size, proportion }: Props) {
   return (
     <div className={styles.container}>
       <AmountChangeInfo vault={vault} size={size} />
-      <canvas ref={canvasRef} width={size} height={size} />
+      <canvas id="portfolio-chart" width={size} height={size} />
     </div>
   )
 }

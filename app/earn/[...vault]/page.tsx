@@ -56,7 +56,7 @@ export default async function Page({ params }: Params) {
       <TokenGradient symbol={symbol} />
       <div className={styles.page}>
         <Header symbol={symbol} yearlyPriceData={yearlyPriceData} />
-        <Content vault={vault} chainId={chainId} />
+        <Content vault={vault} chainId={chainId} yearlyPriceData={yearlyPriceData} />
       </div>
     </>
   )

@@ -1,17 +1,17 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface DrawIntent {
-  canvas: HTMLCanvasElement
   size: number
   lineWidth: number
   animationStep: number
   value: number
 }
 
-export function useChart({ canvas, size, value, lineWidth, animationStep }: DrawIntent) {
+export function useChart({ size, value, lineWidth, animationStep }: DrawIntent) {
   const lastProgressesRef = useRef({ outer: 0, inner: 0 })
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    const canvas = document.getElementById('portfolio-chart')
     if (!canvas)
       return
 
@@ -21,7 +21,7 @@ export function useChart({ canvas, size, value, lineWidth, animationStep }: Draw
     const outerColorB = computedStyle.getPropertyValue('--color-wallet')
 
     const stop = draw({
-      canvas,
+      canvas: canvas as HTMLCanvasElement,
       size,
       value,
       lineWidth,
@@ -35,10 +35,11 @@ export function useChart({ canvas, size, value, lineWidth, animationStep }: Draw
       outerColorB,
     })
     return () => stop()
-  }, [animationStep, canvas, lineWidth, size, value])
+  }, [animationStep, lineWidth, size, value])
 }
 
 interface DrawOptions extends DrawIntent {
+  canvas: HTMLCanvasElement
   outerStartProgress: number
   innerStartProgress: number
   onOuterLastProgress: (progress: number) => void
