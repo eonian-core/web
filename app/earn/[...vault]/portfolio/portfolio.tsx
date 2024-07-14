@@ -39,19 +39,19 @@ export function Portfolio({ vault }: Props) {
     const { symbol, decimals } = vault.asset
 
     let value = inputValue
-    let action = 'deposit'
+    let action = 'saving'
 
     if (formAction === FormAction.WITHDRAW) {
       const vaultBalance = BigInt(vaultBalanceBN)
       if (inputValue > vaultBalance)
         value = vaultBalance
 
-      action = 'withdraw'
+      action = 'withdrawing'
     }
 
     return (
       <SectionSubHeader>
-        After a {action} of&nbsp;
+        After {action} of&nbsp;
         <CompactNumber value={value} decimals={decimals} fractionDigits={2} hideTooltip>
           &nbsp;<span className={styles.asset}>{symbol}</span>
         </CompactNumber>

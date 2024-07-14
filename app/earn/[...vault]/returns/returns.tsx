@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Button, Tooltip } from '@nextui-org/react'
+import clsx from 'clsx'
 import { SectionHeader, SectionSubHeader } from '../components/section-header'
 import { useVaultDepositUSD } from '../hooks/use-vault-deposit-change'
 import { PercentagePriceChange } from '../components/percentage-price-change'
@@ -10,7 +11,6 @@ import type { PriceData } from '@/types'
 import { getGrowthPercent, getYearlyROI } from '@/earn/components/vault-card/vault-card-features'
 import { calculateVaultAPY } from '@/shared/projections/calculate-apy'
 import CompactNumber from '@/components/compact-number/compact-number'
-import clsx from 'clsx'
 
 interface Props {
   vault: Vault
