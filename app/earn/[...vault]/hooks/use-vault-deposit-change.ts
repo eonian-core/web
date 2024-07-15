@@ -2,22 +2,12 @@ import { useMemo } from 'react'
 import { useVaultInputContext } from './use-vault-input-context'
 import { useAppSelector } from '@/store/hooks'
 import { FormAction } from '@/store/slices/vaultActionSlice'
-import { getAmountInUSD, toUSDValue } from '@/shared'
+import { getAmountInUSD } from '@/shared'
 import type { Vault } from '@/api'
 
 export function useVaultDeposit() {
-  const { inputValue, formAction } = useVaultInputContext()
   const { vaultBalanceBN } = useAppSelector(state => state.vaultUser)
-  const currentDeposit = BigInt(vaultBalanceBN)
-  const total = useMemo(() => {
-    switch (formAction) {
-      case FormAction.DEPOSIT:
-        return currentDeposit + inputValue
-      case FormAction.WITHDRAW:
-        return currentDeposit < inputValue ? 0n : currentDeposit - inputValue
-    }
-  }, [currentDeposit, inputValue, formAction])
-  return [total, total - currentDeposit] as const
+  return useDeposit(vaultBalanceBN)
 }
 
 export function useVaultDepositUSD(vault: Vault) {
@@ -25,4 +15,18 @@ export function useVaultDepositUSD(vault: Vault) {
   const [depositInUSD, priceDecimals] = getAmountInUSD(total, vault)
   const changeInUSD = getAmountInUSD(change, vault)
   return { depositInUSD, changeInUSD, decimals: priceDecimals }
+}
+
+function useDeposit(amount: bigint | string) {
+  const { inputValue, formAction } = useVaultInputContext()
+  const amountBN = BigInt(amount)
+  const total = useMemo(() => {
+    switch (formAction) {
+      case FormAction.DEPOSIT:
+        return amountBN + inputValue
+      case FormAction.WITHDRAW:
+        return amountBN < inputValue ? 0n : amountBN - inputValue
+    }
+  }, [amountBN, inputValue, formAction])
+  return [total, total - amountBN] as const
 }
