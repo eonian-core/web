@@ -9,6 +9,11 @@
   align-items: center;
   grid-column-gap: var(--margin-200);
   grid-template-columns: min-content auto;
+
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  }
 }
 
 .description {
