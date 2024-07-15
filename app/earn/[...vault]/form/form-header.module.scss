@@ -6,26 +6,10 @@
   overflow: visible !important;
 }
 
-.underline {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  height: 1px;
-  width: calc(50%);
-  background-color: var(--color-primary-500);
-  z-index: 2;
-  transition: transform 0.2s ease;
-
-  &.moved {
-    transform: translateX(100%);
-  }
+.button {
+  color: var(--color-text-500);
 }
 
-.button {
-  flex: 1;
-  min-width: auto !important;
-
-  &:not(&Active) {
-    color: var(--color-text-500);
-  }
+.buttonActive {
+  color: var(--color-text-100);
 }

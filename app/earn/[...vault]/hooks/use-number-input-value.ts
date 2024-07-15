@@ -36,7 +36,7 @@ export function parseValue(value: string, decimals: number): ValueParseResult | 
   return [isNumber ? toBigIntWithDecimals(newValue, decimals) : 0n, newValue]
 }
 
-export function parseBigIntValue(value: bigint, decimals: number): ValueParseResult | null {
+export function parseBigIntValue(value: bigint, decimals: number): ValueParseResult {
   return [value, bigIntToString(value, decimals)]
 }
 

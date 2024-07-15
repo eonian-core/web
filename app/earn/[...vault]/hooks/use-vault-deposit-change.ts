@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useVaultInputContext } from './use-vault-input-context'
 import { useAppSelector } from '@/store/hooks'
 import { FormAction } from '@/store/slices/vaultActionSlice'
-import { toUSDValue } from '@/shared'
+import { getAmountInUSD, toUSDValue } from '@/shared'
 import type { Vault } from '@/api'
 
 export function useVaultDeposit() {
@@ -22,9 +22,7 @@ export function useVaultDeposit() {
 
 export function useVaultDepositUSD(vault: Vault) {
   const [total, change] = useVaultDeposit()
-  const { decimals, price } = vault.asset
-  const { value: tokenPrice, decimals: priceDecimals } = price
-  const depositInUSD = toUSDValue(total, decimals, tokenPrice)
-  const changeInUSD = toUSDValue(change, decimals, tokenPrice)
+  const [depositInUSD, priceDecimals] = getAmountInUSD(total, vault)
+  const changeInUSD = getAmountInUSD(change, vault)
   return { depositInUSD, changeInUSD, decimals: priceDecimals }
 }

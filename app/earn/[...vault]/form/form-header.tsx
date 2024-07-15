@@ -6,6 +6,7 @@ import { Button, CardHeader } from '@nextui-org/react'
 import clsx from 'clsx'
 import { FormAction } from '../../../store/slices/vaultActionSlice'
 import styles from './form-header.module.scss'
+import { INPUT_ID } from './form-input'
 
 interface Props {
   currentAction: FormAction
@@ -17,20 +18,17 @@ const FormHeader: React.FC<Props> = ({ currentAction, onCurrentActionChange }) =
     (event: React.MouseEvent) => {
       const target = event.target as HTMLElement
       onCurrentActionChange(target.dataset.key as FormAction)
+
+      const input = document.getElementById(INPUT_ID)
+      input?.focus()
     },
     [onCurrentActionChange],
   )
 
   return (
     <CardHeader className={styles.header}>
-      <TabButton action={FormAction.DEPOSIT} currentAction={currentAction} text="Deposit" onClick={handleClick} />
+      <TabButton action={FormAction.DEPOSIT} currentAction={currentAction} text="Save" onClick={handleClick} />
       <TabButton action={FormAction.WITHDRAW} currentAction={currentAction} text="Withdraw" onClick={handleClick} />
-
-      <div
-        className={clsx(styles.underline, {
-          [styles.moved]: currentAction === FormAction.WITHDRAW,
-        })}
-      />
     </CardHeader>
   )
 }
@@ -47,7 +45,13 @@ function TabButton({ action, currentAction, text, onClick }: TabButtonProps) {
     [styles.buttonActive]: currentAction === action,
   })
   return (
-    <Button data-key={action} onClick={onClick} className={classNames} size="lg">
+    <Button
+      data-key={action}
+      onClick={onClick}
+      className={classNames}
+      variant="flat"
+      size="lg"
+    >
       {text}
     </Button>
   )

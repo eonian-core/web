@@ -24,14 +24,15 @@ export function VaultInputProvider({ children, vault }: PropsWithChildren<{ vaul
   const [value, displayValue, handleValueChange] = useNumberInputValue(0n, vault.asset.decimals)
   const [formAction, setFormAction] = useState<FormAction>(FormAction.DEPOSIT)
   return (
-    <VaultInputContext.Provider value={{
-      inputValue:
-      value,
-      displayValue,
-      onValueChange: handleValueChange,
-      formAction,
-      setFormAction,
-    }}>
+    <VaultInputContext.Provider
+      value={{
+        inputValue: value,
+        displayValue,
+        onValueChange: handleValueChange,
+        formAction,
+        setFormAction,
+      }}
+    >
       {children}
     </VaultInputContext.Provider>
   )
