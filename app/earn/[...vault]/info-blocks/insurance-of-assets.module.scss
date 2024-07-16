@@ -1,0 +1,22 @@
+.container {
+  width: 100%;
+}
+
+.checkboxLabel .description {
+  margin-top: var(--margin-50);
+  font-size: var(--font-size-300);
+  color: var(--color-text-450);
+}
+
+.checkboxWrapper {
+  align-self: flex-start;
+  margin-top: 1px;
+}
+
+.link {
+  display: flex;
+  justify-content: flex-end;
+  
+  margin-top: var(--margin-100);
+  font-size: var(--font-size-300);
+}

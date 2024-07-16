@@ -8,21 +8,26 @@ interface VaultInputContextType {
   inputValue: bigint
   displayValue: string
   formAction: FormAction
+  insured: boolean
   onValueChange: (value: string | bigint) => void
   setFormAction: (action: FormAction) => void
+  setInsured: (insured: boolean) => void
 }
 
 const VaultInputContext = createContext<VaultInputContextType>({
   inputValue: 0n,
   displayValue: '0',
   formAction: FormAction.DEPOSIT,
+  insured: true,
   onValueChange: () => {},
   setFormAction: () => {},
+  setInsured: () => {},
 })
 
 export function VaultInputProvider({ children, vault }: PropsWithChildren<{ vault: Vault }>) {
   const [value, displayValue, handleValueChange] = useNumberInputValue(0n, vault.asset.decimals)
   const [formAction, setFormAction] = useState<FormAction>(FormAction.DEPOSIT)
+  const [insured, setInsured] = useState(true)
   return (
     <VaultInputContext.Provider
       value={{
@@ -31,6 +36,8 @@ export function VaultInputProvider({ children, vault }: PropsWithChildren<{ vaul
         onValueChange: handleValueChange,
         formAction,
         setFormAction,
+        insured,
+        setInsured,
       }}
     >
       {children}

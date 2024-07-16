@@ -10,6 +10,7 @@ import { WalletStatus } from '../../../providers/wallet/wrappers/types'
 import { FormAction } from '../../../store/slices/vaultActionSlice'
 import { useExecuteTransaction, useVaultUserInfo } from '../hooks'
 import { useVaultInputContext } from '../hooks/use-vault-input-context'
+import { ASSET_INSURANCE_LABEL } from '../info-blocks/insurance-of-assets'
 import styles from './form-button.module.scss'
 import type { Vault } from '@/api'
 
@@ -22,7 +23,7 @@ interface Props extends Omit<ButtonProps, 'onSubmit'> {
 const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, vault, ...restProps }) => {
   const { status, connect, chain, setCurrentChain } = useWalletWrapperContext()
 
-  const { onValueChange, inputValue, formAction } = useVaultInputContext()
+  const { onValueChange, inputValue, formAction, insured, setInsured } = useVaultInputContext()
   const executeTransaction = useExecuteTransaction()
   const refetechVaultUserData = useVaultUserInfo(vault, {
     autoUpdateInterval: 5000,
@@ -46,6 +47,9 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, vault, .
   }
 
   const handlePress = () => {
+    if (!insured)
+      return setInsured(true)
+
     switch (status) {
       case WalletStatus.NOT_CONNECTED: {
         void connect()
@@ -76,6 +80,9 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, vault, .
   )
 
   function getText() {
+    if (!insured)
+      return ASSET_INSURANCE_LABEL
+
     switch (status) {
       case WalletStatus.NOT_CONNECTED:
         return 'Connect to a wallet'

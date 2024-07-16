@@ -1,9 +1,23 @@
 .container {
-  display: grid;
-  grid-template-columns: 300px 1fr 300px;
+  margin-top: var(--margin-700);
+  display: flex;
   width: 100%;
+}
 
-  justify-content: space-evenly;
-  justify-items: center;
-  align-content: space-evenly;
+.left,
+.right {
+  width: 315px;
+}
+
+.middle {
+  flex: 1;
+}
+
+.left,
+.right,
+.middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--margin-400);
 }
