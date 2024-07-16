@@ -35,12 +35,14 @@ export function RawFormInput({ label, value, vault, inputStart, headerEnd, ...re
     const [amountInUSD, decimals] = getAmountInUSD(amount, vault)
 
     const stringValueUSD = ethers.formatUnits(amountInUSD, decimals)
-    if (+stringValueUSD <= Number.MAX_SAFE_INTEGER)
-      return <>{formatUSD(+stringValueUSD)}</>
+    const valueUSD = +stringValueUSD
+    const useApprox = valueUSD > 0
+    if (valueUSD <= Number.MAX_SAFE_INTEGER)
+      return <>{useApprox ? '≈ ' : ''}{formatUSD(valueUSD)}</>
 
     return (
       <CompactNumber value={amountInUSD} decimals={decimals} fractionDigits={2} hideTooltip childrenAtStart>
-        <>$</>
+        <>≈ $</>
       </CompactNumber>
     )
   }
