@@ -1,29 +1,37 @@
 .container {
-    display: inline-flex;
-    align-items: center;
+  display: inline-flex;
+  align-items: center;
 
-    a {
-        color: var(--color-positive);
+  a {
+    color: var(--color-positive);
 
-        span {
-            color: initial;
-            opacity: 0.6;
-        }
+    span {
+      color: initial;
+      opacity: 0.6;
+    }
+  }
+
+  &::before {
+    content: '●';
+    color: var(--color-positive);
+    margin-right: var(--margin-50);
+    animation: blinker 2s linear infinite;
+  }
+
+  &:hover {
+    span {
+      opacity: 1;
     }
 
     &::before {
-        content: '●';
-        color: var(--color-positive);
-        margin-right: var(--margin-50);
+      color: var(--color-text-300);
+      animation: none;
     }
+  }
+}
 
-    &:hover {
-        span {
-            opacity: 1;
-        }
-
-        &::before {
-            color: var(--color-text-300);
-        }
-    }
+@keyframes blinker {
+  50% {
+    opacity: 0.25;
+  }
 }
