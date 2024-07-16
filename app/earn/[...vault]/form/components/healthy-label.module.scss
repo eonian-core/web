@@ -1,0 +1,29 @@
+.container {
+    display: inline-flex;
+    align-items: center;
+
+    a {
+        color: var(--color-positive);
+
+        span {
+            color: initial;
+            opacity: 0.6;
+        }
+    }
+
+    &::before {
+        content: '●';
+        color: var(--color-positive);
+        margin-right: var(--margin-50);
+    }
+
+    &:hover {
+        span {
+            opacity: 1;
+        }
+
+        &::before {
+            color: var(--color-text-300);
+        }
+    }
+}

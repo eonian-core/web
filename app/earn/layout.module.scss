@@ -16,7 +16,7 @@
   }
 
   // Used for the indication of positive/negative price changes
-  --color-positive: #91E873;
+  --color-positive: var(--color-success-400);
   --color-negative: #FF7F7F;
 }
 

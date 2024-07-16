@@ -14,16 +14,15 @@ import styles from './form-button.module.scss'
 import type { Vault } from '@/api'
 
 interface Props extends Omit<ButtonProps, 'onSubmit'> {
-  formAction: FormAction
   vaultChain: Chain
   vault: Vault
   isLoading?: boolean
 }
 
-const FormButton: React.FC<Props> = ({ formAction, vaultChain, isLoading, disabled, vault, ...restProps }) => {
+const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, vault, ...restProps }) => {
   const { status, connect, chain, setCurrentChain } = useWalletWrapperContext()
 
-  const { onValueChange, inputValue } = useVaultInputContext()
+  const { onValueChange, inputValue, formAction } = useVaultInputContext()
   const executeTransaction = useExecuteTransaction()
   const refetechVaultUserData = useVaultUserInfo(vault, {
     autoUpdateInterval: 5000,

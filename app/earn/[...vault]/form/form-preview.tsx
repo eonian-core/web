@@ -4,6 +4,7 @@ import { useVaultInputContext } from '../hooks/use-vault-input-context'
 import { RawFormInput } from './components/raw-form-input'
 import { INPUT_ID } from './form-input'
 import { InputIcon } from './components/input-icon'
+import { HealthyLabel } from './components/healthy-label'
 import type { Vault } from '@/api'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 
@@ -25,7 +26,8 @@ export function FormPreview({ vault }: Props) {
 
   const [, value] = parseBigIntValue(deposit, decimals)
 
-  const label = formAction === FormAction.DEPOSIT ? 'To Your Account' : 'To Your Wallet'
+  const isDeposit = formAction === FormAction.DEPOSIT
+  const label = isDeposit ? 'To Your Account' : 'To Your Wallet'
 
   return (
     <RawFormInput
@@ -36,6 +38,7 @@ export function FormPreview({ vault }: Props) {
       inputStart={<InputIcon type="PREVIEW" vault={vault} />}
       readOnly
       onClick={handleClick}
+      headerEnd={isDeposit ? <HealthyLabel /> : undefined}
     />
   )
 }

@@ -26,8 +26,6 @@ interface Props {
 }
 
 const Form: React.FC<Props> = ({ vault, chainId }) => {
-  const { formAction } = useVaultInputContext()
-
   const vaultChain = useVaultChain(chainId)
 
   const hasPendingTransactions = useHasPendingTransactions()
@@ -50,7 +48,6 @@ const Form: React.FC<Props> = ({ vault, chainId }) => {
           <FormButton
             vaultChain={vaultChain}
             disabled={!isFormReady}
-            formAction={formAction}
             vault={vault}
             isLoading={hasPendingTransactions}
           />
@@ -72,11 +69,6 @@ function ArrowDivider({ size }: { size: number }) {
       </div>
     </div>
   )
-}
-
-export interface Balance {
-  inWallet: bigint
-  inVault: bigint
 }
 
 function useHasPendingTransactions() {
