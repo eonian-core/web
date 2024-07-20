@@ -4,15 +4,12 @@ import React from 'react'
 
 import { Card, CardBody, Divider } from '@nextui-org/react'
 import clsx from 'clsx'
-import type { Vault } from '../../../api'
 import { useAppSelector } from '../../../store/hooks'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '../../../providers/wallet/wrappers/types'
-import { VaultLink } from '../components'
 import { FormActionStep } from '../../../store/slices/vaultActionSlice'
 import { getActiveStepSelector } from '../../../store'
 import type { ChainId } from '../../../providers/wallet/wrappers/helpers'
-import { useVaultInputContext } from '../hooks/use-vault-input-context'
 import FormButton from './form-button'
 import FormHeader from './form-header'
 import styles from './form.module.scss'
@@ -21,11 +18,10 @@ import { FormPreview } from './form-preview'
 import IconArrowRightShort from '@/components/icons/icon-arrow-right-short'
 
 interface Props {
-  vault: Vault
   chainId: ChainId
 }
 
-const Form: React.FC<Props> = ({ vault, chainId }) => {
+const Form: React.FC<Props> = ({ chainId }) => {
   const vaultChain = useVaultChain(chainId)
 
   const hasPendingTransactions = useHasPendingTransactions()
@@ -39,23 +35,15 @@ const Form: React.FC<Props> = ({ vault, chainId }) => {
         <Divider />
 
         <CardBody className={styles.fragment}>
-          <FormInput disabled={hasPendingTransactions || !isFormReady} vault={vault} />
+          <FormInput disabled={hasPendingTransactions || !isFormReady} />
 
           <ArrowDivider size={24} />
 
-          <FormPreview vault={vault} />
+          <FormPreview />
 
-          <FormButton
-            vaultChain={vaultChain}
-            disabled={!isFormReady}
-            vault={vault}
-            isLoading={hasPendingTransactions}
-          />
+          <FormButton vaultChain={vaultChain} disabled={!isFormReady} isLoading={hasPendingTransactions} />
         </CardBody>
       </Card>
-      <h4>
-        <VaultLink vault={vault} chainId={vaultChain.id} />
-      </h4>
     </div>
   )
 }

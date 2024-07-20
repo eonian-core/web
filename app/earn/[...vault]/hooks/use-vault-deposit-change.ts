@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useVaultInputContext } from './use-vault-input-context'
+import { useVaultContext } from './use-vault-context'
 import { useAppSelector } from '@/store/hooks'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 import { getAmountInUSD } from '@/shared'
@@ -14,11 +14,11 @@ export function useVaultDepositUSD(vault: Vault) {
   const [total, change] = useVaultDeposit()
   const [depositInUSD, priceDecimals] = getAmountInUSD(total, vault)
   const changeInUSD = getAmountInUSD(change, vault)
-  return { depositInUSD, changeInUSD, decimals: priceDecimals }
+  return { depositInUSD, changeInUSD, deposit: total, decimals: priceDecimals }
 }
 
 function useDeposit(amount: bigint | string) {
-  const { inputValue, formAction } = useVaultInputContext()
+  const { inputValue, formAction } = useVaultContext()
   const amountBN = BigInt(amount)
   const total = useMemo(() => {
     switch (formAction) {

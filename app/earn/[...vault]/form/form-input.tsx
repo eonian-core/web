@@ -2,24 +2,22 @@
 
 import React from 'react'
 
-import { useVaultInputContext } from '../hooks/use-vault-input-context'
+import { useVaultContext } from '../hooks/use-vault-context'
 import styles from './form-input.module.scss'
 import { RawFormInput } from './components/raw-form-input'
 import { InputIcon } from './components/input-icon'
 import { Balance } from './components/balance'
-import type { Vault } from '@/api'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 import { useAppSelector } from '@/store/hooks'
 
 export const INPUT_ID = 'main-form-input'
 
 interface Props {
-  vault: Vault
   disabled: boolean
 }
 
-const FormInput: React.FC<Props> = ({ vault, disabled }) => {
-  const { formAction, displayValue, onValueChange } = useVaultInputContext()
+const FormInput: React.FC<Props> = ({ disabled }) => {
+  const { formAction, displayValue, onValueChange, vault } = useVaultContext()
 
   const label = formAction === FormAction.DEPOSIT ? 'From Your Wallet' : 'From Your Account'
 

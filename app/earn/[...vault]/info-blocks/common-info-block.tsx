@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { SectionHeader } from '../components/section-header'
 import styles from './common-info-block.module.scss'
 
 export interface InfoBlockItem {
@@ -11,12 +12,13 @@ export interface InfoBlockItem {
 interface Props {
   title: React.ReactNode
   items: InfoBlockItem[]
-  description: React.ReactNode
+  description?: React.ReactNode
 }
 
-export function CommonInfoBlock({ items, description }: Props) {
+export function CommonInfoBlock({ title, items, description }: Props) {
   return (
     <div className={styles.container}>
+      <SectionHeader title={title} className={styles.header} />
       <ul>
         {items.map((item, index) => (
           <li key={index}>

@@ -9,21 +9,20 @@ import type { Chain } from '../../../providers/wallet/wrappers/types'
 import { WalletStatus } from '../../../providers/wallet/wrappers/types'
 import { FormAction } from '../../../store/slices/vaultActionSlice'
 import { useExecuteTransaction, useVaultUserInfo } from '../hooks'
-import { useVaultInputContext } from '../hooks/use-vault-input-context'
+import { useVaultContext } from '../hooks/use-vault-context'
 import { ASSET_INSURANCE_LABEL } from '../info-blocks/insurance-of-assets'
 import styles from './form-button.module.scss'
 import type { Vault } from '@/api'
 
 interface Props extends Omit<ButtonProps, 'onSubmit'> {
   vaultChain: Chain
-  vault: Vault
   isLoading?: boolean
 }
 
-const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, vault, ...restProps }) => {
+const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restProps }) => {
   const { status, connect, chain, setCurrentChain } = useWalletWrapperContext()
 
-  const { onValueChange, inputValue, formAction, insured, setInsured } = useVaultInputContext()
+  const { onValueChange, inputValue, formAction, insured, setInsured, vault } = useVaultContext()
   const executeTransaction = useExecuteTransaction()
   const refetechVaultUserData = useVaultUserInfo(vault, {
     autoUpdateInterval: 5000,

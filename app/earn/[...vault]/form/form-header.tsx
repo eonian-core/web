@@ -5,12 +5,12 @@ import { Button, CardHeader } from '@nextui-org/react'
 
 import clsx from 'clsx'
 import { FormAction } from '../../../store/slices/vaultActionSlice'
-import { useVaultInputContext } from '../hooks/use-vault-input-context'
+import { useVaultContext } from '../hooks/use-vault-context'
 import styles from './form-header.module.scss'
 import { INPUT_ID } from './form-input'
 
 function FormHeader() {
-  const { formAction, setFormAction } = useVaultInputContext()
+  const { formAction, setFormAction } = useVaultContext()
 
   const handleClick = (event: React.MouseEvent) => {
     const target = event.target as HTMLElement

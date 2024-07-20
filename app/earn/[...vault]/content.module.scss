@@ -5,7 +5,8 @@
 }
 
 .left,
-.right {
+.right,
+.middleInner {
   width: 315px;
 }
 
@@ -15,9 +16,14 @@
 
 .left,
 .right,
-.middle {
+.middle,
+.middleInner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--margin-400);
+  gap: var(--margin-500);
+}
+
+.middleInner > * {
+  width: 100%;
 }

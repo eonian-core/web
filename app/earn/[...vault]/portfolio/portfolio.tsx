@@ -1,20 +1,15 @@
 import { ethers } from 'ethers'
-import { useVaultInputContext } from '../hooks/use-vault-input-context'
+import { useVaultContext } from '../hooks/use-vault-context'
 import { SectionHeader, SectionSubHeader } from '../components/section-header'
 import styles from './portfolio.module.scss'
 import { PortfolioChart } from './portfolio-chart'
 import { PortfolioLegend } from './portfolio-legend'
-import type { Vault } from '@/api'
 import { useAppSelector } from '@/store/hooks'
 import CompactNumber from '@/components/compact-number/compact-number'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 
-interface Props {
-  vault: Vault
-}
-
-export function Portfolio({ vault }: Props) {
-  const { inputValue, formAction } = useVaultInputContext()
+export function Portfolio() {
+  const { inputValue, formAction, vault } = useVaultContext()
   const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
 
   const proportion = useVaultAssetProportion({
@@ -30,7 +25,7 @@ export function Portfolio({ vault }: Props) {
       <SectionHeader title="Your Portfolio">
         <SubHeader />
       </SectionHeader>
-      <PortfolioChart vault={vault} size={160} proportion={proportion} />
+      <PortfolioChart size={160} proportion={proportion} />
       <PortfolioLegend className={styles.legend} proportion={proportion} />
     </div>
   )

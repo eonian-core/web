@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Area, ComposedChart, Line, ResponsiveContainer } from 'recharts'
-import { useVaultInputContext } from '../hooks/use-vault-input-context'
+import { useVaultContext } from '../hooks/use-vault-context'
 import type { Vault } from '@/api'
 import { reducePriceData } from '@/shared/charts/reduce-price-data'
 import { calculateVaultAPY } from '@/shared/projections/calculate-apy'
@@ -126,7 +126,7 @@ function useChartData({ days, yearlyPriceData, vault }: Pick<Props, 'days' | 'ye
 }
 
 function useDebouncedInputValue(debounce = 100) {
-  const { displayValue } = useVaultInputContext()
+  const { displayValue } = useVaultContext()
   /**
    * Ensure input is in range [0.001, 2 ** 31) to properly form a shape of the chart
    */

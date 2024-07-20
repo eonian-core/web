@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { SectionHeader, SectionSubHeader } from '../components/section-header'
 import { useVaultDepositUSD } from '../hooks/use-vault-deposit-change'
 import { PercentagePriceChange } from '../components/percentage-price-change'
+import { useVaultContext } from '../hooks/use-vault-context'
 import styles from './returns.module.scss'
 import { ReturnsChart } from './returns-chart'
 import type { Vault } from '@/api'
@@ -13,7 +14,6 @@ import { calculateVaultAPY } from '@/shared/projections/calculate-apy'
 import CompactNumber from '@/components/compact-number/compact-number'
 
 interface Props {
-  vault: Vault
   yearlyPriceData: PriceData[]
 }
 
@@ -25,7 +25,8 @@ const timeLookupMap: Record<Timeframe, number> = {
   Year: 365,
 }
 
-export function Returns({ vault, yearlyPriceData }: Props) {
+export function Returns({ yearlyPriceData }: Props) {
+  const { vault } = useVaultContext()
   const [timeframe, setTimeframe] = useState<Timeframe>('Year')
   const days = timeLookupMap[timeframe]
   return (

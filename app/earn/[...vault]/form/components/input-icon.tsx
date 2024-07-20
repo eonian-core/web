@@ -1,4 +1,4 @@
-import { useVaultInputContext } from '../../hooks/use-vault-input-context'
+import { useVaultContext } from '../../hooks/use-vault-context'
 import styles from './input-icon.module.scss'
 import type { Vault } from '@/api'
 import IconCoin from '@/components/icons/icon-coin'
@@ -27,7 +27,7 @@ const iconResolver: Record<FormAction, Record<INPUT_TYPE, ICON_TYPE>> = {
 }
 
 export function InputIcon({ type, vault, size = '1.5em' }: Props) {
-  const { formAction } = useVaultInputContext()
+  const { formAction } = useVaultContext()
 
   function renderIcon(type: ICON_TYPE) {
     switch (type) {

@@ -1,19 +1,14 @@
 import { useVaultDeposit } from '../hooks/use-vault-deposit-change'
 import { parseBigIntValue } from '../hooks/use-number-input-value'
-import { useVaultInputContext } from '../hooks/use-vault-input-context'
+import { useVaultContext } from '../hooks/use-vault-context'
 import { RawFormInput } from './components/raw-form-input'
 import { INPUT_ID } from './form-input'
 import { InputIcon } from './components/input-icon'
 import { HealthyLabel } from './components/healthy-label'
-import type { Vault } from '@/api'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 
-interface Props {
-  vault: Vault
-}
-
-export function FormPreview({ vault }: Props) {
-  const { formAction } = useVaultInputContext()
+export function FormPreview() {
+  const { formAction, vault } = useVaultContext()
 
   const { decimals } = vault.asset
 
