@@ -14,15 +14,18 @@ import styles from './vault-grid.module.scss'
 import { NetworkSelector } from './network-selector'
 import { BaseVaultCard, VaultCard } from './vault-card/vault-card'
 import { getAssetSymbol } from './vault-card/vault-card-features'
+import type { TokenSymbol } from '@/types'
 import { TokenOrder } from '@/types'
 
 export type VaultsByChain = Record<ChainId, Vault[]>
+export type PastYearPrices = Record<TokenSymbol, number>
 
 interface Props {
   vaultsByChain: VaultsByChain
+  pastYearPrices: PastYearPrices
 }
 
-export function VaultGrid({ vaultsByChain }: Props) {
+export function VaultGrid({ vaultsByChain, pastYearPrices }: Props) {
   const defaultChainId = ChainId.parse(defaultChain.id)
   const [chainId, setChainId] = React.useState(defaultChainId)
   const chainName = ChainId.getName(chainId).toLowerCase()
@@ -41,7 +44,12 @@ export function VaultGrid({ vaultsByChain }: Props) {
       </div>
       <div className={styles.cards}>
         {vaults.map(vault => (
-          <VaultCard chainName={chainName} key={vault.address} vault={vault} />
+          <VaultCard
+            chainName={chainName}
+            key={vault.address}
+            vault={vault}
+            pastYearPrice={pastYearPrices[getAssetSymbol(vault)]}
+          />
         ))}
         {chainId === ChainId.BSC_MAINNET && <ComingSoonBNBVaults />}
       </div>

@@ -20,12 +20,13 @@ import type { TokenSymbol } from '@/types'
 interface Props {
   chainName: string
   vault: Vault
+  pastYearPrice: number
 }
 
-export function VaultCard({ chainName, vault }: Props) {
+export function VaultCard({ chainName, vault, pastYearPrice }: Props) {
   const symbol = getAssetSymbol(vault)
   const apy = calculateVaultAPY(vault, 100)
-  const growth = getGrowthPercent(vault)
+  const growth = getGrowthPercent(vault, pastYearPrice)
   const href = `/earn/${chainName}/${vault.symbol}`
   return <BaseVaultCard href={href} symbol={symbol} balance={<VaultUserBalance vault={vault} />} apy={apy} growth={growth} />
 }

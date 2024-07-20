@@ -9,9 +9,8 @@ export function getYearlyROI(apy: number, growth: number): number {
   return Number(value.toFixed(2))
 }
 
-export function getGrowthPercent(vault: Vault, pastYearPriceUSD?: number): number {
+export function getGrowthPercent(vault: Vault, pastYearPriceUSD: number): number {
   const currentPrice = getPriceUSD(vault)
-  pastYearPriceUSD ??= getYearPastPriceUSD(vault)
   return Number(((currentPrice / pastYearPriceUSD - 1) * 100).toFixed(2))
 }
 
@@ -21,22 +20,6 @@ export function getPriceUSD(vault: Vault): number {
   const scale = 10n ** 3n
   const currentPrice = (scale * price.value) / mantissa
   return Math.ceil(Number(currentPrice) / 1000)
-}
-
-export function getYearPastPriceUSD(vault: Vault): number {
-  const symbol = getAssetSymbol(vault)
-  /**
-   * TODO: Use up-to-date values instead of this hardcoded data (from ~Nov. 2023)
-   */
-  const price: Record<TokenSymbol, number> = {
-    ETH: 2121,
-    BTC: 34500,
-    BNB: 251,
-    USDT: 1,
-    USDC: 1,
-    DAI: 1,
-  }
-  return price[symbol]
 }
 
 export function getAssetSymbol(vault: Vault): TokenSymbol {

@@ -40,6 +40,14 @@ export async function getYearPriceHistorical(symbol: TokenSymbol, revalidate = 1
   return prices.map(([timestamp, price]) => ({ timestamp, price }))
 }
 
+/**
+ * Returns the price of the token at the start of the year (365 days ago).
+ */
+export async function getPastYearPrice(symbol: TokenSymbol): Promise<number> {
+  const prices = await getYearPriceHistorical(symbol)
+  return prices[0].price
+}
+
 const KEYS = (process.env.COINGECKO_API_KEY || '').split(',').filter(Boolean)
 let index = 0
 
