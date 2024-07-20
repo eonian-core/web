@@ -15,6 +15,7 @@ import FormHeader from './form-header'
 import styles from './form.module.scss'
 import FormInput from './form-input'
 import { FormPreview } from './form-preview'
+import { BlocknativeLink } from './components/blocknative-link'
 import IconArrowRightShort from '@/components/icons/icon-arrow-right-short'
 
 interface Props {
@@ -44,6 +45,7 @@ const Form: React.FC<Props> = ({ chainId }) => {
           <FormButton vaultChain={vaultChain} disabled={!isFormReady} isLoading={hasPendingTransactions} />
         </CardBody>
       </Card>
+      <BlocknativeLink />
     </div>
   )
 }
