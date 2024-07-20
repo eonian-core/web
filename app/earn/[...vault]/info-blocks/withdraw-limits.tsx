@@ -1,11 +1,11 @@
 import { CommonInfoBlock } from './common-info-block'
 import IconSandClock from '@/components/icons/icon-sand-clock'
-import IconInfinity from '@/components/icons/icon-infinity'
+import IconCurrencyDollar from '@/components/icons/icon-dollar'
 
 export function WithdrawLimits() {
   return (
     <CommonInfoBlock
-      title="Fees"
+      title="Withdraw Limits"
       items={[
         {
           title: 'Time lock',
@@ -15,7 +15,7 @@ export function WithdrawLimits() {
         {
           title: 'Amount',
           value: 'Unlimited',
-          icon: <IconInfinity />,
+          icon: <IconCurrencyDollar />,
         },
       ]}
     />
