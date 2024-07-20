@@ -9,10 +9,10 @@ export function getYearlyROI(apy: number, growth: number): number {
   return Number(value.toFixed(2))
 }
 
-export function getGrowthPercent(vault: Vault): number {
+export function getGrowthPercent(vault: Vault, pastYearPriceUSD?: number): number {
   const currentPrice = getPriceUSD(vault)
-  const yearPastPrice = getYearPastPriceUSD(vault)
-  return Number(((currentPrice / yearPastPrice - 1) * 100).toFixed(2))
+  pastYearPriceUSD ??= getYearPastPriceUSD(vault)
+  return Number(((currentPrice / pastYearPriceUSD - 1) * 100).toFixed(2))
 }
 
 export function getPriceUSD(vault: Vault): number {

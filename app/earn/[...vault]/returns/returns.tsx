@@ -7,6 +7,7 @@ import { PercentagePriceChange } from '../components/percentage-price-change'
 import { useVaultContext } from '../hooks/use-vault-context'
 import styles from './returns.module.scss'
 import { ReturnsChart } from './returns-chart'
+import { ReturnsLegend } from './returns-legend'
 import type { Vault } from '@/api'
 import type { PriceData } from '@/types'
 import { getGrowthPercent, getYearlyROI } from '@/earn/components/vault-card/vault-card-features'
@@ -47,6 +48,7 @@ export function Returns({ yearlyPriceData }: Props) {
         <AmountOfReturns vault={vault} days={days} yearPriceData={yearlyPriceData} />
       </div>
       <TimeframePicker />
+      <ReturnsLegend days={days} yearlyPriceData={yearlyPriceData} />
     </div>
   )
 
@@ -82,7 +84,7 @@ function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
   const previousPrice = yearPriceData[yearPriceData.length - days]?.price
 
   const apy = calculateVaultAPY(vault, 100)
-  const growth = getGrowthPercent(vault)
+  const growth = getGrowthPercent(vault, previousPrice)
 
   const depositWithROI = useMemo(() => {
     const yearlyROI = getYearlyROI(apy, growth)
