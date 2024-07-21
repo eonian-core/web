@@ -5,7 +5,7 @@ export function toUSDValue(amount: bigint, decimals: number, price: bigint): big
   return (amount * price) / mantissa
 }
 
-export function getAmountInUSD(amount: bigint, vault: Vault): [bigint, number] {
+export function getAmountInUSD(amount: bigint, vault: Vault): readonly [bigint, number] {
   const { decimals, price } = vault.asset
   const { value: tokenPrice, decimals: priceDecimals } = price
   const amountInUSD = toUSDValue(amount, decimals, tokenPrice)
