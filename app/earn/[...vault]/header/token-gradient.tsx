@@ -9,8 +9,9 @@ interface Props {
 }
 
 export function TokenGradient({ symbol }: Props) {
+  const color = { '--color-token': `var(--color-token-${symbol})` } as React.CSSProperties
   return (
-    <div id="token-gradient" className={styles.container}>
+    <div id="token-gradient" className={styles.container} style={color}>
       <div className={styles.imageWrapper}>
         <TokenImage symbol={symbol} width={256} height={256} />
       </div>

@@ -27,8 +27,9 @@ export const TokenContext = createContext<TokenProps>({ token: 'ETH', developmen
 export const useToken = () => useContext(TokenContext)
 
 export function Token({ token, children, development, balance, href, buttonLabel, buttonDisabled }: PropsWithChildren<TokenProps>) {
+  const color = { '--color-token': `var(--color-token-${token})` } as React.CSSProperties
   return (
-    <div className={clsx(styles.token, styles[token])}>
+    <div className={clsx(styles.token, styles[token])} style={color}>
       <TokenContext.Provider value={{ token, development }}>
         <div className={styles.content}>
           <Logo {...{ token, development }} />

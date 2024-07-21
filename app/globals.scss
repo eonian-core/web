@@ -43,6 +43,14 @@
 ::after,
 ::before {
 
+  // Token-related colors
+  --color-token-USDC: hsl(210, 71%, 46%);
+  --color-token-BTC: hsl(30, 92%, 58%);
+  --color-token-USDT: hsla(142, 71%, 45%, 60%);
+  --color-token-ETH: hsl(291, 29%, 54%);
+  --color-token-DAI: transparent;
+  --color-token-BNB: transparent;
+
   // font sizes
   --font-size-100: 0.75rem;
   --font-size-200: 0.825rem;
