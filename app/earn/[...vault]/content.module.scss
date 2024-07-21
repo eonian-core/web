@@ -1,12 +1,31 @@
+@import '../../screen.scss';
+
 .container {
   margin-top: var(--margin-700);
   display: flex;
   width: 100%;
+
+  @media (max-width: $screen-desktop) {
+    margin-top: var(--margin-300);
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: var(--margin-500);
+
+    .middle {
+      order: -1;
+      flex-basis: 100%;
+    }
+
+    .infoBlocks {
+      display: none;
+    }
+  }
 }
 
 .left,
 .right,
-.middleInner {
+.infoBlocks {
   width: 315px;
 }
 
@@ -17,13 +36,30 @@
 .left,
 .right,
 .middle,
-.middleInner {
+.infoBlocks {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--margin-500);
 }
 
-.middleInner > * {
+.infoBlocks > * {
   width: 100%;
+}
+
+.mobileInfoBlocks {
+  display: none;
+
+  @media (max-width: $screen-desktop) {
+    margin: var(--margin-500) 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--margin-500);
+
+    .infoBlocks {
+      display: flex;
+    }
+  }
 }

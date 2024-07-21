@@ -12,7 +12,7 @@ export function SlitherProtection() {
       iconAtEnd
     >
       <IconShieldHeart className={styles.icon} />
-      Contracts are protected by Slither Vulnerability Scanner
+      Protected by Slither Vulnerability Scanner
     </ExternalLink>
   )
 }

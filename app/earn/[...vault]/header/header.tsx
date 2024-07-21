@@ -16,14 +16,10 @@ interface Props {
 export function Header({ yearlyPriceData, symbol }: Props) {
   return (
     <header className={styles.container}>
-      <div className={styles.line}>
-        <HeaderInfo symbol={symbol} />
-        <PriceChart symbol={symbol} yearlyPriceData={yearlyPriceData} />
-      </div>
-      <div className={styles.line}>
-        <Actions symbol={symbol} />
-        <SlitherProtection />
-      </div>
+      <HeaderInfo symbol={symbol} />
+      <PriceChart symbol={symbol} yearlyPriceData={yearlyPriceData} />
+      <Actions symbol={symbol} />
+      <SlitherProtection />
     </header>
   )
 }

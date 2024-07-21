@@ -29,25 +29,42 @@ export function Content({ vault, chainId, yearlyPriceData }: Props) {
         <section className={styles.right}>
           <Portfolio />
           <InsuranceOfAssets />
-          <AssetSafety />
-          <ProtocolInsurance />
-          <WalletInsurance />
+          <SafetyBlocks />
         </section>
 
         <section className={styles.middle}>
           <Form chainId={chainId} />
-
-          <div className={styles.middleInner}>
-            <Fees />
-            <WithdrawLimits />
-            <VaultToken />
-          </div>
+          <LimitBlocks />
         </section>
 
         <section className={styles.left}>
           <Returns yearlyPriceData={yearlyPriceData} />
         </section>
       </div>
+      <div className={styles.mobileInfoBlocks}>
+        <SafetyBlocks />
+        <LimitBlocks />
+      </div>
     </VaultProvider>
+  )
+}
+
+function SafetyBlocks() {
+  return (
+    <div className={styles.infoBlocks}>
+      <AssetSafety />
+      <ProtocolInsurance />
+      <WalletInsurance />
+    </div>
+  )
+}
+
+function LimitBlocks() {
+  return (
+    <div className={styles.infoBlocks}>
+      <Fees />
+      <WithdrawLimits />
+      <VaultToken />
+    </div>
   )
 }
