@@ -13,7 +13,7 @@ export function TokenGradient({ symbol }: Props) {
   return (
     <div id="token-gradient" className={styles.container} style={color}>
       <div className={styles.imageWrapper}>
-        <TokenImage symbol={symbol} width={256} height={256} />
+        <TokenImage symbol={symbol} width={450} height={450} />
       </div>
     </div>
   )
