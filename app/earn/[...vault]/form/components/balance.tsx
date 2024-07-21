@@ -1,4 +1,3 @@
-import { Spinner } from '@nextui-org/react'
 import clsx from 'clsx'
 import { ethers } from 'ethers'
 import { INPUT_ID } from '../form-input'

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Button, Tooltip } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import clsx from 'clsx'
 import { SectionHeader, SectionSubHeader } from '../components/section-header'
 import { useVaultDepositUSD } from '../hooks/use-vault-deposit-change'

@@ -1,4 +1,4 @@
-import { Button, Chip } from '@nextui-org/react'
+import { Chip } from '@nextui-org/react'
 import styles from './header-info.module.scss'
 import type { TokenSymbol } from '@/types'
 import IconCoin from '@/components/icons/icon-coin'

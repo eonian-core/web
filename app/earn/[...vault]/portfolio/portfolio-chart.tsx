@@ -1,6 +1,6 @@
 'use client'
 
-import { useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Spacer, Tooltip } from '@nextui-org/react'
 import { useVaultDeposit } from '../hooks/use-vault-deposit-change'
 import { useVaultContext } from '../hooks/use-vault-context'

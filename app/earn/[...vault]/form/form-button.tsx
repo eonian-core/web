@@ -12,7 +12,6 @@ import { useExecuteTransaction, useVaultUserInfo } from '../hooks'
 import { useVaultContext } from '../hooks/use-vault-context'
 import { ASSET_INSURANCE_LABEL } from '../info-blocks/insurance-of-assets'
 import styles from './form-button.module.scss'
-import type { Vault } from '@/api'
 
 interface Props extends Omit<ButtonProps, 'onSubmit'> {
   vaultChain: Chain
