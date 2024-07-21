@@ -173,7 +173,7 @@ export function Action({ development, balance, href, buttonLabel, buttonDisabled
 function Logo({ token }: TokenProps) {
   return (
     <div className={clsx(styles.logo, styles[token])}>
-      <TokenImage symbol={token} width={256} height={256} />
+      <TokenImage symbol={token} width={312} height={312} />
     </div>
   )
 }

@@ -30,7 +30,7 @@
     filter: blur(2em);
     transition: filter 0.5s ease;
 
-    // Fallback for browsers that don't support CSS relative color functions
+    // (!) Fallback for browsers that don't support CSS relative color functions
     background: linear-gradient(to bottom right, #a166ab, #333399, #5073b8, #2657eb, #2657eb);
 
     @supports (color: hsl(from white h s l)) {
@@ -83,6 +83,7 @@
     transform: scale(1);
     transition: transform 0.5s ease;
 
+    .USDC &,
     .BTC & {
       opacity: 0.75;
     }
@@ -104,26 +105,15 @@
 }
 
 .logo {
+  color: rgba(0, 0, 0, 0.15);
   position: absolute;
-  width: 15rem;
-  top: -2rem;
-  right: -5rem;
+  top: -3.5rem;
+  right: -6.5rem;
   z-index: 1;
-  opacity: 0.4;
   user-select: none;
   pointer-events: none;
-
-  &.BTC {
-    opacity: 0.2;
-  }
-
-  &.USDT {
-    opacity: 0.2;
-  }
-
-  &.DAI {
-    opacity: 0.3;
-  }
+  user-select: none;
+  pointer-events: none;
 }
 
 .token {
@@ -218,9 +208,10 @@
 }
 
 .borderedTag {
-  background-color: rgba(#fff, 0.15);
-  color: var(--color-text-700);
-  font-weight: var(--font-medium);
+  // "!important" is required for local development, because of wrong CSS order
+  background-color: rgba(#fff, 0.15) !important;
+  color: var(--color-text-700) !important;
+  font-weight: var(--font-medium) !important;
 }
 
 .symbol {
