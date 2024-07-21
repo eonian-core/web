@@ -98,6 +98,8 @@ function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
     return depositInUSD + (depositInUSD * scaled) / denominator
   }, [apy, growth, decimals, depositInUSD, days])
 
+  const changeAPY = (apy / 365 * days) / 100 + 1
+
   return (
     <div className={styles.returns}>
       <div className={styles.amount}>
@@ -105,7 +107,7 @@ function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
           <>$</>
         </CompactNumber>
       </div>
-      <PercentagePriceChange className={styles.percent} currentPrice={currentPrice} previousPrice={previousPrice} />
+      <PercentagePriceChange className={styles.percent} currentPrice={currentPrice * changeAPY} previousPrice={previousPrice} />
     </div>
   )
 }
