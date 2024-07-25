@@ -32,7 +32,7 @@ $secondary-seciton-width: calc(100% - $main-seciton-width);
         font-size: var(--font-size-600);
         line-height: var(--line-height-600);
         text-align: left;
-        margin-bottom: 2rem;
+        margin-bottom: 4rem;
     }
 }
 
@@ -41,7 +41,7 @@ $secondary-seciton-width: calc(100% - $main-seciton-width);
     flex-wrap: wrap;
     justify-content: space-between;
     flex-direction: column;
-    margin-bottom: 3rem;
+    margin-bottom: 5rem;
 
     @media (max-width: $screen-laptop) {
         margin-bottom: 2rem;
