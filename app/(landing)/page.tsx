@@ -60,6 +60,12 @@ import {
   YearlyReturns,
 } from './views/offer/token'
 import Warning from './views/hero/warning'
+import SocialProof, {
+  SocialProofHeader,
+  SocialProofBody,
+  SocialProofLinks,
+  SocialProofStatItem,
+} from './views/social-proof/social-proof'
 import Testimonials from './views/testimonials/testimonials'
 
 const components = {
@@ -133,6 +139,11 @@ const components = {
   Warning,
   AppearMarkOnScroll,
   AppearMark,
+  SocialProof,
+  SocialProofHeader,
+  SocialProofBody,
+  SocialProofStatItem,
+  SocialProofLinks,
   Testimonials,
 }
 
