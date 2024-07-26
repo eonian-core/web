@@ -1,27 +1,13 @@
-import { ChainEnvironment, getChainEnvironment } from './endpoints'
+import { checkEnvVar } from './endpoints'
 
-describe('getChainEnvironment', () => {
-  it('Should fallback to DEVELOPMENT if chain env is not specified', () => {
-    process.env.NEXT_PUBLIC_ENVIRONMENT = ''
-    expect(getChainEnvironment()).toBe(ChainEnvironment.DEVELOPMENT)
-
-    delete process.env.NEXT_PUBLIC_ENVIRONMENT
-    expect(getChainEnvironment()).toBe(ChainEnvironment.DEVELOPMENT)
+describe('checkEnvVar', () => {
+  it('returns the value when it exists', () => {
+    expect(checkEnvVar('TEST_ENV', 'test value')).toEqual('test value')
   })
 
-  it('Should throw error if chain is not valid', () => {
-    process.env.NEXT_PUBLIC_ENVIRONMENT = 'UNKNOWN CHAIN'
-    expect(getChainEnvironment).toThrow(Error)
-  })
-
-  it('Should parse specified chain environment', () => {
-    process.env.NEXT_PUBLIC_ENVIRONMENT = 'DEVELOPMENT'
-    expect(getChainEnvironment()).toBe(ChainEnvironment.DEVELOPMENT)
-
-    process.env.NEXT_PUBLIC_ENVIRONMENT = 'STAGING'
-    expect(getChainEnvironment()).toBe(ChainEnvironment.STAGING)
-
-    process.env.NEXT_PUBLIC_ENVIRONMENT = 'PRODUCTION'
-    expect(getChainEnvironment()).toBe(ChainEnvironment.PRODUCTION)
+  it('throws an error when the value is undefined', () => {
+    expect(() => checkEnvVar('TEST_ENV', undefined)).toThrow(
+      new Error('Environment variable "TEST_ENV" not found'),
+    )
   })
 })
