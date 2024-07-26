@@ -62,9 +62,8 @@ import {
 import Warning from './views/hero/warning'
 import SocialProof, {
   SocialProofHeader,
-  SocialProofLeftSide,
+  SocialProofBody,
   SocialProofLinks,
-  SocialProofRightSide,
   SocialProofStatItem,
 } from './views/social-proof/social-proof'
 import Testimonials from './views/testimonials/testimonials'
@@ -142,8 +141,7 @@ const components = {
   AppearMark,
   SocialProof,
   SocialProofHeader,
-  SocialProofLeftSide,
-  SocialProofRightSide,
+  SocialProofBody,
   SocialProofStatItem,
   SocialProofLinks,
   Testimonials,

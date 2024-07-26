@@ -24,33 +24,25 @@ interface StatItemProps {
   children?: React.ReactNode
 }
 
-export const SocialProofStatItem: React.FC<StatItemProps> = ({ number, description, children }) => {
-  return (
-    <div className={styles.statItem}>
-      <div className={`${styles.number} ${interFont.className}`}>{number}</div>
-      <div className={styles.description}>{description}</div>
-      {children && <div className={styles.children}>{children}</div>}
-    </div>
-  )
-}
+export const SocialProofStatItem: React.FC<StatItemProps> = ({ number, description, children }) =>  (
+  <div className={styles.statItem}>
+    <div className={`${styles.number} ${interFont.className}`}>{number}</div>
+    <div className={styles.description}>{description}</div>
+    {children && <div className={styles.children}>{children}</div>}
+  </div>
+)
 
-interface SocialProofRightSideProps {
-  children: React.ReactNode
-}
-
-export const SocialProofRightSide: React.FC<SocialProofRightSideProps> = ({ children }) => {
-  return (
-    <div className={`${styles.socialProofRightSide}`}>
-      {children}
-    </div>
-  )
-}
+export const SocialProofBody: React.FC<React.PropsWithChildren> = ({ children }) => (
+  <div className={`${styles.body}`}>
+    {children}
+  </div>
+)
 
 export const SocialProofLinks: React.FC = () => {
   const socials = useLocalSocials()
 
   return <div>
-    <ul className={`${styles.socialProofLinks}`}>
+    <ul className={`${styles.links}`}>
       {socials.map(({ name, href, icon }) => (
         <li key={name}>
           <ExternalLink href={href} icon={icon} />
@@ -60,26 +52,10 @@ export const SocialProofLinks: React.FC = () => {
   </div>
 }
 
-interface SocialProofLeftSideProps {
-  children: React.ReactNode
-}
 
-export const SocialProofLeftSide: React.FC<SocialProofLeftSideProps> = ({ children }) => {
-  return (
-    <div className={`${styles.socialProofLeftSide}`}>
-      {children}
-    </div>
-  )
-}
+export const SocialProofHeader: React.FC<React.PropsWithChildren> = ({ children }) =>  (
+  <div className={`${styles.header}`}>
+    {children}
+  </div>
+)
 
-interface socialProofHeaderProps {
-  children: React.ReactNode
-}
-
-export const SocialProofHeader: React.FC<socialProofHeaderProps> = ({ children }) => {
-  return (
-    <div className={`${styles.socialProofHeader}`}>
-      {children}
-    </div>
-  )
-}
