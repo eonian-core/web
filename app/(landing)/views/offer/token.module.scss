@@ -9,9 +9,9 @@
 
   background: linear-gradient(
     210deg,
-    var(--color-neutral-300) 5%,
-    var(--color-neutral-200) 35%,
-    var(--color-neutral-100) 85%
+    var(--color-neutral-325) 5%,
+    var(--color-neutral-300) 35%,
+    var(--color-neutral-325) 85%
   );
   border-radius: var(--border-radius-600);
 
@@ -216,7 +216,7 @@
 
 .symbol {
   font-size: var(--font-size-500);
-  color: var(--color-text-400);
+  color: var(--color-text-500);
 }
 
 .stats {
@@ -246,7 +246,7 @@
 
 .label {
   font-size: var(--font-size-400);
-  color: var(--color-text-500);
+  color: var(--color-text-600);
 }
 
 .distribution {
