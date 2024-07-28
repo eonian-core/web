@@ -12,9 +12,9 @@ export interface ChipProps extends PropsWithChildren<{}> {
 
 export function Chip({ children, icon, variant = 'primary', size = 'medium', className }: ChipProps) {
   return (
-        <span className={clsx(styles.chip, styles[variant], styles[size], className)}>
-            {icon}
-            {children}
-        </span>
+    <span className={clsx(styles.chip, styles[variant], styles[size], className)}>
+        {icon}
+        {children}
+    </span>
   )
 }

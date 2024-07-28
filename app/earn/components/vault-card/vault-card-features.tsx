@@ -1,4 +1,4 @@
-import { Tag } from '../../../(landing)/views/offer/token'
+import { Tag } from '../../../components/vault-card/token'
 import type { Vault } from '../../../api'
 import IconPalmTree from '../../../components/icons/icon-paml-tree'
 import IconShieldHeart from '../../../components/icons/icon-shield-heart'

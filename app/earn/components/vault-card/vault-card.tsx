@@ -8,7 +8,7 @@ import {
   TokenHeader,
   TokenStats,
   YearlyReturns,
-} from '../../../(landing)/views/offer/token'
+} from '../../../components/vault-card/token'
 import type { Vault } from '../../../api'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '../../../providers/wallet/wrappers/types'

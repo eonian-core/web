@@ -5,11 +5,11 @@ import { Progress } from '@nextui-org/react'
 
 import clsx from 'clsx'
 import { createContext, useContext } from 'react'
-import Button from '../../../components/button/button'
-import { InternalLink } from '../../../components/links/links'
 import styles from './token.module.scss'
+import Button from '@/components/button/button'
+import { InternalLink } from '@/components/links/links'
 
-import { Chip } from './chip'
+import { Chip } from '@/components/chip/chip'
 import type { TokenSymbol } from '@/types'
 import { TokenImage } from '@/components/token-image/TokenImage'
 
@@ -21,17 +21,19 @@ export interface TokenProps {
   href?: string
   buttonLabel?: string
   buttonDisabled?: boolean
+  className?: string
+  contentClassName?: string
 }
 
 export const TokenContext = createContext<TokenProps>({ token: 'ETH', development: true })
 export const useToken = () => useContext(TokenContext)
 
-export function Token({ token, children, development, balance, href, buttonLabel, buttonDisabled }: PropsWithChildren<TokenProps>) {
+export function Token({ token, children, development, balance, href, buttonLabel, buttonDisabled, className, contentClassName }: PropsWithChildren<TokenProps>) {
   const color = { '--color-token': `var(--color-token-${token})` } as React.CSSProperties
   return (
-    <div className={clsx(styles.token, styles[token])} style={color}>
+    <div className={clsx(styles.token, styles[token], className)} style={color}>
       <TokenContext.Provider value={{ token, development }}>
-        <div className={styles.content}>
+        <div className={clsx(styles.content, contentClassName)}>
           <Logo {...{ token, development }} />
 
           {children}
