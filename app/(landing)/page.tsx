@@ -33,6 +33,7 @@ import {
   Tag,
   Tags,
   Token,
+  TokenAction,
   TokenApy,
   TokenFees,
   TokenGrowth,
@@ -145,6 +146,7 @@ const components = {
   SocialProofStatItem,
   SocialProofLinks,
   Testimonials,
+  TokenAction,
 }
 
 export default function Home() {

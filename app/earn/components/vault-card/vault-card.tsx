@@ -2,6 +2,7 @@ import {
   Distribution,
   Tags,
   Token,
+  TokenAction,
   TokenApy,
   TokenFees,
   TokenGrowth,
@@ -46,7 +47,7 @@ export function BaseVaultCard({ symbol, balance, href, apy, growth, buttonLabel,
   const balanceElement = walletStatus === WalletStatus.NOT_CONNECTED ? undefined : balance
   return (
     <div>
-      <Token token={symbol} balance={balanceElement} href={href} buttonLabel={buttonLabel} buttonDisabled={buttonDisabled}>
+      <Token token={symbol} balance={balanceElement} href={href}>
         <TokenHeader>{getVaultName(symbol)}</TokenHeader>
         <Tags>{getTags(symbol)}</Tags>
         <TokenStats>
@@ -57,6 +58,8 @@ export function BaseVaultCard({ symbol, balance, href, apy, growth, buttonLabel,
             <TokenGrowth>{growth}%</TokenGrowth>
           </Distribution>
         </TokenStats>
+
+        <TokenAction disabled={buttonDisabled}>{buttonLabel}</TokenAction>
       </Token>
     </div>
   )

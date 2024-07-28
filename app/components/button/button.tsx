@@ -3,7 +3,7 @@ import React from 'react'
 import clsx from 'clsx'
 import styles from './button.module.scss'
 
-export interface Props extends Omit<React.HTMLProps<HTMLButtonElement>, 'size' | 'type'> {
+export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'size' | 'type'> {
   size?: 'sm' | 'md' | 'lg'
   bordered?: boolean
   gradient?: boolean
@@ -18,7 +18,7 @@ export interface Props extends Omit<React.HTMLProps<HTMLButtonElement>, 'size' |
   type?: 'button' | 'submit' | 'reset'
 }
 
-const Button: React.FC<Props> = ({
+const Button: React.FC<ButtonProps> = ({
   size = 'md',
   bordered = false,
   gradient = false,

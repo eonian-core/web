@@ -6,6 +6,7 @@ import { Progress } from '@nextui-org/react'
 import clsx from 'clsx'
 import { createContext, useContext } from 'react'
 import styles from './token.module.scss'
+import type { ButtonProps } from '@/components/button/button'
 import Button from '@/components/button/button'
 import { InternalLink } from '@/components/links/links'
 
@@ -19,8 +20,6 @@ export interface TokenProps {
   development?: boolean
   balance?: React.ReactNode
   href?: string
-  buttonLabel?: string
-  buttonDisabled?: boolean
   className?: string
   contentClassName?: string
 }
@@ -28,7 +27,7 @@ export interface TokenProps {
 export const TokenContext = createContext<TokenProps>({ token: 'ETH', development: true })
 export const useToken = () => useContext(TokenContext)
 
-export function Token({ token, children, development, balance, href, buttonLabel, buttonDisabled, className, contentClassName }: PropsWithChildren<TokenProps>) {
+export function Token({ token, children, development, balance, href, className, contentClassName }: PropsWithChildren<TokenProps>) {
   const color = { '--color-token': `var(--color-token-${token})` } as React.CSSProperties
   return (
     <div className={clsx(styles.token, styles[token], className)} style={color}>
@@ -37,8 +36,6 @@ export function Token({ token, children, development, balance, href, buttonLabel
           <Logo {...{ token, development }} />
 
           {children}
-
-          <Action {...{ token, development, balance, href, buttonLabel, buttonDisabled }} />
         </div>
       </TokenContext.Provider>
     </div>
@@ -130,7 +127,20 @@ export function TokenGrowth({ children }: PropsWithChildren) {
   )
 }
 
-export function Action({ development, balance, href, buttonLabel, buttonDisabled }: TokenProps) {
+export interface ActionProps {
+  balance?: React.ReactNode
+  href?: string
+  children?: React.ReactNode
+  disabled?: boolean
+}
+
+export function TokenAction({ balance, href, disabled, children }: ActionProps) {
+  const { development } = useToken()
+
+  const button = (<CTAButton disabled={disabled}>{
+    children || (development ? 'Join the Waitlist' : 'Save')
+  }</CTAButton>)
+
   return (
     <div className={styles.action}>
       {balance && (
@@ -157,19 +167,22 @@ export function Action({ development, balance, href, buttonLabel, buttonDisabled
         />
       </div>
 
-      {href ? <InternalLink href={href}>{<CTAButton />}</InternalLink> : <CTAButton />}
+      {href
+        ? <InternalLink href={href}>{button}</InternalLink>
+        : button
+      }
 
       {development && <p className={styles.development}>Coming soon</p>}
     </div>
   )
+}
 
-  function CTAButton() {
-    return (
-      <Button disabled={buttonDisabled} size="lg" dark className={styles.actionButton}>
-        {buttonLabel || (development ? 'Join the Waitlist' : 'Save')}
-      </Button>
-    )
-  }
+function CTAButton({ children, ...props }: ButtonProps) {
+  return (
+    <Button size="lg" dark className={styles.actionButton} {...props}>
+      {children}
+    </Button>
+  )
 }
 
 function Logo({ token }: TokenProps) {

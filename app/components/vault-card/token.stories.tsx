@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import IconShieldHeart from '../icons/icon-shield-heart'
 import IconPalmTree from '../icons/icon-paml-tree'
-import { Distribution, Tag, Tags, Token, TokenApy, TokenFees, TokenGrowth, TokenHeader, TokenStats, YearlyReturns } from './token'
+import { Distribution, Tag, Tags, Token, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenHeader, TokenStats, YearlyReturns } from './token'
 
 const meta: Meta<typeof Token> = {
   title: 'Components/Token',
@@ -56,6 +56,8 @@ export const Default: Story = {
             <TokenGrowth>~85%</TokenGrowth>
           </Distribution>
         </TokenStats>
+
+        <TokenAction />
       </>
     ),
   },
@@ -83,6 +85,8 @@ export const Etherium: Story = {
             <TokenGrowth>~85%</TokenGrowth>
           </Distribution>
         </TokenStats>
+
+        <TokenAction />
       </>
     ),
   },
@@ -110,6 +114,8 @@ export const Bitcoin: Story = {
             <TokenGrowth>~155%</TokenGrowth>
           </Distribution>
         </TokenStats>
+
+        <TokenAction />
       </>
     ),
   },
@@ -137,6 +143,8 @@ export const Tether: Story = {
             <TokenGrowth>~0%</TokenGrowth>
           </Distribution>
         </TokenStats>
+
+        <TokenAction />
       </>
     ),
   },
@@ -165,6 +173,8 @@ export const DevEtherium: Story = {
             <TokenGrowth>~85%</TokenGrowth>
           </Distribution>
         </TokenStats>
+
+        <TokenAction />
       </>
     ),
   },
@@ -193,6 +203,8 @@ export const DevBitcoin: Story = {
             <TokenGrowth>~155%</TokenGrowth>
           </Distribution>
         </TokenStats>
+
+        <TokenAction />
       </>
     ),
   },
@@ -221,6 +233,8 @@ export const DevTether: Story = {
             <TokenGrowth>~0%</TokenGrowth>
           </Distribution>
         </TokenStats>
+
+        <TokenAction />
       </>
     ),
   },

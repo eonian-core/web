@@ -51,7 +51,8 @@ export function VaultGrid({ vaultsByChain, pastYearPrices }: Props) {
             pastYearPrice={pastYearPrices[getAssetSymbol(vault)]}
           />
         ))}
-        {chainId === ChainId.BSC_MAINNET && <ComingSoonBNBVaults />}
+
+        <ComingSoonBNBVaults />
       </div>
     </div>
   )
