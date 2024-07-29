@@ -14,26 +14,36 @@ import { Chip } from '@/components/chip/chip'
 import type { TokenSymbol } from '@/types'
 import { TokenImage } from '@/components/token-image/TokenImage'
 
+export enum TokenState {
+  Active = 'active',
+  InDevelopment = 'in-development',
+  Planned = 'planned',
+}
+
 export interface TokenProps {
   /** Used for displaying symbol and extract stats */
   token: TokenSymbol
-  development?: boolean
-  balance?: React.ReactNode
-  href?: string
+  state?: TokenState
   className?: string
   contentClassName?: string
 }
 
-export const TokenContext = createContext<TokenProps>({ token: 'ETH', development: true })
+export const TokenContext = createContext<{
+  token: TokenSymbol
+  state: TokenState
+}>({ token: 'ETH', state: TokenState.Active })
 export const useToken = () => useContext(TokenContext)
 
-export function Token({ token, children, development, balance, href, className, contentClassName }: PropsWithChildren<TokenProps>) {
+export function Token({ token, children, state = TokenState.Active, className, contentClassName }: PropsWithChildren<TokenProps>) {
   const color = { '--color-token': `var(--color-token-${token})` } as React.CSSProperties
+
   return (
-    <div className={clsx(styles.token, styles[token], className)} style={color}>
-      <TokenContext.Provider value={{ token, development }}>
+    <div className={clsx(styles.token, styles[token], className, {
+      [styles.planned]: state === TokenState.Planned,
+    })} style={color}>
+      <TokenContext.Provider value={{ token, state }}>
         <div className={clsx(styles.content, contentClassName)}>
-          <Logo {...{ token, development }} />
+          <Logo />
 
           {children}
         </div>
@@ -59,10 +69,17 @@ export function Tags({ children }: PropsWithChildren) {
 }
 
 export function Tag({ bordered, children, icon }: PropsWithChildren<{ bordered?: boolean; icon?: React.ReactNode }>) {
+  const { state } = useToken()
+
   if (!bordered) {
     return (
       <li>
-        <Chip variant="secondary" size="small" icon={icon}>
+        <Chip
+          variant="secondary"
+          size="small"
+          icon={icon}
+          className={clsx({ [styles.plannedTag]: state === TokenState.Planned })}
+        >
           {children}
         </Chip>
       </li>
@@ -71,7 +88,7 @@ export function Tag({ bordered, children, icon }: PropsWithChildren<{ bordered?:
 
   return (
     <li>
-      <Chip variant="bordered" size="small" className={styles.borderedTag}>
+      <Chip variant="bordered" size="small" className={clsx(styles.borderedTag, { [styles.plannedTag]: state === TokenState.Planned })}>
         {children}
       </Chip>
     </li>
@@ -131,16 +148,16 @@ export interface ActionProps {
   balance?: React.ReactNode
   href?: string
   children?: React.ReactNode
-  disabled?: boolean
 }
 
-export function TokenAction({ balance, href, disabled, children }: ActionProps) {
-  const { development } = useToken()
+const CtaButtonText = {
+  [TokenState.Active]: 'Save',
+  [TokenState.InDevelopment]: 'Join the Waitlist',
+  [TokenState.Planned]: 'Coming soon',
+}
 
-  const button = (<CTAButton disabled={disabled}>{
-    children || (development ? 'Join the Waitlist' : 'Save')
-  }</CTAButton>)
-
+export function TokenAction({ balance, href, children }: ActionProps) {
+  const { state } = useToken()
   return (
     <div className={styles.action}>
       {balance && (
@@ -167,25 +184,37 @@ export function TokenAction({ balance, href, disabled, children }: ActionProps) 
         />
       </div>
 
-      {href
-        ? <InternalLink href={href}>{button}</InternalLink>
-        : button
-      }
+      <ButtonLink
+        size="lg"
+        dark={state !== TokenState.Planned}
+        bordered={state === TokenState.Planned}
+        // development={state === TokenState.Planned}
+        className={styles.actionButton}
+        disabled={state === TokenState.Planned}
+        href={href}
+        >
+        {children || CtaButtonText[state]}
+      </ButtonLink>
 
-      {development && <p className={styles.development}>Coming soon</p>}
+      {state === TokenState.InDevelopment && <p className={styles.development}>Coming soon</p>}
     </div>
   )
 }
 
-function CTAButton({ children, ...props }: ButtonProps) {
+export function ButtonLink({ children, href, ...props }: ButtonProps & { href?: string }) {
+  if (!href)
+    return <Button {...props}>{children}</Button>
+
   return (
-    <Button size="lg" dark className={styles.actionButton} {...props}>
-      {children}
-    </Button>
+    <InternalLink href={href}>
+      <Button {...props}>{children}</Button>
+    </InternalLink>
   )
 }
 
-function Logo({ token }: TokenProps) {
+function Logo() {
+  const { token } = useToken()
+
   return (
     <div className={clsx(styles.logo, styles[token])}>
       <TokenImage symbol={token} width={312} height={312} />

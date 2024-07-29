@@ -10,9 +10,10 @@ import { ReturnsChart } from './returns-chart'
 import { ReturnsLegend } from './returns-legend'
 import type { Vault } from '@/api'
 import type { PriceData } from '@/types'
-import { getGrowthPercent, getYearlyROI } from '@/earn/components/vault-card/vault-card-features'
-import { calculateVaultAPY } from '@/shared/projections/calculate-apy'
 import CompactNumber from '@/components/compact-number/compact-number'
+import { calculateVaultAPY } from '@/finances/apy'
+import { getGrowthPercent } from '@/finances/growth'
+import { getYearlyROI } from '@/finances/roi'
 
 interface Props {
   yearlyPriceData: PriceData[]
@@ -83,8 +84,8 @@ function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
   const currentPrice = yearPriceData[yearPriceData.length - 1]?.price
   const previousPrice = yearPriceData[yearPriceData.length - days]?.price
 
-  const apy = calculateVaultAPY(vault, 100)
-  const growth = getGrowthPercent(vault, previousPrice)
+  const apy = calculateVaultAPY(vault.rates[0].apy.yearly, vault.asset.decimals, 100)
+  const growth = getGrowthPercent(vault.asset.price, previousPrice)
 
   const depositWithROI = useMemo(() => {
     const yearlyROI = getYearlyROI(apy, growth)

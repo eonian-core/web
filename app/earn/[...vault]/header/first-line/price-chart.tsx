@@ -4,7 +4,7 @@ import { PercentagePriceChange, getChange, getChangeColor } from '../../componen
 import styles from './price-chart.module.scss'
 import { reducePriceData } from '@/shared/charts/reduce-price-data'
 import type { PriceData, TokenSymbol } from '@/types'
-import { formatUSD } from '@/shared/humanize/format-currency'
+import { formatUSD } from '@/finances/humanize/format-currency'
 
 interface ChartProps {
   symbol: TokenSymbol

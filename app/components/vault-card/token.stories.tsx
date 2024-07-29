@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import IconShieldHeart from '../icons/icon-shield-heart'
-import IconPalmTree from '../icons/icon-paml-tree'
-import { Distribution, Tag, Tags, Token, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenHeader, TokenStats, YearlyReturns } from './token'
+import { Distribution, Tag, Tags, Token, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenHeader, TokenState, TokenStats, YearlyReturns } from './token'
 
 const meta: Meta<typeof Token> = {
   title: 'Components/Token',
@@ -63,97 +62,10 @@ export const Default: Story = {
   },
 }
 
-export const Etherium: Story = {
-  args: {
-    token: 'ETH',
-    contentClassName: 'contentFix',
-    children: (
-      <>
-        <TokenHeader>Ethereum Vault</TokenHeader>
-
-        <Tags>
-          <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
-          <Tag bordered>Innovation</Tag>
-          <Tag bordered>Save and Forget</Tag>
-        </Tags>
-
-        <TokenStats>
-          <YearlyReturns>+87.95%</YearlyReturns>
-          <Distribution>
-            <TokenFees>0%</TokenFees>
-            <TokenApy>~3%</TokenApy>
-            <TokenGrowth>~85%</TokenGrowth>
-          </Distribution>
-        </TokenStats>
-
-        <TokenAction />
-      </>
-    ),
-  },
-}
-
-export const Bitcoin: Story = {
-  args: {
-    token: 'BTC',
-    contentClassName: 'contentFix',
-    children: (
-      <>
-        <TokenHeader>Bitcoin Vault</TokenHeader>
-
-        <Tags>
-          <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
-          <Tag bordered>Innovation</Tag>
-          <Tag bordered>Save and Forget</Tag>
-        </Tags>
-
-        <TokenStats>
-          <YearlyReturns>+159.94%</YearlyReturns>
-          <Distribution>
-            <TokenFees>0%</TokenFees>
-            <TokenApy>~3%</TokenApy>
-            <TokenGrowth>~155%</TokenGrowth>
-          </Distribution>
-        </TokenStats>
-
-        <TokenAction />
-      </>
-    ),
-  },
-}
-
-export const Tether: Story = {
-  args: {
-    token: 'USDT',
-    contentClassName: 'contentFix',
-    children: (
-      <>
-        <TokenHeader>Tether Vault</TokenHeader>
-
-        <Tags>
-          <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
-          <Tag bordered>Innovation</Tag>
-          <Tag bordered>Zero Fee Insurance</Tag>
-        </Tags>
-
-        <TokenStats>
-          <YearlyReturns>+9.59%</YearlyReturns>
-          <Distribution>
-            <TokenFees>0%</TokenFees>
-            <TokenApy>~9%</TokenApy>
-            <TokenGrowth>~0%</TokenGrowth>
-          </Distribution>
-        </TokenStats>
-
-        <TokenAction />
-      </>
-    ),
-  },
-}
-
 export const DevEtherium: Story = {
   args: {
     token: 'ETH',
-    development: true,
+    state: TokenState.InDevelopment,
     contentClassName: 'contentFix',
     children: (
       <>
@@ -180,14 +92,14 @@ export const DevEtherium: Story = {
   },
 }
 
-export const DevBitcoin: Story = {
+export const PlannedBnb: Story = {
   args: {
-    token: 'BTC',
-    development: true,
+    token: 'BNB',
+    state: TokenState.Planned,
     contentClassName: 'contentFix',
     children: (
       <>
-        <TokenHeader>Bitcoin Vault</TokenHeader>
+        <TokenHeader>BNB Vault</TokenHeader>
 
         <Tags>
           <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
@@ -196,41 +108,11 @@ export const DevBitcoin: Story = {
         </Tags>
 
         <TokenStats>
-          <YearlyReturns>+159.94%</YearlyReturns>
+          <YearlyReturns>+87.95%</YearlyReturns>
           <Distribution>
             <TokenFees>0%</TokenFees>
             <TokenApy>~3%</TokenApy>
-            <TokenGrowth>~155%</TokenGrowth>
-          </Distribution>
-        </TokenStats>
-
-        <TokenAction />
-      </>
-    ),
-  },
-}
-
-export const DevTether: Story = {
-  args: {
-    token: 'USDT',
-    development: true,
-    contentClassName: 'contentFix',
-    children: (
-      <>
-        <TokenHeader>Tether Vault</TokenHeader>
-
-        <Tags>
-          <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
-          <Tag bordered>Innovation</Tag>
-          <Tag bordered>Zero Fee Insurance</Tag>
-        </Tags>
-
-        <TokenStats>
-          <YearlyReturns>+9.59%</YearlyReturns>
-          <Distribution>
-            <TokenFees>0%</TokenFees>
-            <TokenApy>~9%</TokenApy>
-            <TokenGrowth>~0%</TokenGrowth>
+            <TokenGrowth>~85%</TokenGrowth>
           </Distribution>
         </TokenStats>
 

@@ -3,8 +3,8 @@ import { Area, ComposedChart, Line, ResponsiveContainer } from 'recharts'
 import { useVaultContext } from '../hooks/use-vault-context'
 import type { Vault } from '@/api'
 import { reducePriceData } from '@/shared/charts/reduce-price-data'
-import { calculateVaultAPY } from '@/shared/projections/calculate-apy'
 import type { PriceData } from '@/types'
+import { calculateVaultAPY } from '@/finances/apy'
 
 interface Props {
   vault: Vault
@@ -69,7 +69,7 @@ interface PriceDataWithPremium extends PriceData {
 }
 
 function useChartData({ days, yearlyPriceData, vault }: Pick<Props, 'days' | 'yearlyPriceData' | 'vault'>) {
-  const apy = calculateVaultAPY(vault, 100)
+  const apy = calculateVaultAPY(vault.rates[0].apy.yearly, vault.asset.decimals, 100)
 
   const inputValue = useDebouncedInputValue()
 

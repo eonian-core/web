@@ -1,11 +1,15 @@
 @import '../../screen.scss';
 
+
+
 .token {
+  --token-min-heigh: 30rem;
+
   position: relative;
 
   height: 100%;
   width: 20rem;
-  min-height: 30rem;
+  min-height: var(--token-min-heigh);
 
   background: linear-gradient(
     210deg,
@@ -55,6 +59,13 @@
       filter: blur(3rem);
     }
   }
+
+  &.planned {
+    background: none;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='15' ry='15' stroke='%23868686FF' stroke-width='5' stroke-dasharray='15' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+
+    
+  }
 }
 
 .content {
@@ -69,6 +80,8 @@
   border-radius: var(--border-radius-600);
   padding: var(--padding-300) var(--padding-400);
   padding-bottom: var(--padding-50);
+
+  min-height: calc(var(--token-min-heigh) - var(--padding-300) - var(--padding-50));
 
   &::before {
     content: '';
@@ -114,6 +127,10 @@
   pointer-events: none;
   user-select: none;
   pointer-events: none;
+}
+
+.planned .logo {
+  color: rgba(255, 255, 255, 0.25);
 }
 
 .token {
@@ -173,6 +190,10 @@
   }
 }
 
+.planned .header h3 {
+  color: var(--color-text-400);
+}
+
 .token:hover {
   .hoverText {
     width: calc(100% + 0.5rem);
@@ -212,7 +233,15 @@
   background-color: rgba(#fff, 0.15) !important;
   color: var(--color-text-700) !important;
   font-weight: var(--font-medium) !important;
+
+  &.plannedTag {
+    background-color: rgba(#000000, 0.5) !important;
+    color: var(--color-text-400) !important;
+  }
 }
+
+
+
 
 .symbol {
   font-size: var(--font-size-500);
@@ -225,6 +254,10 @@
   flex-direction: column;
   color: var(--color-text-800);
   margin-top: var(--margin-400);
+}
+
+.planned .stats {
+  color: var(--color-text-400);
 }
 
 .returns {
@@ -249,6 +282,10 @@
   color: var(--color-text-600);
 }
 
+.planned .label {
+  color: var(--color-text-500);
+}
+
 .distribution {
   display: flex;
   flex-direction: row;
@@ -267,6 +304,10 @@
 
     color: var(--color-text-700);
   }
+}
+
+.planned .distribution .value {
+  color: var(--color-text-400);
 }
 
 .action {
@@ -294,6 +335,10 @@
     color: var(--color-text-600);
     padding-top: var(--padding-50);
   }
+}
+
+.planned .action .value {
+  color: var(--color-text-400);
 }
 
 .actionButton {

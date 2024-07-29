@@ -2,9 +2,9 @@ import clsx from 'clsx'
 import { ethers } from 'ethers'
 import { INPUT_ID } from '../form-input'
 import styles from './balance.module.scss'
-import { FractionPartView } from '@/shared'
 import CompactNumber from '@/components/compact-number/compact-number'
 import type { Vault } from '@/api'
+import { FractionPartView } from '@/finances/humanize'
 
 interface Props {
   balance: bigint

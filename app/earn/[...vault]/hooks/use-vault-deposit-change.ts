@@ -2,8 +2,8 @@ import { useMemo } from 'react'
 import { useVaultContext } from './use-vault-context'
 import { useAppSelector } from '@/store/hooks'
 import { FormAction } from '@/store/slices/vaultActionSlice'
-import { getAmountInUSD } from '@/shared'
 import type { Vault } from '@/api'
+import { getAmountInUSD } from '@/finances/humanize'
 
 export function useVaultDeposit() {
   const { vaultBalanceBN } = useAppSelector(state => state.vaultUser)

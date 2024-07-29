@@ -1,9 +1,9 @@
 import React from 'react'
 import { Tooltip } from '@nextui-org/react'
 import { useAppSelector } from '../../store/hooks'
-import type { FractionPartView } from '../../shared/humanize'
-import { formatNumberCompactWithThreshold } from '../../shared/humanize'
 import { toStringNumberFromDecimals } from '../../shared'
+import type { FractionPartView } from '@/finances/humanize'
+import { formatNumberCompactWithThreshold } from '@/finances/humanize'
 
 interface Props {
   value: bigint

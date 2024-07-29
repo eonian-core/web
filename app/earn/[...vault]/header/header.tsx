@@ -3,10 +3,10 @@
 import React from 'react'
 import styles from './header.module.scss'
 import { PriceChart } from './first-line/price-chart'
-import { HeaderInfo } from './first-line/header-info'
 import { Actions } from './second-line/actions'
 import { SlitherProtection } from './second-line/slither-protection'
 import type { PriceData, TokenSymbol } from '@/types'
+import { vaultTitleMap } from './first-line/content'
 
 interface Props {
   symbol: TokenSymbol
@@ -14,9 +14,10 @@ interface Props {
 }
 
 export function Header({ yearlyPriceData, symbol }: Props) {
+  const VaultTitle = vaultTitleMap[symbol]
   return (
     <header className={styles.container}>
-      <HeaderInfo symbol={symbol} />
+      <VaultTitle />
       <PriceChart symbol={symbol} yearlyPriceData={yearlyPriceData} />
       <Actions symbol={symbol} />
       <SlitherProtection />

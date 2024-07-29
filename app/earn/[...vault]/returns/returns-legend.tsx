@@ -1,8 +1,8 @@
+import { getGrowthPercent } from '@/finances/growth'
 import { useVaultContext } from '../hooks/use-vault-context'
 import styles from './returns-legend.module.scss'
 import type { PriceData } from '@/types'
-import { getGrowthPercent } from '@/earn/components/vault-card/vault-card-features'
-import { calculateVaultAPY } from '@/shared/projections/calculate-apy'
+import { calculateVaultAPY } from '@/finances/apy'
 
 interface Props {
   days: number
@@ -11,8 +11,8 @@ interface Props {
 
 export function ReturnsLegend({ days, yearlyPriceData }: Props) {
   const { vault } = useVaultContext()
-  const apy = calculateVaultAPY(vault, 100) / 365 * days
-  const growth = getGrowthPercent(vault, yearlyPriceData[0].price) / 365 * days
+  const apy = calculateVaultAPY(vault.rates[0].apy.yearly, vault.asset.decimals, 100) / 365 * days
+  const growth = getGrowthPercent(vault.asset.price, yearlyPriceData[0].price) / 365 * days
   return (
     <ul className={styles.container}>
       <li className={styles.growth}>

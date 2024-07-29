@@ -1,8 +1,7 @@
-import type { Vault } from '../../api'
+export function calculateVaultAPY(yerlyApy: bigint, decimals: number, precision = 10000): number {
+  const mantissa = 10n ** BigInt(decimals)
+  const scaled = yerlyApy * BigInt(precision)
 
-export function calculateVaultAPY(vault: Vault, precision = 10000): number {
-  const mantissa = 10n ** BigInt(vault.asset.decimals)
-  const scaled = vault.rates[0].apy.yearly * BigInt(precision)
   return Number(scaled / mantissa) / precision
 }
 

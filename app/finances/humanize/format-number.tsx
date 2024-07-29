@@ -1,4 +1,4 @@
-import { toStringNumberFromDecimals } from '../web3'
+import { toStringNumberFromDecimals } from '@/shared/web3'
 
 export enum FractionPartView {
   GREATER_SIGN,

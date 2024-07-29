@@ -4,13 +4,13 @@ import { getClient, getVaultBySymbol, getVaultsSymbols } from '../../api'
 import { ChainId } from '../../providers/wallet/wrappers/helpers'
 import { defaultChain } from '../../web3-onboard'
 import { showEarn } from '../../features'
-import { getAssetSymbol } from '../components/vault-card/vault-card-features'
 
 import styles from './page.module.scss'
 import { Header } from './header/header'
 import { TokenGradient } from './header/token-gradient'
 import { Content } from './content'
 import { getYearPriceHistorical } from '@/api/coin-gecko'
+import { getAssetSymbol } from '@/components/vault-card/vault-card'
 
 export const revalidate = 10
 

@@ -3,7 +3,7 @@ import styles from './input-icon.module.scss'
 import type { Vault } from '@/api'
 import IconCoin from '@/components/icons/icon-coin'
 import IconWallet from '@/components/icons/icon-wallet'
-import { getAssetSymbol } from '@/earn/components/vault-card/vault-card-features'
+import { getAssetSymbol } from '@/components/vault-card/vault-card'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 
 type ICON_TYPE = 'WALLET' | 'COIN'

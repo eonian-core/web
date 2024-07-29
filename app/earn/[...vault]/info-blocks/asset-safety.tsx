@@ -1,9 +1,9 @@
 import { useVaultDeposit } from '../hooks/use-vault-deposit-change'
 import { useVaultContext } from '../hooks/use-vault-context'
 import { CommonInfoBlock } from './common-info-block'
-import { getAssetSymbol } from '@/earn/components/vault-card/vault-card-features'
 import CompactNumber from '@/components/compact-number/compact-number'
 import IconArrowRightShort from '@/components/icons/icon-arrow-right-short'
+import { getAssetSymbol } from '@/components/vault-card/vault-card'
 
 export function AssetSafety() {
   const [amount] = useVaultDeposit()

@@ -12,10 +12,12 @@ import { useAppDispatch } from '../../store/hooks'
 import { fetchPositionInfo } from '../../store/slices/positionInfoSlice'
 import styles from './vault-grid.module.scss'
 import { NetworkSelector } from './network-selector'
-import { BaseVaultCard, VaultCard } from './vault-card/vault-card'
-import { getAssetSymbol } from './vault-card/vault-card-features'
 import type { TokenSymbol } from '@/types'
 import { TokenOrder } from '@/types'
+import { VaultCard, getAssetSymbol } from '@/components/vault-card/vault-card'
+import { BnbToken, DaiToken } from '@/components/vault-card/tokens'
+import { Distribution, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenState, TokenStats, YearlyReturns } from '@/components/vault-card/token'
+import { getYearlyROI } from '@/finances/roi'
 
 export type VaultsByChain = Record<ChainId, Vault[]>
 export type PastYearPrices = Record<TokenSymbol, number>
@@ -65,8 +67,31 @@ function sortVaults(vaults: Vault[]): Vault[] {
 function ComingSoonBNBVaults() {
   return (
     <>
-      <BaseVaultCard symbol="BNB" apy={3} growth={143.5} buttonLabel="Coming soon" buttonDisabled />
-      <BaseVaultCard symbol="DAI" apy={10} growth={0} buttonLabel="Coming soon" buttonDisabled />
+      <BnbToken state={TokenState.Planned}>
+        <TokenStats>
+            <YearlyReturns>{getYearlyROI(3, 143.5)}%</YearlyReturns>
+            <Distribution>
+                <TokenFees>0%</TokenFees>
+                <TokenApy>3%</TokenApy>
+                <TokenGrowth>143.5%</TokenGrowth>
+            </Distribution>
+        </TokenStats>
+
+        <TokenAction />
+      </BnbToken>
+
+      <DaiToken state={TokenState.Planned}>
+        <TokenStats>
+            <YearlyReturns>{getYearlyROI(10, 0)}%</YearlyReturns>
+            <Distribution>
+                <TokenFees>0%</TokenFees>
+                <TokenApy>10%</TokenApy>
+                <TokenGrowth>9%</TokenGrowth>
+            </Distribution>
+        </TokenStats>
+
+        <TokenAction />
+      </DaiToken>
     </>
   )
 }

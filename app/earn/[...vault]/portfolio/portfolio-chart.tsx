@@ -8,9 +8,10 @@ import styles from './portfolio-chart.module.scss'
 import { useChart } from './use-chart'
 import { ChangeIndicator } from './components/change-indicator'
 import type { Vault } from '@/api'
-import { toStringNumberFromDecimals, toUSDValue } from '@/shared'
+import { toStringNumberFromDecimals } from '@/shared'
 import CompactNumber from '@/components/compact-number/compact-number'
 import { Row } from '@/components/row/Row'
+import { toUSDValue } from '@/finances/humanize'
 
 interface Props {
   size: number

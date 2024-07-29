@@ -2,8 +2,8 @@ import { ethers } from 'ethers'
 import styles from './raw-form-input.module.scss'
 import CompactNumber from '@/components/compact-number/compact-number'
 import type { Vault } from '@/api'
-import { getAmountInUSD } from '@/shared'
-import { formatUSD } from '@/shared/humanize/format-currency'
+import { getAmountInUSD } from '@/finances/humanize'
+import { formatUSD } from '@/finances/humanize/format-currency'
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string

@@ -11,6 +11,7 @@ export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 's
   wide?: boolean
   round?: boolean
   disabled?: boolean
+  development?: boolean
   icon?: React.ReactNode
   /** Display icon position, default right */
   iconPosition?: 'left' | 'right'
@@ -26,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
   wide = false,
   round = false,
   disabled = false,
+  development = false,
   icon,
   iconPosition = 'right',
   children,
@@ -40,6 +42,7 @@ const Button: React.FC<ButtonProps> = ({
     [styles.wide]: wide,
     [styles.round]: round,
     [styles.disabled]: disabled,
+    [styles.inDevelopment]: development,
     [styles.iconLeft]: iconPosition === 'left',
   })
   return (

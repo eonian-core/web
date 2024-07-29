@@ -2,7 +2,7 @@ import { Tooltip } from '@nextui-org/react'
 import type { PropsWithChildren } from 'react'
 import clsx from 'clsx'
 import styles from './percentage-price-change.module.scss'
-import { formatUSD } from '@/shared/humanize/format-currency'
+import { formatUSD } from '@/finances/humanize/format-currency'
 
 interface Props {
   currentPrice?: number
