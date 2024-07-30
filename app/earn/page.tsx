@@ -6,33 +6,22 @@ import type { ChainId } from '../providers/wallet/wrappers/helpers'
 import { supportedChainsIds } from '../web3-onboard'
 
 import styles from './page.module.scss'
-import type { PastYearPrices, VaultsByChain } from './components/vault-grid'
+import type {VaultsByChain } from './components/vault-grid'
 import { VaultGrid } from './components/vault-grid'
-import { getPastYearPrice } from '@/api/coin-gecko'
-import { TokenOrder } from '@/types'
-
-export const revalidate = 30
 
 export default async function Page() {
-  if (!showEarn)
+  if (!showEarn) 
     redirect('/')
 
   const vaultsByChain = await fetchVaults()
-  const pastYearPrices = await fetchPastYearPrices()
   return (
     <div className={styles.page}>
-      <VaultGrid vaultsByChain={vaultsByChain} pastYearPrices={pastYearPrices} />
+      <VaultGrid vaultsByChain={vaultsByChain} />
     </div>
   )
 }
 
-async function fetchPastYearPrices(): Promise<PastYearPrices> {
-  const symbols = Object.values(TokenOrder)
-  const result = {} as PastYearPrices
-  for (const symbol of symbols)
-    result[symbol] = await getPastYearPrice(symbol)
-  return result
-}
+
 
 async function fetchVaults() {
   const promises = supportedChainsIds.map(fetchVault)

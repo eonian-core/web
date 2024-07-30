@@ -9,14 +9,25 @@ const tokenToCoinGeckoId: Record<TokenSymbol, string> = {
   BNB: 'binancecoin',
 }
 
-const cache: Partial<Record<TokenSymbol, [number, PriceData[]]>> = {}
+const ONE_HOUR = 3600 // in seconds
 
-export async function getYearPriceHistorical(symbol: TokenSymbol, revalidate = 1800): Promise<PriceData[]> {
-  const cacheData = cache[symbol]
-  if (cacheData && Date.now() - cacheData[0] < revalidate * 1000)
-    return cacheData[1]
+/**
+ * Returns the price of the token at the start of the year (365 days ago).
+ * Can be invoken only on server side.
+ */
+export async function getPastYearPrice(symbol: TokenSymbol, revalidate = ONE_HOUR): Promise<number> {
+  const prices = await getYearPriceHistorical(symbol, revalidate)
+  return prices[0].price
+}
 
-  const options = {
+// Coingecko API can be invoken only on server side
+const toYearPriceUrl = (symbol: TokenSymbol) => `https://api.coingecko.com/api/v3/coins/${tokenToCoinGeckoId[symbol]}/market_chart?vs_currency=usd&days=365&interval=daily`
+
+export async function getYearPriceHistorical(symbol: TokenSymbol, revalidate: number): Promise<PriceData[]> {
+  const url = toYearPriceUrl(symbol)
+  console.log('Fetching', url)
+  // will cache on NextJS level
+  const response = await fetch(url, {
     headers: {
       'accept': 'application/json',
       'x-cg-demo-api-key': getKey(),
@@ -24,9 +35,7 @@ export async function getYearPriceHistorical(symbol: TokenSymbol, revalidate = 1
     next: {
       revalidate,
     },
-  }
-  const url = `https://api.coingecko.com/api/v3/coins/${tokenToCoinGeckoId[symbol]}/market_chart?vs_currency=usd&days=365&interval=daily`
-  const response = await fetch(url, options)
+  })
 
   if (!response.ok)
     throw new Error(`Failed to fetch ${url}, reason: ${response.statusText}`)
@@ -38,14 +47,6 @@ export async function getYearPriceHistorical(symbol: TokenSymbol, revalidate = 1
     throw new Error(`Unexpected response from ${url}, got: ${JSON.stringify(result)}`)
 
   return prices.map(([timestamp, price]) => ({ timestamp, price }))
-}
-
-/**
- * Returns the price of the token at the start of the year (365 days ago).
- */
-export async function getPastYearPrice(symbol: TokenSymbol): Promise<number> {
-  const prices = await getYearPriceHistorical(symbol)
-  return prices[0].price
 }
 
 const KEYS = (process.env.COINGECKO_API_KEY || '').split(',').filter(Boolean)

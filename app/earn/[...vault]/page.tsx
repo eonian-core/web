@@ -9,7 +9,7 @@ import styles from './page.module.scss'
 import { Header } from './header/header'
 import { TokenGradient } from './header/token-gradient'
 import { Content } from './content'
-import { getYearPriceHistorical } from '@/api/coin-gecko'
+import { getYearPriceHistorical } from '@/api/coin-gecko/get-past-year-price'
 import { getAssetSymbol } from '@/components/vault-card/vault-card'
 
 export const revalidate = 10

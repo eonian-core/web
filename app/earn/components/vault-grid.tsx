@@ -15,19 +15,18 @@ import { NetworkSelector } from './network-selector'
 import type { TokenSymbol } from '@/types'
 import { TokenOrder } from '@/types'
 import { VaultCard, getAssetSymbol } from '@/components/vault-card/vault-card'
-import { BnbToken, DaiToken } from '@/components/vault-card/tokens'
 import { Distribution, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenState, TokenStats, YearlyReturns } from '@/components/vault-card/token'
 import { getYearlyROI } from '@/finances/roi'
+import { BnbToken, DaiToken } from '@/components/vault-card/content'
 
 export type VaultsByChain = Record<ChainId, Vault[]>
-export type PastYearPrices = Record<TokenSymbol, number>
+
 
 interface Props {
   vaultsByChain: VaultsByChain
-  pastYearPrices: PastYearPrices
 }
 
-export function VaultGrid({ vaultsByChain, pastYearPrices }: Props) {
+export function VaultGrid({ vaultsByChain }: Props) {
   const defaultChainId = ChainId.parse(defaultChain.id)
   const [chainId, setChainId] = React.useState(defaultChainId)
   const chainName = ChainId.getName(chainId).toLowerCase()
@@ -50,7 +49,6 @@ export function VaultGrid({ vaultsByChain, pastYearPrices }: Props) {
             chainName={chainName}
             key={vault.address}
             vault={vault}
-            pastYearPrice={pastYearPrices[getAssetSymbol(vault)]}
           />
         ))}
 
