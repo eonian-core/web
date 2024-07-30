@@ -59,6 +59,7 @@ function Value({ balance, decimals, price, symbol, priceDecimals }: ValueProps) 
   )
 }
 
+// TODO: switch to skeleton loader
 function Loader() {
   return <Spinner size="sm" />
 }

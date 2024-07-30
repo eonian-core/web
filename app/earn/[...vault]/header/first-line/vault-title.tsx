@@ -4,6 +4,7 @@ import type { TokenSymbol } from '@/types'
 import IconCoin from '@/components/icons/icon-coin'
 import { interFont } from '@/shared/fonts/Inter'
 import { PropsWithChildren } from 'react'
+import { DisplaySymbol } from '@/components/vault-card/display-symbol'
 
 export function VaultTitle({children}: PropsWithChildren) {
   return (
@@ -25,7 +26,7 @@ export function VaultName({ symbol, children }: VaultNameProps) {
       <IconCoin symbol={symbol} width={logoSize} height={logoSize} />
       <div className={styles.title}>
         <h1 className={interFont.className}>{children}</h1>
-        <h2>{symbol}</h2>
+        <h2><DisplaySymbol>{symbol}</DisplaySymbol></h2>
       </div>
     </div>
   )

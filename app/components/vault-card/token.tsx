@@ -1,6 +1,6 @@
 'use client'
 
-import type { PropsWithChildren } from 'react'
+import type { FC, PropsWithChildren } from 'react'
 import { Progress } from '@nextui-org/react'
 
 import clsx from 'clsx'
@@ -11,8 +11,9 @@ import Button from '@/components/button/button'
 import { InternalLink } from '@/components/links/links'
 
 import { Chip } from '@/components/chip/chip'
-import type { TokenSymbol } from '@/types'
+import { type TokenSymbol } from '@/types'
 import { TokenImage } from '@/components/token-image/TokenImage'
+import { DisplaySymbol } from './display-symbol'
 
 export enum TokenState {
   Active = 'active',
@@ -32,6 +33,7 @@ export const TokenContext = createContext<{
   token: TokenSymbol
   state: TokenState
 }>({ token: 'ETH', state: TokenState.Active })
+
 export const useToken = () => useContext(TokenContext)
 
 export function Token({ token, children, state = TokenState.Active, className, contentClassName }: PropsWithChildren<TokenProps>) {
@@ -57,7 +59,7 @@ export function TokenHeader({ children }: PropsWithChildren) {
 
   return (
     <div className={clsx(styles.header, styles[token])}>
-      <span className={styles.symbol}>{token}</span>
+      <span className={styles.symbol}><DisplaySymbol>{token}</DisplaySymbol></span>
 
       <h3>{children}</h3>
     </div>

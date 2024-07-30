@@ -24,7 +24,7 @@ export function EthToken({ children, ...props }: DefinedTokenProps) {
 }
 
 export function BtcToken({ children, ...props }: DefinedTokenProps) {
-  return <Token token="BTC" {...props}>
+  return <Token token="BTCB" {...props}>
         <TokenHeader>Bitcoin Vault</TokenHeader>
 
         <Tags>
@@ -99,7 +99,7 @@ type TokenComponentMap = {
 
 export const tokensMap: TokenComponentMap = {
   ETH: EthToken,
-  BTC: BtcToken,
+  BTCB: BtcToken,
   BNB: BnbToken,
   USDT: UsdtToken,
   USDC: UsdcToken,

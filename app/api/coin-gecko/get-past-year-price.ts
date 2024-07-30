@@ -1,7 +1,7 @@
 import type { PriceData, TokenSymbol } from '@/types'
 
 const tokenToCoinGeckoId: Record<TokenSymbol, string> = {
-  BTC: 'bitcoin',
+  BTCB: 'bitcoin',
   ETH: 'ethereum',
   USDT: 'tether',
   USDC: 'usd-coin',

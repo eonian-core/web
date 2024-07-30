@@ -13,7 +13,7 @@ interface Props extends React.SVGProps<SVGSVGElement> {
 }
 
 const iconLookupMap: Record<TokenSymbol, React.FC<Omit<Props, 'symbol'>>> = {
-  BTC: IconBitcoin,
+  BTCB: IconBitcoin,
   ETH: IconEthereum,
   USDT: IconTether,
   USDC: IconUSDC,

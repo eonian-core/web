@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { JsonRpcProvider } from 'ethers'
 import type { Vault } from '../../api'
 import { H2, H3 } from '../../components/heading/heading'
@@ -14,25 +14,21 @@ import styles from './vault-grid.module.scss'
 import { NetworkSelector } from './network-selector'
 import type { TokenSymbol } from '@/types'
 import { TokenOrder } from '@/types'
-import { VaultCard, getAssetSymbol } from '@/components/vault-card/vault-card'
+import { VaultCard } from '@/components/vault-card/vault-card'
 import { Distribution, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenState, TokenStats, YearlyReturns } from '@/components/vault-card/token'
 import { getYearlyROI } from '@/finances/roi'
 import { BnbToken, DaiToken } from '@/components/vault-card/content'
+import { getAssetSymbol, useVaultsContext } from '@/api/vaults/vaults-context'
+import { useChainContext } from '@/shared/web3/chain-context'
 
-export type VaultsByChain = Record<ChainId, Vault[]>
+export function VaultGrid() {
 
+  const { vaults } = useVaultsContext()
+  const sorted = useMemo(() => 
+    Object.values(vaults).sort(bySymbolOrder),
+  [vaults])
 
-interface Props {
-  vaultsByChain: VaultsByChain
-}
-
-export function VaultGrid({ vaultsByChain }: Props) {
-  const defaultChainId = ChainId.parse(defaultChain.id)
-  const [chainId, setChainId] = React.useState(defaultChainId)
-  const chainName = ChainId.getName(chainId).toLowerCase()
-  const vaults = sortVaults(vaultsByChain[chainId])
-
-  useFetchPositionInfo(chainId, vaults)
+  const { chainId, setChainId } = useChainContext()
 
   return (
     <div>
@@ -44,11 +40,10 @@ export function VaultGrid({ vaultsByChain }: Props) {
         <NetworkSelector value={chainId} onChange={setChainId} />
       </div>
       <div className={styles.cards}>
-        {vaults.map(vault => (
+        {sorted.map(vault => (
           <VaultCard
-            chainName={chainName}
+            symbol={getAssetSymbol(vault)}
             key={vault.address}
-            vault={vault}
           />
         ))}
 
@@ -58,9 +53,7 @@ export function VaultGrid({ vaultsByChain }: Props) {
   )
 }
 
-function sortVaults(vaults: Vault[]): Vault[] {
-  return [...vaults].sort((a, b) => TokenOrder.indexOf(getAssetSymbol(a)) - TokenOrder.indexOf(getAssetSymbol(b)))
-}
+const bySymbolOrder = (a: Vault, b: Vault) => TokenOrder.indexOf(getAssetSymbol(a)) - TokenOrder.indexOf(getAssetSymbol(b))
 
 function ComingSoonBNBVaults() {
   return (
@@ -94,34 +87,4 @@ function ComingSoonBNBVaults() {
   )
 }
 
-/**
- * Gets the user's invested position in each vault in the list.
- * @param chainId The ID of the currently selected chain.
- * @param vaults A list of vaults from which to get the position.
- */
-function useFetchPositionInfo(chainId: ChainId, vaults: Vault[]) {
-  const { wallet, chain, provider } = useWalletWrapperContext()
-  const walletAddress = wallet?.address
-  const multicallAddress = chain?.multicallAddress
-  const dispatch = useAppDispatch()
 
-  const callback = () => {
-    if (!multicallAddress || !walletAddress || !provider || vaults.length === 0)
-      return
-
-    const endpoint = getRPCEndpoint(chainId)
-    if (!endpoint)
-      return
-
-    void dispatch(
-      fetchPositionInfo({
-        walletAddress,
-        vaultAddresses: vaults.map(vault => vault.address),
-        multicallAddress,
-        provider: new JsonRpcProvider(endpoint),
-      }),
-    )
-  }
-
-  React.useEffect(callback, [vaults, chainId, dispatch, provider, multicallAddress, walletAddress])
-}

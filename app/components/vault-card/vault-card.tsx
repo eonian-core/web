@@ -1,9 +1,6 @@
 import { tokensMap } from './content'
 import { Distribution, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenStats, YearlyReturns } from './token'
 import { VaultUserBalance } from './vault-user-balance'
-import type { TokenSymbol } from '@/types'
-import { TokenOrder } from '@/types'
-import type { Vault } from '@/api'
 import { calculateVaultAPY } from '@/finances/apy'
 import { getGrowthPercent } from '@/finances/growth'
 import { getYearlyROI } from '@/finances/roi'
@@ -11,25 +8,20 @@ import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import ContentLoader, { IContentLoaderProps } from 'react-content-loader'
 import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
+import { useVaultsContext } from '@/api/vaults/vaults-context'
+import { TokenSymbol } from '@/types'
+import { useChainContext } from '@/shared/web3/chain-context'
 
-export function getAssetSymbol(vault: Vault): TokenSymbol {
-  const name = vault.asset.symbol
-  if (name === 'BTCB')
-    return 'BTC'
-
-  if (!TokenOrder.includes(name as TokenSymbol))
-    throw new Error(`Unknown asset symbol: ${name}`)
-
-  return name as TokenSymbol
-}
 
 export interface VaultCardProps {
-  chainName: string
-  vault: Vault
+  symbol: TokenSymbol
 }
 
-export function VaultCard({ chainName, vault,  }: VaultCardProps) {
-  const symbol = getAssetSymbol(vault)
+export function VaultCard({ symbol  }: VaultCardProps) {
+  const {chainName} = useChainContext()
+  const { vaults } = useVaultsContext()
+  const vault = vaults[symbol]
+
   const DefinedToken = tokensMap[symbol]
 
   const apy = calculateVaultAPY(vault.rates[0].apy.yearly, vault.asset.decimals, 100)

@@ -30,7 +30,7 @@ export function BtcVaultTitle() {
                 <VaultTag>Save and Forget</VaultTag>
             </VaultTags>
 
-            <VaultName symbol="BTC">Bitcoin Vault</VaultName>
+            <VaultName symbol="BTCB">Bitcoin Vault</VaultName>
         </VaultTitle>
     )
 }
@@ -103,7 +103,7 @@ type VaultTitle = {
 }
 
 export const vaultTitleMap: VaultTitle = {
-    BTC: BtcVaultTitle,
+    BTCB: BtcVaultTitle,
     ETH: EthVaultTitle,
     BNB: BnbVaultTitle,
     USDT: UsdtVaultTitle,
