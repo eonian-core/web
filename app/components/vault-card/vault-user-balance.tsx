@@ -6,6 +6,7 @@ import { toStringNumberFromDecimals } from '../../shared'
 import { Row } from '../row/Row'
 import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '../../providers/wallet/wrappers/types'
+import { OneLineLoader } from '../loader/skeleton-loader'
 import { toUSDValue } from '@/finances/humanize'
 
 export interface VaultUserBalanceProps {
@@ -17,7 +18,7 @@ export function VaultUserBalance({ vault }: VaultUserBalanceProps) {
   const { vaultBalances, isLoading, errors } = useAppSelector(state => state.positionInfo)
   const error = typeof errors === 'string' ? errors : errors[vault.address]
   if (walletStatus === WalletStatus.CONNECTING || isLoading || error)
-    return <Loader />
+    return <OneLineLoader />
 
   return <Value
     symbol={vault.asset.symbol}
@@ -57,11 +58,6 @@ function Value({ balance, decimals, price, symbol, priceDecimals }: ValueProps) 
       </div>
     </Tooltip>
   )
-}
-
-// TODO: switch to skeleton loader
-function Loader() {
-  return <Spinner size="sm" />
 }
 
 export interface TooltipContentProps {
