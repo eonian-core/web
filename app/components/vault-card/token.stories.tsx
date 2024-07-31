@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import IconShieldHeart from '../icons/icon-shield-heart'
-import { Distribution, Tag, Tags, Token, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenHeader, TokenState, TokenStats, YearlyReturns } from './token'
+import { Distribution, Tag, Tags, Token, TokenApy, TokenFees, TokenFooter, TokenGrowth, TokenHeader, TokenState, TokenStats, YearlyReturns } from './token'
 
 const meta: Meta<typeof Token> = {
   title: 'Components/Token',
@@ -56,7 +56,7 @@ export const Default: Story = {
           </Distribution>
         </TokenStats>
 
-        <TokenAction />
+        <TokenFooter />
       </>
     ),
   },
@@ -86,7 +86,7 @@ export const DevEtherium: Story = {
           </Distribution>
         </TokenStats>
 
-        <TokenAction />
+        <TokenFooter />
       </>
     ),
   },
@@ -116,7 +116,7 @@ export const PlannedBnb: Story = {
           </Distribution>
         </TokenStats>
 
-        <TokenAction />
+        <TokenFooter />
       </>
     ),
   },

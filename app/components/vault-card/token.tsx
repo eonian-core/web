@@ -6,6 +6,7 @@ import { Progress } from '@nextui-org/react'
 import clsx from 'clsx'
 import { createContext, useContext } from 'react'
 import styles from './token.module.scss'
+import { DisplaySymbol } from './display-symbol'
 import type { ButtonProps } from '@/components/button/button'
 import Button from '@/components/button/button'
 import { InternalLink } from '@/components/links/links'
@@ -13,7 +14,6 @@ import { InternalLink } from '@/components/links/links'
 import { Chip } from '@/components/chip/chip'
 import { type TokenSymbol } from '@/types'
 import { TokenImage } from '@/components/token-image/TokenImage'
-import { DisplaySymbol } from './display-symbol'
 
 export enum TokenState {
   Active = 'active',
@@ -27,6 +27,7 @@ export interface TokenProps {
   state?: TokenState
   className?: string
   contentClassName?: string
+  style?: React.CSSProperties
 }
 
 export const TokenContext = createContext<{
@@ -36,13 +37,13 @@ export const TokenContext = createContext<{
 
 export const useToken = () => useContext(TokenContext)
 
-export function Token({ token, children, state = TokenState.Active, className, contentClassName }: PropsWithChildren<TokenProps>) {
+export function Token({ token, children, state = TokenState.Active, className, contentClassName, style = {} }: PropsWithChildren<TokenProps>) {
   const color = { '--color-token': `var(--color-token-${token})` } as React.CSSProperties
 
   return (
     <div className={clsx(styles.token, styles[token], className, {
       [styles.planned]: state === TokenState.Planned,
-    })} style={color}>
+    })} style={{ ...color, ...style }} >
       <TokenContext.Provider value={{ token, state }}>
         <div className={clsx(styles.content, contentClassName)}>
           <Logo />
@@ -148,18 +149,10 @@ export function TokenGrowth({ children }: PropsWithChildren) {
 
 export interface ActionProps {
   balance?: React.ReactNode
-  href?: string
   children?: React.ReactNode
 }
 
-const CtaButtonText = {
-  [TokenState.Active]: 'Save',
-  [TokenState.InDevelopment]: 'Join the Waitlist',
-  [TokenState.Planned]: 'Coming soon',
-}
-
-export function TokenAction({ balance, href, children }: ActionProps) {
-  const { state } = useToken()
+export function TokenFooter({ balance, children }: ActionProps) {
   return (
     <div className={styles.action}>
       {balance && (
@@ -186,24 +179,35 @@ export function TokenAction({ balance, href, children }: ActionProps) {
         />
       </div>
 
-      <ButtonLink
-        size="lg"
-        dark={state !== TokenState.Planned}
-        bordered={state === TokenState.Planned}
-        // development={state === TokenState.Planned}
-        className={styles.actionButton}
-        disabled={state === TokenState.Planned}
-        href={href}
-        >
-        {children || CtaButtonText[state]}
-      </ButtonLink>
-
-      {state === TokenState.InDevelopment && <p className={styles.development}>Coming soon</p>}
+      {children}
     </div>
   )
 }
 
-export function ButtonLink({ children, href, ...props }: ButtonProps & { href?: string }) {
+export const TokenAction: FC<ButtonLinkProps> = (props) => {
+  const { state } = useToken()
+
+  return (
+    <ButtonLink
+      size="lg"
+      dark={state !== TokenState.Planned}
+      bordered={state === TokenState.Planned}
+      className={styles.actionButton}
+      disabled={state === TokenState.Planned}
+      {...props}
+    />
+  )
+}
+
+export const FrictionRemover: FC<PropsWithChildren> = ({ children }) => {
+  return <p className={styles.development}>{children}</p>
+}
+
+export interface ButtonLinkProps extends ButtonProps {
+  href?: string
+}
+
+export function ButtonLink({ children, href, ...props }: ButtonLinkProps) {
   if (!href)
     return <Button {...props}>{children}</Button>
 

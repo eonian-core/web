@@ -2,6 +2,14 @@ import type { PropsWithChildren } from 'react'
 import React, { Children, useEffect, useState } from 'react'
 import { useFadeInListContext } from './fade-in-list'
 
+export function buildFadeInAnitionStyles(isVisble: boolean, duration: number) {
+  return {
+    transition: `opacity ${duration}s, transform ${duration}s`,
+    transform: isVisble ? 'none' : 'translateY(20px)',
+    opacity: isVisble ? 1 : 0,
+  }
+}
+
 export interface FadeInChildListProps extends PropsWithChildren {
   /** The delay before the animation starts, default 0.2s */
   initialDelay?: number
@@ -35,11 +43,7 @@ export default function FadeInChildList({
         return (
           <div
             className={className}
-            style={{
-              transition: `opacity ${duration}s, transform ${duration}s`,
-              transform: maxIsVisible > i ? 'none' : 'translateY(20px)',
-              opacity: maxIsVisible > i ? 1 : 0,
-            }}
+            style={buildFadeInAnitionStyles(maxIsVisible > i, duration)}
           >
             {child}
           </div>

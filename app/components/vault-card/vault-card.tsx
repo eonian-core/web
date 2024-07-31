@@ -1,7 +1,8 @@
 import ContentLoader, { IContentLoaderProps } from 'react-content-loader'
+import type { PropsWithChildren } from 'react'
 import { OneLineLoader } from '../loader/skeleton-loader'
 import { tokensMap } from './content'
-import { Distribution, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenStats, YearlyReturns } from './token'
+import { Distribution, TokenApy, TokenFees, TokenFooter, TokenGrowth, TokenStats, YearlyReturns } from './token'
 import { VaultUserBalance } from './vault-user-balance'
 import { calculateVaultAPY } from '@/finances/apy'
 import { getGrowthPercent } from '@/finances/growth'
@@ -13,12 +14,12 @@ import { useVaultsContext } from '@/api/vaults/vaults-context'
 import type { TokenSymbol } from '@/types'
 import { useChainContext } from '@/shared/web3/chain-context'
 
-export interface VaultCardProps {
+export interface VaultCardProps extends PropsWithChildren {
   symbol: TokenSymbol
+  style?: React.CSSProperties
 }
 
-export function VaultCard({ symbol }: VaultCardProps) {
-  const { chainName } = useChainContext()
+export function VaultCard({ symbol, children, style }: VaultCardProps) {
   const { vaults } = useVaultsContext()
   const vault = vaults[symbol]
 
@@ -33,7 +34,7 @@ export function VaultCard({ symbol }: VaultCardProps) {
   const { status: walletStatus } = useWalletWrapperContext()
 
   return (
-    <DefinedToken>
+    <DefinedToken style={style}>
         <TokenStats>
             <YearlyReturns>{isNumber(growth)
               ? `${getYearlyROI(apy, growth)}%`
@@ -49,13 +50,12 @@ export function VaultCard({ symbol }: VaultCardProps) {
             </Distribution>
         </TokenStats>
 
-        <TokenAction
-            href={`/earn/${chainName}/${vault.symbol}`}
+        <TokenFooter
             balance={walletStatus === WalletStatus.NOT_CONNECTED
               ? undefined
               : <VaultUserBalance vault={vault} />
             }
-        />
+        >{children}</TokenFooter>
 
     </DefinedToken>
   )

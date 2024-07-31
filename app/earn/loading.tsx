@@ -1,9 +1,9 @@
 'use client'
 
 import pageStyles from './page.module.scss'
-import gridStyles from './components/vault-grid.module.scss'
 import { Header } from './components/header'
-import { CardSkeleton } from '@/components/vault-card/card-loader'
+import gridStyles from './components/vault-grid.module.scss'
+import { VaultGridSkeleton } from './components/vault-grid-skeleton'
 
 export default function Loading() {
   return (
@@ -14,15 +14,8 @@ export default function Loading() {
             <Header />
           </div>
         </div>
-        <div className={gridStyles.cards}>
-          <CardSkeleton />
-          <CardSkeleton />
-          <CardSkeleton />
 
-          <CardSkeleton />
-          <CardSkeleton />
-          <CardSkeleton />
-        </div>
+        <VaultGridSkeleton />
         </div>
     </div>
   )

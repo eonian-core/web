@@ -30,12 +30,14 @@ import IconWindowGrid from '../components/icons/icon-window-grid'
 import { AppearMark, AppearMarkOnScroll } from '../components/appear-mark/appear-mark'
 import {
   Distribution,
+  FrictionRemover,
   Tag,
   Tags,
   Token,
   TokenAction,
   TokenApy,
   TokenFees,
+  TokenFooter,
   TokenGrowth,
   TokenHeader,
   TokenStats,
@@ -146,6 +148,8 @@ const components = {
   SocialProofStatItem,
   SocialProofLinks,
   Testimonials,
+  TokenFooter,
+  FrictionRemover,
   TokenAction,
 }
 
