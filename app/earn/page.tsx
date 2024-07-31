@@ -7,8 +7,6 @@ import { ChainProvider } from '@/shared/web3/chain-context'
 import { VaultsProvider } from '@/api/vaults/vaults-context'
 import { fetchVaults } from '@/api/vaults/fetchVaults'
 
-const timeout = (time: number) => new Promise(resolve => setTimeout(resolve, time))
-
 export default async function Page() {
   if (!showEarn)
     redirect('/')

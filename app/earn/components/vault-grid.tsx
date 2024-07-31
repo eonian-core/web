@@ -12,7 +12,6 @@ import { Distribution, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenState
 import { getYearlyROI } from '@/finances/roi'
 import { BnbToken, DaiToken } from '@/components/vault-card/content'
 import { useVaultsContext } from '@/api/vaults/vaults-context'
-import { useChainContext } from '@/shared/web3/chain-context'
 import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
 
 const bySymbolOrder = (a: Vault, b: Vault) => TokenOrder.indexOf(getAssetSymbol(a)) - TokenOrder.indexOf(getAssetSymbol(b))

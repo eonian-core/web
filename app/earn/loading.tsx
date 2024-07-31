@@ -3,7 +3,6 @@
 import pageStyles from './page.module.scss'
 import gridStyles from './components/vault-grid.module.scss'
 import { Header } from './components/header'
-import { OneLineLoader } from '@/components/loader/skeleton-loader'
 import { CardSkeleton } from '@/components/vault-card/card-loader'
 
 export default function Loading() {
