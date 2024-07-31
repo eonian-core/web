@@ -2,9 +2,10 @@
 
 import React, { useMemo } from 'react'
 import type { Vault } from '../../api'
-import { H2, H3 } from '../../components/heading/heading'
+
 import styles from './vault-grid.module.scss'
 import { NetworkSelector } from './network-selector'
+import { Header } from './header'
 import { TokenOrder } from '@/types'
 import { VaultCard } from '@/components/vault-card/vault-card'
 import { Distribution, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenState, TokenStats, YearlyReturns } from '@/components/vault-card/token'
@@ -22,16 +23,11 @@ export function VaultGrid() {
     Object.values(vaults).sort(bySymbolOrder),
   [vaults])
 
-  const { chainId, setChainId } = useChainContext()
-
   return (
     <div>
       <div className={styles.header}>
-        <div>
-          <H2>Select Cryptocurrency</H2>
-          <H3>Choose an asset to save and generate passive income</H3>
-        </div>
-        <NetworkSelector value={chainId} onChange={setChainId} />
+        <Header />
+        <NetworkSelector />
       </div>
       <div className={styles.cards}>
         {sorted.map(vault => (

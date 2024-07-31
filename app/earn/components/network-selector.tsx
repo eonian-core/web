@@ -4,13 +4,11 @@ import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-p
 import { ChainId } from '../../providers/wallet/wrappers/helpers'
 
 import styles from './network-selector.module.scss'
+import { useChainContext } from '@/shared/web3/chain-context'
 
-interface Props {
-  value: ChainId
-  onChange: (value: ChainId) => void
-}
+export const NetworkSelector: React.FC = () => {
+  const { chainId: value, setChainId: onChange } = useChainContext()
 
-export const NetworkSelector: React.FC<Props> = ({ value, onChange }) => {
   const { chains } = useWalletWrapperContext()
 
   const chain = chains.find(({ id }) => id === value)!
