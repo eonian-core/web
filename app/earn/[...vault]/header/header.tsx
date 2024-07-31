@@ -5,20 +5,21 @@ import styles from './header.module.scss'
 import { PriceChart } from './first-line/price-chart'
 import { Actions } from './second-line/actions'
 import { SlitherProtection } from './second-line/slither-protection'
-import type { PriceData, TokenSymbol } from '@/types'
 import { vaultTitleMap } from './first-line/content'
+import type { TokenSymbol } from '@/types'
+import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 
 interface Props {
   symbol: TokenSymbol
-  yearlyPriceData: PriceData[]
 }
 
-export function Header({ yearlyPriceData, symbol }: Props) {
+export function Header({ symbol }: Props) {
   const VaultTitle = vaultTitleMap[symbol]
+
   return (
     <header className={styles.container}>
       <VaultTitle />
-      <PriceChart symbol={symbol} yearlyPriceData={yearlyPriceData} />
+      <PriceChart symbol={symbol} />
       <Actions symbol={symbol} />
       <SlitherProtection />
     </header>

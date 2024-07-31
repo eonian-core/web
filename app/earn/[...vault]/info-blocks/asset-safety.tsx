@@ -3,7 +3,8 @@ import { useVaultContext } from '../hooks/use-vault-context'
 import { CommonInfoBlock } from './common-info-block'
 import CompactNumber from '@/components/compact-number/compact-number'
 import IconArrowRightShort from '@/components/icons/icon-arrow-right-short'
-import { getAssetSymbol } from '@/components/vault-card/vault-card'
+import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
+import type { TokenSymbol } from '@/types'
 
 export function AssetSafety() {
   const [amount] = useVaultDeposit()
@@ -16,15 +17,20 @@ export function AssetSafety() {
         value: 'Fully Protected',
         icon: <IconArrowRightShort />,
       }]}
-      description={<>After deposit of <Amount />, the whole portfolio will be covered by insurance.</>}
+      description={<Amount amount={amount} decimals={vault.asset.decimals} symbol={getAssetSymbol(vault)} />}
     />
   )
+}
 
-  function Amount() {
-    return (
-      <CompactNumber value={amount} decimals={vault.asset.decimals} fractionDigits={2} hideTooltip>
-        &nbsp;{getAssetSymbol(vault)}
-      </CompactNumber>
-    )
-  }
+interface AmountProps {
+  amount: bigint
+  decimals: number
+  symbol: TokenSymbol
+}
+
+function Amount({ amount, decimals, symbol }: AmountProps) {
+  return (<>After deposit of <CompactNumber value={amount} decimals={decimals} fractionDigits={2} hideTooltip>
+    &nbsp;{symbol}
+  </CompactNumber>, the whole portfolio will be covered by insurance.
+  </>)
 }

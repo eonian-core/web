@@ -1,9 +1,9 @@
 import { useVaultContext } from '../../hooks/use-vault-context'
 import styles from './input-icon.module.scss'
 import type { Vault } from '@/api'
+import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
 import IconCoin from '@/components/icons/icon-coin'
 import IconWallet from '@/components/icons/icon-wallet'
-import { getAssetSymbol } from '@/components/vault-card/vault-card'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 
 type ICON_TYPE = 'WALLET' | 'COIN'
@@ -29,13 +29,9 @@ const iconResolver: Record<FormAction, Record<INPUT_TYPE, ICON_TYPE>> = {
 export function InputIcon({ type, vault, size = '1.5em' }: Props) {
   const { formAction } = useVaultContext()
 
-  function renderIcon(type: ICON_TYPE) {
-    switch (type) {
-      case 'WALLET':
-        return <IconWallet className={styles.wallet} width={size} height={size} />
-      case 'COIN':
-        return <IconCoin symbol={getAssetSymbol(vault)} width={size} height={size} />
-    }
-  }
-  return renderIcon(iconResolver[formAction][type])
+  const iconType = iconResolver[formAction][type]
+  if (iconType === 'WALLET')
+    return <IconWallet className={styles.wallet} width={size} height={size} />
+
+  return <IconCoin symbol={getAssetSymbol(vault)} width={size} height={size} />
 }

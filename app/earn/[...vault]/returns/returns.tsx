@@ -1,6 +1,8 @@
-import { useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { Button } from '@nextui-org/react'
 import clsx from 'clsx'
+import type { IContentLoaderProps } from 'react-content-loader'
+import ContentLoader from 'react-content-loader'
 import { SectionHeader, SectionSubHeader } from '../components/section-header'
 import { useVaultDepositUSD } from '../hooks/use-vault-deposit-change'
 import { PercentagePriceChange } from '../components/percentage-price-change'
@@ -9,14 +11,16 @@ import styles from './returns.module.scss'
 import { ReturnsChart } from './returns-chart'
 import { ReturnsLegend } from './returns-legend'
 import type { Vault } from '@/api'
-import type { PriceData } from '@/types'
+import type { PriceData, TokenSymbol } from '@/types'
 import CompactNumber from '@/components/compact-number/compact-number'
 import { calculateVaultAPY } from '@/finances/apy'
 import { getGrowthPercent } from '@/finances/growth'
 import { getYearlyROI } from '@/finances/roi'
+import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
+import { OneLineLoader } from '@/components/loader/skeleton-loader'
 
 interface Props {
-  yearlyPriceData: PriceData[]
+  symbol: TokenSymbol
 }
 
 type Timeframe = 'Week' | 'Month' | 'Year'
@@ -27,49 +31,72 @@ const timeLookupMap: Record<Timeframe, number> = {
   Year: 365,
 }
 
-export function Returns({ yearlyPriceData }: Props) {
+const chartWidth = 300
+const chartHeight = 160
+
+export function Returns({ symbol }: Props) {
   const { vault } = useVaultContext()
   const [timeframe, setTimeframe] = useState<Timeframe>('Year')
   const days = timeLookupMap[timeframe]
+
+  const { data } = useTokenPrice(symbol)
+  const yearlyPriceData = data?.prices
+
   return (
     <div className={styles.container}>
       <SectionHeader title="Projected Returns">
         <SectionSubHeader>Based on last {timeframe.toLowerCase()} APY</SectionSubHeader>
       </SectionHeader>
       <div className={styles.chart}>
-        <ReturnsChart
-          days={days}
-          vault={vault}
-          yearlyPriceData={yearlyPriceData}
-          width="100%"
-          height={160}
-          colorGrowth="var(--color-growth)"
-          colorPremium="var(--color-premium)"
-        />
-        <AmountOfReturns vault={vault} days={days} yearPriceData={yearlyPriceData} />
+        {!yearlyPriceData
+          ? <ChartLoader />
+          : (
+          <ReturnsChart
+            days={days}
+            vault={vault}
+            yearlyPriceData={yearlyPriceData}
+            width="100%"
+            height={chartHeight}
+            colorGrowth="var(--color-growth)"
+            colorPremium="var(--color-premium)"
+          />
+            )}
+        {yearlyPriceData && <AmountOfReturns vault={vault} days={days} yearPriceData={yearlyPriceData} />}
       </div>
-      <TimeframePicker />
-      <ReturnsLegend days={days} yearlyPriceData={yearlyPriceData} />
+      <TimeframePicker {...{ timeframe, setTimeframe }} />
+      {!yearlyPriceData
+        ? (<>
+        <OneLineLoader marginTop={5} width={chartWidth} />
+        <OneLineLoader marginTop={5} width={chartWidth} />
+      </>)
+        : (
+        <ReturnsLegend days={days} yearlyPriceData={yearlyPriceData} />
+          )}
     </div>
   )
+}
 
-  function TimeframePicker() {
-    return (
-      <div className={styles.timeframe}>
-        {Object.keys(timeLookupMap).map(key => (
-          <Button
-            key={key}
-            variant={timeframe === key ? 'flat' : 'light'}
-            className={clsx(styles.button, { [styles.active]: timeframe === key })}
-            size="sm"
-            onClick={() => setTimeframe(key as Timeframe)}
-          >
-            {key}
-          </Button>
-        ))}
-      </div>
-    )
-  }
+interface TimeframePickerProps {
+  timeframe: Timeframe
+  setTimeframe: (timeframe: Timeframe) => void
+}
+
+function TimeframePicker({ timeframe, setTimeframe }: TimeframePickerProps) {
+  return (
+    <div className={styles.timeframe}>
+      {Object.keys(timeLookupMap).map(key => (
+        <Button
+          key={key}
+          variant={timeframe === key ? 'flat' : 'light'}
+          className={clsx(styles.button, { [styles.active]: timeframe === key })}
+          size="sm"
+          onClick={() => setTimeframe(key as Timeframe)}
+        >
+          {key}
+        </Button>
+      ))}
+    </div>
+  )
 }
 
 interface AmountOfReturnsProps {
@@ -110,5 +137,20 @@ function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
       </div>
       <PercentagePriceChange className={styles.percent} currentPrice={currentPrice * changeAPY} previousPrice={previousPrice} />
     </div>
+  )
+}
+
+function ChartLoader(props: IContentLoaderProps) {
+  return (
+    <ContentLoader
+      width={chartWidth}
+      height={chartHeight}
+      viewBox={`0 0 ${chartWidth} ${chartHeight}`}
+      backgroundColor="#b6b6b658"
+      foregroundColor="#c9c7c7c0"
+      {...props}
+    >
+      <rect x="0" y="0" rx="10" ry="10" width={chartWidth} height={chartHeight - 20} />
+    </ContentLoader>
   )
 }

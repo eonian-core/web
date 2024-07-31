@@ -97,7 +97,8 @@
     transition: transform 0.5s ease;
 
     .USDC &,
-    .BTC & {
+    .BTC &,
+    .BTCB & {
       opacity: 0.75;
     }
 

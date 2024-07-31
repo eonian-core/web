@@ -12,17 +12,18 @@ import { WalletInsurance } from './info-blocks/wallet-insurance'
 import { Fees } from './info-blocks/fees'
 import { WithdrawLimits } from './info-blocks/withdraw-limits'
 import { VaultToken } from './info-blocks/vault-token'
-import type { PriceData } from '@/types'
+import type { PriceData, TokenSymbol } from '@/types'
 import type { Vault } from '@/api'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
+import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 
 interface Props {
   vault: Vault
   chainId: ChainId
-  yearlyPriceData: PriceData[]
+  symbol: TokenSymbol
 }
 
-export function Content({ vault, chainId, yearlyPriceData }: Props) {
+export function Content({ vault, chainId, symbol }: Props) {
   return (
     <VaultProvider vault={vault}>
       <div className={styles.container}>
@@ -38,7 +39,7 @@ export function Content({ vault, chainId, yearlyPriceData }: Props) {
         </section>
 
         <section className={styles.left}>
-          <Returns yearlyPriceData={yearlyPriceData} />
+          <Returns symbol={symbol} />
         </section>
       </div>
       <div className={styles.mobileInfoBlocks}>

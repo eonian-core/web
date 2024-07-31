@@ -1,30 +1,24 @@
 'use client'
 
 import React, { useMemo } from 'react'
-import { JsonRpcProvider } from 'ethers'
 import type { Vault } from '../../api'
 import { H2, H3 } from '../../components/heading/heading'
-import { ChainId, getRPCEndpoint } from '../../providers/wallet/wrappers/helpers'
-import { defaultChain } from '../../web3-onboard'
-
-import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-provider'
-import { useAppDispatch } from '../../store/hooks'
-import { fetchPositionInfo } from '../../store/slices/positionInfoSlice'
 import styles from './vault-grid.module.scss'
 import { NetworkSelector } from './network-selector'
-import type { TokenSymbol } from '@/types'
 import { TokenOrder } from '@/types'
 import { VaultCard } from '@/components/vault-card/vault-card'
 import { Distribution, TokenAction, TokenApy, TokenFees, TokenGrowth, TokenState, TokenStats, YearlyReturns } from '@/components/vault-card/token'
 import { getYearlyROI } from '@/finances/roi'
 import { BnbToken, DaiToken } from '@/components/vault-card/content'
-import { getAssetSymbol, useVaultsContext } from '@/api/vaults/vaults-context'
+import { useVaultsContext } from '@/api/vaults/vaults-context'
 import { useChainContext } from '@/shared/web3/chain-context'
+import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
+
+const bySymbolOrder = (a: Vault, b: Vault) => TokenOrder.indexOf(getAssetSymbol(a)) - TokenOrder.indexOf(getAssetSymbol(b))
 
 export function VaultGrid() {
-
   const { vaults } = useVaultsContext()
-  const sorted = useMemo(() => 
+  const sorted = useMemo(() =>
     Object.values(vaults).sort(bySymbolOrder),
   [vaults])
 
@@ -52,8 +46,6 @@ export function VaultGrid() {
     </div>
   )
 }
-
-const bySymbolOrder = (a: Vault, b: Vault) => TokenOrder.indexOf(getAssetSymbol(a)) - TokenOrder.indexOf(getAssetSymbol(b))
 
 function ComingSoonBNBVaults() {
   return (
@@ -86,5 +78,3 @@ function ComingSoonBNBVaults() {
     </>
   )
 }
-
-
