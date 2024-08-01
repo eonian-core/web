@@ -6,8 +6,9 @@ import FadeIn from '../../../components/fade-in/fade-in'
 import { MOBILE_SCREEN, useIsScreenSmallerOrEqual } from '../../../components/resize-hooks/screens'
 import styles from './offer.module.scss'
 import { ClientOnly } from '@/components/client-only/client-only'
+import type { VaultCardProps } from '@/components/vault-card/vault-card'
 
-const TOKEN_PROP = 'token'
+const TOKEN_PROP = 'symbol'
 const TOKEN_OFFSET = 20
 const TOKEN_SCALE_FACTOR = 0.06
 const TOKEN_OPACITY_FACTOR = 0.15
@@ -26,9 +27,7 @@ function animate(index: number, total: number) {
 export default function TokensBody({ children }: PropsWithChildren) {
   const isMobile = useIsScreenSmallerOrEqual(MOBILE_SCREEN)
 
-  const defaultItems = React.Children.toArray(children) as React.ReactElement<
-    React.PropsWithChildren<{ [TOKEN_PROP]: string }>
-  >[]
+  const defaultItems = React.Children.toArray(children) as React.ReactElement<VaultCardProps>[]
 
   const [items, setItems] = React.useState(defaultItems)
   const dragStartXRef = React.useRef(0)
