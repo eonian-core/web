@@ -33,7 +33,6 @@ import {
   FrictionRemover,
   Tag,
   Tags,
-  Token,
   TokenAction,
   TokenApy,
   TokenFees,
@@ -70,6 +69,7 @@ import SocialProof, {
   SocialProofStatItem,
 } from './views/social-proof/social-proof'
 import Testimonials from './views/testimonials/testimonials'
+import { VaultCard } from '@/components/vault-card/vault-card'
 
 const components = {
   Hero,
@@ -113,7 +113,7 @@ const components = {
   FeaturesList,
   Offer,
   Tokens,
-  Token,
+  VaultCard,
   TokenHeader,
   Tags,
   Tag,

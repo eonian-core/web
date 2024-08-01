@@ -13,7 +13,7 @@ export type VaultBySymbol = {
 }
 
 export interface VaultsContextState {
-  vaultsByChain: VaultsByChain
+  vaultsByChain?: VaultsByChain
   /** Current chain vaults */
   vaults: VaultBySymbol
 }
@@ -28,9 +28,18 @@ export function useVaultsContext(): VaultsContextState {
   return context
 }
 
-export const VaultsProvider: React.FC<PropsWithChildren<{ vaultsByChain: VaultsByChain }>> = ({ vaultsByChain, children }) => {
+export interface VaultsProviderProps {
+  vaultsByChain?: VaultsByChain
+  /** Allow to specify only current chain vaults */
+  currentChainVaults?: Array<Vault>
+}
+
+export const VaultsProvider: React.FC<PropsWithChildren<VaultsProviderProps>> = ({ vaultsByChain, currentChainVaults, children }) => {
   const { chainId } = useChainContext()
-  const vaultsForChain = vaultsByChain[chainId]
+  const vaultsForChain = currentChainVaults ?? vaultsByChain?.[chainId]
+  if (!vaultsForChain)
+    throw new Error('Vaults for chain not found and not provided')
+
   const vaults = useMemo(() => mapVaultBySymbol(vaultsForChain), [chainId, vaultsForChain])
 
   useFetchPositionInfo(chainId, vaultsForChain)

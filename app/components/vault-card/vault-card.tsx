@@ -12,7 +12,6 @@ import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provi
 import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 import { useVaultsContext } from '@/api/vaults/vaults-context'
 import type { TokenSymbol } from '@/types'
-import { useChainContext } from '@/shared/web3/chain-context'
 
 export interface VaultCardProps extends PropsWithChildren {
   symbol: TokenSymbol

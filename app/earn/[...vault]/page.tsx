@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import type { Vault } from '../../api'
-import { getClient, getVaultBySymbol, getVaultsSymbols } from '../../api'
+import { getRscClient, getVaultBySymbol, getVaultsSymbols } from '../../api'
 import { ChainId } from '../../providers/wallet/wrappers/helpers'
 import { defaultChain } from '../../web3-onboard'
 import { showEarn } from '../../features'
@@ -27,7 +27,7 @@ interface Params {
  */
 export async function generateStaticParams(): Promise<RouteSegment[]> {
   const chainId = ChainId.parse(defaultChain.id)
-  const client = getClient(chainId)
+  const client = getRscClient(chainId)
   const { data } = await getVaultsSymbols(client)
   return data.vaults.map(({ symbol }) => ({ vault: [ChainId.getName(chainId).toLowerCase(), symbol] }))
 }
@@ -43,7 +43,7 @@ export default async function Page({ params }: Params) {
 
   const [chainName, vaultSymbol] = vaultRoute
   const chainId = ChainId.getByName(chainName)
-  const client = getClient(chainId)
+  const client = getRscClient(chainId)
   const { data } = await getVaultBySymbol(client, vaultSymbol)
   const vault = data.vaults[0] as Vault
 
