@@ -33,8 +33,6 @@ const Form: React.FC<Props> = ({ chainId }) => {
       <Card>
         <FormHeader />
 
-        <Divider />
-
         <CardBody className={styles.fragment}>
           <FormInput disabled={hasPendingTransactions || !isFormReady} />
 

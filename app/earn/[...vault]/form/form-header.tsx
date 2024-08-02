@@ -36,19 +36,16 @@ interface TabButtonProps {
 }
 
 function TabButton({ action, currentAction, text, onClick }: TabButtonProps) {
-  const classNames = clsx(styles.button, {
-    [styles.buttonActive]: currentAction === action,
-  })
   return (
-    <Button
+    <span
       data-key={action}
       onClick={onClick}
-      className={classNames}
-      variant="flat"
-      size="lg"
+      className={clsx(styles.button, {
+        [styles.buttonActive]: currentAction === action,
+      })}
     >
       {text}
-    </Button>
+    </span>
   )
 }
 

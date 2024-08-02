@@ -90,7 +90,7 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
         if (isOnDifferentChain)
           return `Switch to ${vaultChain.name}`
 
-        return formAction === FormAction.DEPOSIT ? 'Deposit' : 'Withdraw'
+        return formAction === FormAction.DEPOSIT ? 'Save' : 'Withdraw'
       }
     }
   }
