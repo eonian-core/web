@@ -1,6 +1,6 @@
-import { getGrowthPercent } from '@/finances/growth'
 import { useVaultContext } from '../hooks/use-vault-context'
 import styles from './returns-legend.module.scss'
+import { getGrowthPercent } from '@/finances/growth'
 import type { PriceData } from '@/types'
 import { calculateVaultAPY } from '@/finances/apy'
 

@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Button } from '@nextui-org/react'
 import clsx from 'clsx'
 import type { IContentLoaderProps } from 'react-content-loader'

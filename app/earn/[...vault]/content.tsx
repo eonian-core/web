@@ -12,10 +12,9 @@ import { WalletInsurance } from './info-blocks/wallet-insurance'
 import { Fees } from './info-blocks/fees'
 import { WithdrawLimits } from './info-blocks/withdraw-limits'
 import { VaultToken } from './info-blocks/vault-token'
-import type { PriceData, TokenSymbol } from '@/types'
+import type { TokenSymbol } from '@/types'
 import type { Vault } from '@/api'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
-import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 
 interface Props {
   vault: Vault

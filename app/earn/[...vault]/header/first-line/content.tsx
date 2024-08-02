@@ -1,112 +1,112 @@
-import { TokenSymbol } from "@/types";
-import { VaultName, VaultTag, VaultTags, VaultTitle } from "./vault-title";
+import { VaultName, VaultTag, VaultTags, VaultTitle } from './vault-title'
+import type { TokenSymbol } from '@/types'
 
 // TODO: move this compoenents to mdx file
 
 export function EthVaultTitle() {
-    return (
+  return (
         <VaultTitle>
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Zero Fee Insurance</VaultTag>
+                <VaultTag>Free Insurance</VaultTag>
                 <VaultTag>Blue-chip</VaultTag>
                 <VaultTag>Save and Forget</VaultTag>
             </VaultTags>
 
             <VaultName symbol="ETH">Ethereum Vault</VaultName>
         </VaultTitle>
-    )
+  )
 }
 
 export function BtcVaultTitle() {
-    return (
+  return (
         <VaultTitle>
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Zero Fee Insurance</VaultTag>
+                <VaultTag>Free Insurance</VaultTag>
                 <VaultTag>Blue-chip</VaultTag>
                 <VaultTag>Save and Forget</VaultTag>
             </VaultTags>
 
             <VaultName symbol="BTCB">Bitcoin Vault</VaultName>
         </VaultTitle>
-    )
+  )
 }
 
 export function BnbVaultTitle() {
-    return (
+  return (
         <VaultTitle>
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Zero Fee Insurance</VaultTag>
+                <VaultTag>Free Insurance</VaultTag>
                 <VaultTag>Save and Forget</VaultTag>
             </VaultTags>
 
             <VaultName symbol="BNB">BNB Vault</VaultName>
         </VaultTitle>
-    )
+  )
 }
 
 export function UsdtVaultTitle() {
-    return (
+  return (
         <VaultTitle>
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Zero Fee Insurance</VaultTag>
+                <VaultTag>Free Insurance</VaultTag>
                 <VaultTag>Earn Passively</VaultTag>
                 <VaultTag>Stable</VaultTag>
             </VaultTags>
 
             <VaultName symbol="USDT">Tether Vault</VaultName>
         </VaultTitle>
-    )
+  )
 }
 
 export function UsdcVaultTitle() {
-    return (
+  return (
         <VaultTitle>
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Zero Fee Insurance</VaultTag>
+                <VaultTag>Free Insurance</VaultTag>
                 <VaultTag>Earn Passively</VaultTag>
                 <VaultTag>Stable</VaultTag>
             </VaultTags>
 
             <VaultName symbol="USDC">USD Coin Vault</VaultName>
         </VaultTitle>
-    )
+  )
 }
 
 export function DaiVaultTitle() {
-    return (
+  return (
         <VaultTitle>
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Zero Fee Insurance</VaultTag>
+                <VaultTag>Free Insurance</VaultTag>
                 <VaultTag>Earn Passively</VaultTag>
                 <VaultTag>Stable</VaultTag>
             </VaultTags>
 
             <VaultName symbol="DAI">DAI Vault</VaultName>
         </VaultTitle>
-    )
+  )
 }
 
-type VaultTitle = {
-    [K in TokenSymbol]: React.ComponentType
+type FirstLineHeader = {
+  [K in TokenSymbol]: React.ComponentType
 }
 
-export const vaultTitleMap: VaultTitle = {
-    BTCB: BtcVaultTitle,
-    ETH: EthVaultTitle,
-    BNB: BnbVaultTitle,
-    USDT: UsdtVaultTitle,
-    USDC: UsdcVaultTitle,
-    DAI: DaiVaultTitle,
+export const firstLineHeaderMap: FirstLineHeader = {
+  BTCB: BtcVaultTitle,
+  ETH: EthVaultTitle,
+  BNB: BnbVaultTitle,
+  USDT: UsdtVaultTitle,
+  USDC: UsdcVaultTitle,
+  DAI: DaiVaultTitle,
 }

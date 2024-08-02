@@ -4,24 +4,23 @@ import React from 'react'
 import styles from './header.module.scss'
 import { PriceChart } from './first-line/price-chart'
 import { Actions } from './second-line/actions'
-import { SlitherProtection } from './second-line/slither-protection'
-import { vaultTitleMap } from './first-line/content'
+import { Protected } from './second-line/protected'
+import { firstLineHeaderMap } from './first-line/content'
 import type { TokenSymbol } from '@/types'
-import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 
 interface Props {
   symbol: TokenSymbol
 }
 
 export function Header({ symbol }: Props) {
-  const VaultTitle = vaultTitleMap[symbol]
+  const VaultTitle = firstLineHeaderMap[symbol]
 
   return (
     <header className={styles.container}>
       <VaultTitle />
       <PriceChart symbol={symbol} />
+      <Protected />
       <Actions symbol={symbol} />
-      <SlitherProtection />
     </header>
   )
 }

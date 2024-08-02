@@ -13,7 +13,7 @@ export function VaultToken() {
       items={[
         {
           title: 'You’ll get',
-          value: <>~<Amount />$ in {vault.symbol}</>,
+          value: <>~<Amount {...{ depositInUSD, decimals }}/>$ in {vault.symbol}</>,
           icon: <IconHandWithDollar />,
         },
       ]}
@@ -22,10 +22,15 @@ export function VaultToken() {
       }
     />
   )
+}
 
-  function Amount() {
-    return (
-      <CompactNumber value={depositInUSD} decimals={decimals} fractionDigits={2} hideTooltip />
-    )
-  }
+interface AmountProps {
+  depositInUSD: bigint
+  decimals: number
+}
+
+function Amount({ depositInUSD, decimals }: AmountProps) {
+  return (
+    <CompactNumber value={depositInUSD} decimals={decimals} fractionDigits={2} hideTooltip />
+  )
 }

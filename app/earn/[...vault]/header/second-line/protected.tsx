@@ -1,9 +1,9 @@
-import styles from './slither-protection.module.scss'
+import styles from './protected.module.scss'
 import ExternalLink from '@/components/links/external-link'
 import IconShieldHeart from '@/components/icons/icon-shield-heart'
 import IconExternal from '@/components/icons/icon-external'
 
-export function SlitherProtection() {
+export function Protected() {
   return (
     <ExternalLink
       className={styles.container}
@@ -12,7 +12,9 @@ export function SlitherProtection() {
       iconAtEnd
     >
       <IconShieldHeart className={styles.icon} />
-      Protected by Slither Vulnerability Scanner
+      Audited by Bunzz
+      •
+      Monitored by Slither
     </ExternalLink>
   )
 }

@@ -14,7 +14,7 @@ export function EthToken({ children, ...props }: DefinedTokenProps) {
         <TokenHeader>Ethereum Vault</TokenHeader>
 
         <Tags>
-            <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
+            <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
             <Tag bordered>Blue-chip</Tag>
             <Tag bordered>Save and Forget</Tag>
         </Tags>
@@ -28,7 +28,7 @@ export function BtcToken({ children, ...props }: DefinedTokenProps) {
         <TokenHeader>Bitcoin Vault</TokenHeader>
 
         <Tags>
-            <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
+            <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
             <Tag bordered>Blue-chip</Tag>
             <Tag bordered>Save and Forget</Tag>
         </Tags>
@@ -42,7 +42,7 @@ export function BnbToken({ children, ...props }: DefinedTokenProps) {
         <TokenHeader>BNB Vault</TokenHeader>
 
         <Tags>
-            <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
+            <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
             <Tag bordered>Blue-chip</Tag>
             <Tag bordered>Save and Forget</Tag>
         </Tags>
@@ -58,7 +58,7 @@ export function UsdtToken({ children, ...props }: DefinedTokenProps) {
         <Tags>
             <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
             <Tag bordered>Stable</Tag>
-            <Tag bordered>Zero Fee Insurance</Tag>
+            <Tag bordered>Free Insurance</Tag>
         </Tags>
 
         {children}
@@ -72,7 +72,7 @@ export function UsdcToken({ children, ...props }: DefinedTokenProps) {
         <Tags>
             <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
           <Tag bordered>Stable</Tag>
-          <Tag bordered>Zero Fee Insurance</Tag>
+          <Tag bordered>Free Insurance</Tag>
         </Tags>
 
         {children}
@@ -86,7 +86,7 @@ export function DaiToken({ children, ...props }: DefinedTokenProps) {
         <Tags>
             <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
             <Tag bordered>Stable</Tag>
-            <Tag bordered>Zero Fee Insurance</Tag>
+            <Tag bordered>Free Insurance</Tag>
         </Tags>
 
         {children}

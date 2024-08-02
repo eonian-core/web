@@ -42,7 +42,7 @@ export const Default: Story = {
         <TokenHeader>Ethereum Vault</TokenHeader>
 
         <Tags>
-          <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
+          <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
           <Tag bordered>Innovation</Tag>
           <Tag bordered>Save and Forget</Tag>
         </Tags>
@@ -72,7 +72,7 @@ export const DevEtherium: Story = {
         <TokenHeader>Ethereum Vault</TokenHeader>
 
         <Tags>
-          <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
+          <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
           <Tag bordered>Innovation</Tag>
           <Tag bordered>Save and Forget</Tag>
         </Tags>
@@ -102,7 +102,7 @@ export const PlannedBnb: Story = {
         <TokenHeader>BNB Vault</TokenHeader>
 
         <Tags>
-          <Tag icon={<IconShieldHeart />}>Zero Fee Insurance</Tag>
+          <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
           <Tag bordered>Innovation</Tag>
           <Tag bordered>Save and Forget</Tag>
         </Tags>

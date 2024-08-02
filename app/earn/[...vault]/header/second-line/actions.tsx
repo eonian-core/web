@@ -10,7 +10,7 @@ interface Props {
 
 export function Actions({ symbol }: Props) {
   const cmcPathLookup: Record<TokenSymbol, string> = {
-    BTC: 'bitcoin',
+    BTCB: 'bitcoin',
     ETH: 'ethereum',
     USDT: 'tether',
     USDC: 'usd-coin',
@@ -19,16 +19,24 @@ export function Actions({ symbol }: Props) {
   }
   return (
     <div className={styles.container}>
-      <ExternalLink href={`https://coinmarketcap.com/currencies/${cmcPathLookup[symbol]}/`}>
-        <Button size="sm" variant="flat" radius="md" endContent={<IconExternal width="1em" height="1em" />}>
-          Coin info
-        </Button>
-      </ExternalLink>
-      <ExternalLink href="https://docs.eonian.finance/basics/how-eonian-works">
-        <Button size="sm" variant="flat" radius="md" endContent={<IconExternal width="1em" height="1em" />}>
-          How it works?
-        </Button>
-      </ExternalLink>
+      <ExternalAction href={`https://coinmarketcap.com/currencies/${cmcPathLookup[symbol]}/`}>
+        More info
+      </ExternalAction>
     </div>
+  )
+}
+
+export interface ExternalActionProps {
+  href: string
+  children: React.ReactNode
+}
+
+export function ExternalAction({ href, children }: ExternalActionProps) {
+  return (
+    <ExternalLink href={href}>
+      <Button size="sm" variant="light" radius="md" endContent={<IconExternal width="1.3em" height="1.3em" />}>
+        {children}
+      </Button>
+    </ExternalLink>
   )
 }

@@ -1,5 +1,5 @@
 import { Area, AreaChart } from 'recharts'
-import { FC, useMemo } from 'react'
+import { useMemo } from 'react'
 import type { IContentLoaderProps } from 'react-content-loader'
 import ContentLoader from 'react-content-loader'
 import { PercentagePriceChange, getChange, getChangeColor } from '../../components/percentage-price-change'

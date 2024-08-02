@@ -1,15 +1,14 @@
-'use client';
-import { useState, useEffect } from "react";
+'use client'
+import { useEffect, useState } from 'react'
 
 export interface PromiseState<T> {
-  data?: T;
-  isLoading: boolean;
-  error?: Error,
+  data?: T
+  isLoading: boolean
+  error?: Error
 }
 
-
 /** Simple wrapper around promise, that not trigger suspense, usefull for optional requests */
-export const usePromise = <T>(invoker: () => Promise<T>, deps: Array<any>) => {
+export function usePromise<T>(invoker: () => Promise<T>, deps: Array<any>) {
   const [state, setState] = useState<PromiseState<T>>({ isLoading: true })
 
   useEffect(() => {
@@ -21,4 +20,3 @@ export const usePromise = <T>(invoker: () => Promise<T>, deps: Array<any>) => {
 
   return state
 }
-

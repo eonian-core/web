@@ -1,4 +1,3 @@
-import ContentLoader, { IContentLoaderProps } from 'react-content-loader'
 import type { PropsWithChildren } from 'react'
 import { OneLineLoader } from '../loader/skeleton-loader'
 import { tokensMap } from './content'
