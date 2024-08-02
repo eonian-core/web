@@ -73,27 +73,43 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
       disabled={disabled || isLoading}
       {...restProps}
     >
-      {isLoading ? <Spinner color="current" size="md" /> : getText()}
+      {isLoading
+        ? <Spinner color="current" size="md" />
+        : <ButtonText {...{
+          insured,
+          status,
+          isOnDifferentChain,
+          chainName: vaultChain.name,
+          formAction,
+        }}/>}
     </Button>
   )
-
-  function getText() {
-    if (!insured)
-      return ASSET_INSURANCE_LABEL
-
-    switch (status) {
-      case WalletStatus.NOT_CONNECTED:
-        return 'Connect to a wallet'
-      case WalletStatus.CONNECTING:
-        return 'Connecting to a wallet...'
-      case WalletStatus.CONNECTED: {
-        if (isOnDifferentChain)
-          return `Switch to ${vaultChain.name}`
-
-        return formAction === FormAction.DEPOSIT ? 'Save' : 'Withdraw'
-      }
-    }
-  }
 }
 
 export default FormButton
+
+interface ButtonTextProps {
+  insured: boolean
+  status: WalletStatus
+  isOnDifferentChain: boolean
+  chainName?: string
+  formAction: FormAction
+}
+
+function ButtonText({ insured, status, isOnDifferentChain, chainName, formAction }: ButtonTextProps) {
+  if (!insured)
+    return ASSET_INSURANCE_LABEL
+
+  switch (status) {
+    case WalletStatus.NOT_CONNECTED:
+      return 'Connect to a wallet'
+    case WalletStatus.CONNECTING:
+      return 'Connecting to a wallet...'
+    case WalletStatus.CONNECTED: {
+      if (isOnDifferentChain)
+        return `Switch to ${chainName}`
+
+      return formAction === FormAction.DEPOSIT ? 'Save' : 'Withdraw'
+    }
+  }
+}

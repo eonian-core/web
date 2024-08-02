@@ -21,7 +21,7 @@ export function InsuranceOfAssets() {
           onValueChange={setInsured}
           classNames={{ label: styles.checkboxLabel, wrapper: styles.checkboxWrapper }}
         >
-          {ASSET_INSURANCE_LABEL}<div className={styles.description}>against wallet and smart contract hacks</div>
+          {ASSET_INSURANCE_LABEL}<div className={styles.description}>Against wallet and smart contract hacks</div>
         </Checkbox>
         <div className={styles.link}>
           <ExternalLink href={resourceLink.href} icon={<IconExternal size="0.9em" />} iconAtEnd>
