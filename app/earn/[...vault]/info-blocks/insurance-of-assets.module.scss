@@ -1,22 +1,89 @@
 .container {
   width: 100%;
+  max-width: 100%;
 }
 
-.checkboxLabel .description {
-  margin-top: var(--margin-50);
-  font-size: var(--font-size-300);
-  color: var(--color-text-450);
+.icon {
+  border-radius: 50%;
+  border: 1px solid white;
+  padding: 3px;
+  margin-right: 0.8rem;
+}
+
+.checkboxBase {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 0.8rem;
+  border: 1px solid var(--color-dark-500);
+  margin: 0 !important;
+
+  .icon {
+    border-color: var(--color-text-500);
+
+    svg {
+      color: var(--color-text-500);
+    }
+  }
+
+  &:hover {
+    border-color: var(--color-dark-300);
+
+    .icon {
+      border-color: var(--color-text-300);
+
+      svg {
+        color: var(--color-text-300);
+      }
+    }
+  }
+}
+
+.active {
+  border-color: var(--color-dark-400);
+
+  .icon {
+    border-color: var(--color-text-400);
+
+    svg {
+      color: var(--color-text-400);
+    }
+  }
 }
 
 .checkboxWrapper {
-  align-self: flex-start;
-  margin-top: 1px;
+  margin-right: 0.5rem;
+  margin-top: 0;
+  margin-left: auto;
 }
+
+.content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.text {
+  h5 {
+    font-size: var(--font-size-400);
+  }
+  .description {
+    font-size: var(--font-size-200);
+    color: var(--color-text-450);
+  }  
+}
+
+
 
 .link {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   
   margin-top: var(--margin-100);
-  font-size: var(--font-size-300);
+  font-size: var(--font-size-200);
+  a {
+    color: var(--color-text-600);
+  }
 }

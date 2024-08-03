@@ -2,6 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: var(--font-size-300);
+  color: var(--color-text-400);
+  margin-bottom: var(--margin-50);
 }
 
 .content {
@@ -22,11 +25,6 @@
   margin-top: calc(var(--margin-50) * -1);
   font-size: var(--font-size-300);
   color: var(--color-text-450); 
-}
-
-.header {
-  font-size: var(--font-size-300);
-  color: var(--color-text-400);
 }
 
 .input {

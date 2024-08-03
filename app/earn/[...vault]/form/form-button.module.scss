@@ -1,3 +1,22 @@
-.button {
+.wrapper {
+    display: flex;
+    flex-direction: column;
     margin-top: var(--margin-400);
+}
+
+.wrapperWithoutFriction {
+    padding-bottom: var(--padding-400);
+}
+
+.button {
+    // margin-bottom: var(--margin-100);
+}
+
+.frictionRemover {
+    height: var(--padding-400);
+    line-height: var(--padding-400);
+    width: 100%;
+    text-align: center;
+    font-size: var(--font-size-200);
+    color: var(--color-text-400);
 }

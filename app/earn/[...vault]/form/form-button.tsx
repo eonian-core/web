@@ -1,16 +1,17 @@
 'use client'
 
+import type { PropsWithChildren } from 'react'
 import React from 'react'
 import type { ButtonProps } from '@nextui-org/react'
 import { Button, Spinner } from '@nextui-org/react'
 
+import clsx from 'clsx'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import type { Chain } from '../../../providers/wallet/wrappers/types'
 import { WalletStatus } from '../../../providers/wallet/wrappers/types'
 import { FormAction } from '../../../store/slices/vaultActionSlice'
 import { useExecuteTransaction, useVaultUserInfo } from '../hooks'
 import { useVaultContext } from '../hooks/use-vault-context'
-import { ASSET_INSURANCE_LABEL } from '../info-blocks/insurance-of-assets'
 import styles from './form-button.module.scss'
 
 interface Props extends Omit<ButtonProps, 'onSubmit'> {
@@ -63,26 +64,33 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
     }
   }
 
+  const frictionRemover = status === WalletStatus.NOT_CONNECTED
+    ? <FrictionRemover>To calculate Projected Returns</FrictionRemover>
+    : null
+
   return (
-    <Button
-      auto
-      color="primary"
-      size="lg"
-      className={styles.button}
-      onPress={handlePress}
-      disabled={disabled || isLoading}
-      {...restProps}
-    >
-      {isLoading
-        ? <Spinner color="current" size="md" />
-        : <ButtonText {...{
-          insured,
-          status,
-          isOnDifferentChain,
-          chainName: vaultChain.name,
-          formAction,
-        }}/>}
-    </Button>
+    <div className={clsx(styles.wrapper, { [styles.wrapperWithoutFriction]: !frictionRemover })}>
+      <Button
+        auto
+        color="primary"
+        size="lg"
+        className={styles.button}
+        onPress={handlePress}
+        disabled={disabled || isLoading}
+        {...restProps}
+      >
+        {isLoading
+          ? <Spinner color="current" size="md" />
+          : <ButtonText {...{
+            insured,
+            status,
+            isOnDifferentChain,
+            chainName: vaultChain.name,
+            formAction,
+          }}/>}
+      </Button>
+      {frictionRemover}
+    </div>
   )
 }
 
@@ -98,7 +106,7 @@ interface ButtonTextProps {
 
 function ButtonText({ insured, status, isOnDifferentChain, chainName, formAction }: ButtonTextProps) {
   if (!insured)
-    return ASSET_INSURANCE_LABEL
+    return 'Enable Asset Insurance'
 
   switch (status) {
     case WalletStatus.NOT_CONNECTED:
@@ -112,4 +120,8 @@ function ButtonText({ insured, status, isOnDifferentChain, chainName, formAction
       return formAction === FormAction.DEPOSIT ? 'Save' : 'Withdraw'
     }
   }
+}
+
+function FrictionRemover({ children }: PropsWithChildren) {
+  return <span className={styles.frictionRemover}>{children}</span>
 }

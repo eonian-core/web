@@ -3,6 +3,7 @@
 .container {
   width: 470px;
   padding: var(--padding-200);
+  padding-top: 0;
   position: relative;
 
   @media (max-width: $screen-mobile) {
@@ -22,6 +23,7 @@
 .fragment {
   padding: var(--padding-400);
   padding-top: var(--padding-100);
+  padding-bottom: 0;
 }
 
 .arrowDivider {
