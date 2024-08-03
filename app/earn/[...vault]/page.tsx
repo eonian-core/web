@@ -43,10 +43,7 @@ export default async function Page({ params }: Params) {
 
   const [chainName, vaultSymbol] = vaultRoute
   const chainId = ChainId.getByName(chainName)
-  const client = getRscClient(chainId)
-  const { data } = await getVaultBySymbol(client, vaultSymbol)
-  const vault = data.vaults[0] as Vault
-
+  const vault = await getVaultBySimbol(chainId, vaultSymbol)
   const symbol = getAssetSymbol(vault)
 
   return (
@@ -58,4 +55,14 @@ export default async function Page({ params }: Params) {
       </div>
     </>
   )
+}
+
+async function getVaultBySimbol(chainId: ChainId, vaultSymbol: string) {
+  const client = getRscClient(chainId)
+  const { data } = await getVaultBySymbol(client, vaultSymbol)
+  const vault = data.vaults[0]
+  if (!vault)
+    throw new Error(`Vault with symbol "${vaultSymbol}" not found`)
+
+  return vault as Vault
 }
