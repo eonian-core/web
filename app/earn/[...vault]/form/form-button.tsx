@@ -64,12 +64,8 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
     }
   }
 
-  const frictionRemover = status === WalletStatus.NOT_CONNECTED
-    ? <FrictionRemover>To calculate Projected Returns</FrictionRemover>
-    : null
-
   return (
-    <div className={clsx(styles.wrapper, { [styles.wrapperWithoutFriction]: !frictionRemover })}>
+    <div className={styles.wrapper}>
       <Button
         auto
         color="primary"
@@ -89,7 +85,6 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
             formAction,
           }}/>}
       </Button>
-      {frictionRemover}
     </div>
   )
 }
