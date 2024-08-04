@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import styles from './percentage-price-change.module.scss'
 import { formatUSD } from '@/finances/humanize/format-currency'
 import { formatPercent } from '@/finances/humanize/format-persent'
+import { getPriceChange } from '@/finances/price'
 
 interface Props {
   currentPrice?: number
@@ -19,7 +20,7 @@ export function PercentagePriceChange({
   className,
   children,
 }: PropsWithChildren<Props>) {
-  const change = getChange(currentPrice, previousPrice)
+  const change = getPriceChange(currentPrice, previousPrice)
   const { percent, prefix } = formatPercent(change)
   return (
     <div className={clsx(styles.container, className)} style={{ color: getChangeColor(change) }}>
@@ -52,10 +53,6 @@ function TooltipContent({ label, prefix, currentPrice, previousPrice }: TooltipC
       </b>
     </>
   )
-}
-
-export function getChange(current: number, previous: number): number {
-  return ((current - previous) / previous) * 100
 }
 
 export function getChangeColor(change: number): string {

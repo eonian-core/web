@@ -18,6 +18,7 @@ import { getGrowthPercent } from '@/finances/growth'
 import { getYearlyROI } from '@/finances/roi'
 import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
+import { getPriceChangeDuringTimeline } from '@/finances/price'
 
 interface Props {
   symbol: TokenSymbol
@@ -49,7 +50,7 @@ export function Returns({ symbol }: Props) {
       </SectionHeader>
       <div className={styles.chart}>
         {!yearlyPriceData
-          ? <ChartLoader />
+          ? <ChartSkeleton />
           : (
           <ReturnsChart
             days={days}
@@ -112,7 +113,7 @@ function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
   const previousPrice = yearPriceData[yearPriceData.length - days]?.price
 
   const apy = calculateVaultAPY(vault.rates[0].apy.yearly, vault.asset.decimals, 100)
-  const growth = getGrowthPercent(vault.asset.price, previousPrice)
+  const growth = getPriceChangeDuringTimeline(yearPriceData)
 
   const depositWithROI = useMemo(() => {
     const yearlyROI = getYearlyROI(apy, growth)
@@ -140,7 +141,7 @@ function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
   )
 }
 
-function ChartLoader(props: IContentLoaderProps) {
+function ChartSkeleton(props: IContentLoaderProps) {
   return (
     <ContentLoader
       width={chartWidth}

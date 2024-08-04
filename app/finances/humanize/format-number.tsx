@@ -6,6 +6,13 @@ export enum FractionPartView {
   CUT,
 }
 
+export interface CompactNumberParams {
+  threshold?: bigint
+  fractionDigits?: number
+  fractionPartView?: FractionPartView
+  locale?: string
+}
+
 /**
  * Returns formatted value with compact notation if it's greater then {@link threshold}.
  * @param value The value to format.
@@ -18,20 +25,23 @@ export enum FractionPartView {
  * @returns Formatted value.
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity
-export function formatNumberCompactWithThreshold(value: bigint,
+export function formatNumberCompactWithThreshold(
+  value: bigint,
   decimals: number,
-  params?: {
-    threshold?: bigint
-    fractionDigits?: number
-    fractionPartView?: FractionPartView
-    locale?: string
-  }): string {
-  const { threshold = 0n, fractionDigits = 0, fractionPartView = FractionPartView.CUT, locale } = params ?? {}
+  {
+    threshold = 0n,
+    fractionDigits = 0,
+    fractionPartView = FractionPartView.CUT,
+    locale,
+  }: CompactNumberParams = {}): string {
   const stringNumber = toStringNumberFromDecimals(value, decimals)
 
   if (threshold > 0n && value > threshold)
     return formatNumberCompact(Number.parseFloat(stringNumber), locale)
 
+  const [integerPart, fractionPart] = String(stringNumber).split('.')
+
+  // TODO: @sergey refactor this, cognitive-complexity exists for reason
   if (stringNumber.replace(/\.0$/, '').includes('.') && fractionDigits > 0) {
     const index = stringNumber.indexOf('.')
     const capped = stringNumber.substring(0, index + 1 + fractionDigits)
@@ -54,7 +64,6 @@ export function formatNumberCompactWithThreshold(value: bigint,
         if (lengthDifference === 0)
           return stringNumber
 
-        const [integerPart, fractionPart] = String(stringNumber).split('.')
         const digits = Math.min(fractionPart.length, fractionDigits)
         const cuttedNumber = `${integerPart}.${fractionPart.slice(0, digits)}`
 
@@ -68,6 +77,9 @@ export function formatNumberCompactWithThreshold(value: bigint,
       }
     }
   }
+
+  if (fractionPart === '0')
+    return integerPart
 
   return stringNumber
 }
