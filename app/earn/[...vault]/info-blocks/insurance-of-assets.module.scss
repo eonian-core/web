@@ -75,11 +75,13 @@
   }  
 }
 
-
+.tag {
+  margin-left: var(--margin-50);
+}
 
 .link {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   
   margin-top: var(--margin-100);
   font-size: var(--font-size-200);

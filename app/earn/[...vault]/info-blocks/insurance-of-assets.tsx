@@ -1,4 +1,4 @@
-import { Card, CardBody, Checkbox } from '@nextui-org/react'
+import { Card, CardBody, Checkbox, Chip } from '@nextui-org/react'
 import React from 'react'
 
 import clsx from 'clsx'
@@ -8,6 +8,7 @@ import ExternalLink from '@/components/links/external-link'
 import { ResourcesLinks } from '@/features'
 import IconExternal from '@/components/icons/icon-external'
 import IconShieldWithDollar from '@/components/icons/shield-with-dollar'
+import { Tag } from '@/components/chip/tag'
 
 export function InsuranceOfAssets() {
   const { insured, setInsured } = useVaultContext()
@@ -31,7 +32,7 @@ export function InsuranceOfAssets() {
                 />
             </div>
             <div className={styles.text}>
-              <h5>Asset Insurance</h5>
+              <h5>Asset Insurance <Tag className={styles.tag}>Free</Tag></h5>
               <div className={styles.description}>Wallet and Smart Contract hacks</div>
             </div>
           </div>

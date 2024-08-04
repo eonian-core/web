@@ -6,6 +6,7 @@ import type { TokenSymbol } from '@/types'
 import IconCoin from '@/components/icons/icon-coin'
 import { interFont } from '@/shared/fonts/Inter'
 import { DisplaySymbol } from '@/components/vault-card/display-symbol'
+import { Tag } from '@/components/chip/tag'
 
 export function VaultTitle({ children }: PropsWithChildren) {
   return (
@@ -47,9 +48,5 @@ export function VaultTags({ children }: PropsWithChildren) {
 }
 
 export function VaultTag({ children }: PropsWithChildren) {
-  return <li>
-    <Chip variant="bordered" size="sm" className={styles.tag}>
-      {children}
-    </Chip>
-  </li>
+  return <li><Tag>{children}</Tag></li>
 }

@@ -9,7 +9,7 @@ export function EthVaultTitle() {
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Free Insurance</VaultTag>
+                <VaultTag>Insured</VaultTag>
                 <VaultTag>Blue-chip</VaultTag>
                 <VaultTag>Save and Forget</VaultTag>
             </VaultTags>
@@ -25,7 +25,7 @@ export function BtcVaultTitle() {
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Free Insurance</VaultTag>
+                <VaultTag>Insured</VaultTag>
                 <VaultTag>Blue-chip</VaultTag>
                 <VaultTag>Save and Forget</VaultTag>
             </VaultTags>
@@ -41,7 +41,7 @@ export function BnbVaultTitle() {
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Free Insurance</VaultTag>
+                <VaultTag>Insured</VaultTag>
                 <VaultTag>Save and Forget</VaultTag>
             </VaultTags>
 
@@ -56,7 +56,7 @@ export function UsdtVaultTitle() {
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Free Insurance</VaultTag>
+                <VaultTag>Insured</VaultTag>
                 <VaultTag>Earn Passively</VaultTag>
                 <VaultTag>Stable</VaultTag>
             </VaultTags>
@@ -72,7 +72,7 @@ export function UsdcVaultTitle() {
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Free Insurance</VaultTag>
+                <VaultTag>Insured</VaultTag>
                 <VaultTag>Earn Passively</VaultTag>
                 <VaultTag>Stable</VaultTag>
             </VaultTags>
@@ -88,7 +88,7 @@ export function DaiVaultTitle() {
             <VaultTags>
                 <VaultTag>Popular</VaultTag>
                 <VaultTag>Tested</VaultTag>
-                <VaultTag>Free Insurance</VaultTag>
+                <VaultTag>Insured</VaultTag>
                 <VaultTag>Earn Passively</VaultTag>
                 <VaultTag>Stable</VaultTag>
             </VaultTags>
