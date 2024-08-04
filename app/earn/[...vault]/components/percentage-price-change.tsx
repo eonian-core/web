@@ -3,6 +3,7 @@ import type { PropsWithChildren } from 'react'
 import clsx from 'clsx'
 import styles from './percentage-price-change.module.scss'
 import { formatUSD } from '@/finances/humanize/format-currency'
+import { formatPercent } from '@/finances/humanize/format-persent'
 
 interface Props {
   currentPrice?: number
@@ -19,30 +20,38 @@ export function PercentagePriceChange({
   children,
 }: PropsWithChildren<Props>) {
   const change = getChange(currentPrice, previousPrice)
-  const prefix = change > 0 ? '+' : '-'
-  const classNames = clsx(styles.container, className)
+  const { percent, prefix } = formatPercent(change)
   return (
-    <div className={classNames} style={{ color: getChangeColor(change) }}>
-      <Tooltip content={<TooltipContent />}>
+    <div className={clsx(styles.container, className)} style={{ color: getChangeColor(change) }}>
+      <Tooltip content={<TooltipContent
+        label={tooltipLabel}
+        {...{ currentPrice, previousPrice, prefix }}
+      />}>
         <div>
-          {prefix}
-          {Math.abs(change).toFixed(2)}%{children}
+          {percent}{children}
         </div>
       </Tooltip>
     </div>
   )
+}
 
-  function TooltipContent() {
-    return (
-      <>
-        {tooltipLabel}
-        <b>
-          {prefix}
-          {formatUSD(Math.abs(currentPrice - previousPrice))}
-        </b>
-      </>
-    )
-  }
+interface TooltipContentProps {
+  currentPrice: number
+  previousPrice: number
+  prefix: string
+  label?: string
+}
+
+function TooltipContent({ label, prefix, currentPrice, previousPrice }: TooltipContentProps) {
+  return (
+    <>
+      {label}
+      <b>
+        {prefix}
+        {formatUSD(Math.abs(currentPrice - previousPrice))}
+      </b>
+    </>
+  )
 }
 
 export function getChange(current: number, previous: number): number {

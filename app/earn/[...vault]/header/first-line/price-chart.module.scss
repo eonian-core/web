@@ -2,24 +2,35 @@
   display: flex;
   align-items: center;
   gap: var(--margin-300);
+  position: relative;
 }
 
 .priceInfo {
   display: flex;
   flex-direction: column;
-  padding-top: var(--padding-400);
+  position: absolute;
+  top: 0;
 
   color: var(--color-text-100);
 
   h3 {
     margin-bottom: var(--margin-50);
+    font-size: var(--font-size-200);
+    color: var(--color-text-300);
   }
 
   h2 {
+    font-size: var(--font-size-700);
     font-weight: var(--font-bold);
   }
 }
 
+.price {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
 .priceChange {
-  font-size: var(--font-size-300);
+  font-size: var(--font-size-200);
 }

@@ -36,19 +36,21 @@ export function PriceChart({ symbol }: ChartProps) {
   const currentPriceUSD = formatUSD(currentPrice)
   return (
     <div className={styles.container}>
+      <Chart yearlyPriceData={yearlyPriceData} />
       <div className={styles.priceInfo}>
         <h3>{symbol} Price</h3>
-        <h2>{currentPriceUSD}</h2>
-        <PercentagePriceChange currentPrice={currentPrice} previousPrice={previousPrice}>
-          &nbsp;YoY
-        </PercentagePriceChange>
+        <div className={styles.price}>
+          <h2>{currentPriceUSD}</h2>
+          <PercentagePriceChange currentPrice={currentPrice} previousPrice={previousPrice}>
+            &nbsp;YoY
+          </PercentagePriceChange>
+        </div>
       </div>
-      <Chart yearlyPriceData={yearlyPriceData} />
     </div>
   )
 }
 
-const chartWidth = 192
+const chartWidth = 315
 const chartHeight = 128
 
 function Chart({ yearlyPriceData }: { yearlyPriceData: PriceData[] }) {
