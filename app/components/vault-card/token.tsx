@@ -4,7 +4,7 @@ import type { FC, PropsWithChildren } from 'react'
 import { Progress } from '@nextui-org/react'
 
 import clsx from 'clsx'
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import styles from './token.module.scss'
 import { DisplaySymbol } from './display-symbol'
 import type { ButtonProps } from '@/components/button/button'
@@ -37,8 +37,11 @@ export const TokenContext = createContext<{
 
 export const useToken = () => useContext(TokenContext)
 
+export const getTokenColor = (token: TokenSymbol) => ({ '--color-token': `var(--color-token-${token})` }) as React.CSSProperties
+export const useTokenColor = (token: TokenSymbol) => useMemo(() => getTokenColor(token), [token])
+
 export function Token({ token, children, state = TokenState.Active, className, contentClassName, style = {} }: PropsWithChildren<TokenProps>) {
-  const color = { '--color-token': `var(--color-token-${token})` } as React.CSSProperties
+  const color = useTokenColor(token)
 
   return (
     <div className={clsx(styles.token, styles[token], className, {
