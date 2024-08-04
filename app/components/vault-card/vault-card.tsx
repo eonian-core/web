@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import { OneLineLoader } from '../loader/skeleton-loader'
+import { OneLineSkeleton } from '../loader/skeleton-loader'
 import { tokensMap } from './content'
 import { Distribution, TokenApy, TokenFees, TokenFooter, TokenGrowth, TokenStats, YearlyReturns } from './token'
 import { VaultUserBalance } from './vault-user-balance'
@@ -36,14 +36,14 @@ export function VaultCard({ symbol, children, style }: VaultCardProps) {
         <TokenStats>
             <YearlyReturns>{isNumber(growth)
               ? `${getYearlyROI(apy, growth)}%`
-              : <OneLineLoader />
+              : <OneLineSkeleton />
             }</YearlyReturns>
             <Distribution>
                 <TokenFees>0%</TokenFees>
                 <TokenApy>{apy}%</TokenApy>
                 <TokenGrowth>{isNumber(growth)
                   ? `${growth.toFixed(2)}%`
-                  : <OneLineLoader />
+                  : <OneLineSkeleton />
                 }</TokenGrowth>
             </Distribution>
         </TokenStats>

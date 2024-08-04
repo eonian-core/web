@@ -17,7 +17,7 @@ import { calculateVaultAPY } from '@/finances/apy'
 import { getGrowthPercent } from '@/finances/growth'
 import { getYearlyROI } from '@/finances/roi'
 import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
-import { OneLineLoader } from '@/components/loader/skeleton-loader'
+import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 
 interface Props {
   symbol: TokenSymbol
@@ -66,8 +66,8 @@ export function Returns({ symbol }: Props) {
       <TimeframePicker {...{ timeframe, setTimeframe }} />
       {!yearlyPriceData
         ? (<>
-        <OneLineLoader marginTop={5} width={chartWidth} />
-        <OneLineLoader marginTop={5} width={chartWidth} />
+        <OneLineSkeleton marginTop={5} width={chartWidth} />
+        <OneLineSkeleton marginTop={5} width={chartWidth} />
       </>)
         : (
         <ReturnsLegend days={days} yearlyPriceData={yearlyPriceData} />

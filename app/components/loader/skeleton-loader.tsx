@@ -6,7 +6,7 @@ import ContentLoader from 'react-content-loader'
  * One line skeleton loader
  * More loaders for copy-paste: https://skeletonreact.com/
  */
-export const OneLineLoader: FC<IContentLoaderProps & { marginTop?: number; marginBottom?: number }> = ({
+export const OneLineSkeleton: FC<IContentLoaderProps & { marginTop?: number; marginBottom?: number }> = ({
   marginTop = 10,
   marginBottom = 5,
   width = 60,

@@ -8,7 +8,7 @@ import { reducePriceData } from '@/shared/charts/reduce-price-data'
 import type { PriceData, TokenSymbol } from '@/types'
 import { formatUSD } from '@/finances/humanize/format-currency'
 import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
-import { OneLineLoader } from '@/components/loader/skeleton-loader'
+import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 
 interface ChartProps {
   symbol: TokenSymbol
@@ -23,10 +23,10 @@ export function PriceChart({ symbol }: ChartProps) {
       <div className={styles.container}>
         <div className={styles.priceInfo}>
           <h3>{symbol} Price</h3>
-          <h2><OneLineLoader width={80} /></h2>
-          <OneLineLoader marginTop={0} height={20} width={80} />
+          <h2><OneLineSkeleton width={80} /></h2>
+          <OneLineSkeleton marginTop={0} height={20} width={80} />
         </div>
-        <ChartLoader />
+        <ChartSkeleton />
       </div>
     )
   }
@@ -70,7 +70,7 @@ function Chart({ yearlyPriceData }: { yearlyPriceData: PriceData[] }) {
   )
 }
 
-function ChartLoader(props: IContentLoaderProps) {
+function ChartSkeleton(props: IContentLoaderProps) {
   return (
     <ContentLoader
       width={chartWidth}
