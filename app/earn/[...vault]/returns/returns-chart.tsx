@@ -74,7 +74,7 @@ export function ReturnsChart({ days, vault, yearlyPriceData, colorGrowth, colorP
           fill="url(#growth-bg-color)"
           animationDuration={animationDuration}
         />
-        {/* <YAxis /> */}
+
         <YAxis domain={calcYAxisDomain(yAxisDomainOptionsMap[symbol])} hide />
       </ComposedChart>
     </ResponsiveContainer>
