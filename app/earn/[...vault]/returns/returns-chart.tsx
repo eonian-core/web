@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Area, ComposedChart, Line, ResponsiveContainer } from 'recharts'
+import { Area, ComposedChart, Line, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 import { useVaultContext } from '../hooks/use-vault-context'
 import type { Vault } from '@/api'
 import { reducePriceData } from '@/shared/charts/reduce-price-data'
-import type { PriceData } from '@/types'
+import type { PriceData, TokenSymbol } from '@/types'
 import { calculateVaultAPY } from '@/finances/apy'
+import type { YAxisDomainOptions } from '@/components/chart/axis-domain'
+import { calcYAxisDomain } from '@/components/chart/axis-domain'
+import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
 
 interface Props {
   vault: Vault
@@ -16,9 +19,23 @@ interface Props {
   colorPremium: string
 }
 
+const animationDuration = 300
+
+const stableYAxisDomain: YAxisDomainOptions = { kMin: 1, kMax: 10 }
+
+const yAxisDomainOptionsMap: { [key in TokenSymbol]: YAxisDomainOptions } = {
+  ETH: { kMin: 10, kMax: 10 },
+  BTCB: { kMin: 10, kMax: 10 },
+  USDT: stableYAxisDomain,
+  USDC: stableYAxisDomain,
+  DAI: stableYAxisDomain,
+  BNB: { kMin: 10, kMax: 10 },
+}
+
 export function ReturnsChart({ days, vault, yearlyPriceData, colorGrowth, colorPremium, width, height }: Props) {
   const data = useChartData({ days, yearlyPriceData, vault })
-  const animationDuration = 300
+  const symbol = getAssetSymbol(vault)
+
   return (
     <ResponsiveContainer width={width} height={height}>
       <ComposedChart data={data}>
@@ -57,6 +74,8 @@ export function ReturnsChart({ days, vault, yearlyPriceData, colorGrowth, colorP
           fill="url(#growth-bg-color)"
           animationDuration={animationDuration}
         />
+        {/* <YAxis /> */}
+        <YAxis domain={calcYAxisDomain(yAxisDomainOptionsMap[symbol])} hide />
       </ComposedChart>
     </ResponsiveContainer>
   )
