@@ -4,11 +4,11 @@ import { Price, RawFormInput } from './components/raw-form-input'
 import { HealthyLabel } from './components/healthy-label'
 import { PreviewInputCoin } from './components/input-icon'
 import { focusOnInput } from './form-input'
-import { BalanceWithSetter } from './BalanceWithSetter'
+import { BalanceWithSetter } from './balance-with-setter'
 import { useAppSelector } from '@/store/hooks'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
-import CompactNumber, { RawCompactNumber, useCompactBigInt } from '@/components/compact-number/compact-number'
+import { RawCompactNumber, useLocalCompactBigInt } from '@/components/compact-number/compact-number'
 import { FractionPartView } from '@/finances/humanize/format-number'
 import { toStringNumberFromDecimals } from '@/shared/web3'
 
@@ -26,8 +26,7 @@ export function FormPreview({ disabled }: { disabled: boolean }) {
   const { vaultBalanceBN } = useAppSelector(state => state.vaultUser)
   const { status } = useWalletWrapperContext()
 
-  const locale = useAppSelector(state => state.locale.current)
-  const formattedValue = useCompactBigInt(deposit, vault.asset.decimals, { locale, ...formatOptions })
+  const formattedValue = useLocalCompactBigInt(deposit, vault.asset.decimals, formatOptions)
   const accurateValue = toStringNumberFromDecimals(deposit, vault.asset.decimals)
 
   return (

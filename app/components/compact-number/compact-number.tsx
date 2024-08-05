@@ -6,6 +6,11 @@ import { toStringNumberFromDecimals } from '../../shared'
 import type { FractionPartView } from '@/finances/humanize'
 import { formatNumberCompactWithThreshold } from '@/finances/humanize'
 
+export function useLocalCompactBigInt(value: bigint, decimals: number, options: Omit<CompactBigIntOptions, 'locale'>) {
+  const locale = useAppSelector(state => state.locale.current)
+  return useMemo(() => compactBigInt(value, decimals, { locale, ...options }), [value, decimals, locale, options])
+}
+
 export interface CompactBigIntOptions {
   threshold?: bigint
   fractionDigits?: number
@@ -13,16 +18,14 @@ export interface CompactBigIntOptions {
   locale?: string
 }
 
-export function useCompactBigInt(value: bigint, decimals: number, options: CompactBigIntOptions) {
-  return useMemo(() => {
-    const threshold = options.threshold ?? BigInt(1e6) * 10n ** BigInt(decimals)
-    const formattedValue = formatNumberCompactWithThreshold(value, decimals, {
-      ...options,
-      threshold,
-    })
+export function compactBigInt(value: bigint, decimals: number, options: CompactBigIntOptions) {
+  const threshold = options.threshold ?? BigInt(1e6) * 10n ** BigInt(decimals)
+  const formattedValue = formatNumberCompactWithThreshold(value, decimals, {
+    ...options,
+    threshold,
+  })
 
-    return formattedValue
-  }, [value, decimals, options])
+  return formattedValue
 }
 
 interface CompactNumberProps extends Omit<RawCompactNumberProps, 'value' | 'accurateValue' | 'tooltipContent'> {
@@ -42,7 +45,7 @@ const CompactNumber: React.FC<CompactNumberProps> = ({
   ...props
 }) => {
   const locale = useAppSelector(state => state.locale.current)
-  const formattedValue = useCompactBigInt(value, decimals, { locale, ...props })
+  const formattedValue = compactBigInt(value, decimals, { locale, ...props })
 
   return <RawCompactNumber {...{
     value: formattedValue.result,

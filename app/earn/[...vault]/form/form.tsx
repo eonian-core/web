@@ -1,23 +1,21 @@
 'use client'
 
-import React, { useCallback } from 'react'
+import React from 'react'
 
-import { Card, CardBody, Divider } from '@nextui-org/react'
-import clsx from 'clsx'
+import { Card, CardBody } from '@nextui-org/react'
 import { useAppSelector } from '../../../store/hooks'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '../../../providers/wallet/wrappers/types'
-import { FormAction, FormActionStep } from '../../../store/slices/vaultActionSlice'
+import { FormActionStep } from '../../../store/slices/vaultActionSlice'
 import { getActiveStepSelector } from '../../../store'
 import type { ChainId } from '../../../providers/wallet/wrappers/helpers'
-import { useVaultContext } from '../hooks/use-vault-context'
 import FormButton from './form-button'
 import FormHeader from './form-header'
 import styles from './form.module.scss'
-import FormInput, { focusOnInput } from './form-input'
+import FormInput from './form-input'
 import { FormPreview } from './form-preview'
 import { BlocknativeLink } from './components/blocknative-link'
-import IconArrowRightShort from '@/components/icons/icon-arrow-right-short'
+import { ArrowDivider } from './arrow-divider'
 
 interface Props {
   chainId: ChainId
@@ -46,29 +44,6 @@ const Form: React.FC<Props> = ({ chainId }) => {
         </CardBody>
       </Card>
       <BlocknativeLink />
-    </div>
-  )
-}
-
-function ArrowDivider({ size }: { size: number }) {
-  const { formAction, setFormAction } = useVaultContext()
-  const handleClick = useCallback(() => {
-    setFormAction(formAction === FormAction.DEPOSIT ? FormAction.WITHDRAW : FormAction.DEPOSIT)
-
-    focusOnInput()
-  }, [formAction, setFormAction])
-
-  return (
-    <div className={styles.arrowDivider}>
-      <Divider />
-      <div
-        className={clsx(styles.arrow, 'bg-content1', {
-          [styles.reverse]: formAction === FormAction.WITHDRAW,
-        })}
-        onClick={handleClick}
-      >
-        <IconArrowRightShort width={size} height={size} />
-      </div>
     </div>
   )
 }

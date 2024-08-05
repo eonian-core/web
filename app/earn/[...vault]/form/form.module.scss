@@ -67,24 +67,6 @@
 
 .fragment {
   padding: var(--padding-400);
-  padding-top: var(--padding-100);
+  padding-top: var(--padding-200);
   padding-bottom: 0;
-}
-
-.arrowDivider {
-  position: relative;
-  margin: var(--margin-400) 0;
-
-  .arrow {
-    position: absolute;
-    transform: translateY(-50%) translateX(-50%) rotateZ(90deg);
-    left: 50%;
-    cursor: pointer;
-
-    transition: transform 0.3s ease-in-out;
-
-    &.reverse {
-      transform: translateY(-50%) translateX(-50%) rotateZ(270deg);
-    }
-  }
 }
