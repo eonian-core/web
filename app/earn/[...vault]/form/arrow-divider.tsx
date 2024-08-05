@@ -53,15 +53,14 @@ export function PercentPicker({ children, balance }: { children: Array<number>; 
 
   return (
         <div className={styles.percentPicker}>
-            {children.map((option) => {
-              return (
-                    <PercentOption
-                        key={option}
-                        {...{ currentPercent, balance }}
-                        decimals={vault.asset.decimals}
-                    >{option}</PercentOption>
-              )
-            })}
+            {children.map(option => (
+                <PercentOption
+                    key={option}
+                    {...{ currentPercent, balance }}
+                    decimals={vault.asset.decimals}
+                >{option}</PercentOption>
+            ),
+            )}
         </div>
   )
 }
@@ -85,8 +84,7 @@ export function PercentOption({ children: option, currentPercent, balance, decim
   const { raw, result: formated } = useLocalCompactBigInt(value, decimals, formatOptions)
 
   const onClick = useCallback(() => {
-    if (
-      raw === formated // formating unnnecessary, will use raw
+    if (raw === formated // formating unnnecessary, will use raw
             || Number.isNaN(+formated) // formated number can be something like "<0.00001", will use raw
             || option === 1 // option is 100%, will use raw
     ) {
