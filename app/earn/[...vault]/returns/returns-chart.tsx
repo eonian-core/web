@@ -21,15 +21,16 @@ interface Props {
 
 const animationDuration = 300
 
+const coinYAxisDomain: YAxisDomainOptions = { kMin: 2, kMax: 10 }
 const stableYAxisDomain: YAxisDomainOptions = { kMin: 1, kMax: 10 }
 
 const yAxisDomainOptionsMap: { [key in TokenSymbol]: YAxisDomainOptions } = {
-  ETH: { kMin: 10, kMax: 10 },
-  BTCB: { kMin: 10, kMax: 10 },
+  ETH: coinYAxisDomain,
+  BTCB: coinYAxisDomain,
   USDT: stableYAxisDomain,
   USDC: stableYAxisDomain,
   DAI: stableYAxisDomain,
-  BNB: { kMin: 10, kMax: 10 },
+  BNB: coinYAxisDomain,
 }
 
 export function ReturnsChart({ days, vault, yearlyPriceData, colorGrowth, colorPremium, width, height }: Props) {
