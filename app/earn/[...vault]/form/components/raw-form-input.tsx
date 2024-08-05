@@ -6,13 +6,15 @@ import { getAmountInUSD } from '@/finances/humanize'
 import { formatUSD } from '@/finances/humanize/format-currency'
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  preview?: boolean
+  children: any
   label: string
-  vault: Vault
   inputStart?: React.ReactNode
   headerEnd?: React.ReactNode
+  price: React.ReactNode
 }
 
-export function RawFormInput({ label, value, vault, inputStart, headerEnd, ...restProps }: Props) {
+export function RawFormInput({ label, preview, children: value, inputStart, headerEnd, price, ...restProps }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -21,9 +23,16 @@ export function RawFormInput({ label, value, vault, inputStart, headerEnd, ...re
       </div>
       <div className={styles.content}>
         <div className={styles.inputStart}>{inputStart}</div>
-        <input className={styles.input} value={value} autoComplete="off" {...restProps} />
+        {
+          preview
+            ? (<div className={styles.input} {...restProps}>{value}</div>)
+            : (
+            <input className={styles.input} value={value as string} autoComplete="off" {...restProps} />
+              )
+        }
+
         <div className={styles.description}>
-          <Price vault={vault}>{value}</Price>
+          {price}
         </div>
       </div>
     </div>
@@ -35,7 +44,7 @@ interface PriceProps {
   children: string | ReadonlyArray<string> | number | undefined
 }
 
-function Price({ children: value, vault }: PriceProps) {
+export function Price({ children: value, vault }: PriceProps) {
   const stringValue = String(value || 0)
   const amount = ethers.parseUnits(stringValue, vault.asset.decimals)
   const [amountInUSD, decimals] = getAmountInUSD(amount, vault)

@@ -1,24 +1,23 @@
 'use client'
 
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Button, CardHeader } from '@nextui-org/react'
 
 import clsx from 'clsx'
 import { FormAction } from '../../../store/slices/vaultActionSlice'
 import { useVaultContext } from '../hooks/use-vault-context'
 import styles from './form-header.module.scss'
-import { INPUT_ID } from './form-input'
+import { focusOnInput } from './form-input'
 
 function FormHeader() {
   const { formAction, setFormAction } = useVaultContext()
 
-  const handleClick = (event: React.MouseEvent) => {
+  const handleClick = useCallback((event: React.MouseEvent) => {
     const target = event.target as HTMLElement
     setFormAction(target.dataset.key as FormAction)
 
-    const input = document.getElementById(INPUT_ID)
-    input?.focus()
-  }
+    focusOnInput()
+  }, [setFormAction])
 
   return (
     <CardHeader className={styles.header}>

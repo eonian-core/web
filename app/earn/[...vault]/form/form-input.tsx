@@ -4,43 +4,46 @@ import React from 'react'
 
 import { useVaultContext } from '../hooks/use-vault-context'
 import styles from './form-input.module.scss'
-import { RawFormInput } from './components/raw-form-input'
-import { InputIcon } from './components/input-icon'
-import { Balance } from './components/balance'
-import { FormAction } from '@/store/slices/vaultActionSlice'
+import { Price, RawFormInput } from './components/raw-form-input'
+import { WalletInputIcon } from './components/input-icon'
+import { BalanceWithSetter } from './BalanceWithSetter'
 import { useAppSelector } from '@/store/hooks'
+import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
+import { WalletStatus } from '@/providers/wallet/wrappers/types'
 
 export const INPUT_ID = 'main-form-input'
 
-interface Props {
+export function focusOnInput() {
+  const input = document.getElementById(INPUT_ID)
+  input?.focus()
+}
+
+interface FormInputProps {
   disabled: boolean
 }
 
-const FormInput: React.FC<Props> = ({ disabled }) => {
-  const { formAction, displayValue, onValueChange, vault } = useVaultContext()
-
-  const label = formAction === FormAction.DEPOSIT ? 'From Your Wallet' : 'From Your Account'
+const FormInput: React.FC<FormInputProps> = ({ disabled }) => {
+  const { displayValue, onValueChange, vault } = useVaultContext()
+  const { walletBalanceBN } = useAppSelector(state => state.vaultUser)
+  const { status } = useWalletWrapperContext()
 
   return (
     <RawFormInput
-      label={label}
-      vault={vault}
+      label={'Wallet'}
       id={INPUT_ID}
       className={styles.input}
-      value={displayValue}
       placeholder="0"
       onChange={event => onValueChange(event.target.value)}
       disabled={disabled}
-      inputStart={<InputIcon type='INPUT' vault={vault} />}
-      headerEnd={<InputBalance />}
-    />
+      inputStart={<WalletInputIcon />}
+      headerEnd={status === WalletStatus.CONNECTED
+        && <BalanceWithSetter {...{
+          disabled,
+          balance: BigInt(walletBalanceBN),
+        }} />}
+      price={<Price vault={vault}>{displayValue}</Price>}
+    >{displayValue}</RawFormInput>
   )
-
-  function InputBalance() {
-    const { vaultBalanceBN, walletBalanceBN } = useAppSelector(state => state.vaultUser)
-    const value = formAction === FormAction.DEPOSIT ? walletBalanceBN : vaultBalanceBN
-    return <Balance vault={vault} balance={BigInt(value)} decimals={vault.asset.decimals} onChange={onValueChange} disabled={disabled} />
-  }
 }
 
 export default FormInput

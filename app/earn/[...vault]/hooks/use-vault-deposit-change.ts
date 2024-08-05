@@ -20,6 +20,7 @@ export function useVaultDepositUSD(vault: Vault) {
 function useDeposit(amount: bigint | string) {
   const { inputValue, formAction } = useVaultContext()
   const amountBN = BigInt(amount)
+
   const total = useMemo(() => {
     switch (formAction) {
       case FormAction.DEPOSIT:
@@ -28,5 +29,6 @@ function useDeposit(amount: bigint | string) {
         return amountBN < inputValue ? 0n : amountBN - inputValue
     }
   }, [amountBN, inputValue, formAction])
+
   return [total, total - amountBN] as const
 }

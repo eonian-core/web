@@ -79,5 +79,12 @@
     position: absolute;
     transform: translateY(-50%) translateX(-50%) rotateZ(90deg);
     left: 50%;
+    cursor: pointer;
+
+    transition: transform 0.3s ease-in-out;
+
+    &.reverse {
+      transform: translateY(-50%) translateX(-50%) rotateZ(270deg);
+    }
   }
 }

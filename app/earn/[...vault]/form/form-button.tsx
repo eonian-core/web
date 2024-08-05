@@ -1,11 +1,10 @@
 'use client'
 
 import type { PropsWithChildren } from 'react'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import type { ButtonProps } from '@nextui-org/react'
 import { Button, Spinner } from '@nextui-org/react'
 
-import clsx from 'clsx'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import type { Chain } from '../../../providers/wallet/wrappers/types'
 import { WalletStatus } from '../../../providers/wallet/wrappers/types'
@@ -22,47 +21,26 @@ interface Props extends Omit<ButtonProps, 'onSubmit'> {
 const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restProps }) => {
   const { status, connect, chain, setCurrentChain } = useWalletWrapperContext()
 
-  const { onValueChange, inputValue, formAction, insured, setInsured, vault } = useVaultContext()
-  const executeTransaction = useExecuteTransaction()
-  const refetechVaultUserData = useVaultUserInfo(vault, {
-    autoUpdateInterval: 5000,
-  })
+  const { formAction, insured, setInsured } = useVaultContext()
+  const [submit, isSubmiting] = useSubmit()
 
   const isOnDifferentChain = vaultChain.id !== chain?.id
-
-  const submit = async (formAction: FormAction) => {
-    // Refresh vault <-> user data before the transaction to make sure all calculations are correct.
-    await refetechVaultUserData!()
-
-    // Execute Deposit/Withdraw transaction
-    const success = await executeTransaction(formAction, vault, inputValue)
-    if (success) {
-      // Refresh wallet balance & vault deposit after the transaction executed.
-      void refetechVaultUserData!()
-
-      // Reset form input
-      onValueChange(0n)
-    }
-  }
-
-  const handlePress = () => {
+  const handlePress = useCallback(() => {
     if (!insured)
       return setInsured(true)
 
-    switch (status) {
-      case WalletStatus.NOT_CONNECTED: {
-        void connect()
-        return
-      }
-      case WalletStatus.CONNECTED: {
-        if (isOnDifferentChain) {
-          void setCurrentChain(vaultChain.id)
-          return
-        }
-        void submit(formAction)
-      }
+    if (status === WalletStatus.NOT_CONNECTED) {
+      void connect()
+      return
     }
-  }
+
+    if (isOnDifferentChain) {
+      void setCurrentChain(vaultChain.id)
+      return
+    }
+
+    void submit(formAction)
+  }, [insured, setInsured, status, isOnDifferentChain, formAction, connect, setCurrentChain, submit, vaultChain.id])
 
   return (
     <div className={styles.wrapper}>
@@ -72,10 +50,10 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
         size="lg"
         className={styles.button}
         onPress={handlePress}
-        disabled={disabled || isLoading}
+        disabled={disabled || isLoading || isSubmiting}
         {...restProps}
       >
-        {isLoading
+        {(isLoading || isSubmiting)
           ? <Spinner color="current" size="md" />
           : <ButtonText {...{
             insured,
@@ -83,13 +61,49 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
             isOnDifferentChain,
             chainName: vaultChain.name,
             formAction,
-          }}/>}
+          }} />}
       </Button>
     </div>
   )
 }
 
 export default FormButton
+
+function useSubmit() {
+  const { onValueChange, inputValue, vault } = useVaultContext()
+  const [isSubmiting, setIsSubmiting] = useState(false)
+
+  const executeTransaction = useExecuteTransaction()
+  const refetechVaultUserData = useVaultUserInfo(vault, {
+    autoUpdateInterval: 5000,
+  })
+
+  const submit = useCallback(async (formAction: FormAction) => {
+    setIsSubmiting(true)
+
+    try {
+      // Refresh vault <-> user data before the transaction to make sure all calculations are correct.
+      await refetechVaultUserData!()
+
+      // Execute Deposit/Withdraw transaction
+      const success = await executeTransaction(formAction, vault, inputValue)
+      if (success) {
+        // Refresh wallet balance & vault deposit after the transaction executed.
+        void refetechVaultUserData!()
+
+        // Reset form input
+        onValueChange(0n)
+      }
+    }
+    catch (error) {
+      console.error('Error during submit', error)
+    }
+
+    setIsSubmiting(false)
+  }, [])
+
+  return [submit, isSubmiting] as const
+}
 
 interface ButtonTextProps {
   insured: boolean
@@ -101,20 +115,23 @@ interface ButtonTextProps {
 
 function ButtonText({ insured, status, isOnDifferentChain, chainName, formAction }: ButtonTextProps) {
   if (!insured)
-    return 'Enable Asset Insurance'
+    return 'Asset Insurance Required'
 
-  switch (status) {
-    case WalletStatus.NOT_CONNECTED:
-      return 'Connect to a wallet'
-    case WalletStatus.CONNECTING:
-      return 'Connecting to a wallet...'
-    case WalletStatus.CONNECTED: {
-      if (isOnDifferentChain)
-        return `Switch to ${chainName}`
+  if (status === WalletStatus.NOT_CONNECTED)
+    return 'Connect wallet'
 
-      return formAction === FormAction.DEPOSIT ? 'Save' : 'Withdraw'
-    }
-  }
+  if (status === WalletStatus.CONNECTING)
+    return 'Connecting wallet...'
+
+  // wallet connected...
+
+  if (isOnDifferentChain)
+    return `Switch to ${chainName}`
+
+  if (formAction === FormAction.DEPOSIT)
+    return 'Save'
+
+  return 'Withdraw'
 }
 
 function FrictionRemover({ children }: PropsWithChildren) {

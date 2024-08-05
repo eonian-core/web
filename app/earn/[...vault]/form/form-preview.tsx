@@ -1,39 +1,55 @@
 import { useVaultDeposit } from '../hooks/use-vault-deposit-change'
-import { parseBigIntValue } from '../hooks/use-number-input-value'
 import { useVaultContext } from '../hooks/use-vault-context'
-import { RawFormInput } from './components/raw-form-input'
-import { INPUT_ID } from './form-input'
-import { InputIcon } from './components/input-icon'
+import { Price, RawFormInput } from './components/raw-form-input'
 import { HealthyLabel } from './components/healthy-label'
-import { FormAction } from '@/store/slices/vaultActionSlice'
+import { PreviewInputCoin } from './components/input-icon'
+import { focusOnInput } from './form-input'
+import { BalanceWithSetter } from './BalanceWithSetter'
+import { useAppSelector } from '@/store/hooks'
+import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
+import { WalletStatus } from '@/providers/wallet/wrappers/types'
+import CompactNumber, { RawCompactNumber, useCompactBigInt } from '@/components/compact-number/compact-number'
+import { FractionPartView } from '@/finances/humanize/format-number'
+import { toStringNumberFromDecimals } from '@/shared/web3'
 
-export function FormPreview() {
-  const { formAction, vault } = useVaultContext()
+const formatOptions = {
+  threshold: 0n,
+  fractionDigits: 5,
+  fractionPartView: FractionPartView.DOTS,
+}
 
-  const { decimals } = vault.asset
-
+export function FormPreview({ disabled }: { disabled: boolean }) {
+  const { vault } = useVaultContext()
   const [deposit] = useVaultDeposit()
+  const { inputValue } = useVaultContext()
 
-  const handleClick = () => {
-    const input = document.getElementById(INPUT_ID)
-    input?.focus()
-  }
+  const { vaultBalanceBN } = useAppSelector(state => state.vaultUser)
+  const { status } = useWalletWrapperContext()
 
-  const [, value] = parseBigIntValue(deposit, decimals)
-
-  const isDeposit = formAction === FormAction.DEPOSIT
-  const label = isDeposit ? 'To Your Account' : 'To Your Wallet'
+  const locale = useAppSelector(state => state.locale.current)
+  const formattedValue = useCompactBigInt(deposit, vault.asset.decimals, { locale, ...formatOptions })
+  const accurateValue = toStringNumberFromDecimals(deposit, vault.asset.decimals)
 
   return (
     <RawFormInput
-      label={label}
-      vault={vault}
-      value={value === '0' ? '' : value}
+      preview
+      label={'Savings Account'}
       placeholder="0"
-      inputStart={<InputIcon type="PREVIEW" vault={vault} />}
+      inputStart={<PreviewInputCoin vault={vault} />}
       readOnly
-      onClick={handleClick}
-      headerEnd={isDeposit ? <HealthyLabel /> : undefined}
-    />
+      onClick={focusOnInput}
+      headerEnd={<HealthyLabel showValue={status === WalletStatus.CONNECTED && inputValue !== 0n}>
+        <BalanceWithSetter {...{
+          disabled,
+          balance: BigInt(vaultBalanceBN),
+        }} />
+      </HealthyLabel>}
+      price={<Price vault={vault}>{formattedValue.raw}</Price>}
+    >
+      <RawCompactNumber
+          value={formattedValue.result}
+          tooltipContent={accurateValue}
+       />
+    </RawFormInput>
   )
 }
