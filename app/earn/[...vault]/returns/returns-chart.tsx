@@ -87,14 +87,14 @@ interface PriceDataWithPremium extends PriceData {
   returnAmountWithPremium: number
 }
 
+const compactTo = 12
+
 function useChartData({ days, yearlyPriceData, vault }: Pick<Props, 'days' | 'yearlyPriceData' | 'vault'>) {
   const apy = calculateVaultAPY(vault.rates[0].apy.yearly, vault.asset.decimals, 100)
 
   const inputValue = useDebouncedInputValue()
 
   return useMemo(() => {
-    const compactTo = 48
-
     let data = yearlyPriceData
 
     /**
