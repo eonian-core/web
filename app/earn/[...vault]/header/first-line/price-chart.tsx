@@ -1,8 +1,10 @@
-import { Area, AreaChart } from 'recharts'
+import { Area, AreaChart, YAxis } from 'recharts'
 import { useMemo } from 'react'
 import type { IContentLoaderProps } from 'react-content-loader'
 import ContentLoader from 'react-content-loader'
+import type { AxisDomain } from 'recharts/types/util/types'
 import { PercentagePriceChange, getChangeColor } from '../../components/percentage-price-change'
+import { useVaultContext } from '../../hooks/use-vault-context'
 import styles from './price-chart.module.scss'
 import { reducePriceData } from '@/shared/charts/reduce-price-data'
 import type { PriceData, TokenSymbol } from '@/types'
@@ -10,6 +12,8 @@ import { formatUSD } from '@/finances/humanize/format-currency'
 import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { getPriceChange, getPriceChangeDuringTimeline } from '@/finances/price'
+import { calcYAxisDomain } from '@/components/chart/axis-domain'
+import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
 
 interface ChartProps {
   symbol: TokenSymbol
@@ -54,9 +58,23 @@ export function PriceChart({ symbol }: ChartProps) {
 const chartWidth = 315
 const chartHeight = 128
 
+const coinYAxisDomain: AxisDomain = ['auto', 'auto']
+const stableYAxisDomain: AxisDomain = [0, 2]
+
+const yAxisDomainMap: { [key in TokenSymbol]: AxisDomain } = {
+  ETH: coinYAxisDomain,
+  BTCB: coinYAxisDomain,
+  USDT: stableYAxisDomain,
+  USDC: stableYAxisDomain,
+  DAI: stableYAxisDomain,
+  BNB: coinYAxisDomain,
+}
+
 function Chart({ yearlyPriceData }: { yearlyPriceData: PriceData[] }) {
   const change = getPriceChangeDuringTimeline(yearlyPriceData)
   const color = getChangeColor(change)
+  const { vault } = useVaultContext()
+  const symbol = getAssetSymbol(vault)
 
   // Reduce the amount of data points to be displayed (from 365 to 48), for performance reasons and smoother chart.
   const data = useMemo(() => reducePriceData(yearlyPriceData, 48), [yearlyPriceData])
@@ -69,6 +87,9 @@ function Chart({ yearlyPriceData }: { yearlyPriceData: PriceData[] }) {
         </linearGradient>
       </defs>
       <Area type="monotone" dataKey="price" stroke={color} fillOpacity={1} fill="url(#chart-bg-color)" />
+
+      <YAxis domain={yAxisDomainMap[symbol]} hide />
+
     </AreaChart>
   )
 }
