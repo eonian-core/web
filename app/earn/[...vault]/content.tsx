@@ -4,7 +4,7 @@ import { useHover } from '@uidotdev/usehooks'
 import clsx from 'clsx'
 import styles from './content.module.scss'
 import Form from './form/form'
-import { VaultProvider } from './hooks/use-vault-context'
+import { VaultProvider, useVaultContext } from './hooks/use-vault-context'
 import { Portfolio } from './portfolio/portfolio'
 import { Returns } from './returns/returns'
 import { InsuranceOfAssets } from './info-blocks/insurance-of-assets'
@@ -18,6 +18,8 @@ import type { TokenSymbol } from '@/types'
 import type { Vault } from '@/api'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 import { useHideAnimtion } from '@/components/fade-in/animation'
+import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
+import { WalletStatus } from '@/providers/wallet/wrappers/types'
 
 interface Props {
   vault: Vault
@@ -26,32 +28,62 @@ interface Props {
 }
 
 export function Content({ vault, chainId, symbol }: Props) {
-  const [leftSectionRef, leftSectionHovering] = useHover()
   const [formRef, formHovering] = useHover()
 
   return (
     <VaultProvider vault={vault}>
       <div className={styles.container}>
-        <section ref={leftSectionRef} className={styles.right}>
-          <Portfolio />
-          <InsuranceOfAssets />
-          <SafetyBlocks show={leftSectionHovering} />
-        </section>
+        <LeftSection />
 
         <section ref={formRef} className={styles.middle}>
           <Form chainId={chainId} />
           <LimitBlocks show={formHovering}/>
         </section>
 
-        <section className={styles.left}>
-          <Returns symbol={symbol} />
-        </section>
+        <RightSection symbol={symbol} />
       </div>
       <div className={styles.mobileInfoBlocks}>
         <SafetyBlocks show/>
         <LimitBlocks show/>
       </div>
     </VaultProvider>
+  )
+}
+
+function useHaveWhatToDisplay() {
+  const { inputValue = 0n } = useVaultContext()
+  const { status } = useWalletWrapperContext()
+  return inputValue !== 0n || status === WalletStatus.CONNECTED
+}
+
+function LeftSection() {
+  const [leftSectionRef, leftSectionHovering] = useHover()
+  const show = useHaveWhatToDisplay()
+  const hide = useHideAnimtion(show, 200)
+
+  return (
+    <section ref={leftSectionRef} className={clsx(styles.left, {
+      [styles.show]: show,
+      [styles.hide]: hide,
+    })}>
+      <Portfolio />
+      <InsuranceOfAssets />
+      <SafetyBlocks show={leftSectionHovering} />
+    </section>
+  )
+}
+
+function RightSection({ symbol }: { symbol: TokenSymbol }) {
+  const show = useHaveWhatToDisplay()
+  const hide = useHideAnimtion(show, 200)
+
+  return (
+    <section className={clsx(styles.right, {
+      [styles.show]: show,
+      [styles.hide]: hide,
+    })}>
+      <Returns symbol={symbol} />
+    </section>
   )
 }
 

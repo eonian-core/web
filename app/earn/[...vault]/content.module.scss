@@ -44,6 +44,26 @@
   gap: var(--margin-400);
 }
 
+.left, .right {
+  opacity: 0;
+}
+
+.left.hide {
+  animation: appearToLeft 0.2s ease-in forwards reverse;
+}
+
+.left.show {
+  animation: appearToLeft 0.2s ease-in forwards;
+}
+
+.right.hide {
+  animation: appearToRight 0.2s ease-in forwards reverse;
+}
+
+.right.show {
+  animation: appearToRight 0.2s ease-in forwards;
+}
+
 .infoBlocks {
   opacity: 0;
   & > * {
@@ -51,11 +71,11 @@
   }
 }
 
-.hide {
+.infoBlocks.hide {
   animation: appearDown 0.2s ease-in forwards reverse;
 }
 
-.show {
+.infoBlocks.show {
   animation: appearDown 0.2s ease-in forwards;
 }
 
