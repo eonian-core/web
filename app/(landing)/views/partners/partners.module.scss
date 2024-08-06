@@ -24,24 +24,32 @@ $height: 60px;
   width: 100%;
   height: $height;
 
-  ul {
-    height: 100%;
+  display: grid;
+  & > * {
+    grid-area: 1 / 1;
+  }
 
+  ul {
+    $gap: var(--margin-700);
+    $duration: 80s;
+
+    height: 100%;
     display: flex;
     align-items: center;
-    gap: var(--margin-700);
+    gap: $gap;
 
-    bottom: 0;
-    left: 0;
+    position: relative;
+    transform: translate;
+    animation: scroll $duration linear infinite;
 
-    position: absolute;
-    overflow: hidden;
-    white-space: nowrap;
+    &:first-child {
+      padding: 0 $gap;
+      animation-delay: -($duration / 2);
+    }
 
-    animation-name: scroll;
-    animation-duration: 60s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+    &:last-child {
+      animation-delay: 0s;
+    }
   }
 }
 
@@ -73,9 +81,9 @@ $height: 60px;
 
 @keyframes scroll {
   0% {
-    transform: translateX(0);
+    transform: translateX(100%);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
 }

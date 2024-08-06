@@ -49,11 +49,8 @@ function Sheet({ children }: React.PropsWithChildren) {
   const items = React.Children.toArray(children)
   return (
     <div className={styles.sheet}>
-      <ul>
-        {[...items, ...items].map((item, index) => (
-          <React.Fragment key={index}>{item}</React.Fragment>
-        ))}
-      </ul>
+      <ul>{items}</ul>
+      <ul>{items}</ul>
     </div>
   )
 }
