@@ -18,6 +18,7 @@ import { getYearlyROI } from '@/finances/roi'
 import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { getPriceChangeDuringTimeline } from '@/finances/price'
+import { convertToUsd } from '@/finances/usd'
 
 interface Props {
   symbol: TokenSymbol
@@ -108,8 +109,10 @@ interface AmountOfReturnsProps {
 function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
   const { depositInUSD, decimals } = useVaultDepositUSD(vault)
 
-  const currentPrice = yearPriceData[yearPriceData.length - 1]?.price
+  // will display chart and growth based on hisotrical data
   const previousPrice = yearPriceData[yearPriceData.length - days]?.price
+  // but current price is from Vault data, to be aligned with the form
+  const currentPrice = convertToUsd(vault.asset.price)
 
   const apy = calculateVaultAPY(vault.rates[0].apy.yearly, vault.asset.decimals, 100)
   const growth = getPriceChangeDuringTimeline(yearPriceData)

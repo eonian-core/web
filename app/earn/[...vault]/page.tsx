@@ -10,6 +10,7 @@ import { Header } from './header/header'
 import { TokenGradient } from './header/token-gradient'
 import { Content } from './content'
 import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
+import { convertToUsd } from '@/finances/usd'
 
 export const revalidate = 10
 
@@ -46,12 +47,14 @@ export default async function Page({ params }: Params) {
   const vault = await getVaultBySimbol(chainId, vaultSymbol)
   const symbol = getAssetSymbol(vault)
 
+  const currentPrice = convertToUsd(vault.asset.price)
+
   return (
     <>
       <TokenGradient symbol={symbol} />
       <div className={styles.page}>
-        <Header symbol={symbol} />
-        <Content symbol={symbol} vault={vault} chainId={chainId} />
+        <Header {...{ symbol, currentPrice }}/>
+        <Content {...{ symbol, vault, chainId }} />
       </div>
     </>
   )

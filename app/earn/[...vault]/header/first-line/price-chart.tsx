@@ -1,4 +1,5 @@
 import { Area, AreaChart, YAxis } from 'recharts'
+import type { PropsWithChildren } from 'react'
 import { useMemo } from 'react'
 import type { IContentLoaderProps } from 'react-content-loader'
 import ContentLoader from 'react-content-loader'
@@ -14,39 +15,47 @@ import { getPriceChangeDuringTimeline } from '@/finances/price'
 
 interface ChartProps {
   symbol: TokenSymbol
+  currentPrice: number
 }
 
-export function PriceChart({ symbol }: ChartProps) {
+export function PriceChart({ symbol, currentPrice }: ChartProps) {
   const { data } = useTokenPrice(symbol)
   const yearlyPriceData = data?.prices
 
   if (!yearlyPriceData) {
     return (
       <div className={styles.container}>
-        <div className={styles.priceInfo}>
-          <h3>{symbol} Price</h3>
-          <h2><OneLineSkeleton width={80} /></h2>
+        <PriceInfo {...{ symbol, currentPrice }}>
           <OneLineSkeleton marginTop={0} height={20} width={80} />
-        </div>
+        </PriceInfo>
         <ChartSkeleton />
       </div>
     )
   }
 
-  const currentPrice = yearlyPriceData[yearlyPriceData.length - 1].price
   const previousPrice = yearlyPriceData[0].price
-  const currentPriceUSD = formatUSD(currentPrice)
+
   return (
     <div className={styles.container}>
       <Chart yearlyPriceData={yearlyPriceData} symbol={symbol} />
-      <div className={styles.priceInfo}>
-        <h3>{symbol} Price</h3>
-        <div className={styles.price}>
-          <h2>{currentPriceUSD}</h2>
-          <PercentagePriceChange currentPrice={currentPrice} previousPrice={previousPrice}>
-            &nbsp;YoY
-          </PercentagePriceChange>
-        </div>
+      <PriceInfo {...{ symbol, currentPrice }}>
+        <PercentagePriceChange currentPrice={currentPrice} previousPrice={previousPrice}>
+          &nbsp;YoY
+        </PercentagePriceChange>
+      </PriceInfo>
+    </div>
+  )
+}
+
+function PriceInfo({ symbol, currentPrice, children }: PropsWithChildren<ChartProps>) {
+  const currentPriceUSD = formatUSD(currentPrice)
+
+  return (
+    <div className={styles.priceInfo}>
+      <h3>{symbol} Price</h3>
+      <div className={styles.price}>
+        <h2>{currentPriceUSD}</h2>
+        {children}
       </div>
     </div>
   )

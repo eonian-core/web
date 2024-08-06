@@ -10,15 +10,16 @@ import type { TokenSymbol } from '@/types'
 
 interface Props {
   symbol: TokenSymbol
+  currentPrice: number
 }
 
-export function Header({ symbol }: Props) {
+export function Header({ symbol, currentPrice }: Props) {
   const VaultTitle = firstLineHeaderMap[symbol]
 
   return (
     <header className={styles.container}>
       <VaultTitle />
-      <PriceChart symbol={symbol} />
+      <PriceChart {...{ symbol, currentPrice }} />
       <Protected />
       <Actions symbol={symbol} />
     </header>
