@@ -61,12 +61,13 @@ import {
 } from './views/offer/token'
 import Warning from './views/hero/warning'
 import SocialProof, {
-  SocialProofHeader,
   SocialProofBody,
+  SocialProofHeader,
   SocialProofLinks,
   SocialProofStatItem,
 } from './views/social-proof/social-proof'
 import Testimonials from './views/testimonials/testimonials'
+import Partners from './views/partners/partners'
 
 const components = {
   Hero,
@@ -145,6 +146,7 @@ const components = {
   SocialProofStatItem,
   SocialProofLinks,
   Testimonials,
+  Partners,
 }
 
 export default function Home() {
