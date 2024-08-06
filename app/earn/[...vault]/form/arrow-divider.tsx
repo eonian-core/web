@@ -1,6 +1,6 @@
 import { Button, Divider } from '@nextui-org/react'
 import clsx from 'clsx'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { useVaultContext } from '../hooks/use-vault-context'
 import { focusOnInput } from './form-input'
 import styles from './arrow-divider.module.scss'

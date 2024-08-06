@@ -19,7 +19,7 @@ export function PortfolioLegend({ proportion, className }: Props) {
     <ul className={classNames}>
       <li className={styles.wallet}>
         <span className={styles.label}>Wallet</span>
-        <WalletValue />
+        <WalletValue {...{ walletStatus }}>{wallet}</WalletValue>
       </li>
       <li className={styles.vault}>
         <span className={styles.label}>Vault</span>
@@ -31,11 +31,16 @@ export function PortfolioLegend({ proportion, className }: Props) {
       </li>
     </ul>
   )
+}
 
-  function WalletValue() {
-    if (walletStatus !== WalletStatus.CONNECTED)
-      return <span className={styles.notConnected}>Not connected</span>
+interface WalletValueProps {
+  children?: string | number
+  walletStatus: WalletStatus
+}
 
-    return <span className={styles.value}>{wallet}</span>
-  }
+function WalletValue({ children: wallet, walletStatus }: WalletValueProps) {
+  if (walletStatus !== WalletStatus.CONNECTED)
+    return <span className={styles.notConnected}>Not connected</span>
+
+  return <span className={styles.value}>{wallet}</span>
 }

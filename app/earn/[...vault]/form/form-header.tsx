@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useCallback } from 'react'
-import { Button, CardHeader } from '@nextui-org/react'
+import { CardHeader } from '@nextui-org/react'
 
 import clsx from 'clsx'
 import { FormAction } from '../../../store/slices/vaultActionSlice'

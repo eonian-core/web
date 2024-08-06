@@ -58,27 +58,35 @@ function AmountChangeInfo({ size }: Omit<Props, 'proportion'>) {
   }, [size, total, change])
 
   return (
-    <Tooltip content={<TooltipContent />}>
+    <Tooltip content={<TooltipContent {...{ total, decimals, priceInUSD, priceDecimals, assetSymbol }}/>}>
       <div className={styles.info} ref={ref} style={{ transform: `scale(${scale})` }}>
         <TokenAmount vault={vault} value={total} change={change} decimals={decimals} />
         <Price value={priceInUSD} decimals={priceDecimals} />
       </div>
     </Tooltip>
   )
+}
 
-  function TooltipContent() {
-    const valueAccurate = toStringNumberFromDecimals(total, decimals)
-    const valueUSDAccurate = toStringNumberFromDecimals(priceInUSD, priceDecimals)
-    return (
-      <>
-        <Row justify="center">
-          {valueAccurate}&nbsp;{assetSymbol}
-        </Row>
-        <Spacer y={0.5} />
-        <Row justify="center">${valueUSDAccurate}</Row>
-      </>
-    )
-  }
+interface TooltipContentProps {
+  total: bigint
+  decimals: number
+  priceInUSD: bigint
+  priceDecimals: number
+  assetSymbol: string
+}
+
+function TooltipContent({ total, decimals, priceInUSD, priceDecimals, assetSymbol }: TooltipContentProps) {
+  const valueAccurate = toStringNumberFromDecimals(total, decimals)
+  const valueUSDAccurate = toStringNumberFromDecimals(priceInUSD, priceDecimals)
+  return (
+    <>
+      <Row justify="center">
+        {valueAccurate}&nbsp;{assetSymbol}
+      </Row>
+      <Spacer y={0.5} />
+      <Row justify="center">${valueUSDAccurate}</Row>
+    </>
+  )
 }
 
 interface PriceProps {

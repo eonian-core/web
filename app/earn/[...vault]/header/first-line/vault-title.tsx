@@ -1,4 +1,3 @@
-import { Chip } from '@nextui-org/react'
 import type { PropsWithChildren } from 'react'
 import { ExternalAction } from '../second-line/actions'
 import styles from './vault-title.module.scss'

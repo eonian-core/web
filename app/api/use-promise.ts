@@ -14,7 +14,7 @@ export function usePromise<T>(invoker: () => Promise<T>, deps: Array<any>) {
   useEffect(() => {
     invoker().then(
       data => setState({ data, isLoading: false }),
-      error => setState({ error, isLoading: false }),
+      (error: Error) => setState({ error, isLoading: false }),
     )
   }, deps) // avoid inoking again on function change
 

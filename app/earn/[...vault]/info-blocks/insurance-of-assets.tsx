@@ -1,4 +1,4 @@
-import { Card, CardBody, Checkbox, Chip } from '@nextui-org/react'
+import { Checkbox } from '@nextui-org/react'
 import React from 'react'
 
 import clsx from 'clsx'

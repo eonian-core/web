@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Area, ComposedChart, Line, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { Area, ComposedChart, Line, ResponsiveContainer, YAxis } from 'recharts'
 import { useVaultContext } from '../hooks/use-vault-context'
 import type { Vault } from '@/api'
 import { reducePriceData } from '@/shared/charts/reduce-price-data'

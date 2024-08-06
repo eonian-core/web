@@ -49,20 +49,16 @@ interface DrawOptions extends DrawIntent {
   outerColorB: string
 }
 
-function draw({
-  canvas,
-  size,
-  value,
-  lineWidth,
-  animationStep,
-  outerStartProgress,
-  innerStartProgress,
-  onInnerLastProgress,
-  onOuterLastProgress,
-  innerColor,
-  outerColorA,
-  outerColorB,
-}: DrawOptions) {
+function draw(options: DrawOptions) {
+  const {
+    canvas,
+    size,
+    lineWidth,
+    outerStartProgress,
+    innerStartProgress,
+    onInnerLastProgress,
+    onOuterLastProgress,
+  } = options
   const ctx = canvas.getContext('2d')!
 
   normalizeRatio(canvas, size)
@@ -76,121 +72,72 @@ function draw({
    */
   const gapAngle = (lineWidth * 1.5) / radius
 
-  let innerProgress = innerStartProgress
-  let outerProgress = outerStartProgress
-
-  let handler: number = -1
-
-  function drawArc(color: string, start: number, end: number, arcX = x, arcY = y, arcRadius = radius) {
-    ctx.lineCap = 'round'
-    ctx.beginPath()
-    ctx.arc(arcX, arcY, arcRadius, start, end, false)
-    ctx.strokeStyle = color
-    ctx.fillStyle = color
-    ctx.stroke()
+  const state: AnimateState = {
+    ...options,
+    radius,
+    x,
+    y,
+    gapAngle,
+    innerProgress: innerStartProgress,
+    outerProgress: outerStartProgress,
+    handler: -1,
   }
 
-  function drawOuterChart(): boolean {
-    const startA = 0
-    const endA = Math.max(Math.min(Math.PI * 2 - gapAngle * 2, outerProgress * Math.PI * 2 - gapAngle), 0)
-
-    const startB = endA + gapAngle
-    const endB = Math.PI * 2 - gapAngle
-
-    drawArc(outerColorB, startB, endB)
-    drawArc(outerColorA, startA, endA)
-
-    let reachTarget = false
-    if (outerStartProgress < value)
-      reachTarget = outerProgress >= value
-    else if (outerStartProgress > value)
-      reachTarget = outerProgress <= value
-
-    outerProgress += animationStep * (outerStartProgress < value ? 1 : -1)
-    outerProgress = +outerProgress.toFixed(2)
-
-    if (outerStartProgress < value)
-      outerProgress = outerProgress >= value ? value : outerProgress
-    else if (outerStartProgress > value)
-      outerProgress = outerProgress <= value ? value : outerProgress
-
-    outerProgress = Math.min(Math.max(outerProgress, 0), 1)
-
-    return reachTarget
-  }
-
-  function drawInnerChart(): boolean {
-    /**
-     * The distance between two circles is dependent on the line width.
-     */
-    const innerRadius = radius - lineWidth * 1.5
-
-    /**
-     * We need to recalculate the gap angle for the inner chart because the radius is different.
-     * Otherwise, the gap proportion will be different between the inner and outer charts.
-     */
-    const innerGapAngle = gapAngle * (radius / innerRadius)
-
-    /**
-     * Slightly rotate the inner chart by ~2.5 degrees (depends on the size) to match the outer chart.
-     * The magic number 128 is the initial size of the chart on which the rotation was calibrated.
-     */
-    const shift = (((2.5 * 128) / size) * Math.PI) / 180
-    const start = shift
-    const end = innerProgress * Math.PI * 2 - innerGapAngle + shift
-
-    const innerOffset = size / 2
-
-    drawArc(innerColor, start, end, innerOffset, innerOffset, innerRadius)
-
-    const reachTarget = innerProgress >= 1
-
-    innerProgress = Math.min(innerProgress + animationStep, 1)
-
-    return reachTarget
-  }
-
-  function drawOpacityGradientOverlay() {
-    const gradient = ctx.createLinearGradient(0, 0, 0, size)
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 0.5)')
-    gradient.addColorStop(1, 'rgba(255, 255, 255, 1.0)')
-    ctx.fillStyle = gradient
-    ctx.fillRect(0, 0, size, size)
-  }
-
-  function animate() {
-    ctx.save()
-
-    ctx.translate(size / 2, size / 2)
-    ctx.rotate((-100 * Math.PI) / 180)
-    ctx.translate(-size / 2, -size / 2)
-
-    ctx.clearRect(0, 0, size, size)
-    ctx.lineWidth = lineWidth
-
-    ctx.globalCompositeOperation = 'destination-over'
-    const isOuterChartDone = drawOuterChart()
-    const isInnerChartDone = drawInnerChart()
-
-    ctx.globalCompositeOperation = 'destination-in'
-    drawOpacityGradientOverlay()
-
-    ctx.restore()
-
-    const isAnimationDone = isOuterChartDone && isInnerChartDone
-    if (isAnimationDone)
-      return cancelAnimationFrame(handler)
-
-    handler = requestAnimationFrame(animate)
-  }
-
-  animate()
+  animate(ctx, state)
 
   return () => {
-    cancelAnimationFrame(handler)
-    onOuterLastProgress(outerProgress)
-    onInnerLastProgress(innerProgress)
+    cancelAnimationFrame(state.handler)
+    onOuterLastProgress(state.outerProgress)
+    onInnerLastProgress(state.innerProgress)
   }
+}
+
+export interface AnimateState extends DrawOptions {
+  radius: number
+  x: number
+  y: number
+  gapAngle: number
+  innerProgress: number
+  outerProgress: number
+  handler: number
+}
+
+function animate(ctx: CanvasRenderingContext2D, state: AnimateState): number | void {
+  const {
+    size,
+    lineWidth,
+  } = state
+  ctx.save()
+
+  ctx.translate(size / 2, size / 2)
+  ctx.rotate((-100 * Math.PI) / 180)
+  ctx.translate(-size / 2, -size / 2)
+
+  ctx.clearRect(0, 0, size, size)
+  ctx.lineWidth = lineWidth
+
+  ctx.globalCompositeOperation = 'destination-over'
+  const isOuterChartDone = drawOuterChart(ctx, state)
+  const isInnerChartDone = drawInnerChart(ctx, state)
+
+  ctx.globalCompositeOperation = 'destination-in'
+  drawOpacityGradientOverlay(ctx, state)
+
+  ctx.restore()
+
+  const isAnimationDone = isOuterChartDone && isInnerChartDone
+  if (isAnimationDone)
+    return cancelAnimationFrame(state.handler)
+
+  return requestAnimationFrame(() => animate(ctx, state))
+}
+
+function drawOpacityGradientOverlay(ctx: CanvasRenderingContext2D, { size }: DrawOptions) {
+  const gradient = ctx.createLinearGradient(0, 0, 0, size)
+  gradient.addColorStop(0, 'rgba(255, 255, 255, 0.5)')
+  gradient.addColorStop(1, 'rgba(255, 255, 255, 1.0)')
+  ctx.fillStyle = gradient
+  ctx.fillRect(0, 0, size, size)
 }
 
 function normalizeRatio(canvas: HTMLCanvasElement, size: number) {
@@ -204,4 +151,93 @@ function normalizeRatio(canvas: HTMLCanvasElement, size: number) {
   canvas.height = size * scale
 
   ctx.scale(scale, scale)
+}
+
+function drawInnerChart(ctx: CanvasRenderingContext2D, state: AnimateState): boolean {
+  const {
+    innerColor,
+    size,
+    lineWidth,
+    animationStep,
+    radius,
+    gapAngle,
+  } = state
+  /**
+   * The distance between two circles is dependent on the line width.
+   */
+  const innerRadius = radius - lineWidth * 1.5
+
+  /**
+   * We need to recalculate the gap angle for the inner chart because the radius is different.
+   * Otherwise, the gap proportion will be different between the inner and outer charts.
+   */
+  const innerGapAngle = gapAngle * (radius / innerRadius)
+
+  /**
+   * Slightly rotate the inner chart by ~2.5 degrees (depends on the size) to match the outer chart.
+   * The magic number 128 is the initial size of the chart on which the rotation was calibrated.
+   */
+  const shift = (((2.5 * 128) / size) * Math.PI) / 180
+  const start = shift
+  const end = state.innerProgress * Math.PI * 2 - innerGapAngle + shift
+
+  const innerOffset = size / 2
+
+  drawArc(ctx, state, innerColor, start, end, innerOffset, innerOffset, innerRadius)
+
+  const reachTarget = state.innerProgress >= 1
+
+  state.innerProgress = Math.min(state.innerProgress + animationStep, 1)
+
+  return reachTarget
+}
+
+function drawOuterChart(ctx: CanvasRenderingContext2D, state: AnimateState): boolean {
+  const {
+    outerColorA,
+    outerColorB,
+    animationStep,
+    gapAngle,
+    value,
+    outerStartProgress,
+  } = state
+  const startA = 0
+  const endA = Math.max(Math.min(Math.PI * 2 - gapAngle * 2, state.outerProgress * Math.PI * 2 - gapAngle), 0)
+
+  const startB = endA + gapAngle
+  const endB = Math.PI * 2 - gapAngle
+
+  drawArc(ctx, state, outerColorB, startB, endB)
+  drawArc(ctx, state, outerColorA, startA, endA)
+
+  let reachTarget = false
+  if (outerStartProgress < value)
+    reachTarget = state.outerProgress >= value
+  else if (outerStartProgress > value)
+    reachTarget = state.outerProgress <= value
+
+  state.outerProgress += animationStep * (outerStartProgress < value ? 1 : -1)
+  state.outerProgress = +state.outerProgress.toFixed(2)
+
+  if (outerStartProgress < value)
+    state.outerProgress = state.outerProgress >= value ? value : state.outerProgress
+  else if (outerStartProgress > value)
+    state.outerProgress = state.outerProgress <= value ? value : state.outerProgress
+
+  state.outerProgress = Math.min(Math.max(state.outerProgress, 0), 1)
+
+  return reachTarget
+}
+
+function drawArc(ctx: CanvasRenderingContext2D, state: AnimateState, color: string, start: number, end: number, arcX?: number, arcY?: number, arcRadius?: number) {
+  arcX = arcX ?? state.x
+  arcY = arcY ?? state.y
+  arcRadius = arcRadius ?? state.radius
+
+  ctx.lineCap = 'round'
+  ctx.beginPath()
+  ctx.arc(arcX, arcY, arcRadius, start, end, false)
+  ctx.strokeStyle = color
+  ctx.fillStyle = color
+  ctx.stroke()
 }

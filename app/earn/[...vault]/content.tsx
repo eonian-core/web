@@ -2,7 +2,6 @@
 
 import { useHover } from '@uidotdev/usehooks'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
 import styles from './content.module.scss'
 import Form from './form/form'
 import { VaultProvider } from './hooks/use-vault-context'
@@ -18,6 +17,7 @@ import { VaultToken } from './info-blocks/vault-token'
 import type { TokenSymbol } from '@/types'
 import type { Vault } from '@/api'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
+import { useHideAnimtion } from '@/components/fade-in/animation'
 
 interface Props {
   vault: Vault
@@ -81,37 +81,4 @@ function LimitBlocks({ show }: { show: boolean }) {
       <VaultToken />
     </div>
   )
-}
-
-export function useHideAnimtion(show: boolean, duration: number) {
-  const arePeviuslyShowed = usePreviusState(show)
-  return useStateDebounce(!show && arePeviuslyShowed, duration)
-}
-
-export function usePreviusState(value: boolean) {
-  const [previusState, setState] = useState(value)
-  useEffect(() => {
-    setState(value)
-  }, [value])
-
-  return previusState
-}
-
-/** When value switches to true, will keep it for given duration time */
-export function useStateDebounce(value: boolean, duration: number) {
-  const [state, setState] = useState(value)
-  useEffect(() => {
-    if (value) {
-      setState(true)
-      return
-    }
-
-    const timeout = setTimeout(() => {
-      setState(false)
-    }, duration)
-
-    return () => clearTimeout(timeout)
-  }, [value])
-
-  return state
 }
