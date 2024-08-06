@@ -1,5 +1,8 @@
 'use client'
 
+import { useHover } from '@uidotdev/usehooks'
+import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 import styles from './content.module.scss'
 import Form from './form/form'
 import { VaultProvider } from './hooks/use-vault-context'
@@ -23,18 +26,21 @@ interface Props {
 }
 
 export function Content({ vault, chainId, symbol }: Props) {
+  const [leftSectionRef, leftSectionHovering] = useHover()
+  const [formRef, formHovering] = useHover()
+
   return (
     <VaultProvider vault={vault}>
       <div className={styles.container}>
-        <section className={styles.right}>
+        <section ref={leftSectionRef} className={styles.right}>
           <Portfolio />
           <InsuranceOfAssets />
-          <SafetyBlocks />
+          <SafetyBlocks show={leftSectionHovering} />
         </section>
 
-        <section className={styles.middle}>
+        <section ref={formRef} className={styles.middle}>
           <Form chainId={chainId} />
-          <LimitBlocks />
+          <LimitBlocks show={formHovering}/>
         </section>
 
         <section className={styles.left}>
@@ -42,16 +48,20 @@ export function Content({ vault, chainId, symbol }: Props) {
         </section>
       </div>
       <div className={styles.mobileInfoBlocks}>
-        <SafetyBlocks />
-        <LimitBlocks />
+        <SafetyBlocks show/>
+        <LimitBlocks show/>
       </div>
     </VaultProvider>
   )
 }
 
-function SafetyBlocks() {
+function SafetyBlocks({ show }: { show: boolean }) {
+  const hide = useHideAnimtion(show, 200)
   return (
-    <div className={styles.infoBlocks}>
+    <div className={clsx(styles.infoBlocks, {
+      [styles.show]: show,
+      [styles.hide]: hide,
+    })}>
       <AssetSafety />
       <ProtocolInsurance />
       <WalletInsurance />
@@ -59,12 +69,49 @@ function SafetyBlocks() {
   )
 }
 
-function LimitBlocks() {
+function LimitBlocks({ show }: { show: boolean }) {
+  const hide = useHideAnimtion(show, 200)
   return (
-    <div className={styles.infoBlocks}>
+    <div className={clsx(styles.infoBlocks, {
+      [styles.show]: show,
+      [styles.hide]: hide,
+    })}>
       <Fees />
       <WithdrawLimits />
       <VaultToken />
     </div>
   )
+}
+
+export function useHideAnimtion(show: boolean, duration: number) {
+  const arePeviuslyShowed = usePreviusState(show)
+  return useStateDebounce(!show && arePeviuslyShowed, duration)
+}
+
+export function usePreviusState(value: boolean) {
+  const [previusState, setState] = useState(value)
+  useEffect(() => {
+    setState(value)
+  }, [value])
+
+  return previusState
+}
+
+/** When value switches to true, will keep it for given duration time */
+export function useStateDebounce(value: boolean, duration: number) {
+  const [state, setState] = useState(value)
+  useEffect(() => {
+    if (value) {
+      setState(true)
+      return
+    }
+
+    const timeout = setTimeout(() => {
+      setState(false)
+    }, duration)
+
+    return () => clearTimeout(timeout)
+  }, [value])
+
+  return state
 }

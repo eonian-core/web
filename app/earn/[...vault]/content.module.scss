@@ -1,4 +1,5 @@
 @import '../../screen.scss';
+@import "../../components/styles/appear.animation.scss";
 
 .container {
   margin-top: var(--margin-700);
@@ -43,8 +44,19 @@
   gap: var(--margin-400);
 }
 
-.infoBlocks > * {
-  width: 100%;
+.infoBlocks {
+  opacity: 0;
+  & > * {
+    width: 100%;
+  }
+}
+
+.hide {
+  animation: appearDown 0.2s ease-in forwards reverse;
+}
+
+.show {
+  animation: appearDown 0.2s ease-in forwards;
 }
 
 .mobileInfoBlocks {
