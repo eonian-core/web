@@ -23,7 +23,8 @@
     "mock": "ts-node --esm ./apollo/mocks/apollo-mock.ts",
     "gen:gql-types": "graphql-codegen --config ./apollo/codegen.ts",
     "release-logrocket": "node release-logrocket.cjs",
-    "postinstall": "cp .hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit"
+    "postinstall": "cp .hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit",
+    "ts": "tsc --noEmit --incremental --watch"
   },
   "engines": {
     "node": ">=18.17.1 <19.0.0"

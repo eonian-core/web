@@ -48,7 +48,7 @@ export function ArrowDivider({ size }: { size: number }) {
 }
 
 export function PercentPicker({ children, balance }: { children: Array<number>; balance: bigint }) {
-  const { inputValue, vault } = useVaultContext()
+  const { inputValue = 0n, vault } = useVaultContext()
   const currentPercent = useDivToPercent(inputValue, balance)
 
   return (

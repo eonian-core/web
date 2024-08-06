@@ -26,7 +26,7 @@ export const VaultInfoCard: React.FC<Props> = ({ value, currentDeposit, vault, f
 
   const [apyPercents, apy, apyD] = React.useMemo(() => {
     const bps = 1e6
-    const apy = calculateVaultAPY(vault)
+    const apy = calculateVaultAPY(vault.rates[0].apy.yearly, vault.asset.decimals)
     return [apy, BigInt(Number.parseInt(String(apy * bps))), BigInt(bps * 100)]
   }, [vault])
 

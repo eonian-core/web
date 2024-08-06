@@ -145,12 +145,14 @@ function useChartData({ days, yearlyPriceData, vault }: Pick<Props, 'days' | 'ye
   }, [days, yearlyPriceData, apy, inputValue])
 }
 
+/**
+ * Ensure input is in range [0.001, 2 ** 31) to properly form a shape of the chart
+ */
+const cap = (value: number) => Math.max(Math.min(value, 2 ** 31 - 1), 0.001)
+
 function useDebouncedInputValue(debounce = 100) {
-  const { displayValue } = useVaultContext()
-  /**
-   * Ensure input is in range [0.001, 2 ** 31) to properly form a shape of the chart
-   */
-  const cap = (value: number) => Math.max(Math.min(value, 2 ** 31 - 1), 0.001)
+  const { displayValue = '0' } = useVaultContext()
+
   const input = cap(+displayValue)
   const [result, setResult] = useState(input)
 

@@ -9,12 +9,12 @@ import CompactNumber from '@/components/compact-number/compact-number'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 
 export function Portfolio() {
-  const { inputValue, formAction, vault } = useVaultContext()
+  const { inputValue = 0n, formAction, vault } = useVaultContext()
   const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
-
+  const decimals = vault.asset.decimals
   const proportion = useVaultAssetProportion({
     inputValue,
-    decimals: vault.asset.decimals,
+    decimals,
     formAction,
     walletBalanceBN,
     vaultBalanceBN,
@@ -23,36 +23,57 @@ export function Portfolio() {
   return (
     <div id="portfolio" className={styles.container}>
       <SectionHeader title="Your Portfolio">
-        <SubHeader />
+        <SubHeader {...{
+          ...vault.asset,
+          vaultBalanceBN,
+          formAction,
+          decimals,
+          value: inputValue,
+        }}
+        />
       </SectionHeader>
       <PortfolioChart size={160} proportion={proportion} />
       <PortfolioLegend className={styles.legend} proportion={proportion} />
     </div>
   )
+}
 
-  function SubHeader() {
-    const { symbol, decimals } = vault.asset
+export interface SubHeaderProps extends Omit<SubHeaderBodyProps, 'children'> {
+  formAction: FormAction
+  vaultBalanceBN: string
+}
 
-    let value = inputValue
-    let action = 'saving'
+function SubHeader({ formAction, value, vaultBalanceBN, ...props }: SubHeaderProps) {
+  if (formAction === FormAction.DEPOSIT)
+    return <SubHeaderBody {...props} value={value}>After saving of</SubHeaderBody>
 
-    if (formAction === FormAction.WITHDRAW) {
-      const vaultBalance = BigInt(vaultBalanceBN)
-      if (inputValue > vaultBalance)
-        value = vaultBalance
+  const vaultBalance = BigInt(vaultBalanceBN)
+  return (
+    <SubHeaderBody
+      {...props}
+      value={value > vaultBalance ? vaultBalance : value}
+    >
+     After withdraw of
+    </SubHeaderBody>
+  )
+}
 
-      action = 'withdrawing'
-    }
+export interface SubHeaderBodyProps {
+  children: string
+  value: bigint
+  decimals: number
+  symbol: string
+}
 
-    return (
-      <SectionSubHeader>
-        After {action} of&nbsp;
-        <CompactNumber value={value} decimals={decimals} fractionDigits={2} hideTooltip>
-          &nbsp;<span className={styles.asset}>{symbol}</span>
-        </CompactNumber>
-      </SectionSubHeader>
-    )
-  }
+function SubHeaderBody({ children: action, value, decimals, symbol }: SubHeaderBodyProps) {
+  return (
+    <SectionSubHeader>
+      {action}&nbsp;
+      <CompactNumber value={value} decimals={decimals} fractionDigits={2} hideTooltip>
+        &nbsp;<span className={styles.asset}>{symbol}</span>
+      </CompactNumber>
+    </SectionSubHeader>
+  )
 }
 
 interface ProportionOptions {

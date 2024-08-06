@@ -70,7 +70,7 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
 export default FormButton
 
 function useSubmit() {
-  const { onValueChange, inputValue, vault } = useVaultContext()
+  const { onValueChange, inputValue = 0n, vault } = useVaultContext()
   const [isSubmiting, setIsSubmiting] = useState(false)
 
   const executeTransaction = useExecuteTransaction()

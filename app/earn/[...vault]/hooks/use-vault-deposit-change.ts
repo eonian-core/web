@@ -18,7 +18,7 @@ export function useVaultDepositUSD(vault: Vault) {
 }
 
 function useDeposit(amount: bigint | string) {
-  const { inputValue, formAction } = useVaultContext()
+  const { inputValue = 0n, formAction } = useVaultContext()
   const amountBN = BigInt(amount)
 
   const total = useMemo(() => {

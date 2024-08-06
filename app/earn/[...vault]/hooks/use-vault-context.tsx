@@ -5,8 +5,8 @@ import type { Vault } from '@/api'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 
 interface VaultContextType {
-  inputValue: bigint
-  displayValue: string
+  inputValue?: bigint
+  displayValue?: string
   formAction: FormAction
   insured: boolean
   vault: Vault
@@ -22,8 +22,6 @@ function createVaultContext(vault: Vault) {
     return VaultContext
 
   return (VaultContext = createContext<VaultContextType>({
-    inputValue: 0n,
-    displayValue: '0',
     formAction: FormAction.DEPOSIT,
     insured: true,
     vault,
@@ -36,7 +34,7 @@ function createVaultContext(vault: Vault) {
 export function VaultProvider({ children, vault }: PropsWithChildren<{ vault: Vault }>) {
   createVaultContext(vault)
 
-  const [value, displayValue, handleValueChange] = useNumberInputValue(0n, vault.asset.decimals)
+  const { value, displayValue, onValueChange } = useNumberInputValue(undefined, vault.asset.decimals)
   const [formAction, setFormAction] = useState<FormAction>(FormAction.DEPOSIT)
   const [insured, setInsured] = useState(true)
   return (
@@ -45,7 +43,7 @@ export function VaultProvider({ children, vault }: PropsWithChildren<{ vault: Va
         vault,
         inputValue: value,
         displayValue,
-        onValueChange: handleValueChange,
+        onValueChange,
         formAction,
         setFormAction,
         insured,
