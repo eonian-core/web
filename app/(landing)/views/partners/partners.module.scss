@@ -25,13 +25,17 @@ $height: 60px;
   height: $height;
 
   display: grid;
+  justify-content: center;
   & > * {
     grid-area: 1 / 1;
   }
 
   ul {
+    list-style-type: none;
+    margin: 0;
+
     $gap: var(--margin-700);
-    $duration: 80s;
+    $duration: 60s;
 
     height: 100%;
     display: flex;
@@ -39,16 +43,19 @@ $height: 60px;
     gap: $gap;
 
     position: relative;
-    transform: translate;
+    transform: translateX(100%);
     animation: scroll $duration linear infinite;
 
     &:first-child {
-      padding: 0 $gap;
       animation-delay: -($duration / 2);
     }
 
     &:last-child {
       animation-delay: 0s;
+    }
+
+    & > li:first-child {
+        margin-left: $gap;
     }
   }
 }
