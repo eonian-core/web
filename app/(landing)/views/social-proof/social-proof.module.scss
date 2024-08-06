@@ -1,0 +1,129 @@
+@import "../../../screen.scss";
+
+$main-seciton-width: 70%;
+$secondary-seciton-width: calc(100% - $main-seciton-width);
+
+.container {
+    padding: 0 var(--width-gap);
+    text-align: left;
+    width: 100%;
+}
+
+.socialProof {
+    max-width: var(--width-900);
+    margin: 0 auto;
+    align-items: normal;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: flex-start;
+    justify-content: space-between;
+    min-height: auto;
+
+    h3 {
+        font-size: var(--font-size-600);
+        font-weight: var(--font-normal);
+        line-height: var(--line-height-600);
+        margin-bottom: var(--margin-100);
+        text-align: left;
+    }
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+
+    .number {
+        font-size: var(--font-size-1130);
+        line-height: 1;
+        font-weight: var(--font-black);
+
+        @media (max-width: $screen-laptop) {
+            font-size: var(--font-size-1050);
+        }
+
+        @media (max-width: $screen-mobile) {
+            font-size: var(--font-size-950);
+        }
+    }
+    .description {
+        font-size: var(--font-size-600);
+        font-weight: var(--font-normal);
+        color: var(--color-text-400);
+    }
+}
+
+.header {
+    flex: 1 0 100%;
+}
+
+.body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+
+
+    p {
+        font-size: var(--font-size-600);
+        line-height: var(--line-height-600);
+        text-align: left;
+    }
+}
+
+.links {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    svg {
+        width: var(--font-size-750);
+        height: var(--font-size-750);
+    }
+
+    @media (max-width: $screen-mobile) {
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: $screen-laptop) {
+    .body {
+        grid-template-columns: 1fr 17rem 1fr;
+
+        p {
+            grid-column: 1 / span 3;
+            max-width: 45rem;
+        }
+    }
+}
+
+@media (max-width: $screen-tablet) {
+    .body {
+        grid-template-columns: 1fr 17rem;
+
+        grid-row-gap: 0;
+
+        p {
+            grid-column: 1 / span 2;
+            max-width: 45rem;
+            margin-bottom: 3rem;
+        }
+    }
+}
+
+@media (max-width: $screen-mobile) {
+    .header {
+
+        br {
+            display: none;
+        }
+    }
+    .body {
+        grid-template-columns: 1fr;
+        grid-row-gap: 2rem;
+        p {
+            grid-column: 1;
+            margin-bottom: 0;
+        }
+    }
+}
