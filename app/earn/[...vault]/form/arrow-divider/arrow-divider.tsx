@@ -1,4 +1,4 @@
-import { Button, Divider } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import clsx from 'clsx'
 import { useCallback } from 'react'
 import { useVaultContext } from '../../hooks/use-vault-context'
@@ -6,7 +6,6 @@ import { focusOnInput } from '../form-input/form-input'
 import styles from './arrow-divider.module.scss'
 import { ArrowDividerBody } from './arrow-divider-body'
 import { FormAction } from '@/store/slices/vaultActionSlice'
-import IconArrowRightShort from '@/components/icons/icon-arrow-right-short'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import { useAppSelector } from '@/store/hooks'
@@ -45,16 +44,16 @@ export function PercentPicker({ children, balance }: { children: Array<number>; 
   const currentPercent = useDivToPercent(inputValue, balance)
 
   return (
-        <div className={styles.percentPicker}>
-            {children.map(option => (
-                <PercentOption
-                    key={option}
-                    {...{ currentPercent, balance }}
-                    decimals={vault.asset.decimals}
-                >{option}</PercentOption>
-            ),
-            )}
-        </div>
+    <div className={styles.percentPicker}>
+        {children.map(option => (
+            <PercentOption
+                key={option}
+                {...{ currentPercent, balance }}
+                decimals={vault.asset.decimals}
+            >{option}</PercentOption>
+        ),
+        )}
+    </div>
   )
 }
 

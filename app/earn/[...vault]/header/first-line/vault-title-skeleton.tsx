@@ -1,4 +1,4 @@
-import { VaultTag, VaultTags, VaultTitle } from './vault-title'
+import { VaultTags, VaultTitle } from './vault-title'
 import styles from './vault-title.module.scss'
 import { CircleSkeleton, OneLineSkeleton } from '@/components/loader/skeleton-loader'
 

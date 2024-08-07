@@ -1,8 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Button } from '@nextui-org/react'
 import clsx from 'clsx'
-import type { IContentLoaderProps } from 'react-content-loader'
-import ContentLoader from 'react-content-loader'
 import { SectionHeader, SectionSubHeader } from '../components/section-header/section-header'
 import { useVaultDepositUSD } from '../hooks/use-vault-deposit-change'
 import { PercentagePriceChange } from '../components/percentage-price-change/percentage-price-change'

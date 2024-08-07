@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { useNumberInputValue } from './use-number-input-value'
 import { coinsPlaceholders, usePlaceholderAnimation } from './use-placeholder-animation'
 import type { Vault } from '@/api'

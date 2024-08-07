@@ -1,5 +1,5 @@
 import type { ButtonProps } from '@nextui-org/react'
-import { Button, Spinner } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import styles from './form-button.module.scss'
 
 /** Minimal logic, will be used in skeleton */
