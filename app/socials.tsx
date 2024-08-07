@@ -66,6 +66,21 @@ export const socials: LocalesSocials = {
 
 export default socials
 
+export interface SocialMap {
+  [name: string]: SocialLink
+}
+
+export interface LocalsSocialsMap {
+  [locale: string]: SocialMap
+}
+
+export const socialsMap: LocalsSocialsMap = Object.fromEntries(
+  Object.entries(socials).map(([locale, links]) => [
+    locale,
+    Object.fromEntries(links.map(link => [link.name, link])),
+  ]),
+)
+
 export function useLocalSocials(): Array<SocialLink> {
   const { current } = store.getState().locale
   return socials[current]

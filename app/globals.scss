@@ -42,6 +42,14 @@
 :root,
 ::after,
 ::before {
+  // Token-related colors
+  --color-token-USDC: hsl(210, 71%, 46%);
+  --color-token-BTC: hsl(35, 92%, 58%); 
+  --color-token-BTCB: var(--color-token-BTC); 
+  --color-token-USDT: hsla(142, 71%, 45%, 60%);
+  --color-token-ETH: hsl(291, 29%, 54%);
+  --color-token-DAI: transparent;
+  --color-token-BNB: transparent;
 
   // font sizes
   --font-size-100: 0.75rem;
@@ -199,11 +207,9 @@
   --color-secondary-800: hsl(341, 67%, 17%);
   --color-secondary-900: hsl(341, 66%, 6%);
 
-
   // Background
-
-  --color-background-start: hsl(220, 9%, 14%);
-  --color-background-end: var(--color-dark-500);
+  --color-background-start: hsl(240, 4%, 6%);
+  --color-background-end: hsl(240, 5%, 9%);
   --color-background-highlight: hsl(180, 7%, 17%);
   --color-neutral-background-gradient: linear-gradient(to bottom,
       var(--color-background-start),
@@ -219,6 +225,7 @@
   --color-neutral-100: hsl(0, 0%, 96%);
   --color-neutral-200: hsl(0, 0%, 90%);
   --color-neutral-300: hsl(0, 0%, 83%);
+  --color-neutral-325: hsl(0, 0%, 70%);
   --color-neutral-350: hsla(0, 1%, 27%, 0.822);
   --color-neutral-400: hsl(0, 0%, 64%);
   --color-neutral-500: hsl(0, 0%, 45%); // Default color

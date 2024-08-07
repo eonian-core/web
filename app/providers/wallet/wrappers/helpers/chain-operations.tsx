@@ -1,21 +1,18 @@
-import IconCoin, { CoinIcon } from '../../../../components/icons/icon-coin'
+import IconCoin from '../../../../components/icons/icon-coin'
 import IconWarning from '../../../../components/icons/icon-warning'
 import type { Chain } from '../types'
 import { ChainId } from './wallet-chain-id'
+import type { TokenSymbol } from '@/types'
 
 export function getChainIcon(id: ChainId, iconSize: number): React.ReactNode {
-  let icon: CoinIcon
-
-  switch (id) {
-    case ChainId.SEPOLIA:
-      icon = CoinIcon.ETH
-      break
-    case ChainId.BSC_MAINNET:
-      icon = CoinIcon.BNB
-      break
-    case ChainId.UNKNOWN:
-      return <IconWarning width={iconSize} height={iconSize} />
+  const iconLookupMap: Record<ChainId, TokenSymbol | null> = {
+    [ChainId.SEPOLIA]: 'ETH',
+    [ChainId.BSC_MAINNET]: 'BNB',
+    [ChainId.UNKNOWN]: null,
   }
+  const icon = iconLookupMap[id]
+  if (icon === null)
+    return <IconWarning width={iconSize} height={iconSize} />
 
   return <IconCoin symbol={icon} width={iconSize} height={iconSize} />
 }

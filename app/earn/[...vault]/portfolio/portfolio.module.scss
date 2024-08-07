@@ -1,0 +1,11 @@
+.container {
+  width: 100%;
+
+  --color-vault: #b77eff;
+  --color-wallet: #fece26;
+  --color-coverage: #8e8cdf;
+}
+
+.legend {
+  margin-top: var(--margin-300);
+}

@@ -3,7 +3,7 @@ import { gql } from '@apollo/client'
 
 import type { GetVaultsQuery, GetVaultsSymbolsQuery } from '../gql/graphql'
 
-const GetVaults = gql`
+export const GetVaults = gql`
   query GetVaults {
     vaults(orderBy: name, orderDirection: asc) {
       asset {

@@ -1,0 +1,31 @@
+.container {
+  display: grid;
+  place-content: center;
+  align-items: center;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .tokenAmount {
+    font-weight: var(--font-medium);
+
+    .asset {
+      margin: 0 var(--margin-50);
+      color: var(--color-text-400);
+      font-weight: var(--font-normal);
+    }
+  }
+
+  .priceInUSD {
+    color: var(--color-text-300);
+    font-size: var(--font-size-300);
+  }
+}

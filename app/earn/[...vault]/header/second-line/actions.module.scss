@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: row; 
+  align-items: flex-end;
+
+  a {
+    margin-left: auto;
+  }
+
+  button svg {
+    fill: var(--color-text-300);
+  }
+}

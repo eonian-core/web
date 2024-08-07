@@ -24,7 +24,7 @@ interface StatItemProps {
   children?: React.ReactNode
 }
 
-export const SocialProofStatItem: React.FC<StatItemProps> = ({ number, description, children }) =>  (
+export const SocialProofStatItem: React.FC<StatItemProps> = ({ number, description, children }) => (
   <div className={styles.statItem}>
     <div className={`${styles.number} ${interFont.className}`}>{number}</div>
     <div className={styles.description}>{description}</div>
@@ -52,10 +52,8 @@ export const SocialProofLinks: React.FC = () => {
   </div>
 }
 
-
-export const SocialProofHeader: React.FC<React.PropsWithChildren> = ({ children }) =>  (
+export const SocialProofHeader: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div className={`${styles.header}`}>
     {children}
   </div>
 )
-

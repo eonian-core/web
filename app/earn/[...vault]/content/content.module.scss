@@ -1,0 +1,97 @@
+@import '../../../screen.scss';
+@import "../../../components/styles/appear.animation.scss";
+
+.container {
+  margin-top: var(--margin-700);
+  display: flex;
+  width: 100%;
+
+  @media (max-width: $screen-desktop) {
+    margin-top: var(--margin-300);
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: var(--margin-500);
+
+    .middle {
+      order: -1;
+      flex-basis: 100%;
+    }
+
+    .infoBlocks {
+      display: none;
+    }
+  }
+}
+
+.left,
+.right,
+.infoBlocks {
+  width: 315px; // same like in header
+}
+
+.middle {
+  flex: 1;
+}
+
+.left,
+.right,
+.middle,
+.infoBlocks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--margin-400);
+}
+
+.left, .right {
+  opacity: 0;
+}
+
+.left.hide {
+  animation: appearToLeft 0.2s ease-in forwards reverse;
+}
+
+.left.show {
+  animation: appearToLeft 0.2s ease-in forwards;
+}
+
+.right.hide {
+  animation: appearToRight 0.2s ease-in forwards reverse;
+}
+
+.right.show {
+  animation: appearToRight 0.2s ease-in forwards;
+}
+
+.infoBlocks {
+  opacity: 0;
+  & > * {
+    width: 100%;
+  }
+}
+
+.infoBlocks.hide {
+  animation: appearDown 0.2s ease-in forwards reverse;
+}
+
+.infoBlocks.show {
+  animation: appearDown 0.2s ease-in forwards;
+}
+
+.mobileInfoBlocks {
+  display: none;
+
+  @media (max-width: $screen-desktop) {
+    margin: var(--margin-500) 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--margin-500);
+
+    .infoBlocks {
+      display: flex;
+    }
+  }
+}

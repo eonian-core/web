@@ -1,8 +1,8 @@
 import type { PropsWithChildren } from 'react'
 import FadeInChildList from '../../../components/fade-in/fade-in-child-list'
+import type { ChipProps } from '../../../components/chip/chip'
+import { Chip } from '../../../components/chip/chip'
 import styles from './offer.module.scss'
-import type { ChipProps } from './chip'
-import { Chip } from './chip'
 import Heading from './components/heading'
 
 interface Props extends PropsWithChildren {
