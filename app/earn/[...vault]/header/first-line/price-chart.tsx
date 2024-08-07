@@ -1,16 +1,14 @@
 import { Area, AreaChart, YAxis } from 'recharts'
 import type { PropsWithChildren } from 'react'
 import { useMemo } from 'react'
-import type { IContentLoaderProps } from 'react-content-loader'
-import ContentLoader from 'react-content-loader'
 import type { AxisDomain } from 'recharts/types/util/types'
 import { PercentagePriceChange, getChangeColor } from '../../components/percentage-price-change'
 import styles from './price-chart.module.scss'
+import { chartHeight, chartWidth } from './price-chart-skeleton'
 import { reducePriceData } from '@/shared/charts/reduce-price-data'
 import type { PriceData, TokenSymbol } from '@/types'
 import { formatUSD } from '@/finances/humanize/format-currency'
 import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
-import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { getPriceChangeDuringTimeline } from '@/finances/price'
 import { ChartSkeleton } from '@/components/loader/skeleton-chart'
 
@@ -18,9 +16,6 @@ interface ChartProps {
   symbol: TokenSymbol
   currentPrice: number
 }
-
-const chartWidth = 315
-const chartHeight = 128
 
 export function PriceChart({ symbol, currentPrice }: ChartProps) {
   const { data } = useTokenPrice(symbol)

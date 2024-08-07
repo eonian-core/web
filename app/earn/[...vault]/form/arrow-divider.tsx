@@ -4,6 +4,7 @@ import { useCallback } from 'react'
 import { useVaultContext } from '../hooks/use-vault-context'
 import { focusOnInput } from './form-input'
 import styles from './arrow-divider.module.scss'
+import { ArrowDividerBody } from './arrow-divider-body'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 import IconArrowRightShort from '@/components/icons/icon-arrow-right-short'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
@@ -15,7 +16,7 @@ import { useDivToPercent, useMultiplyOnPercent, usePercentToBigInt } from '@/fin
 
 const options = [0.25, 0.5, 0.75, 1]
 
-export function ArrowDivider({ size }: { size: number }) {
+export function ArrowDivider() {
   const { formAction, setFormAction } = useVaultContext()
   const handleClick = useCallback(() => {
     setFormAction(formAction === FormAction.DEPOSIT ? FormAction.WITHDRAW : FormAction.DEPOSIT)
@@ -29,21 +30,13 @@ export function ArrowDivider({ size }: { size: number }) {
   const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
   const balance = formAction === FormAction.DEPOSIT ? BigInt(walletBalanceBN) : BigInt(vaultBalanceBN)
   const balanceNotEmpty = balance > 0n
-  const showPicker = isWalletConnected && balanceNotEmpty
 
   return (
-        <div className={clsx(styles.divider, { [styles.withPicker]: showPicker })}>
-            {showPicker && <PercentPicker {...{ balance }}>{options}</PercentPicker>}
-            <Divider />
-            <div
-                className={clsx(styles.arrow, 'bg-content1', {
-                  [styles.reverse]: formAction === FormAction.WITHDRAW,
-                })}
-                onClick={handleClick}
-            >
-                <IconArrowRightShort width={size} height={size} />
-            </div>
-        </div>
+    <ArrowDividerBody reverse={formAction === FormAction.WITHDRAW} onClick={handleClick}>
+      {(isWalletConnected && balanceNotEmpty)
+        ? <PercentPicker {...{ balance }}>{options}</PercentPicker>
+        : null}
+    </ArrowDividerBody>
   )
 }
 

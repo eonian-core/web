@@ -3,7 +3,7 @@
 import type { PropsWithChildren } from 'react'
 import React, { useCallback, useState } from 'react'
 import type { ButtonProps } from '@nextui-org/react'
-import { Button, Spinner } from '@nextui-org/react'
+import { Spinner } from '@nextui-org/react'
 
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import type { Chain } from '../../../providers/wallet/wrappers/types'
@@ -12,6 +12,7 @@ import { FormAction } from '../../../store/slices/vaultActionSlice'
 import { useExecuteTransaction, useVaultUserInfo } from '../hooks'
 import { useVaultContext } from '../hooks/use-vault-context'
 import styles from './form-button.module.scss'
+import { FormButtonBody } from './form-button-body'
 
 interface Props extends Omit<ButtonProps, 'onSubmit'> {
   vaultChain: Chain
@@ -43,27 +44,21 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
   }, [insured, setInsured, status, isOnDifferentChain, formAction, connect, setCurrentChain, submit, vaultChain.id])
 
   return (
-    <div className={styles.wrapper}>
-      <Button
-        auto
-        color="primary"
-        size="lg"
-        className={styles.button}
-        onPress={handlePress}
-        disabled={disabled || isLoading || isSubmiting}
-        {...restProps}
-      >
-        {(isLoading || isSubmiting)
-          ? <Spinner color="current" size="md" />
-          : <ButtonText {...{
-            insured,
-            status,
-            isOnDifferentChain,
-            chainName: vaultChain.name,
-            formAction,
-          }} />}
-      </Button>
-    </div>
+    <FormButtonBody
+      onPress={handlePress}
+      disabled={disabled || isLoading || isSubmiting}
+      {...restProps}
+    >
+      {(isLoading || isSubmiting)
+        ? <Spinner color="current" size="md" />
+        : <ButtonText {...{
+          insured,
+          status,
+          isOnDifferentChain,
+          chainName: vaultChain.name,
+          formAction,
+        }} />}
+    </FormButtonBody>
   )
 }
 

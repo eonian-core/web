@@ -36,7 +36,7 @@ const Form: React.FC<Props> = ({ chainId }) => {
         <CardBody className={styles.fragment}>
           <FormInput {...{ disabled }}/>
 
-          <ArrowDivider size={24} />
+          <ArrowDivider />
 
           <FormPreview {...{ disabled }}/>
 

@@ -65,6 +65,13 @@
   }
 }
 
+.disableAnimation {
+  &:before {
+    animation: none;
+    background: none;
+  }
+}
+
 .fragment {
   padding: var(--padding-400);
   padding-top: var(--padding-200);
