@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SectionHeader } from '../components/section-header'
+import { SectionHeader } from '../components/section-header/section-header'
 import styles from './common-info-block.module.scss'
 
 export interface InfoBlockItem {

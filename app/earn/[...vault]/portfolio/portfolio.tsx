@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 import { useVaultContext } from '../hooks/use-vault-context'
-import { SectionHeader, SectionSubHeader } from '../components/section-header'
+import { SectionHeader, SectionSubHeader } from '../components/section-header/section-header'
 import styles from './portfolio.module.scss'
 import { PortfolioChart } from './portfolio-chart'
 import { PortfolioLegend } from './portfolio-legend'

@@ -9,13 +9,13 @@ import { WalletStatus } from '../../../providers/wallet/wrappers/types'
 import { FormActionStep } from '../../../store/slices/vaultActionSlice'
 import { getActiveStepSelector } from '../../../store'
 import type { ChainId } from '../../../providers/wallet/wrappers/helpers'
-import FormButton from './form-button'
-import FormHeader from './form-header'
+import FormButton from './form-button/form-button'
+import FormHeader from './form-header/form-header'
 import styles from './form.module.scss'
-import FormInput from './form-input'
+import FormInput from './form-input/form-input'
 import { FormPreview } from './form-preview'
-import { BlocknativeLink } from './components/blocknative-link'
-import { ArrowDivider } from './arrow-divider'
+import { BlocknativeLink } from './blocknative-link/blocknative-link'
+import { ArrowDivider } from './arrow-divider/arrow-divider'
 
 interface Props {
   chainId: ChainId

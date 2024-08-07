@@ -1,6 +1,6 @@
 'use client'
 
-import { ContentSkeleton } from './content-skeleton'
+import { ContentSkeleton } from './content/content-skeleton'
 import { HeaderSkeleton } from './header/header-skeleton'
 import pageStyles from './page.module.scss'
 

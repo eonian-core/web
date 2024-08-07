@@ -2,9 +2,9 @@
 
 import React, { useCallback } from 'react'
 
-import { FormAction } from '../../../store/slices/vaultActionSlice'
-import { useVaultContext } from '../hooks/use-vault-context'
-import { focusOnInput } from './form-input'
+import { FormAction } from '../../../../store/slices/vaultActionSlice'
+import { useVaultContext } from '../../hooks/use-vault-context'
+import { focusOnInput } from '../form-input/form-input'
 import { FormHeaderBody, TabButton } from './form-header-body'
 
 function FormHeader() {

@@ -1,5 +1,5 @@
+import { FormSkeleton } from '../form/form-skeleton'
 import styles from './content.module.scss'
-import { FormSkeleton } from './form/form-skeleton'
 
 export function ContentSkeleton() {
   return (

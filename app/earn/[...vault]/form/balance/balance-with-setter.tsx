@@ -1,8 +1,8 @@
 import { ethers } from 'ethers'
 import { useCallback } from 'react'
-import { useVaultContext } from '../hooks/use-vault-context'
-import { Balance } from './components/balance'
-import { focusOnInput } from './form-input'
+import { useVaultContext } from '../../hooks/use-vault-context'
+import { focusOnInput } from '../form-input/form-input'
+import { Balance } from './balance'
 
 export interface BalanceWithSetterProps {
   disabled: boolean

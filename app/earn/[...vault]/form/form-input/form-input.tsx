@@ -2,12 +2,12 @@
 
 import React from 'react'
 
-import { useVaultContext } from '../hooks/use-vault-context'
+import { useVaultContext } from '../../hooks/use-vault-context'
+import { RawFormInput } from '../raw-form-input/raw-form-input'
+import { WalletInputIcon } from '../input-icon/input-icon'
+import { BalanceWithSetter } from '../balance/balance-with-setter'
+import { Price } from '../price/price'
 import styles from './form-input.module.scss'
-import { RawFormInput } from './components/raw-form-input'
-import { WalletInputIcon } from './components/input-icon'
-import { BalanceWithSetter } from './balance-with-setter'
-import { Price } from './components/price'
 import { useAppSelector } from '@/store/hooks'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'

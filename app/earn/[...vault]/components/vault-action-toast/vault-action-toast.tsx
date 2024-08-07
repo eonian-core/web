@@ -3,12 +3,12 @@
 import React from 'react'
 import Image from 'next/image'
 import { Spinner } from '@nextui-org/react'
-import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
-import { useAppSelector } from '../../../store/hooks'
-import { FormAction, FormActionStep } from '../../../store/slices/vaultActionSlice'
+import { useWalletWrapperContext } from '../../../../providers/wallet/wallet-wrapper-provider'
+import { useAppSelector } from '../../../../store/hooks'
+import { FormAction, FormActionStep } from '../../../../store/slices/vaultActionSlice'
 
-import { getActiveStepSelector } from '../../../store'
-import { toStringNumberFromDecimals } from '../../../shared'
+import { getActiveStepSelector } from '../../../../store'
+import { toStringNumberFromDecimals } from '../../../../shared'
 import styles from './vault-action-toast.module.scss'
 
 export function VaultActionToast() {

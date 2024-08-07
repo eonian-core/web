@@ -4,13 +4,13 @@ import { Card, CardBody } from '@nextui-org/react'
 import React from 'react'
 
 import clsx from 'clsx'
-import type { Vault } from '../../../api'
+import type { Vault } from '../../../../api'
 
-import CompactNumber from '../../../components/compact-number/compact-number'
-import IconBoxArrow from '../../../components/icons/icon-box-arrow'
+import CompactNumber from '../../../../components/compact-number/compact-number'
+import IconBoxArrow from '../../../../components/icons/icon-box-arrow'
 
-import { calculateVaultAPY } from '../../../finances/apy'
-import { FormAction } from '../../../store/slices/vaultActionSlice'
+import { calculateVaultAPY } from '../../../../finances/apy'
+import { FormAction } from '../../../../store/slices/vaultActionSlice'
 import styles from './vault-info-card.module.scss'
 
 interface Props {
