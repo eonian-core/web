@@ -9,11 +9,11 @@ import CompactNumber from '@/components/compact-number/compact-number'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 
 export function Portfolio() {
-  const { inputValue = 0n, formAction, vault } = useVaultContext()
+  const { inputValue = 0n, showPlaceholder, placeholderValue, formAction, vault } = useVaultContext()
   const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
   const decimals = vault.asset.decimals
   const proportion = useVaultAssetProportion({
-    inputValue,
+    inputValue: showPlaceholder ? placeholderValue : inputValue,
     decimals,
     formAction,
     walletBalanceBN,
@@ -28,7 +28,7 @@ export function Portfolio() {
           vaultBalanceBN,
           formAction,
           decimals,
-          value: inputValue,
+          value: showPlaceholder ? placeholderValue : inputValue,
         }}
         />
       </SectionHeader>

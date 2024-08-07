@@ -21,7 +21,7 @@ const formatOptions = {
 export function FormPreview({ disabled }: { disabled: boolean }) {
   const { vault } = useVaultContext()
   const [deposit] = useVaultDeposit()
-  const { inputValue } = useVaultContext()
+  const { inputValue, placeholderDisplayValue } = useVaultContext()
 
   const { vaultBalanceBN } = useAppSelector(state => state.vaultUser)
   const { status } = useWalletWrapperContext()
@@ -33,7 +33,7 @@ export function FormPreview({ disabled }: { disabled: boolean }) {
     <RawFormInput
       preview
       label={'Savings Account'}
-      placeholder="0"
+      placeholder={placeholderDisplayValue}
       inputStart={<PreviewInputCoin vault={vault} />}
       readOnly
       onClick={focusOnInput}

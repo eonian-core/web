@@ -18,17 +18,19 @@ export function useVaultDepositUSD(vault: Vault) {
 }
 
 function useDeposit(amount: bigint | string) {
-  const { inputValue = 0n, formAction } = useVaultContext()
+  const { inputValue = 0n, showPlaceholder, placeholderValue, formAction } = useVaultContext()
   const amountBN = BigInt(amount)
+
+  const value = showPlaceholder ? placeholderValue : inputValue
 
   const total = useMemo(() => {
     switch (formAction) {
       case FormAction.DEPOSIT:
-        return amountBN + inputValue
+        return amountBN + value
       case FormAction.WITHDRAW:
-        return amountBN < inputValue ? 0n : amountBN - inputValue
+        return amountBN < value ? 0n : amountBN - value
     }
-  }, [amountBN, inputValue, formAction])
+  }, [amountBN, value, formAction])
 
   return [total, total - amountBN] as const
 }
