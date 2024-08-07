@@ -19,6 +19,7 @@ import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { getPriceChangeDuringTimeline } from '@/finances/price'
 import { convertToUsd } from '@/finances/usd'
+import { ChartSkeleton } from '@/components/loader/skeleton-chart'
 
 interface Props {
   symbol: TokenSymbol
@@ -50,7 +51,7 @@ export function Returns({ symbol }: Props) {
       </SectionHeader>
       <div className={styles.chart}>
         {!yearlyPriceData
-          ? <ChartSkeleton />
+          ? <ChartSkeleton width={chartWidth} height={chartHeight}/>
           : (
           <ReturnsChart
             days={days}
@@ -140,20 +141,5 @@ function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
       </div>
       <PercentagePriceChange className={styles.percent} currentPrice={currentPrice * changeAPY} previousPrice={previousPrice} />
     </div>
-  )
-}
-
-function ChartSkeleton(props: IContentLoaderProps) {
-  return (
-    <ContentLoader
-      width={chartWidth}
-      height={chartHeight}
-      viewBox={`0 0 ${chartWidth} ${chartHeight}`}
-      backgroundColor="#b6b6b658"
-      foregroundColor="#c9c7c7c0"
-      {...props}
-    >
-      <rect x="0" y="0" rx="10" ry="10" width={chartWidth} height={chartHeight - 20} />
-    </ContentLoader>
   )
 }

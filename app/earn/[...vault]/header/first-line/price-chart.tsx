@@ -12,11 +12,15 @@ import { formatUSD } from '@/finances/humanize/format-currency'
 import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { getPriceChangeDuringTimeline } from '@/finances/price'
+import { ChartSkeleton } from '@/components/loader/skeleton-chart'
 
 interface ChartProps {
   symbol: TokenSymbol
   currentPrice: number
 }
+
+const chartWidth = 315
+const chartHeight = 128
 
 export function PriceChart({ symbol, currentPrice }: ChartProps) {
   const { data } = useTokenPrice(symbol)
@@ -26,9 +30,8 @@ export function PriceChart({ symbol, currentPrice }: ChartProps) {
     return (
       <div className={styles.container}>
         <PriceInfo {...{ symbol, currentPrice }}>
-          <OneLineSkeleton marginTop={0} height={20} width={80} />
         </PriceInfo>
-        <ChartSkeleton />
+        <ChartSkeleton width={chartWidth} height={chartHeight}/>
       </div>
     )
   }
@@ -61,9 +64,6 @@ function PriceInfo({ symbol, currentPrice, children }: PropsWithChildren<ChartPr
   )
 }
 
-const chartWidth = 315
-const chartHeight = 128
-
 const coinYAxisDomain: AxisDomain = ['auto', 'auto']
 const stableYAxisDomain: AxisDomain = [0, 2]
 
@@ -95,20 +95,5 @@ function Chart({ yearlyPriceData, symbol }: { yearlyPriceData: PriceData[]; symb
       <YAxis domain={yAxisDomainMap[symbol]} hide />
 
     </AreaChart>
-  )
-}
-
-function ChartSkeleton(props: IContentLoaderProps) {
-  return (
-    <ContentLoader
-      width={chartWidth}
-      height={chartHeight}
-      viewBox={`0 0 ${chartWidth} ${chartHeight}`}
-      backgroundColor="#b6b6b658"
-      foregroundColor="#c9c7c7c0"
-      {...props}
-    >
-      <rect x="0" y="0" rx="10" ry="10" width={chartWidth} height={chartHeight} />
-    </ContentLoader>
   )
 }
