@@ -40,3 +40,7 @@ next-env.d.ts
 
 # Storybook
 /storybook-static
+
+#Editors
+.idea
+.vscode

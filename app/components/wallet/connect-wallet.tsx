@@ -24,7 +24,7 @@ function ConnectWallet() {
       )
     : (
     <InternalLink href={'/earn'} onClick={handleClick}>
-      <Button bordered>{status === WalletStatus.CONNECTING ? 'Connecting...' : 'Connect'}</Button>
+      <Button id="connect-button" bordered>{status === WalletStatus.CONNECTING ? 'Connecting...' : 'Connect'}</Button>
     </InternalLink>
       )
 }

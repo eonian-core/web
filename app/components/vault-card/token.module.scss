@@ -1,0 +1,365 @@
+@import '../../screen.scss';
+
+
+
+.token {
+  --token-min-heigh: 30rem;
+
+  position: relative;
+
+  height: 100%;
+  width: 20rem;
+  min-height: var(--token-min-heigh);
+
+  background: linear-gradient(
+    210deg,
+    var(--color-neutral-325) 5%,
+    var(--color-neutral-300) 35%,
+    var(--color-neutral-325) 85%
+  );
+  border-radius: var(--border-radius-600);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: 0.5rem;
+    height: calc(100% - 0.5rem);
+    width: calc(100% - 1rem);
+
+    border-radius: calc(2 * var(--border-radius-400));
+    z-index: -1;
+    background-size: 300% 300%;
+    mix-blend-mode: screen;
+    filter: blur(2em);
+    transition: filter 0.5s ease;
+
+    // (!) Fallback for browsers that don't support CSS relative color functions
+    background: linear-gradient(to bottom right, #a166ab, #333399, #5073b8, #2657eb, #2657eb);
+
+    @supports (color: hsl(from white h s l)) {
+      background: linear-gradient(
+        180deg,
+        var(--color-token) 0%,
+        rgb(from var(--color-token) r g b / 50%) 50%,
+        rgb(from var(--color-token) r g b / 85%) 100%
+      );
+    }
+  }
+
+  &.BNB,
+  &.DAI {
+    &::after {
+      background: none;
+    }
+  }
+
+  &:hover {
+    &::after {
+      filter: blur(3rem);
+    }
+  }
+
+  &.planned {
+    background: none;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='15' ry='15' stroke='%23868686FF' stroke-width='5' stroke-dasharray='15' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+
+    
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  border-radius: var(--border-radius-600);
+  padding: var(--padding-300) var(--padding-400);
+  padding-bottom: var(--padding-50);
+
+  min-height: calc(var(--token-min-heigh) - var(--padding-300) - var(--padding-50));
+
+  &::before {
+    content: '';
+    background-color: var(--color-token);
+    position: absolute;
+    border-radius: 50%;
+    width: 10rem;
+    height: 10rem;
+    top: 1rem;
+    right: -3rem;
+    filter: blur(3rem);
+    transform: scale(1);
+    transition: transform 0.5s ease;
+
+    .USDC &,
+    .BTC &,
+    .BTCB & {
+      opacity: 0.75;
+    }
+
+    .USDC & {
+      filter: blur(4rem);
+      transform: scale(1.5);
+    }
+
+    .BNB &,
+    .DAI & {
+      background: none;
+    }
+  }
+
+  &:hover::before {
+    transform: scale(1.1);
+  }
+}
+
+.logo {
+  color: rgba(0, 0, 0, 0.15);
+  position: absolute;
+  top: -3.5rem;
+  right: -6.5rem;
+  z-index: 1;
+  user-select: none;
+  pointer-events: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.planned .logo {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.token {
+  &:hover {
+    .logo {
+      animation: bounce 3s infinite ease-in-out;
+    }
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-0.5rem);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+
+  margin-top: var(--margin-300);
+
+  z-index: 2;
+
+  h3 {
+    position: relative;
+
+    font-size: var(--font-size-800);
+    font-weight: var(--font-bold);
+    line-height: var(--font-size-800);
+
+    color: var(--color-text-800);
+    padding-left: var(--padding-100);
+
+    &::after {
+      content: '';
+      position: absolute;
+      height: 1.6rem;
+      top: 0.15rem;
+      left: 0;
+      border-right: 3px solid var(--color-token);
+
+      .BNB &,
+      .DAI & {
+        --color-token: gray;
+      }
+    }
+  }
+}
+
+.planned .header h3 {
+  color: var(--color-text-400);
+}
+
+.token:hover {
+  .hoverText {
+    width: calc(100% + 0.5rem);
+    filter: drop-shadow(0 0 23px hsl(272, 100%, 62%));
+  }
+}
+
+.tags {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+
+  flex-wrap: wrap;
+  z-index: 2;
+
+  margin-top: var(--margin-200);
+  padding-bottom: var(--padding-50);
+
+  span {
+    white-space: nowrap;
+  }
+
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 5rem;
+    bottom: -0.5rem;
+    left: 0;
+    border-bottom: 1px solid var(--color-neutral-400);
+  }
+}
+
+.borderedTag {
+  // "!important" is required for local development, because of wrong CSS order
+  background-color: rgba(#fff, 0.15) !important;
+  color: var(--color-text-700) !important;
+  font-weight: var(--font-medium) !important;
+
+  &.plannedTag {
+    background-color: rgba(#000000, 0.5) !important;
+    color: var(--color-text-400) !important;
+  }
+}
+
+
+
+
+.symbol {
+  font-size: var(--font-size-500);
+  color: var(--color-text-500);
+}
+
+.stats {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text-800);
+  margin-top: var(--margin-400);
+}
+
+.planned .stats {
+  color: var(--color-text-400);
+}
+
+.returns {
+  // border-bottom: solid 1px var(--color-text-400);
+  // padding-bottom: var(--padding-200);
+  margin-bottom: var(--padding-200);
+
+  .value {
+    font-size: var(--font-size-750);
+    font-weight: var(--font-bold);
+    line-height: var(--font-size-800);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--margin-100);
+  }
+}
+
+.label {
+  font-size: var(--font-size-400);
+  color: var(--color-text-600);
+}
+
+.planned .label {
+  color: var(--color-text-500);
+}
+
+.distribution {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: flex-start;
+  width: 100%;
+
+  .item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .value {
+    font-size: var(--font-size-700);
+    font-weight: var(--font-bold);
+
+    color: var(--color-text-700);
+  }
+}
+
+.planned .distribution .value {
+  color: var(--color-text-400);
+}
+
+.action {
+  margin-top: auto;
+
+  .balance,
+  .insurance {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .value {
+      font-size: var(--font-size-700);
+      font-weight: var(--font-bold);
+
+      color: var(--color-text-700);
+      line-height: var(--line-height-500);
+    }
+  }
+
+  .development {
+    width: 100%;
+    text-align: center;
+    color: var(--color-text-600);
+    padding-top: var(--padding-50);
+  }
+}
+
+.planned .action .value {
+  color: var(--color-text-400);
+}
+
+.actionButton {
+  width: 100% !important;
+  margin-top: var(--margin-200);
+
+  &:last-child {
+    margin-bottom: var(--margin-200);
+  }
+}
+
+.insuranceInducatorWrapper {
+  margin-top: 2px;
+}
+
+.insuranceInducator {
+  background: linear-gradient(
+    to right,
+    var(--color-success-800) 30%,
+    var(--color-success-700) 60%,
+    var(--color-success-600) 90%
+  );
+}

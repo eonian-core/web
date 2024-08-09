@@ -1,0 +1,15 @@
+.loading {
+  padding: 0 var(--padding-200);
+}
+
+.balance {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+
+  &:not(.balanceDisabled):hover {
+    cursor: pointer;
+    font-size: var(--font-size-300);
+    color: var(--color-text-300);
+  }
+}

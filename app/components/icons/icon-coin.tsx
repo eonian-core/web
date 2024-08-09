@@ -4,37 +4,26 @@ import IconEthereum from './icon-ethereum'
 import IconBitcoin from './icon-bitcoin'
 import IconTether from './icon-tether'
 import IconUSDC from './icon-usdc'
-import IconBUSD from './icon-busd'
-
-export enum CoinIcon {
-  BNB = 'BNB',
-  ETH = 'ETH',
-  USDT = 'USDT',
-  BUSD = 'BUSD',
-  USDC = 'USDC',
-  BTC = 'BTC',
-}
+import IconDAI from './icon-dai'
+import type { TokenSymbol } from '@/types'
 
 interface Props extends React.SVGProps<SVGSVGElement> {
-  symbol: CoinIcon | string
+  symbol: TokenSymbol
+  noBackground?: boolean
+}
+
+const iconLookupMap: Record<TokenSymbol, React.FC<Omit<Props, 'symbol'>>> = {
+  BTCB: IconBitcoin,
+  ETH: IconEthereum,
+  USDT: IconTether,
+  USDC: IconUSDC,
+  DAI: IconDAI,
+  BNB: IconBNB,
 }
 
 const IconCoin: React.FC<Props> = ({ symbol, ...svgProps }) => {
-  switch (symbol) {
-    case CoinIcon.BNB:
-      return <IconBNB {...svgProps} />
-    case CoinIcon.ETH:
-      return <IconEthereum {...svgProps} />
-    case CoinIcon.USDT:
-      return <IconTether {...svgProps} />
-    case CoinIcon.USDC:
-      return <IconUSDC {...svgProps} />
-    case CoinIcon.BUSD:
-      return <IconBUSD {...svgProps} />
-    case CoinIcon.BTC:
-    default:
-      return <IconBitcoin {...svgProps} />
-  }
+  const Icon = iconLookupMap[symbol]
+  return <Icon {...svgProps} />
 }
 
 export default IconCoin

@@ -8,6 +8,13 @@ module.exports = {
       "namedComponents": ["arrow-function", "function-declaration"],
       "unnamedComponents": "arrow-function"
     }],
-    'curly': ["error", "multi-or-nest"]
+    'curly': ["error", "multi-or-nest"],
+    'no-restricted-syntax': [
+      'error',
+      {
+        message: "Please don't define components inside of components, it really bad practice.",
+        selector: 'FunctionDeclaration FunctionDeclaration'
+      }
+    ]
   },
 }

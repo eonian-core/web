@@ -1,0 +1,29 @@
+.header {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding: var(--padding-50) !important;
+  padding-left: var(--padding-400) !important;
+  padding-right: var(--padding-400) !important;
+  overflow: visible !important;
+  gap: var(--margin-400)
+}
+
+.button {
+  color: var(--color-text-500);
+  padding-top: var(--padding-100);
+  padding-bottom: var(--padding-100);
+  justify-content: flex-start;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: transparent;
+    color: var(--color-text-300);
+  }
+}
+
+.buttonActive {
+  &, &:hover {
+    color: var(--color-text-100);
+  }
+}
