@@ -28,6 +28,7 @@ export function ArrowDivider() {
 
   const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
   const balance = formAction === FormAction.DEPOSIT ? BigInt(walletBalanceBN) : BigInt(vaultBalanceBN)
+
   const balanceNotEmpty = balance > 0n
 
   return (
@@ -79,6 +80,7 @@ export function PercentOption({ children: option, currentPercent, balance, decim
     if (raw === formated // formating unnnecessary, will use raw
             || Number.isNaN(+formated) // formated number can be something like "<0.00001", will use raw
             || option === 1 // option is 100%, will use raw
+            || raw === `${formated}.0` // raw equals formated with ".0" at the end, will use raw
     ) {
       onValueChange(raw)
       return
