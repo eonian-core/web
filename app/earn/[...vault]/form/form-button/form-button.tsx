@@ -86,10 +86,7 @@ function useSubmit() {
   })
   const walletAvailable = !!refetechVaultUserData
 
-  const { formAction } = useVaultContext()
-  const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
-  const haveEnoughAssets = formAction === FormAction.DEPOSIT ? inputValue <= BigInt(walletBalanceBN) : inputValue <= BigInt(vaultBalanceBN)
-
+  const haveEnoughAssets = useHaveEnoughAssets()
   const canSubmit = walletAvailable && haveInputValue && haveEnoughAssets
 
   const submit = useCallback(async (formAction: FormAction) => {
@@ -135,6 +132,17 @@ function useSubmit() {
   }
 }
 
-function FrictionRemover({ children }: PropsWithChildren) {
+export function useHaveEnoughAssets() {
+  const { inputValue = 0n } = useVaultContext()
+  const { formAction } = useVaultContext()
+  const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
+
+  return formAction === FormAction.DEPOSIT
+    ? inputValue <= BigInt(walletBalanceBN)
+    : inputValue <= BigInt(vaultBalanceBN)
+}
+
+// TODO: find proper way to integrate
+export function FrictionRemover({ children }: PropsWithChildren) {
   return <span className={styles.frictionRemover}>{children}</span>
 }
