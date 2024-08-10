@@ -14,6 +14,10 @@
   @media (max-width: $screen-mobile) {
     padding: 0;
   }
+
+  // Used for the indication of positive/negative price changes
+  --color-positive: var(--color-success-400);
+  --color-negative: #FF7F7F;
 }
 
 .loading,
@@ -25,8 +29,85 @@
 
   height: 100%;
   width: 100%;
+
+  h1 {
+    font-size: var(--font-size-800);
+    font-weight: 700;
+    color: var(--color-text-200);
+
+    @media (max-width: $screen-tablet) {
+
+    }
+  }
+  
+}
+
+.errorBanner {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: var(--margin-400);
+}
+
+.errorDescription {
+  max-width: 30rem;
+  color: var(--color-text-400);
+  margin-bottom: var(--margin-400);
+  text-align: center;
+
+  a {
+    color: var(--color-text-200);
+    font-weight: 600;
+  }
+}
+
+.icon {
+  width: 10em;
+  height: 10em;
+
+  @media (max-width: $screen-mobile) {
+    width: 5em;
+    height: 5em;
+  }
+}
+
+.robotIcon {
+  margin-top: 0.7rem;
+
+  @media (max-width: $screen-mobile) {
+    margin-top: 0.3rem;
+  }
 }
 
 .errorMessage {
   margin-top: var(--margin-200);
+  border: 2px dashed var(--color-dark-200);
+  width: 100%;
+  max-width: 40rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-family: 'ui-monospace', 'Menlo', 'Monaco', 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  box-sizing: border-box;
+
+  h2 {
+    font-size: var(--font-size-600);
+    font-weight: 700;
+    margin-bottom: var(--margin-200);
+  }
+
+  p {
+    font-size: var(--font-size-300);
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+  
+  }
+
+  @media (max-width: $screen-tablet) {
+    width: auto;
+    max-width: calc(100% - 2rem);
+  }
+}
+
+.errorDescription, .errorMessage {
+  margin-left: 1rem;
+  margin-right: 1rem;
 }

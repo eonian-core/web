@@ -1,0 +1,42 @@
+.divider {
+    position: relative;
+    margin: var(--margin-600) 0;
+
+    &.withPicker {
+        margin-top: var(--margin-100);
+    }
+}
+
+.arrow {
+    position: absolute;
+    transform: translateY(-50%) translateX(-50%) rotateZ(90deg);
+    left: 50%;
+    cursor: pointer;
+
+    transition: transform 0.3s ease-in-out;
+
+    &.reverse {
+        transform: translateY(-50%) translateX(-50%) rotateZ(270deg);
+    }
+}
+
+.percentPicker {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.option {
+    margin-left: var(--margin-100);
+    margin-right: var(--margin-100);
+    color: var(--color-text-400);
+    font-weight: var(--font-semibold);
+
+    &.active {
+        color: var(--color-text-200);
+    }
+
+    &:hover {
+        color: var(--color-text-100);
+    }
+}

@@ -1,29 +1,40 @@
 import React from 'react'
 import { toBigIntWithDecimals, toStringNumberFromDecimals } from '../../../shared'
 
-export function useNumberInputValue(defaultValue: bigint,
-  decimals: number): [bigint, string, (value: string | bigint) => void] {
-  const [value, setValue] = React.useState(defaultValue)
-  const [displayValue, setDisplayValue] = React.useState(bigIntToString(value, decimals))
+export interface NumberInputValue {
+  value?: bigint
+  displayValue?: string
+  onValueChange: (value: string | bigint) => void
+}
 
-  const handleValueChange = React.useCallback(
+export function useNumberInputValue(
+  defaultValue: bigint | undefined,
+  decimals: number,
+): NumberInputValue {
+  const [value, setValue] = React.useState(defaultValue)
+  const [displayValue, setDisplayValue] = React.useState(value ? bigIntToString(value, decimals) : undefined)
+
+  const onValueChange = React.useCallback(
     (value: string | bigint) => {
       const isBigInt = typeof value === 'bigint'
       const values = isBigInt ? parseBigIntValue(value, decimals) : parseValue(value, decimals)
       if (!values)
         return
 
-      const [newValue, displayValue] = values
+      const { value: newValue, displayValue } = values
       setDisplayValue(displayValue)
       setValue(newValue)
     },
     [decimals],
   )
 
-  return [value, displayValue, handleValueChange]
+  return { value, displayValue, onValueChange }
 }
 
-export type ValueParseResult = [value: bigint, displayValue: string]
+export interface ValueParseResult {
+  value: bigint
+  displayValue: string
+}
 
 export function parseValue(value: string, decimals: number): ValueParseResult | null {
   const newValue = normalizeValue(value)
@@ -33,11 +44,14 @@ export function parseValue(value: string, decimals: number): ValueParseResult | 
 
   const numberValue = Number.parseFloat(newValue)
   const isNumber = !Number.isNaN(numberValue)
-  return [isNumber ? toBigIntWithDecimals(newValue, decimals) : 0n, newValue]
+  return {
+    value: isNumber ? toBigIntWithDecimals(newValue, decimals) : 0n,
+    displayValue: newValue,
+  }
 }
 
-export function parseBigIntValue(value: bigint, decimals: number): ValueParseResult | null {
-  return [value, bigIntToString(value, decimals)]
+export function parseBigIntValue(value: bigint, decimals: number): ValueParseResult {
+  return { value, displayValue: bigIntToString(value, decimals) }
 }
 
 /**

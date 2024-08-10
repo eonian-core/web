@@ -51,6 +51,8 @@ export interface FadeInBodyProps {
 
   /** Show or not content */
   isInView?: boolean
+
+  withExit?: boolean
 }
 
 /** Simple wrapper to allow contnracts fade in animation in more complex components */
@@ -68,6 +70,7 @@ export const FadeInBody = React.forwardRef<HTMLDivElement, FadeInBodyProps>(
       fadeUpInitial = '30%',
       fadeHorizontal = false,
       fadeHorizontalInitial = '30%',
+      withExit = false,
     },
     ref,
   ) => (
@@ -81,6 +84,14 @@ export const FadeInBody = React.forwardRef<HTMLDivElement, FadeInBodyProps>(
         x: fadeHorizontal ? fadeHorizontalInitial : 0,
       }}
       animate={isInView && { opacity: 1, scale: 1, y: 0, x: 0 }}
+      exit={withExit
+        ? {
+            opacity: 0,
+            scale: zoomIn ? zoomInInitial : 1,
+            y: fadeUp ? fadeUpInitial : 0,
+            x: fadeHorizontal ? fadeHorizontalInitial : 0,
+          }
+        : undefined}
       transition={{
         duration,
         delay,

@@ -45,7 +45,7 @@ export default init({
     },
   },
   appMetadata: {
-    name: 'Eonian Finance',
+    name: 'Eonian DAO',
     icon: `
         <svg
           width="24"

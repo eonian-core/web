@@ -4,7 +4,7 @@ import React from 'react'
 import clsx from 'clsx'
 import { useIsDesktopOrSmaller } from '../../../../components/resize-hooks/screens'
 import { WrapperLink } from '../../../../components/links/wrapper-link'
-import type { Props as ButtonProps } from '../../../../components/button/button'
+import type { ButtonProps } from '../../../../components/button/button'
 import Button from '../../../../components/button/button'
 import styles from './hero-button.module.scss'
 

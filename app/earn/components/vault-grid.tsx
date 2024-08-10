@@ -1,95 +1,97 @@
 'use client'
 
-import React from 'react'
-import { JsonRpcProvider } from 'ethers'
+import React, { useMemo } from 'react'
 import type { Vault } from '../../api'
-import { H2, H3 } from '../../components/heading/heading'
-import { ChainId, getRPCEndpoint } from '../../providers/wallet/wrappers/helpers'
-import { defaultChain } from '../../web3-onboard'
 
-import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-provider'
-import { useAppDispatch } from '../../store/hooks'
-import { fetchPositionInfo } from '../../store/slices/positionInfoSlice'
-import { TokenOrder } from '../../(landing)/views/offer/token'
 import styles from './vault-grid.module.scss'
 import { NetworkSelector } from './network-selector'
-import { BaseVaultCard, VaultCard } from './vault-card/vault-card'
-import { getAssetSymbol } from './vault-card/vault-card-features'
+import { Header } from './header'
+import { VaultGridSkeleton } from './vault-grid-skeleton'
+import { TokenOrder } from '@/types'
+import { VaultCard } from '@/components/vault-card/vault-card'
+import { Distribution, TokenAction, TokenApy, TokenFees, TokenFooter, TokenGrowth, TokenState, TokenStats, YearlyReturns } from '@/components/vault-card/token'
+import { getYearlyROI } from '@/finances/roi'
+import { BnbToken, DaiToken } from '@/components/vault-card/content'
+import { useVaultsContext } from '@/api/vaults/vaults-context'
+import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
+import { useChainContext } from '@/shared/web3/chain-context'
+import { buildFadeInAnitionStyles, useAnimation } from '@/components/fade-in/fade-in-child-list'
 
-export type VaultsByChain = Record<ChainId, Vault[]>
+const bySymbolOrder = (a: Vault, b: Vault) => TokenOrder.indexOf(getAssetSymbol(a)) - TokenOrder.indexOf(getAssetSymbol(b))
 
-interface Props {
-  vaultsByChain: VaultsByChain
-}
+const fadeInDuration = 0.1
 
-export function VaultGrid({ vaultsByChain }: Props) {
-  const defaultChainId = ChainId.parse(defaultChain.id)
-  const [chainId, setChainId] = React.useState(defaultChainId)
-  const chainName = ChainId.getName(chainId).toLowerCase()
-  const vaults = sortVaults(vaultsByChain[chainId])
+export function VaultGrid() {
+  const { chainName } = useChainContext()
+  const { vaults } = useVaultsContext()
+  const sorted = useMemo(() =>
+    Object.values(vaults).sort(bySymbolOrder),
+  [vaults])
 
-  useFetchPositionInfo(chainId, vaults)
+  const { maxIsVisible } = useAnimation(sorted.length + 2, true, 0.05)
 
   return (
     <div>
       <div className={styles.header}>
-        <div>
-          <H2>Select Cryptocurrency</H2>
-          <H3>Choose an asset to save and generate passive income</H3>
+        <Header />
+        <NetworkSelector />
+      </div>
+
+      {maxIsVisible <= 0
+        ? <VaultGridSkeleton />
+        : (
+        <div className={styles.cards}>
+          {sorted.map((vault, i) => (
+            <VaultCard
+              symbol={getAssetSymbol(vault)}
+              key={vault.address}
+              style={buildFadeInAnitionStyles(maxIsVisible > i, fadeInDuration)}
+            >
+              <TokenAction
+                href={`/earn/${chainName}/${vault.symbol}`}
+              >Save</TokenAction>
+            </VaultCard>
+          ))}
+
+          <ComingSoonBNBVaults maxIsVisible={maxIsVisible - sorted.length} />
         </div>
-        <NetworkSelector value={chainId} onChange={setChainId} />
-      </div>
-      <div className={styles.cards}>
-        {vaults.map(vault => (
-          <VaultCard chainName={chainName} key={vault.address} vault={vault} />
-        ))}
-        {chainId === ChainId.BSC_MAINNET && <ComingSoonBNBVaults />}
-      </div>
+          )}
     </div>
   )
 }
 
-function sortVaults(vaults: Vault[]): Vault[] {
-  return [...vaults].sort((a, b) => TokenOrder.indexOf(getAssetSymbol(a)) - TokenOrder.indexOf(getAssetSymbol(b)))
-}
-
-function ComingSoonBNBVaults() {
+function ComingSoonBNBVaults({ maxIsVisible }: { maxIsVisible: number }) {
   return (
     <>
-      <BaseVaultCard symbol="BNB" apy={3} growth={143.5} buttonLabel="Coming soon" buttonDisabled />
-      <BaseVaultCard symbol="DAI" apy={10} growth={0} buttonLabel="Coming soon" buttonDisabled />
+      <BnbToken state={TokenState.Planned} style={buildFadeInAnitionStyles(maxIsVisible > 0, fadeInDuration)}>
+        <TokenStats>
+          <YearlyReturns>{getYearlyROI(3, 143.5)}%</YearlyReturns>
+          <Distribution>
+            <TokenFees>0%</TokenFees>
+            <TokenApy>3%</TokenApy>
+            <TokenGrowth>143.5%</TokenGrowth>
+          </Distribution>
+        </TokenStats>
+
+        <TokenFooter>
+          <TokenAction>Coming soon</TokenAction>
+        </TokenFooter>
+      </BnbToken>
+
+      <DaiToken state={TokenState.Planned} style={buildFadeInAnitionStyles(maxIsVisible > 1, fadeInDuration)}>
+        <TokenStats>
+          <YearlyReturns>{getYearlyROI(10, 0)}%</YearlyReturns>
+          <Distribution>
+            <TokenFees>0%</TokenFees>
+            <TokenApy>10%</TokenApy>
+            <TokenGrowth>9%</TokenGrowth>
+          </Distribution>
+        </TokenStats>
+
+        <TokenFooter>
+          <TokenAction>Coming soon</TokenAction>
+        </TokenFooter>
+      </DaiToken>
     </>
   )
-}
-
-/**
- * Gets the user's invested position in each vault in the list.
- * @param chainId The ID of the currently selected chain.
- * @param vaults A list of vaults from which to get the position.
- */
-function useFetchPositionInfo(chainId: ChainId, vaults: Vault[]) {
-  const { wallet, chain, provider } = useWalletWrapperContext()
-  const walletAddress = wallet?.address
-  const multicallAddress = chain?.multicallAddress
-  const dispatch = useAppDispatch()
-
-  const callback = () => {
-    if (!multicallAddress || !walletAddress || !provider || vaults.length === 0)
-      return
-
-    const endpoint = getRPCEndpoint(chainId)
-    if (!endpoint)
-      return
-
-    void dispatch(
-      fetchPositionInfo({
-        walletAddress,
-        vaultAddresses: vaults.map(vault => vault.address),
-        multicallAddress,
-        provider: new JsonRpcProvider(endpoint),
-      }),
-    )
-  }
-
-  React.useEffect(callback, [vaults, chainId, dispatch, provider, multicallAddress, walletAddress])
 }

@@ -44,6 +44,9 @@ export interface FadeInWrapperProps extends PropsWithChildren {
   amount?: 'some' | 'all' | number
   /** Trigger the animation only once, default true */
   once?: boolean
+
+  /** Override is in view */
+  isInView?: boolean
 }
 
 export function FadeInWrapper({
@@ -53,9 +56,11 @@ export function FadeInWrapper({
   once = true,
   isList,
   isSection,
+  isInView: isInViewOverride,
 }: FadeInWrapperProps) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once, amount })
+  const isInViewBasedOnRef = useInView(ref, { once, amount })
+  const isInView = isInViewOverride ?? isInViewBasedOnRef
 
   // Possible to pass wrapper component through props
   // but it in some situations breaks react refs on mobile

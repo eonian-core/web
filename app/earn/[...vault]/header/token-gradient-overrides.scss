@@ -1,0 +1,10 @@
+body:has(#token-gradient) {
+  #connect-button {
+    border-color: var(--color-text-350);
+
+    &:hover {
+      border-color: var(--color-text-200);
+      background-color: transparent;
+    }
+  }
+}

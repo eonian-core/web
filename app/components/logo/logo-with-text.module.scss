@@ -24,7 +24,7 @@ a.logo {
 }
 
 .name {
-  @media (max-width: $screen-tablet) {
+  @media (max-width: $screen-laptop) {
     display: none;
   }
 }

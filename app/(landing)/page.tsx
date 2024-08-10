@@ -28,6 +28,20 @@ import IconWallet from '../components/icons/icon-wallet'
 import IconWindowGrid from '../components/icons/icon-window-grid'
 
 import { AppearMark, AppearMarkOnScroll } from '../components/appear-mark/appear-mark'
+import {
+  Distribution,
+  FrictionRemover,
+  Tag,
+  Tags,
+  TokenAction,
+  TokenApy,
+  TokenFees,
+  TokenFooter,
+  TokenGrowth,
+  TokenHeader,
+  TokenStats,
+  YearlyReturns,
+} from '../components/vault-card/token'
 import HeroButton from './views/hero/button-group/hero-button'
 import HeroButtonGroup from './views/hero/button-group/hero-button-group'
 import Hero from './views/hero/hero'
@@ -42,23 +56,24 @@ import Offer from './views/offer/offer'
 import Tokens from './views/offer/tokens'
 import Caption from './views/offer/caption'
 import Features, { Feature, FeaturesList } from './views/offer/features'
-import SectionCEX, { CexFirstCard, CexHeader, CexHeaderBut, CexSecondCard, CexSecondCardHeader, ScrollingCexHeader } from './views/problem/section-cex/section-cex'
-import SectionWallets, { WalletFirstCard, WalletHeader, WalletScrolledHeader, WalletSecondCard, WalletSecondCardHeader } from './views/problem/section-wallets/section-wallets'
+import SectionCEX, {
+  CexFirstCard,
+  CexHeader,
+  CexHeaderBut,
+  CexSecondCard,
+  CexSecondCardHeader,
+  ScrollingCexHeader,
+} from './views/problem/section-cex/section-cex'
+import SectionWallets, {
+  WalletFirstCard,
+  WalletHeader,
+  WalletScrolledHeader,
+  WalletSecondCard,
+  WalletSecondCardHeader,
+} from './views/problem/section-wallets/section-wallets'
 import { Column } from './views/problem/components/column'
 import styles from './page.module.css'
 import Content from './content/en.mdx'
-import {
-  Distribution,
-  Tag,
-  Tags,
-  Token,
-  TokenApy,
-  TokenFees,
-  TokenGrowth,
-  TokenHeader,
-  TokenStats,
-  YearlyReturns,
-} from './views/offer/token'
 import Warning from './views/hero/warning'
 import SocialProof, {
   SocialProofBody,
@@ -68,6 +83,7 @@ import SocialProof, {
 } from './views/social-proof/social-proof'
 import Testimonials from './views/testimonials/testimonials'
 import Partners from './views/partners/partners'
+import { VaultCard } from '@/components/vault-card/vault-card'
 
 const components = {
   Hero,
@@ -111,7 +127,7 @@ const components = {
   FeaturesList,
   Offer,
   Tokens,
-  Token,
+  VaultCard,
   TokenHeader,
   Tags,
   Tag,
@@ -147,6 +163,9 @@ const components = {
   SocialProofLinks,
   Testimonials,
   Partners,
+  TokenFooter,
+  FrictionRemover,
+  TokenAction,
 }
 
 export default function Home() {
