@@ -1,7 +1,6 @@
 import { useVaultContext } from '../hooks/use-vault-context'
 import styles from './returns-legend.module.scss'
 import type { PriceData } from '@/types'
-import { calculateVaultAPY } from '@/finances/apy'
 import { formatPercent } from '@/finances/humanize/format-persent'
 import { getPriceChangeDuringTimeline } from '@/finances/price'
 import { getYearlyApy } from '@/finances/vault-apy'
