@@ -45,13 +45,13 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
     void submit(formAction)
   }, [insured, setInsured, status, isOnDifferentChain, formAction, connect, setCurrentChain, submit, vaultChain.id])
 
-  const shouldBeAblToSubmit = status === WalletStatus.CONNECTED
+  const shouldBeAbleToSubmit = status === WalletStatus.CONNECTED
   return (
     <FormButtonBody
       onPress={handlePress}
       disabled={
         (disabled || isLoading || isSubmiting)
-        || (shouldBeAblToSubmit ? !canSubmit : false)
+        || (shouldBeAbleToSubmit ? !canSubmit : false)
       }
       {...restProps}
     >
@@ -93,7 +93,7 @@ function useSubmit() {
 
   const submit = useCallback(async (formAction: FormAction) => {
     if (!canSubmit) {
-      toast('Looks like something wrong, try refresh the page', {
+      toast('Looks like something is wrong, try refreshing the page', {
         type: 'error',
       })
       return
@@ -116,7 +116,7 @@ function useSubmit() {
     }
     catch (error) {
       console.error('Error during submit', error)
-      toast('An error occurred, please try refresh the page', {
+      toast('An error occurred, please try refreshing the page', {
         type: 'error',
       })
     }
