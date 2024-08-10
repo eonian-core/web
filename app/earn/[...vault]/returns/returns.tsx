@@ -18,6 +18,7 @@ import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { getPriceChangeDuringTimeline } from '@/finances/price'
 import { convertToUsd } from '@/finances/usd'
 import { ChartSkeleton } from '@/components/loader/skeleton-chart'
+import { getYearlyApy } from '@/finances/vault-apy'
 
 interface Props {
   symbol: TokenSymbol
@@ -113,7 +114,7 @@ function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
   // but current price is from Vault data, to be aligned with the form
   const currentPrice = convertToUsd(vault.asset.price)
 
-  const apy = calculateVaultAPY(vault.rates[0].apy.yearly, vault.asset.decimals, 100)
+  const apy = getYearlyApy(vault, 100)
   const growth = getPriceChangeDuringTimeline(yearPriceData)
 
   const depositWithROI = useMemo(() => {
