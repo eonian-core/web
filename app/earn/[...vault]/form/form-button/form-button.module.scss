@@ -5,6 +5,12 @@
     padding-bottom: var(--padding-400);
 }
 
+.button {
+    &:disabled {
+        background-color: var(--color-dark-400);
+    }
+}
+
 .frictionRemover {
     height: var(--padding-400);
     line-height: var(--padding-400);
