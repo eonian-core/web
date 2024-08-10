@@ -1,4 +1,4 @@
-import type { ChainId } from './helpers'
+import type { ChainId } from './helpers/wallet-chain-id'
 
 export enum WalletStatus {
   NOT_CONNECTED = 'NOT_CONNECTED',
