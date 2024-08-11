@@ -56,8 +56,21 @@ import Offer from './views/offer/offer'
 import Tokens from './views/offer/tokens'
 import Caption from './views/offer/caption'
 import Features, { Feature, FeaturesList } from './views/offer/features'
-import SectionCEX, { CexFirstCard, CexHeader, CexHeaderBut, CexSecondCard, CexSecondCardHeader, ScrollingCexHeader } from './views/problem/section-cex/section-cex'
-import SectionWallets, { WalletFirstCard, WalletHeader, WalletScrolledHeader, WalletSecondCard, WalletSecondCardHeader } from './views/problem/section-wallets/section-wallets'
+import SectionCEX, {
+  CexFirstCard,
+  CexHeader,
+  CexHeaderBut,
+  CexSecondCard,
+  CexSecondCardHeader,
+  ScrollingCexHeader,
+} from './views/problem/section-cex/section-cex'
+import SectionWallets, {
+  WalletFirstCard,
+  WalletHeader,
+  WalletScrolledHeader,
+  WalletSecondCard,
+  WalletSecondCardHeader,
+} from './views/problem/section-wallets/section-wallets'
 import { Column } from './views/problem/components/column'
 import styles from './page.module.css'
 import Content from './content/en.mdx'
@@ -69,6 +82,7 @@ import SocialProof, {
   SocialProofStatItem,
 } from './views/social-proof/social-proof'
 import Testimonials from './views/testimonials/testimonials'
+import Partners from './views/partners/partners'
 import { VaultCard } from '@/components/vault-card/vault-card'
 
 const components = {
@@ -148,6 +162,7 @@ const components = {
   SocialProofStatItem,
   SocialProofLinks,
   Testimonials,
+  Partners,
   TokenFooter,
   FrictionRemover,
   TokenAction,
