@@ -4,10 +4,10 @@ import { useVaultContext } from '../hooks/use-vault-context'
 import type { Vault } from '@/api'
 import { reducePriceData } from '@/shared/charts/reduce-price-data'
 import type { PriceData, TokenSymbol } from '@/types'
-import { calculateVaultAPY } from '@/finances/apy'
 import type { YAxisDomainOptions } from '@/components/chart/axis-domain'
 import { calcYAxisDomain } from '@/components/chart/axis-domain'
 import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
+import { getYearlyApy } from '@/finances/vault-apy'
 
 interface Props {
   vault: Vault
@@ -91,8 +91,7 @@ interface PriceDataWithPremium extends PriceData {
 const compactTo = 12
 
 function useChartData({ days, yearlyPriceData, vault }: Pick<Props, 'days' | 'yearlyPriceData' | 'vault'>) {
-  const apy = calculateVaultAPY(vault.rates[0].apy.yearly, vault.asset.decimals, 100)
-
+  const apy = getYearlyApy(vault, 100)
   const inputValue = useDebouncedInputValue()
 
   return useMemo(() => {
