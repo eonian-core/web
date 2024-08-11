@@ -3,7 +3,6 @@ import { OneLineSkeleton } from '../loader/skeleton-loader'
 import { tokensMap } from './content'
 import { Distribution, TokenApy, TokenFees, TokenFooter, TokenGrowth, TokenStats, YearlyReturns } from './token'
 import { VaultUserBalance } from './vault-user-balance'
-import { calculateVaultAPY } from '@/finances/apy'
 import { getGrowthPercent } from '@/finances/growth'
 import { getYearlyROI } from '@/finances/roi'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
@@ -11,6 +10,7 @@ import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provi
 import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 import { useVaultsContext } from '@/api/vaults/vaults-context'
 import type { TokenSymbol } from '@/types'
+import { getYearlyApy } from '@/finances/vault-apy'
 
 export interface VaultCardProps extends PropsWithChildren {
   symbol: TokenSymbol
@@ -23,7 +23,7 @@ export function VaultCard({ symbol, children, style }: VaultCardProps) {
 
   const DefinedToken = tokensMap[symbol]
 
-  const apy = calculateVaultAPY(vault.rates[0].apy.yearly, vault.asset.decimals, 100)
+  const apy = getYearlyApy(vault, 100)
 
   const { data } = useTokenPrice(symbol)
   const pastYearPrice = data?.pastYearPrice

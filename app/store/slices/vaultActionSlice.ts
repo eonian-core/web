@@ -5,18 +5,13 @@ import { toast } from 'react-toastify'
 import type { Vault } from '../../api'
 import { createVaultActionToast } from '../../earn/[...vault]/components'
 import { parseError } from '../../shared'
+import { FormAction, FormActionStep } from './types'
 
 const TOAST_ID = 'vault-action-toast'
 
-export enum FormAction {
-  DEPOSIT = 'deposit',
-  WITHDRAW = 'withdraw',
-}
-
-export enum FormActionStep {
-  APPROVAL = 'APPROVAL',
-  CONFIRMATION = 'CONFIRMATION',
-  DONE = 'DONE',
+export {
+  FormAction,
+  FormActionStep,
 }
 
 export const formActionSteps: Record<FormAction, FormActionStep[]> = {
