@@ -2,8 +2,8 @@
   {
     "asset": {
       "address": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-      "name": "BUSD Token",
-      "symbol": "BUSD",
+      "name": "BTC Token",
+      "symbol": "BTCB",
       "decimals": 18,
       "price": {
         "value": "100000000",
@@ -19,8 +19,8 @@
       }
     ],
     "address": "0x914b5763cfc6daa9b7a968adff0cbb0d817326b4",
-    "name": "Eonian BUSD Vault Shares",
-    "symbol": "eonBUSD",
+    "name": "Eonian BTC Vault Shares",
+    "symbol": "eonBTC",
     "decimals": 18,
     "fundAssets": "0",
     "fundAssetsUSD": "0"
@@ -76,5 +76,31 @@
     "decimals": 18,
     "fundAssets": "16980816851730721545",
     "fundAssetsUSD": "1697920095"
+  },
+  {
+    "asset": {
+      "address": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      "name": "ETH Token",
+      "symbol": "ETH",
+      "decimals": 18,
+      "price": {
+        "value": "100000000",
+        "decimals": 8
+      }
+    },
+    "rates": [
+      {
+        "perBlock": "0",
+        "apy": {
+          "yearly": "0"
+        }
+      }
+    ],
+    "address": "0x914b5763cfc6daa9b7a968adff0cbb0d817326b4",
+    "name": "Eonian WETH Vault Shares",
+    "symbol": "eonWETH",
+    "decimals": 18,
+    "fundAssets": "0",
+    "fundAssetsUSD": "0"
   }
 ]

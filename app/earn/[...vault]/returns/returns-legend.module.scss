@@ -1,0 +1,36 @@
+.container {
+  margin-top: var(--margin-400);
+  list-style-type: none;
+  padding: 0 var(--padding-100);
+
+  li {
+    display: flex;
+    align-items: center;
+
+    &:not(:first-child) {
+      margin-top: var(--margin-100);
+    }
+
+    &:before {
+      $size: 8px;
+      content: '';
+      border-radius: 50%;
+      margin-right: var(--margin-100);
+      height: $size;
+      width: $size;
+    }
+
+    &.growth:before {
+      background-color: var(--color-growth);
+    }
+
+    &.premium:before {
+      background-color: var(--color-premium);
+    }
+  }
+
+  .value {
+    margin-left: auto;
+    font-weight: var(--font-medium);
+  }
+}

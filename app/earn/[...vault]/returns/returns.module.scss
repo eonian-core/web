@@ -1,0 +1,46 @@
+.container {
+  width: 100%;
+
+  --color-growth: #b77eff;
+  --color-premium: #8e8cdf;
+}
+
+.chart {
+  display: grid;
+  place-content: center;
+  grid-auto-columns: 1fr;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+.returns {
+  position: relative;
+  z-index: 1;
+
+  .amount {
+    display: inline-block;
+    font-weight: var(--font-medium);
+    font-size: var(--font-size-800);
+  }
+
+  .percent {
+    display: inline-block;
+    margin-left: var(--margin-100);
+    font-size: var(--font-size-400);
+  }
+}
+
+.timeframe {
+    display: flex;
+    gap: var(--margin-100);
+    margin-top: calc(var(--margin-50) * -1);
+
+    .button {
+        --tw-text-opacity: 0.6;
+        &.active {
+            --tw-text-opacity: 1;
+        }
+    }
+}

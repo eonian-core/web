@@ -3,7 +3,7 @@ import React from 'react'
 import clsx from 'clsx'
 import styles from './button.module.scss'
 
-export interface Props extends Omit<React.HTMLProps<HTMLButtonElement>, 'size' | 'type'> {
+export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'size' | 'type'> {
   size?: 'sm' | 'md' | 'lg'
   bordered?: boolean
   gradient?: boolean
@@ -11,6 +11,7 @@ export interface Props extends Omit<React.HTMLProps<HTMLButtonElement>, 'size' |
   wide?: boolean
   round?: boolean
   disabled?: boolean
+  development?: boolean
   icon?: React.ReactNode
   /** Display icon position, default right */
   iconPosition?: 'left' | 'right'
@@ -18,7 +19,7 @@ export interface Props extends Omit<React.HTMLProps<HTMLButtonElement>, 'size' |
   type?: 'button' | 'submit' | 'reset'
 }
 
-const Button: React.FC<Props> = ({
+const Button: React.FC<ButtonProps> = ({
   size = 'md',
   bordered = false,
   gradient = false,
@@ -26,6 +27,7 @@ const Button: React.FC<Props> = ({
   wide = false,
   round = false,
   disabled = false,
+  development = false,
   icon,
   iconPosition = 'right',
   children,
@@ -40,6 +42,7 @@ const Button: React.FC<Props> = ({
     [styles.wide]: wide,
     [styles.round]: round,
     [styles.disabled]: disabled,
+    [styles.inDevelopment]: development,
     [styles.iconLeft]: iconPosition === 'left',
   })
   return (

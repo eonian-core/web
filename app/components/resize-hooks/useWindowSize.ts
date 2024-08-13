@@ -1,6 +1,6 @@
 'use client'
 
-import { useLayoutEffect, useState } from 'react'
+import { useCallback, useLayoutEffect, useState } from 'react'
 
 /** Define general type for useWindowSize hook, which includes width and height */
 export interface Size {
@@ -27,16 +27,16 @@ export function useWindowSize(): Size {
   // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
   const [windowSize, setWindowSize] = useState<Size>(getDefaultSize())
 
-  useLayoutEffect(() => {
-    // Handler to call on window resize
-    function handleResize() {
-      // Set window width/height to state
-      setWindowSize({
-        width: window.screen.width,
-        height: window.screen.height,
-      })
-    }
+  // Handler to call on window resize
+  const handleResize = useCallback(() => {
+    // Set window width/height to state
+    setWindowSize({
+      width: window.screen.width,
+      height: window.screen.height,
+    })
+  }, [setWindowSize])
 
+  useLayoutEffect(() => {
     // Add event listener
     window.addEventListener('resize', handleResize)
 
@@ -45,9 +45,7 @@ export function useWindowSize(): Size {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener('resize', handleResize)
-
-    // Empty array ensures that effect is only run on mount
-  }, [])
+  }, [handleResize])
 
   return windowSize
 }
