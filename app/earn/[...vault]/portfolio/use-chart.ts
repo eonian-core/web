@@ -9,6 +9,7 @@ interface DrawIntent {
 
 export function useChart({ size, value, lineWidth, animationStep }: DrawIntent) {
   const lastProgressesRef = useRef({ outer: 0, inner: 0 })
+  const animationHandlerRef = useRef(-1)
 
   useEffect(() => {
     const canvas = document.getElementById('portfolio-chart')
@@ -22,6 +23,8 @@ export function useChart({ size, value, lineWidth, animationStep }: DrawIntent) 
 
     const stop = draw({
       canvas: canvas as HTMLCanvasElement,
+      animationHandler: animationHandlerRef.current,
+      onAnimationHandlerChange: handler => (animationHandlerRef.current = handler),
       size,
       value,
       lineWidth,
@@ -40,6 +43,8 @@ export function useChart({ size, value, lineWidth, animationStep }: DrawIntent) 
 
 interface DrawOptions extends DrawIntent {
   canvas: HTMLCanvasElement
+  animationHandler: number
+  onAnimationHandlerChange: (handler: number) => void
   outerStartProgress: number
   innerStartProgress: number
   onOuterLastProgress: (progress: number) => void
@@ -58,6 +63,7 @@ function draw(options: DrawOptions) {
     innerStartProgress,
     onInnerLastProgress,
     onOuterLastProgress,
+    onAnimationHandlerChange,
   } = options
   const ctx = canvas.getContext('2d')!
 
@@ -80,33 +86,30 @@ function draw(options: DrawOptions) {
     gapAngle,
     innerProgress: innerStartProgress,
     outerProgress: outerStartProgress,
-    handler: -1,
   }
 
-  animate(ctx, state)
+  const handler = animate(ctx, state)
+  onAnimationHandlerChange(handler)
 
   return () => {
-    cancelAnimationFrame(state.handler)
+    cancelAnimationFrame(handler)
     onOuterLastProgress(state.outerProgress)
     onInnerLastProgress(state.innerProgress)
   }
 }
 
 export interface AnimateState extends DrawOptions {
+  animationHandler: number
   radius: number
   x: number
   y: number
   gapAngle: number
   innerProgress: number
   outerProgress: number
-  handler: number
 }
 
-function animate(ctx: CanvasRenderingContext2D, state: AnimateState): number | void {
-  const {
-    size,
-    lineWidth,
-  } = state
+function animate(ctx: CanvasRenderingContext2D, state: AnimateState): number {
+  const { size, lineWidth } = state
   ctx.save()
 
   ctx.translate(size / 2, size / 2)
@@ -126,8 +129,10 @@ function animate(ctx: CanvasRenderingContext2D, state: AnimateState): number | v
   ctx.restore()
 
   const isAnimationDone = isOuterChartDone && isInnerChartDone
-  if (isAnimationDone)
-    return cancelAnimationFrame(state.handler)
+  if (isAnimationDone) {
+    cancelAnimationFrame(state.animationHandler)
+    return -1
+  }
 
   return requestAnimationFrame(() => animate(ctx, state))
 }
@@ -154,14 +159,7 @@ function normalizeRatio(canvas: HTMLCanvasElement, size: number) {
 }
 
 function drawInnerChart(ctx: CanvasRenderingContext2D, state: AnimateState): boolean {
-  const {
-    innerColor,
-    size,
-    lineWidth,
-    animationStep,
-    radius,
-    gapAngle,
-  } = state
+  const { innerColor, size, lineWidth, animationStep, radius, gapAngle } = state
   /**
    * The distance between two circles is dependent on the line width.
    */
@@ -193,14 +191,7 @@ function drawInnerChart(ctx: CanvasRenderingContext2D, state: AnimateState): boo
 }
 
 function drawOuterChart(ctx: CanvasRenderingContext2D, state: AnimateState): boolean {
-  const {
-    outerColorA,
-    outerColorB,
-    animationStep,
-    gapAngle,
-    value,
-    outerStartProgress,
-  } = state
+  const { outerColorA, outerColorB, animationStep, gapAngle, value, outerStartProgress } = state
   const startA = 0
   const endA = Math.max(Math.min(Math.PI * 2 - gapAngle * 2, state.outerProgress * Math.PI * 2 - gapAngle), 0)
 
@@ -211,9 +202,9 @@ function drawOuterChart(ctx: CanvasRenderingContext2D, state: AnimateState): boo
   drawArc(ctx, state, outerColorA, startA, endA)
 
   let reachTarget = false
-  if (outerStartProgress < value)
+  if (outerStartProgress <= value)
     reachTarget = state.outerProgress >= value
-  else if (outerStartProgress > value)
+  else if (outerStartProgress >= value)
     reachTarget = state.outerProgress <= value
 
   state.outerProgress += animationStep * (outerStartProgress < value ? 1 : -1)
@@ -229,7 +220,16 @@ function drawOuterChart(ctx: CanvasRenderingContext2D, state: AnimateState): boo
   return reachTarget
 }
 
-function drawArc(ctx: CanvasRenderingContext2D, state: AnimateState, color: string, start: number, end: number, arcX?: number, arcY?: number, arcRadius?: number) {
+function drawArc(
+  ctx: CanvasRenderingContext2D,
+  state: AnimateState,
+  color: string,
+  start: number,
+  end: number,
+  arcX?: number,
+  arcY?: number,
+  arcRadius?: number,
+) {
   arcX = arcX ?? state.x
   arcY = arcY ?? state.y
   arcRadius = arcRadius ?? state.radius

@@ -37,13 +37,20 @@ const FormInput: React.FC<FormInputProps> = ({ disabled }) => {
       onChange={event => onValueChange(event.target.value)}
       disabled={disabled}
       inputStart={<WalletInputIcon />}
-      headerEnd={status === WalletStatus.CONNECTED
-        && <BalanceWithSetter {...{
-          disabled,
-          balance: BigInt(walletBalanceBN),
-        }} />}
+      headerEnd={
+        status === WalletStatus.CONNECTED && (
+          <BalanceWithSetter
+            {...{
+              disabled,
+              balance: BigInt(walletBalanceBN),
+            }}
+          />
+        )
+      }
       price={<Price vault={vault}>{displayValue || placeholderDisplayValue}</Price>}
-    >{displayValue}</RawFormInput>
+    >
+      {displayValue || ''}
+    </RawFormInput>
   )
 }
 
