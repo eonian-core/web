@@ -16,6 +16,7 @@ import styles from './form-button.module.scss'
 import { FormButtonBody } from './form-button-body'
 import { ButtonText } from './button-text'
 import { useAppSelector } from '@/store/hooks'
+import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 
 interface Props extends Omit<ButtonProps, 'onSubmit'> {
   vaultChain: Chain
@@ -23,28 +24,13 @@ interface Props extends Omit<ButtonProps, 'onSubmit'> {
 }
 
 const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restProps }) => {
-  const { status, connect, chain, setCurrentChain } = useWalletWrapperContext()
+  const { status, chain } = useWalletWrapperContext()
 
-  const { formAction, insured, setInsured } = useVaultContext()
+  const { formAction, insured } = useVaultContext()
   const { submit, walletAvailable, haveInputValue, haveEnoughAssets, canSubmit, isSubmiting } = useSubmit()
 
   const isOnDifferentChain = vaultChain.id !== chain?.id
-  const handlePress = useCallback(() => {
-    if (!insured)
-      return setInsured(true)
-
-    if (status === WalletStatus.NOT_CONNECTED) {
-      void connect()
-      return
-    }
-
-    if (isOnDifferentChain) {
-      void setCurrentChain(vaultChain.id)
-      return
-    }
-
-    void submit(formAction)
-  }, [insured, setInsured, status, isOnDifferentChain, formAction, connect, setCurrentChain, submit, vaultChain.id])
+  const handlePress = useHandlePress(vaultChain.id, isOnDifferentChain, submit)
 
   const shouldBeAbleToSubmit = status === WalletStatus.CONNECTED
   return (
@@ -73,6 +59,28 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
 }
 
 export default FormButton
+
+function useHandlePress(vaultChainId: ChainId, isOnDifferentChain: boolean, submit: (formAction: FormAction) => Promise<void>) {
+  const { status, connect, setCurrentChain } = useWalletWrapperContext()
+  const { formAction, insured, setInsured } = useVaultContext()
+
+  return useCallback(() => {
+    if (!insured)
+      return setInsured(true)
+
+    if (status === WalletStatus.NOT_CONNECTED) {
+      void connect()
+      return
+    }
+
+    if (isOnDifferentChain) {
+      void setCurrentChain(vaultChainId)
+      return
+    }
+
+    void submit(formAction)
+  }, [insured, setInsured, status, isOnDifferentChain, formAction, connect, setCurrentChain, submit, vaultChainId])
+}
 
 function useSubmit() {
   const { onValueChange, inputValue = 0n, vault } = useVaultContext()
@@ -133,8 +141,7 @@ function useSubmit() {
 }
 
 export function useHaveEnoughAssets() {
-  const { inputValue = 0n } = useVaultContext()
-  const { formAction } = useVaultContext()
+  const { inputValue = 0n, formAction } = useVaultContext()
   const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
 
   return formAction === FormAction.DEPOSIT
