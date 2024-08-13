@@ -1,13 +1,13 @@
 {
   "name": "@eonian/web",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently -c \"auto\" \"npm:dev:next\" \"npm:check:ts:watch\"",
+    "dev": "concurrently -c \"auto\" \"npm:dev:next\" \"npm:check:ts:d-watch\"",
     "dev:next": "next dev",
     "dev:no-tls": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev",
-    "dev:next-mock": "concurrently -c \"auto\"  \"npm:dev:next\" \"npm:check:ts:watch\" \"npm:mock\" ",
+    "dev:next-mock": "concurrently -c \"auto\"  \"npm:dev:next\" \"npm:check:ts:d-watch\" \"npm:mock\" ",
     "build": "next build --no-lint",
     "postbuild": "npm run release-logrocket",
     "start": "next start",
@@ -26,6 +26,7 @@
     "release-logrocket": "node release-logrocket.cjs",
     "postinstall": "cp .hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit",
     "check:ts": "tsc --noEmit --incremental",
+    "check:ts:d-watch": "sleep 5s && npm run check:ts:watch",
     "check:ts:watch": "npm run check:ts -- --watch"
   },
   "engines": {
