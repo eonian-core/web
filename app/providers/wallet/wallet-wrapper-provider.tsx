@@ -52,14 +52,12 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
   const wallet = React.useMemo(() => W3O.getWallet(onboardWallet), [onboardWallet])
 
   const isWalletConnected = !!wallet
-
   const status = React.useMemo(() => W3O.getStatus(isWalletConnected, connecting), [isWalletConnected, connecting])
 
   const chains = React.useMemo(
     () => W3O.getAvailableChains(onboardChains.length === 0 ? [defaultChain as W3OChain] : onboardChains),
     [onboardChains],
   )
-
   const chain = React.useMemo(() => W3O.getCurrentChain(chains, connectedChain?.id), [connectedChain?.id, chains])
 
   const provider = React.useMemo(
@@ -98,7 +96,7 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
     identify(address, { address, label })
   }, [identify, wallet])
 
-  const value: WalletWrapperContextValue = {
+  return <WalletWrapperContext.Provider value={{
     wallet,
     status,
     chain,
@@ -107,9 +105,7 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
     connect,
     disconnect,
     setCurrentChain,
-  }
-
-  return <WalletWrapperContext.Provider value={value}>{children}</WalletWrapperContext.Provider>
+  }}>{children}</WalletWrapperContext.Provider>
 }
 
 export const WalletWrapperProvider: React.FC<Props> = ({ children }) => (

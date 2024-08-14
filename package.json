@@ -1,13 +1,13 @@
 {
   "name": "@eonian/web",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently -c \"auto\" \"npm:dev:next\" \"npm:check:ts:watch\"",
+    "dev": "concurrently -c \"auto\" \"npm:dev:next\" \"npm:check:ts:d-watch\"",
     "dev:next": "next dev",
     "dev:no-tls": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev",
-    "dev:next-mock": "concurrently -c \"auto\"  \"npm:dev:next\" \"npm:check:ts:watch\" \"npm:mock\" ",
+    "dev:next-mock": "concurrently -c \"auto\"  \"npm:dev:next\" \"npm:check:ts:d-watch\" \"npm:mock\" ",
     "build": "next build --no-lint",
     "postbuild": "npm run release-logrocket",
     "start": "next start",
@@ -18,7 +18,8 @@
     "serve:storybook": "serve ./storybook-static",
     "production": "next build && next start",
     "open:next": "opener http://localhost:3000",
-    "test": "npm run jest --watchAll",
+    "test": "npm run jest",
+    "test:watch": "npm run jest -- --watchAll",
     "test:ci": "npm run jest --ci",
     "jest": "node --experimental-vm-modules --experimental-specifier-resolution=node ./node_modules/.bin/jest",
     "mock": "ts-node --esm ./apollo/mocks/apollo-mock.ts",
@@ -26,6 +27,7 @@
     "release-logrocket": "node release-logrocket.cjs",
     "postinstall": "cp .hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit",
     "check:ts": "tsc --noEmit --incremental",
+    "check:ts:d-watch": "sleep 5s && npm run check:ts:watch",
     "check:ts:watch": "npm run check:ts -- --watch"
   },
   "engines": {

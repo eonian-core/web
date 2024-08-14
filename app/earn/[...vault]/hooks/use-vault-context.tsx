@@ -8,7 +8,7 @@ import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provi
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
 
-interface VaultContextType {
+export interface VaultContextType {
   inputValue?: bigint
   displayValue?: string
   placeholderValue: bigint
@@ -23,29 +23,9 @@ interface VaultContextType {
   setInsured: (insured: boolean) => void
 }
 
-let VaultContext: React.Context<VaultContextType>
-
-function createVaultContext(vault: Vault) {
-  if (VaultContext)
-    return VaultContext
-
-  return (VaultContext = createContext<VaultContextType>({
-    formAction: FormAction.DEPOSIT,
-    insured: true,
-    vault,
-    placeholderValue: 0n,
-    placeholderDisplayValue: '0',
-    showPlaceholder: true,
-    onValueChange: () => {},
-    onPlaceholderChange: () => {},
-    setFormAction: () => {},
-    setInsured: () => {},
-  }))
-}
+export const VaultContext = createContext<VaultContextType | undefined>(undefined)
 
 export function VaultProvider({ children, vault }: PropsWithChildren<{ vault: Vault }>) {
-  createVaultContext(vault)
-
   const { value, displayValue, onValueChange } = useNumberInputValue(undefined, vault.asset.decimals)
   const { value: placeholderValue = 0n, displayValue: placeholderDisplayValue = '0', onValueChange: onPlaceholderChange } = useNumberInputValue(0n, vault.asset.decimals)
   const [formAction, setFormAction] = useState<FormAction>(FormAction.DEPOSIT)
@@ -79,5 +59,9 @@ export function VaultProvider({ children, vault }: PropsWithChildren<{ vault: Va
 }
 
 export function useVaultContext() {
-  return useContext(VaultContext)
+  const context = useContext(VaultContext)
+  if (!context)
+    throw new Error('useVaultContext must be used within a VaultProvider')
+
+  return context
 }
