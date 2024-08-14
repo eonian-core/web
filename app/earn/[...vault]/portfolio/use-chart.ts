@@ -21,6 +21,8 @@ export function useChart({ size, value, lineWidth, animationStep }: DrawIntent) 
     const outerColorA = computedStyle.getPropertyValue('--color-vault')
     const outerColorB = computedStyle.getPropertyValue('--color-wallet')
 
+    cancelAnimationFrame(animationHandlerRef.current)
+
     const stop = draw({
       canvas: canvas as HTMLCanvasElement,
       animationHandler: animationHandlerRef.current,
@@ -63,7 +65,6 @@ function draw(options: DrawOptions) {
     innerStartProgress,
     onInnerLastProgress,
     onOuterLastProgress,
-    onAnimationHandlerChange,
   } = options
   const ctx = canvas.getContext('2d')!
 
@@ -88,11 +89,9 @@ function draw(options: DrawOptions) {
     outerProgress: outerStartProgress,
   }
 
-  const handler = animate(ctx, state)
-  onAnimationHandlerChange(handler)
+  animate(ctx, state)
 
   return () => {
-    cancelAnimationFrame(handler)
     onOuterLastProgress(state.outerProgress)
     onInnerLastProgress(state.innerProgress)
   }
@@ -109,7 +108,7 @@ export interface AnimateState extends DrawOptions {
 }
 
 function animate(ctx: CanvasRenderingContext2D, state: AnimateState): number {
-  const { size, lineWidth } = state
+  const { size, lineWidth, onAnimationHandlerChange } = state
   ctx.save()
 
   ctx.translate(size / 2, size / 2)
@@ -134,7 +133,10 @@ function animate(ctx: CanvasRenderingContext2D, state: AnimateState): number {
     return -1
   }
 
-  return requestAnimationFrame(() => animate(ctx, state))
+  const handler = requestAnimationFrame(() => animate(ctx, state))
+  onAnimationHandlerChange(handler)
+
+  return handler
 }
 
 function drawOpacityGradientOverlay(ctx: CanvasRenderingContext2D, { size }: DrawOptions) {
@@ -159,7 +161,7 @@ function normalizeRatio(canvas: HTMLCanvasElement, size: number) {
 }
 
 function drawInnerChart(ctx: CanvasRenderingContext2D, state: AnimateState): boolean {
-  const { innerColor, size, lineWidth, animationStep, radius, gapAngle } = state
+  const { innerColor, size, lineWidth, radius, gapAngle } = state
   /**
    * The distance between two circles is dependent on the line width.
    */
@@ -183,15 +185,11 @@ function drawInnerChart(ctx: CanvasRenderingContext2D, state: AnimateState): boo
 
   drawArc(ctx, state, innerColor, start, end, innerOffset, innerOffset, innerRadius)
 
-  const reachTarget = state.innerProgress >= 1
-
-  state.innerProgress = Math.min(state.innerProgress + animationStep, 1)
-
-  return reachTarget
+  return animateProgress(state, 'innerStartProgress', 'innerProgress')
 }
 
 function drawOuterChart(ctx: CanvasRenderingContext2D, state: AnimateState): boolean {
-  const { outerColorA, outerColorB, animationStep, gapAngle, value, outerStartProgress } = state
+  const { outerColorA, outerColorB, gapAngle } = state
   const startA = 0
   const endA = Math.max(Math.min(Math.PI * 2 - gapAngle * 2, state.outerProgress * Math.PI * 2 - gapAngle), 0)
 
@@ -201,23 +199,7 @@ function drawOuterChart(ctx: CanvasRenderingContext2D, state: AnimateState): boo
   drawArc(ctx, state, outerColorB, startB, endB)
   drawArc(ctx, state, outerColorA, startA, endA)
 
-  let reachTarget = false
-  if (outerStartProgress <= value)
-    reachTarget = state.outerProgress >= value
-  else if (outerStartProgress >= value)
-    reachTarget = state.outerProgress <= value
-
-  state.outerProgress += animationStep * (outerStartProgress < value ? 1 : -1)
-  state.outerProgress = +state.outerProgress.toFixed(2)
-
-  if (outerStartProgress < value)
-    state.outerProgress = state.outerProgress >= value ? value : state.outerProgress
-  else if (outerStartProgress > value)
-    state.outerProgress = state.outerProgress <= value ? value : state.outerProgress
-
-  state.outerProgress = Math.min(Math.max(state.outerProgress, 0), 1)
-
-  return reachTarget
+  return animateProgress(state, 'outerStartProgress', 'outerProgress')
 }
 
 function drawArc(
@@ -240,4 +222,35 @@ function drawArc(
   ctx.strokeStyle = color
   ctx.fillStyle = color
   ctx.stroke()
+}
+
+function animateProgress(
+  state: AnimateState,
+  startField: 'outerStartProgress' | 'innerStartProgress',
+  field: 'outerProgress' | 'innerProgress',
+): boolean {
+  const { animationStep, value } = state
+
+  const startProgress = state[startField]
+  let progress = state[field]
+
+  let reachTarget = false
+  if (startProgress <= value)
+    reachTarget = progress >= value
+  else if (startProgress >= value)
+    reachTarget = progress <= value
+
+  progress += animationStep * (startProgress < value ? 1 : -1)
+  progress = +progress.toFixed(2)
+
+  if (startProgress < value)
+    progress = progress >= value ? value : progress
+  else if (startProgress > value)
+    progress = progress <= value ? value : progress
+
+  progress = Math.min(Math.max(progress, 0), 1)
+
+  state[field] = progress
+
+  return reachTarget
 }
