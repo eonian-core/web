@@ -15,7 +15,7 @@ interface Props {
   children: React.ReactNode
 }
 
-interface WalletWrapperContextValue {
+export interface WalletWrapperContextValue {
   wallet: Wallet | null
   status: WalletStatus
   chain: Chain | null

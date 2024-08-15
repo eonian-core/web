@@ -82,7 +82,7 @@ function useHandlePress(vaultChainId: ChainId, isOnDifferentChain: boolean, subm
   }, [insured, setInsured, status, isOnDifferentChain, formAction, connect, setCurrentChain, submit, vaultChainId])
 }
 
-function useSubmit() {
+export function useSubmit() {
   const { onValueChange, inputValue = 0n, vault } = useVaultContext()
   const haveInputValue = inputValue > 0n
 
@@ -97,46 +97,44 @@ function useSubmit() {
   const haveEnoughAssets = useHaveEnoughAssets()
   const canSubmit = walletAvailable && haveInputValue && haveEnoughAssets
 
-  const submit = useCallback(async (formAction: FormAction) => {
-    if (!canSubmit) {
-      toast('Looks like something is wrong, try refreshing the page', {
-        type: 'error',
-      })
-      return
-    }
-    setIsSubmiting(true)
-
-    try {
-      // Refresh vault <-> user data before the transaction to make sure all calculations are correct.
-      await refetechVaultUserData()
-
-      // Execute Deposit/Withdraw transaction
-      const success = await executeTransaction(formAction, vault, inputValue)
-      if (success) {
-        // Refresh wallet balance & vault deposit after the transaction executed.
-        void refetechVaultUserData()
-
-        // Reset form input
-        onValueChange(0n)
-      }
-    }
-    catch (error) {
-      console.error('Error during submit', error)
-      toast('An error occurred, please try refreshing the page', {
-        type: 'error',
-      })
-    }
-
-    setIsSubmiting(false)
-  }, [refetechVaultUserData, onValueChange, inputValue, vault, setIsSubmiting, canSubmit])
-
   return {
-    submit,
     walletAvailable,
     haveInputValue,
     haveEnoughAssets,
     canSubmit,
     isSubmiting,
+    submit: useCallback(async (formAction: FormAction) => {
+      if (!canSubmit) {
+        toast('Looks like something is wrong, try refreshing the page', {
+          type: 'error',
+        })
+        return
+      }
+      setIsSubmiting(true)
+
+      try {
+        // Refresh vault <-> user data before the transaction to make sure all calculations are correct.
+        await refetechVaultUserData()
+
+        // Execute Deposit/Withdraw transaction
+        const success = await executeTransaction(formAction, vault, inputValue)
+        if (success) {
+          // Refresh wallet balance & vault deposit after the transaction executed.
+          void refetechVaultUserData()
+
+          // Reset form input
+          onValueChange(0n)
+        }
+      }
+      catch (error) {
+        console.error('Error during submit', error)
+        toast('An error occurred, please try refreshing the page', {
+          type: 'error',
+        })
+      }
+
+      setIsSubmiting(false)
+    }, [refetechVaultUserData, onValueChange, inputValue, vault, setIsSubmiting, canSubmit]),
   }
 }
 
