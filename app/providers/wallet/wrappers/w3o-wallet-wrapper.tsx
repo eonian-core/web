@@ -41,11 +41,10 @@ export function getStatus(isConnected: boolean, isConnecting: boolean): WalletSt
   if (isConnected)
     return WalletStatus.CONNECTED
 
-  else if (isConnecting)
+  if (isConnecting)
     return WalletStatus.CONNECTING
 
-  else
-    return WalletStatus.NOT_CONNECTED
+  return WalletStatus.NOT_CONNECTED
 }
 
 /**
@@ -143,8 +142,10 @@ export async function reconnect(onboardConnect: (options?: ConnectOptions) => Pr
 /**
  * Disconnects from the connected wallet.
  */
-export async function disconnect(walletLabel: string | null,
-  onboardDisconnect: (wallet: DisconnectOptions) => Promise<WalletState[]>): Promise<void> {
+export async function disconnect(
+  walletLabel: string | null,
+  onboardDisconnect: (wallet: DisconnectOptions) => Promise<WalletState[]>,
+): Promise<void> {
   if (walletLabel)
     await onboardDisconnect({ label: walletLabel })
 
