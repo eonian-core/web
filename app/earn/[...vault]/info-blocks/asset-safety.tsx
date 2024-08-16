@@ -1,6 +1,6 @@
 import { useVaultDeposit } from '../hooks/use-vault-deposit-change'
 import { useVaultContext } from '../hooks/use-vault-context'
-import { CommonInfoBlock } from './common-info-block'
+import { CommonInfoBlock, InfoBlockDescription, InfoBlockList, InfoBlockTitle, InfoItem, InfoItemIcon, InfoItemTitle, InfoItemValue } from './common-info-block'
 import CompactNumber from '@/components/compact-number/compact-number'
 import IconArrowRightShort from '@/components/icons/icon-arrow-right-short'
 import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
@@ -10,15 +10,22 @@ export function AssetSafety() {
   const [amount] = useVaultDeposit()
   const { vault } = useVaultContext()
   return (
-    <CommonInfoBlock
-      title="Asset Safety"
-      items={[{
-        title: 'Portfolio',
-        value: 'Fully Protected',
-        icon: <IconArrowRightShort />,
-      }]}
-      description={<Amount amount={amount} decimals={vault.asset.decimals} symbol={getAssetSymbol(vault)} />}
-    />
+    <CommonInfoBlock>
+      <InfoBlockTitle>Asset Safety</InfoBlockTitle>
+
+      <InfoBlockList>
+        <InfoItem>
+          <InfoItemIcon><IconArrowRightShort /></InfoItemIcon>
+          <InfoItemTitle>Portfolio</InfoItemTitle>
+          <InfoItemValue>Fully Protected</InfoItemValue>
+        </InfoItem>
+      </InfoBlockList>
+
+      <InfoBlockDescription>
+        <Amount amount={amount} decimals={vault.asset.decimals} symbol={getAssetSymbol(vault)} />
+      </InfoBlockDescription>
+
+    </CommonInfoBlock>
   )
 }
 

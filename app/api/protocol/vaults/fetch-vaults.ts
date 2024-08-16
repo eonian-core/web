@@ -1,4 +1,4 @@
-import { getRscClient } from '../../apollo.rsc-client'
+import { getProtocolRscClient } from '../../apollo.rsc-client'
 import type { Vault } from '../gql/graphql'
 import { getVaults } from '../queries'
 import { supportedChainsIds } from '@/web3-onboard'
@@ -19,8 +19,8 @@ export async function fetchVaults() {
 
 async function fetchVault(chainId: ChainId): Promise<Vault[]> {
   try {
-    const client = getRscClient(chainId)
-    const { data } = await getVaults(client)
+    const client = getProtocolRscClient(chainId)
+    const data = await getVaults(client)
     return data.vaults as Vault[]
   }
   catch (e) {

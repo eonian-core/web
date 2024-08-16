@@ -1,18 +1,20 @@
-import { CommonInfoBlock } from './common-info-block'
+import { CommonInfoBlock, InfoBlockDescription, InfoBlockList, InfoBlockTitle, InfoItem, InfoItemIcon, InfoItemTitle, InfoItemValue } from './common-info-block'
 import IconEmail from '@/components/icons/icon-email'
 
 export function WalletInsurance() {
   return (
-    <CommonInfoBlock
-      title="Wallet Insurance"
-      items={[
-        {
-          title: 'Recovery Email',
-          value: 'Not Linked',
-          icon: <IconEmail />,
-        },
-      ]}
-      description={<>In case of a wallet hack, insured assets will be recoverable through email.</>}
-    />
+    <CommonInfoBlock>
+      <InfoBlockTitle>Wallet Insurance</InfoBlockTitle>
+
+      <InfoBlockList>
+        <InfoItem>
+          <InfoItemIcon><IconEmail /></InfoItemIcon>
+          <InfoItemTitle>Recovery Email</InfoItemTitle>
+          <InfoItemValue>Not Linked</InfoItemValue>
+        </InfoItem>
+      </InfoBlockList>
+
+      <InfoBlockDescription>In case of a wallet hack, insured assets will be recoverable through email.</InfoBlockDescription>
+    </CommonInfoBlock>
   )
 }

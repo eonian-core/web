@@ -1,27 +1,26 @@
-import { CommonInfoBlock } from './common-info-block'
+import { CommonInfoBlock, InfoBlockDescription, InfoBlockList, InfoBlockTitle, InfoItem, InfoItemIcon, InfoItemTitle, InfoItemValue } from './common-info-block'
 import IconShieldHeart from '@/components/icons/icon-shield-heart'
 
 export function ProtocolInsurance() {
   return (
-    <CommonInfoBlock
-      title="Protocol Insurance"
-      items={[
-        {
-          title: 'Bitcoin Vault',
-          value: 'Enabled',
-          icon: <IconShieldHeart />,
-        },
-        {
-          title: 'Asset Borrowers Protocols',
-          value: 'Enabled',
-          icon: <IconShieldHeart />,
-        },
-      ]}
-      description={
-        <>
-          In case of a hack of the mentioned solutions, insured assets will be reimbursed.
-        </>
-      }
-    />
+    <CommonInfoBlock>
+    <InfoBlockTitle>Protocol Insurance</InfoBlockTitle>
+
+    <InfoBlockList>
+        <InfoItem>
+          <InfoItemIcon><IconShieldHeart /></InfoItemIcon>
+          <InfoItemTitle>Vault</InfoItemTitle>
+          <InfoItemValue>Enabled</InfoItemValue>
+        </InfoItem>
+        <InfoItem>
+          <InfoItemIcon><IconShieldHeart /></InfoItemIcon>
+          <InfoItemTitle>Asset Borrowers Protocols</InfoItemTitle>
+          <InfoItemValue>Enabled</InfoItemValue>
+        </InfoItem>
+      </InfoBlockList>
+
+      <InfoBlockDescription>In case of a hack of the mentioned solutions, insured assets will be reimbursed.</InfoBlockDescription>
+
+    </CommonInfoBlock>
   )
 }

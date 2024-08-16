@@ -47,7 +47,10 @@ export async function getVaults(client: ApolloClient<any>) {
   const { data, error } = await client.query<GetVaultsQuery>({
     query: GetVaults,
   })
-  return { data, error }
+  if (error)
+    throw error
+
+  return data
 }
 
 /**

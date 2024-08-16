@@ -29,7 +29,10 @@ export async function getWalletPreview(client: ApolloClient<any>, address: strin
       address,
     },
   })
-  return { data, error }
+  if (error)
+    throw error
+
+  return data
 }
 
 export const GetWallet = gql`
@@ -61,5 +64,8 @@ export async function getWallet(client: ApolloClient<any>, address: string) {
       address,
     },
   })
-  return { data, error }
+  if (error)
+    throw error
+
+  return data
 }

@@ -2,7 +2,7 @@
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useMemo } from 'react'
 import type { Vault } from '../gql/graphql'
-import type { VaultsByChain } from './fetchVaults'
+import type { VaultsByChain } from './fetch-vaults'
 import { useFetchPositionInfo } from './use-fetch-position-info'
 import { getAssetSymbol } from './get-asset-symbol'
 import { useChainContext } from '@/shared/web3/chain-context'
