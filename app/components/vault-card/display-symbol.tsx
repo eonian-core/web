@@ -5,7 +5,7 @@ import type { TokenSymbol } from '@/types'
 
 /** Converts real token symbol to symbol that understandable by human */
 export const DisplaySymbol: FC<{ children: TokenSymbol }> = ({ children: symbol }) =>
-  <Tooltip content={`On current chain represented as ${symbol} token`}>
+  <Tooltip content={`Represented as ${symbol} token on the current chain`}>
     <div className={styles.content}>
       <SymbolContent>{symbol}</SymbolContent>
     </div>
