@@ -2,10 +2,10 @@ import type { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: 'https://api.thegraph.com/subgraphs/name/eonian-core/eonian-bsc-development',
+  schema: 'https://api.studio.thegraph.com/query/48141/eonian-bsc-development/version/latest',
   documents: 'app/**/*.{ts,tsx}',
   generates: {
-    'schema.graphql': {
+    'graphql/protocol.schema.graphql': {
       plugins: ['schema-ast'],
     },
     'app/api/gql/': {
