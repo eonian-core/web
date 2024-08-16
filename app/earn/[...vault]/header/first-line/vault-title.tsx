@@ -3,7 +3,6 @@ import { ExternalAction } from '../second-line/actions'
 import styles from './vault-title.module.scss'
 
 import { Tag } from '@/components/chip/tag'
-import IconChevron from '@/components/icons/icon-chevron'
 
 export function VaultTitle({ children }: PropsWithChildren) {
   return (
