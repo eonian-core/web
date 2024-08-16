@@ -7,15 +7,18 @@ import { PortfolioLegend } from './portfolio-legend'
 import { useAppSelector } from '@/store/hooks'
 import CompactNumber from '@/components/compact-number/compact-number'
 import { FormAction } from '@/store/slices/vaultActionSlice'
+import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
+import { WalletStatus } from '@/providers/wallet/wrappers/types'
 
 export function Portfolio() {
   const { inputValue = 0n, showPlaceholder, placeholderValue, formAction, vault } = useVaultContext()
+  const { status: walletStatus } = useWalletWrapperContext()
   const { vaultBalanceBN } = useAppSelector(state => state.vaultUser)
   const proportion = useVaultAssetProportion()
 
   return (
     <div id="portfolio" className={styles.container}>
-      <SectionHeader title="Your Portfolio">
+      <SectionHeader title={walletStatus === WalletStatus.CONNECTED ? 'Your Portfolio' : 'Example Portfolio'}>
         <SubHeader {...{
           ...vault.asset,
           vaultBalanceBN,
