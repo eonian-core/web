@@ -9,7 +9,7 @@ export function ProtocolInsurance() {
     <InfoBlockList>
         <InfoItem>
           <InfoItemIcon><IconShieldHeart /></InfoItemIcon>
-          <InfoItemTitle>Vault</InfoItemTitle>
+          <InfoItemTitle>Savings Account Vault</InfoItemTitle>
           <InfoItemValue>Enabled</InfoItemValue>
         </InfoItem>
         <InfoItem>

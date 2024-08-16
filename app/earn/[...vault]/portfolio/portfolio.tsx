@@ -10,15 +10,8 @@ import { FormAction } from '@/store/slices/vaultActionSlice'
 
 export function Portfolio() {
   const { inputValue = 0n, showPlaceholder, placeholderValue, formAction, vault } = useVaultContext()
-  const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
-  const decimals = vault.asset.decimals
-  const proportion = useVaultAssetProportion({
-    inputValue: showPlaceholder ? placeholderValue : inputValue,
-    decimals,
-    formAction,
-    walletBalanceBN,
-    vaultBalanceBN,
-  })
+  const { vaultBalanceBN } = useAppSelector(state => state.vaultUser)
+  const proportion = useVaultAssetProportion()
 
   return (
     <div id="portfolio" className={styles.container}>
@@ -27,7 +20,7 @@ export function Portfolio() {
           ...vault.asset,
           vaultBalanceBN,
           formAction,
-          decimals,
+          decimals: vault.asset.decimals,
           value: showPlaceholder ? placeholderValue : inputValue,
         }}
         />
@@ -44,6 +37,9 @@ export interface SubHeaderProps extends Omit<SubHeaderBodyProps, 'children'> {
 }
 
 function SubHeader({ formAction, value, vaultBalanceBN, ...props }: SubHeaderProps) {
+  if (value === 0n)
+    return <SectionSubHeader>Wallet and Savings Account combined</SectionSubHeader>
+
   if (formAction === FormAction.DEPOSIT)
     return <SubHeaderBody {...props} value={value}>After saving of</SubHeaderBody>
 
@@ -84,7 +80,20 @@ interface ProportionOptions {
   vaultBalanceBN: string
 }
 
-function useVaultAssetProportion({
+export function useVaultAssetProportion() {
+  const { inputValue = 0n, showPlaceholder, placeholderValue, formAction, vault } = useVaultContext()
+  const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
+
+  return calculateVaultAssetProportion({
+    inputValue: showPlaceholder ? placeholderValue : inputValue,
+    decimals: vault.asset.decimals,
+    formAction,
+    walletBalanceBN,
+    vaultBalanceBN,
+  })
+}
+
+function calculateVaultAssetProportion({
   inputValue,
   decimals,
   formAction,
