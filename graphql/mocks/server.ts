@@ -1,25 +1,21 @@
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
+import type { IMockStore, IMocks } from '@graphql-tools/mock'
 import { addMocksToSchema } from '@graphql-tools/mock'
 import { loadSchema } from '@graphql-tools/load'
+import type { IResolvers } from '@graphql-tools/utils'
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
-import { resolvers as scalarResolvers, mocks as scalarsMocks } from 'graphql-scalars'
 
-import vaults from './data/vaults.json' assert { type: 'json' }
-
-const mocks = {
-  BigInt: scalarsMocks.BigInt,
-  Bytes: scalarsMocks.UUID,
+export interface ServerOptions {
+  schemaPath: string
+  port: number
+  mocks: IMocks<IResolvers>
+  resolvers: (store: IMockStore) => Partial<IResolvers>
 }
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-async function main() {
+export async function server({ schemaPath, port, mocks, resolvers }: ServerOptions) {
   // Load schema from the file
-  const schema = await loadSchema(join(__dirname, '../protocol/schema.graphql'), {
+  const schema = await loadSchema(schemaPath, {
     loaders: [new GraphQLFileLoader()],
   })
 
@@ -32,7 +28,7 @@ async function main() {
   //  2. installs your ApolloServer instance as middleware
   //  3. prepares your app to handle incoming requests
   const { url } = await startStandaloneServer(server, {
-    listen: { port: 4000 },
+    listen: { port },
   })
 
   // eslint-disable-next-line no-console
@@ -45,17 +41,4 @@ async function main() {
 │                                                   │
 ╰───────────────────────────────────────────────────╯
     `)
-}
-
-void main()
-
-function resolvers() {
-  return {
-    Query: {
-      vaults() {
-        return vaults
-      },
-    },
-    BigInt: scalarResolvers.BigInt,
-  }
 }

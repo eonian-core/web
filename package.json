@@ -22,7 +22,7 @@
     "test:watch": "npm run jest -- --watchAll",
     "test:ci": "npm run jest --ci",
     "jest": "node --experimental-vm-modules --experimental-specifier-resolution=node ./node_modules/.bin/jest",
-    "mock": "ts-node --esm ./graphql/mocks/apollo-mock.ts",
+    "mock": "tsx ./graphql/mocks/protocol-mock.ts",
     "gen:gql-types": "npm run gen:gql:protocol && npm run gen:gql:wallet-linking",
     "gen:gql:protocol": "graphql-codegen --config ./graphql/protocol/codegen.ts",
     "gen:gql:wallet-linking": "graphql-codegen --config ./graphql/wallet-linking/codegen.ts",
