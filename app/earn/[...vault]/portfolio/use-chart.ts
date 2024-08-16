@@ -179,7 +179,7 @@ function drawInnerChart(ctx: CanvasRenderingContext2D, state: AnimateState): boo
    */
   const shift = (((2.5 * 128) / size) * Math.PI) / 180
   const start = shift
-  const end = state.innerProgress * Math.PI * 2 - innerGapAngle + shift
+  const end = Math.max(state.innerProgress * Math.PI * 2 - innerGapAngle + shift, shift)
 
   const innerOffset = size / 2
 
