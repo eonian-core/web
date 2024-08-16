@@ -2,7 +2,7 @@ import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rs
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { ChainId } from '../providers/wallet/wrappers/helpers'
 import { makeHttpLink } from './apollo.clients'
-import { scalarTypePolicies } from './gql/graphql'
+import { scalarTypePolicies } from './protocol/gql/graphql'
 
 function makeClientFactory(chainId: ChainId): () => ApolloClient<any> {
   return () => {

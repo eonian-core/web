@@ -1,4 +1,4 @@
-import { getRscClient } from '../apollo.rsc-client'
+import { getRscClient } from '../../apollo.rsc-client'
 import type { Vault } from '../gql/graphql'
 import { getVaults } from '../queries'
 import { supportedChainsIds } from '@/web3-onboard'

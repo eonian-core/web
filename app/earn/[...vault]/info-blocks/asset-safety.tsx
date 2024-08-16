@@ -3,7 +3,7 @@ import { useVaultContext } from '../hooks/use-vault-context'
 import { CommonInfoBlock } from './common-info-block'
 import CompactNumber from '@/components/compact-number/compact-number'
 import IconArrowRightShort from '@/components/icons/icon-arrow-right-short'
-import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
+import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 import type { TokenSymbol } from '@/types'
 
 export function AssetSafety() {

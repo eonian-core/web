@@ -23,7 +23,7 @@
     "test:ci": "npm run jest --ci",
     "jest": "node --experimental-vm-modules --experimental-specifier-resolution=node ./node_modules/.bin/jest",
     "mock": "ts-node --esm ./graphql/mocks/apollo-mock.ts",
-    "gen:gql-types": "graphql-codegen --config ./graphql/protocol.schema.codegen.ts",
+    "gen:gql-types": "graphql-codegen --config ./graphql/protocol/codegen.ts",
     "release-logrocket": "node release-logrocket.cjs",
     "postinstall": "cp .hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit",
     "check:ts": "tsc --noEmit --incremental",

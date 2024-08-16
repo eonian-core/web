@@ -6,7 +6,7 @@ import {
 import type { PropsWithChildren } from 'react'
 import type { ApolloClient } from '@apollo/client'
 import { makeHttpLink } from './apollo.clients'
-import { scalarTypePolicies } from './gql/graphql'
+import { scalarTypePolicies } from './protocol/gql/graphql'
 import { useChainContext } from '@/shared/web3/chain-context'
 import { ChainId } from '@/providers/wallet/wrappers/helpers'
 
