@@ -92,6 +92,11 @@ enum AdminChanged_orderBy {
   transactionHash
 }
 
+enum Aggregation_interval {
+  day
+  hour
+}
+
 type Approval {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
@@ -3774,6 +3779,9 @@ type Subscription {
   ): [Withdraw!]!
 }
 
+"A string representation of microseconds UNIX timestamp (16 digits)\n"
+scalar Timestamp
+
 "Token of standart ERC20, can be stored in vault.\n"
 type Token {
   "The blockchain address of the asset.\n"
@@ -4566,6 +4574,9 @@ type _Block_ {
 
   """The block number"""
   number: Int!
+
+  """The hash of the parent block"""
+  parentHash: Bytes
 
   """Integer representation of the timestamp stored in blocks for the chain"""
   timestamp: Int

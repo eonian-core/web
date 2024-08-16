@@ -18,6 +18,7 @@ const config: CodegenConfig = {
           Bytes: 'string',
           Int8: 'number',
           BigDecimal: 'string',
+          Timestamp: 'string',
         },
       },
       plugins: [
