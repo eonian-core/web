@@ -24,7 +24,7 @@ interface FormInputProps {
 }
 
 const FormInput: React.FC<FormInputProps> = ({ disabled }) => {
-  const { displayValue, placeholderDisplayValue, onValueChange, vault } = useVaultContext()
+  const { displayValue, placeholderDisplayValue, onValueChange, vault, formAction } = useVaultContext()
   const { walletBalanceBN } = useAppSelector(state => state.vaultUser)
   const { status } = useWalletWrapperContext()
 
@@ -37,13 +37,20 @@ const FormInput: React.FC<FormInputProps> = ({ disabled }) => {
       onChange={event => onValueChange(event.target.value)}
       disabled={disabled}
       inputStart={<WalletInputIcon />}
-      headerEnd={status === WalletStatus.CONNECTED
-        && <BalanceWithSetter {...{
-          disabled,
-          balance: BigInt(walletBalanceBN),
-        }} />}
+      headerEnd={
+        status === WalletStatus.CONNECTED && (
+          <BalanceWithSetter
+            {...{
+              disabled,
+              balance: BigInt(walletBalanceBN),
+            }}
+          />
+        )
+      }
       price={<Price vault={vault}>{displayValue || placeholderDisplayValue}</Price>}
-    >{displayValue}</RawFormInput>
+    >
+      {displayValue || ''}
+    </RawFormInput>
   )
 }
 

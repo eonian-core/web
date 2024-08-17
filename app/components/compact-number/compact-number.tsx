@@ -47,11 +47,15 @@ const CompactNumber: React.FC<CompactNumberProps> = ({
   const locale = useAppSelector(state => state.locale.current)
   const formattedValue = compactBigInt(value, decimals, { locale, ...props })
 
-  return <RawCompactNumber {...{
-    value: formattedValue.result,
-    tooltipContent: hideTooltip ? null : tooltipContent(toStringNumberFromDecimals(value, decimals)),
-    ...props,
-  }} />
+  return (
+    <RawCompactNumber
+      {...{
+        value: formattedValue.result,
+        tooltipContent: hideTooltip ? null : tooltipContent(toStringNumberFromDecimals(value, decimals)),
+        ...props,
+      }}
+    />
+  )
 }
 
 export default React.memo(CompactNumber)
@@ -62,20 +66,13 @@ interface RawCompactNumberProps extends CompactBigIntOptions, CompactNumberConte
   className?: string
 }
 
-export function RawCompactNumber({
-  className,
-  tooltipContent,
-  ...props
-}: RawCompactNumberProps) {
+export function RawCompactNumber({ className, tooltipContent, ...props }: RawCompactNumberProps) {
   if (!tooltipContent)
-    return <CompactNumberContent {...props}/>
+    return <CompactNumberContent {...props} />
 
   return (
-    <Tooltip
-      className={className}
-      content={tooltipContent}
-      >
-        <CompactNumberContent {...props}/>
+    <Tooltip className={className} content={tooltipContent}>
+      <CompactNumberContent {...props} />
     </Tooltip>
   )
 }
@@ -86,9 +83,11 @@ interface CompactNumberContentProps extends PropsWithChildren {
 }
 
 export function CompactNumberContent({ children, childrenAtStart, value }: CompactNumberContentProps) {
-  return (<>
-    {childrenAtStart && children}
-    <span>{value}</span>
-    {!childrenAtStart && children}
-  </>)
+  return (
+    <>
+      {childrenAtStart && children}
+      <span>{value}</span>
+      {!childrenAtStart && children}
+    </>
+  )
 }

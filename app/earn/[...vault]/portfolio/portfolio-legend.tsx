@@ -27,7 +27,7 @@ export function PortfolioLegend({ proportion, className }: Props) {
       </li>
       <li className={styles.coverage}>
         <span className={styles.label}>Insurance Coverage</span>
-        <span className={styles.value}>100</span>
+        <span className={styles.value}>{vault}</span>
       </li>
     </ul>
   )
