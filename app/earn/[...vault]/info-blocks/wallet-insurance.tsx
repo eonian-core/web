@@ -1,4 +1,5 @@
 import { Tooltip } from '@nextui-org/react'
+import { useDisclosure } from '@mantine/hooks'
 import { Suspense } from 'react'
 import { CommonInfoBlock, InfoBlockDescription, InfoBlockList, InfoBlockTitle, InfoItem, InfoItemIcon, InfoItemTitle, InfoItemValue } from './common-info-block'
 import IconEmail from '@/components/icons/icon-email'
@@ -7,6 +8,8 @@ import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provi
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import type { EmailLinkPreview, SocialLinkPreview } from '@/api/wallet-linking/gql/graphql'
 import { isEmailLinked, useCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
+import { Drawer } from '@/components/drawer/drawer'
+import Button from '@/components/button/button'
 
 export function WalletInsurance() {
   return (
@@ -49,13 +52,23 @@ export interface EmailStatusContentProps {
 }
 
 function EmailStatusContent({ address, chainId, status }: EmailStatusContentProps) {
+  const [opened, { open, close }] = useDisclosure(false)
+
   const { loading, error, data } = useCurrentWalletLinkPreview(address, chainId, status)
   if (error || loading)
     return <EmailStatusSkeleton />
 
   const link = data?.getWalletPreview?.link
-  if (!link)
-    return 'Link email'
+  if (!link) {
+    return <>
+      <Drawer
+        title={'Authentication'}
+        opened={opened}
+        onClose={close}
+      >Drawer text</Drawer>
+      <Button gradient round size="sm" onClick={open}>Link email</Button>
+    </>
+  }
 
   return (
     <Tooltip content={

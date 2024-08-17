@@ -26,6 +26,10 @@ const nextConfig = {
   },
   // Build source maps only if LogRocket is enabled
   productionBrowserSourceMaps: !!process.env.LOGROCKET_API_KEY,
+
+  experimental: {
+    optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+  },
 }
 
 const withMDX = createMDX({

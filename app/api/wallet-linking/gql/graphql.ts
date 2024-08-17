@@ -244,7 +244,7 @@ export type WalletPreview = {
    * If not empty, then the wallet is linked to an email or social account
    * Will return only last linked account
    */
-  link: LinkPreview;
+  link?: Maybe<LinkPreview>;
 };
 
 export type GetWalletPreviewQueryVariables = Exact<{
@@ -253,7 +253,7 @@ export type GetWalletPreviewQueryVariables = Exact<{
 }>;
 
 
-export type GetWalletPreviewQuery = { __typename?: 'Query', getWalletPreview?: { __typename?: 'WalletPreview', address: string, chainId: number, link: { __typename?: 'EmailLinkPreview', email: string } | { __typename?: 'SocialLinkPreview', platform: string, username: string } } | null };
+export type GetWalletPreviewQuery = { __typename?: 'Query', getWalletPreview?: { __typename?: 'WalletPreview', address: string, chainId: number, link?: { __typename?: 'EmailLinkPreview', email: string } | { __typename?: 'SocialLinkPreview', platform: string, username: string } | null } | null };
 
 export type GetWalletQueryVariables = Exact<{
   address: Scalars['String'];

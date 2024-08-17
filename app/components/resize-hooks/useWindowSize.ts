@@ -30,9 +30,10 @@ export function useWindowSize(): Size {
   // Handler to call on window resize
   const handleResize = useCallback(() => {
     // Set window width/height to state
+    // window.screen.width and height do not count for visible widnow area, they return montior resolution
     setWindowSize({
-      width: window.screen.width,
-      height: window.screen.height,
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
     })
   }, [setWindowSize])
 

@@ -47,7 +47,7 @@ type WalletPreview {
   If not empty, then the wallet is linked to an email or social account
   Will return only last linked account
   """
-  link: LinkPreview!
+  link: LinkPreview
 }
 
 union LinkPayload = EmailLink | SocialLink

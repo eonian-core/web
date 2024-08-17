@@ -110,6 +110,11 @@
 
   border-radius: var(--border-radius-450);
   font-size: var(--font-size-200);
+  &:not(.bordered) {
+    &:after {
+      left: -100%;
+    }
+  }
 }
 
 .md {

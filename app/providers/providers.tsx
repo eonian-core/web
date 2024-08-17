@@ -4,7 +4,7 @@ import React from 'react'
 
 import { Provider as ReduxProvider } from 'react-redux'
 import { store } from '../store/store'
-import NextThemeProvider from './next-theme'
+import ThemesProvider from './themes'
 import { WalletWrapperProvider } from './wallet/wallet-wrapper-provider'
 import { AuthProvider } from './auth'
 import { WaitlistProvider } from './waitlist'
@@ -20,7 +20,7 @@ interface Props {
 export default function Providers({ children }: Props) {
   return (
     <MonitoringProvider>
-      <NextThemeProvider>
+      <ThemesProvider>
         <ReduxProvider store={store}>
           <WalletWrapperProvider>
             <WaitlistProvider>
@@ -34,7 +34,7 @@ export default function Providers({ children }: Props) {
             </WaitlistProvider>
           </WalletWrapperProvider>
         </ReduxProvider>
-      </NextThemeProvider>
+      </ThemesProvider>
     </MonitoringProvider>
   )
 }

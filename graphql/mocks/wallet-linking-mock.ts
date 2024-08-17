@@ -9,34 +9,82 @@ interface QueryArgs {
   chainId: number
 }
 
+enum MutationAction {
+  LINK = 'LINK',
+  UNLINK = 'UNLINK',
+}
+
+interface LinkEmailToWalletInput {
+  action: MutationAction
+  timestamp: string
+  payload: LinkEmailToWalletInputPayload
+  signature: string
+}
+
+interface LinkEmailToWalletInputPayload {
+  chainId: number
+  address: string
+  link: EmailLinkInput
+}
+
+interface EmailLinkInput {
+  email: string
+}
+
+const db: { [address_chainId: string]: { chainId: number; link: { email: string } } } = {}
+
 function resolvers(): Partial<IResolvers> {
   return {
     Query: {
       getWalletPreview(source: any, { address, chainId }: QueryArgs, context: any, info: any) {
+        const data = db[`${address}_${chainId}`]
         return {
           address,
           chainId,
-          link: {
-            __typename: 'EmailLinkPreview',
-            email: 'alp***@g***.com',
-          },
+          link: data
+            ? {
+                __typename: 'EmailLinkPreview',
+                ...data.link,
+              }
+            : null,
         }
       },
       getWallet(source: any, { address, chainId }: QueryArgs, context: any, info: any) {
+        const data = db[`${address}_${chainId}`]
+        return {
+          address,
+          chainId,
+          links: data
+            ? [{
+                payload: {
+                  __typename: 'EmailLink',
+                  ...data.link,
+                },
+              }]
+            : [],
+        }
+      },
+    },
+    LinkPreview: { __resolveType },
+    LinkPayload: { __resolveType },
+    Mutation: {
+      linkEmailToWallet(_, { payload }: LinkEmailToWalletInput) {
+        const { address, chainId, link } = payload
+        const dbValue = { chainId, link }
+        db[`${address}_${chainId}`] = dbValue
+
         return {
           address,
           chainId,
           links: [{
             payload: {
               __typename: 'EmailLink',
-              email: 'alpha@gmail.com',
+              ...link,
             },
           }],
         }
       },
     },
-    LinkPreview: { __resolveType },
-    LinkPayload: { __resolveType },
   }
 }
 

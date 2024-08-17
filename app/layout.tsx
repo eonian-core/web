@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ColorSchemeScript } from '@mantine/core'
 
 import './globals.scss'
 import 'react-toastify/dist/ReactToastify.min.css'
@@ -26,6 +27,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <ColorSchemeScript />
+      </head>
       <GoogleAnalytics />
       <body className={clsx(robotoFont.className, 'dark text-foreground bg-background')}>
         <Providers locale={locale}>

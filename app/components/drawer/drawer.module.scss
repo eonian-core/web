@@ -1,0 +1,18 @@
+.drawer {
+
+    section {
+        & > header, & > div {
+            margin-left: var(--margin-100);
+            margin-right: var(--margin-100);
+        }
+    }
+
+    header {
+        margin-top: var(--margin-100);
+
+        h2 {
+            font-size: var(--font-size-800);
+            font-weight: var(--font-weight-bold);
+        }
+    }
+}
