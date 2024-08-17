@@ -5,7 +5,6 @@ import navigationReducer from './slices/navigationSlice'
 import positionInfoSlice from './slices/positionInfoSlice'
 import vaultActionReducer from './slices/vaultActionSlice'
 import vaultUserReducer from './slices/vaultUserSlice'
-import walletLinkPreviewReducer from './slices/walletLinkPreviewSlice'
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +13,6 @@ export const store = configureStore({
     vaultUser: vaultUserReducer,
     vaultAction: vaultActionReducer,
     positionInfo: positionInfoSlice,
-    walletLinkPreview: walletLinkPreviewReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

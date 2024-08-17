@@ -1,12 +1,12 @@
 import { Tooltip } from '@nextui-org/react'
-import { useWalletLinkPreview } from '../hooks/use-wallet-link-preview'
+import { Suspense } from 'react'
 import { CommonInfoBlock, InfoBlockDescription, InfoBlockList, InfoBlockTitle, InfoItem, InfoItemIcon, InfoItemTitle, InfoItemValue } from './common-info-block'
 import IconEmail from '@/components/icons/icon-email'
 import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
-import { RequestStatus } from '@/store/slices/requestSlice'
 import type { EmailLinkPreview, SocialLinkPreview } from '@/api/wallet-linking/gql/graphql'
+import { useCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
 
 export function WalletInsurance() {
   return (
@@ -29,13 +29,32 @@ export function WalletInsurance() {
 }
 
 function EmailStatus() {
-  const { status: walletStatus } = useWalletWrapperContext()
-  const [link, status] = useWalletLinkPreview()
-  if (walletStatus === WalletStatus.NOT_CONNECTED)
+  const { wallet, chain, status } = useWalletWrapperContext()
+
+  if (status === WalletStatus.CONNECTING)
+    return <EmailStatusSkeleton />
+
+  if (status === WalletStatus.NOT_CONNECTED || !wallet?.address || !chain?.id)
     return 'Not Linked'
 
-  if ([RequestStatus.Pending, RequestStatus.Rejected].includes(status))
+  return (<Suspense fallback={<EmailStatusSkeleton />}>
+    <EmailStatusContent address={wallet.address} chainId={chain?.id} status={status} />
+  </Suspense>)
+}
+
+export interface EmailStatusContentProps {
+  address: string
+  chainId: number
+  status: WalletStatus
+}
+
+function EmailStatusContent({ address, chainId, status }: EmailStatusContentProps) {
+  const { loading, error, data } = useCurrentWalletLinkPreview(address, chainId, status)
+
+  if (error || loading)
     return <EmailStatusSkeleton />
+
+  const link = data?.getWalletPreview?.link
 
   if (!link)
     return 'Link email'
@@ -44,8 +63,8 @@ function EmailStatus() {
     Linked to {(link as EmailLinkPreview).email
     ? <EmailWalletLink>{link as EmailLinkPreview}</EmailWalletLink>
     : <SocialWalletLink>{link as SocialLinkPreview}</SocialWalletLink>
-    }
-  </>}><span>Linked</span></Tooltip>
+      }
+    </>}><span>Linked</span></Tooltip>
 }
 
 export function EmailStatusSkeleton() {
