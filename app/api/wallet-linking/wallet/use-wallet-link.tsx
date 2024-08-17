@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { GetWallet, GetWalletPreview } from '../queries/get-wallet.query'
-import type { GetWalletPreviewQuery, GetWalletQuery } from '../gql/graphql'
+import type { EmailLinkPreview, GetWalletPreviewQuery, GetWalletQuery } from '../gql/graphql'
 import { walletLinkingClient } from '@/api/wallet-linker.client'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 
@@ -20,6 +20,8 @@ export function useCurrentWalletLinkPreview(address: string, chainId: number, st
     data: undefined,
   }
 }
+
+export const isEmailLinked = (link: any): link is EmailLinkPreview => 'email' in link
 
 export function useWalletLinkPreview(address: string, chainId: number) {
   return useQuery<GetWalletPreviewQuery>(GetWalletPreview, {

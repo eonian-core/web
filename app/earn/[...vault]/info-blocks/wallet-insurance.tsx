@@ -6,7 +6,7 @@ import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import type { EmailLinkPreview, SocialLinkPreview } from '@/api/wallet-linking/gql/graphql'
-import { useCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
+import { isEmailLinked, useCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
 
 export function WalletInsurance() {
   return (
@@ -50,21 +50,25 @@ export interface EmailStatusContentProps {
 
 function EmailStatusContent({ address, chainId, status }: EmailStatusContentProps) {
   const { loading, error, data } = useCurrentWalletLinkPreview(address, chainId, status)
-
   if (error || loading)
     return <EmailStatusSkeleton />
 
   const link = data?.getWalletPreview?.link
-
   if (!link)
     return 'Link email'
 
-  return <Tooltip content={<>
-    Linked to {(link as EmailLinkPreview).email
-    ? <EmailWalletLink>{link as EmailLinkPreview}</EmailWalletLink>
-    : <SocialWalletLink>{link as SocialLinkPreview}</SocialWalletLink>
-      }
-    </>}><span>Linked</span></Tooltip>
+  return (
+    <Tooltip content={
+      <>
+        Linked to {isEmailLinked(link)
+        ? <EmailWalletLinked>{link}</EmailWalletLinked>
+        : <SocialWalletLinked>{link}</SocialWalletLinked>
+        }
+      </>
+    }>
+      <span>Linked</span>
+    </Tooltip>
+  )
 }
 
 export function EmailStatusSkeleton() {
@@ -75,10 +79,10 @@ export function EmailStatusSkeleton() {
   />
 }
 
-export function EmailWalletLink({ children: link }: { children: EmailLinkPreview }) {
+export function EmailWalletLinked({ children: link }: { children: EmailLinkPreview }) {
   return link.email
 }
 
-export function SocialWalletLink({ children: link }: { children: SocialLinkPreview }) {
+export function SocialWalletLinked({ children: link }: { children: SocialLinkPreview }) {
   return <>{link.username} on {link.platform}</>
 }
