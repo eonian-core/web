@@ -3,9 +3,10 @@ import { gql } from '@apollo/client'
 import type { GetWalletPreviewQuery, GetWalletQuery } from '../gql/graphql'
 
 export const GetWalletPreview = gql`
-  query GetWalletPreview($address: String!) {
-    getWalletPreview(address: $address) {
+  query GetWalletPreview($address: String!, $chainId: Int!) {
+    getWalletPreview(address: $address, chainId: $chainId) {
       address
+      chainId
       link {
         ... on EmailLinkPreview {
           email
@@ -22,11 +23,12 @@ export const GetWalletPreview = gql`
 /**
  * Get wallet preview
  */
-export async function getWalletPreview(client: ApolloClient<any>, address: string) {
+export async function getWalletPreview(client: ApolloClient<any>, address: string, chainId: number) {
   const { data, error } = await client.query<GetWalletPreviewQuery>({
     query: GetWalletPreview,
     variables: {
       address,
+      chainId,
     },
   })
   if (error)
@@ -36,9 +38,10 @@ export async function getWalletPreview(client: ApolloClient<any>, address: strin
 }
 
 export const GetWallet = gql`
-  query GetWallet($address: String!) {
-    getWallet(address: $address) {
+  query GetWallet($address: String!, $chainId: Int!) {
+    getWallet(address: $address, chainId: $chainId) {
       address
+      chainId
       links {
         payload {
           ... on EmailLink {
@@ -57,11 +60,12 @@ export const GetWallet = gql`
 /**
  * Get wallet with linked emails and social links
  */
-export async function getWallet(client: ApolloClient<any>, address: string) {
+export async function getWallet(client: ApolloClient<any>, address: string, chainId: number) {
   const { data, error } = await client.query<GetWalletQuery>({
     query: GetWallet,
     variables: {
       address,
+      chainId,
     },
   })
   if (error)

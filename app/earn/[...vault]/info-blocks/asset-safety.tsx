@@ -1,12 +1,10 @@
 import type { PropsWithChildren } from 'react'
-import { useVaultDeposit } from '../hooks/use-vault-deposit-change'
 import { useVaultContext } from '../hooks/use-vault-context'
 import { useVaultAssetProportion } from '../portfolio/portfolio'
 import { CommonInfoBlock, InfoBlockDescription, InfoBlockList, InfoBlockTitle, InfoItem, InfoItemIcon, InfoItemTitle, InfoItemValue } from './common-info-block'
 import CompactNumber from '@/components/compact-number/compact-number'
 import IconArrowRightShort from '@/components/icons/icon-arrow-right-short'
 import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
-import type { TokenSymbol } from '@/types'
 import { FormAction } from '@/store/slices/types'
 
 export function AssetSafety() {

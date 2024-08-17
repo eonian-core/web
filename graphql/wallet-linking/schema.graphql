@@ -31,12 +31,17 @@ type Wallet implements BaseEntity {
   deletedBy: String
 
   address: String!
+  """
+  Chain id, ex. 1 for Ethereum, 56 for Binance Smart Chain
+  """
+  chainId: Int!
   links: [Link!]!
 }
 
 union LinkPreview = EmailLinkPreview | SocialLinkPreview
 
 type WalletPreview {
+  chainId: Int!
   address: String!
   """
   If not empty, then the wallet is linked to an email or social account
@@ -103,12 +108,12 @@ type Query {
   Only one route that not require authentication
   Not inlcude deleted wallets and all data is masked
   """
-  getWalletPreview(address: String!): WalletPreview
+  getWalletPreview(address: String!, chainId: Int!): WalletPreview
 
   """
   Requires authentication header with wallet address signature
   """
-  getWallet(address: String!): Wallet
+  getWallet(address: String!, chainId: Int!): Wallet
   """
   Requires admin authentication header
   """
@@ -140,6 +145,7 @@ input LinkEmailToWalletInput {
 }
 
 input LinkEmailToWalletInputPayload {
+    chainId: Int!
     address: String!
     link: EmailLinkInput!
 }
@@ -164,6 +170,7 @@ input LinkSocialToWalletInput {
 }
 
 input LinkSocialToWalletInputPayload {
+    chainId: Int!
     address: String!
     link: SocialLinkInput!
 }

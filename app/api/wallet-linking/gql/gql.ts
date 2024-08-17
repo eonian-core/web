@@ -13,8 +13,8 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query GetWalletPreview($address: String!) {\n    getWalletPreview(address: $address) {\n      address\n      link {\n        ... on EmailLinkPreview {\n          email\n        }\n        ... on SocialLinkPreview {\n          platform\n          username\n        }\n      }\n    }\n  }\n": types.GetWalletPreviewDocument,
-    "\n  query GetWallet($address: String!) {\n    getWallet(address: $address) {\n      address\n      links {\n        payload {\n          ... on EmailLink {\n            email\n          }\n          ... on SocialLink {\n            platform\n            username\n          }\n        }\n      }\n    }\n  }\n": types.GetWalletDocument,
+    "\n  query GetWalletPreview($address: String!, $chainId: Int!) {\n    getWalletPreview(address: $address, chainId: $chainId) {\n      address\n      chainId\n      link {\n        ... on EmailLinkPreview {\n          email\n        }\n        ... on SocialLinkPreview {\n          platform\n          username\n        }\n      }\n    }\n  }\n": types.GetWalletPreviewDocument,
+    "\n  query GetWallet($address: String!, $chainId: Int!) {\n    getWallet(address: $address, chainId: $chainId) {\n      address\n      chainId\n      links {\n        payload {\n          ... on EmailLink {\n            email\n          }\n          ... on SocialLink {\n            platform\n            username\n          }\n        }\n      }\n    }\n  }\n": types.GetWalletDocument,
 };
 
 /**
@@ -34,11 +34,11 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetWalletPreview($address: String!) {\n    getWalletPreview(address: $address) {\n      address\n      link {\n        ... on EmailLinkPreview {\n          email\n        }\n        ... on SocialLinkPreview {\n          platform\n          username\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetWalletPreview($address: String!) {\n    getWalletPreview(address: $address) {\n      address\n      link {\n        ... on EmailLinkPreview {\n          email\n        }\n        ... on SocialLinkPreview {\n          platform\n          username\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query GetWalletPreview($address: String!, $chainId: Int!) {\n    getWalletPreview(address: $address, chainId: $chainId) {\n      address\n      chainId\n      link {\n        ... on EmailLinkPreview {\n          email\n        }\n        ... on SocialLinkPreview {\n          platform\n          username\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetWalletPreview($address: String!, $chainId: Int!) {\n    getWalletPreview(address: $address, chainId: $chainId) {\n      address\n      chainId\n      link {\n        ... on EmailLinkPreview {\n          email\n        }\n        ... on SocialLinkPreview {\n          platform\n          username\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetWallet($address: String!) {\n    getWallet(address: $address) {\n      address\n      links {\n        payload {\n          ... on EmailLink {\n            email\n          }\n          ... on SocialLink {\n            platform\n            username\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetWallet($address: String!) {\n    getWallet(address: $address) {\n      address\n      links {\n        payload {\n          ... on EmailLink {\n            email\n          }\n          ... on SocialLink {\n            platform\n            username\n          }\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query GetWallet($address: String!, $chainId: Int!) {\n    getWallet(address: $address, chainId: $chainId) {\n      address\n      chainId\n      links {\n        payload {\n          ... on EmailLink {\n            email\n          }\n          ... on SocialLink {\n            platform\n            username\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetWallet($address: String!, $chainId: Int!) {\n    getWallet(address: $address, chainId: $chainId) {\n      address\n      chainId\n      links {\n        payload {\n          ... on EmailLink {\n            email\n          }\n          ... on SocialLink {\n            platform\n            username\n          }\n        }\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

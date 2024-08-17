@@ -1,6 +1,6 @@
-import { requireEnv } from './endpoints'
+import { requireEnv } from './environment'
 
-describe('checkEnvVar', () => {
+describe('requireEnv', () => {
   it('returns the value when it exists', () => {
     expect(requireEnv('TEST_ENV', 'test value')).toEqual('test value')
   })

@@ -75,6 +75,7 @@ export type LinkEmailToWalletInput = {
 
 export type LinkEmailToWalletInputPayload = {
   address: Scalars['String'];
+  chainId: Scalars['Int'];
   link: EmailLinkInput;
 };
 
@@ -97,6 +98,7 @@ export type LinkSocialToWalletInput = {
 
 export type LinkSocialToWalletInputPayload = {
   address: Scalars['String'];
+  chainId: Scalars['Int'];
   link: SocialLinkInput;
 };
 
@@ -183,11 +185,13 @@ export type QueryGetSocialLinksArgs = {
 
 export type QueryGetWalletArgs = {
   address: Scalars['String'];
+  chainId: Scalars['Int'];
 };
 
 
 export type QueryGetWalletPreviewArgs = {
   address: Scalars['String'];
+  chainId: Scalars['Int'];
 };
 
 
@@ -222,6 +226,8 @@ export type SocialLinkPreview = {
 export type Wallet = BaseEntity & {
   __typename?: 'Wallet';
   address: Scalars['String'];
+  /** Chain id, ex. 1 for Ethereum, 56 for Binance Smart Chain */
+  chainId: Scalars['Int'];
   createdAt: Scalars['DateTimeISO'];
   createdBy: Scalars['String'];
   deletedAt?: Maybe<Scalars['DateTimeISO']>;
@@ -233,6 +239,7 @@ export type Wallet = BaseEntity & {
 export type WalletPreview = {
   __typename?: 'WalletPreview';
   address: Scalars['String'];
+  chainId: Scalars['Int'];
   /**
    * If not empty, then the wallet is linked to an email or social account
    * Will return only last linked account
@@ -242,18 +249,20 @@ export type WalletPreview = {
 
 export type GetWalletPreviewQueryVariables = Exact<{
   address: Scalars['String'];
+  chainId: Scalars['Int'];
 }>;
 
 
-export type GetWalletPreviewQuery = { __typename?: 'Query', getWalletPreview?: { __typename?: 'WalletPreview', address: string, link: { __typename?: 'EmailLinkPreview', email: string } | { __typename?: 'SocialLinkPreview', platform: string, username: string } } | null };
+export type GetWalletPreviewQuery = { __typename?: 'Query', getWalletPreview?: { __typename?: 'WalletPreview', address: string, chainId: number, link: { __typename?: 'EmailLinkPreview', email: string } | { __typename?: 'SocialLinkPreview', platform: string, username: string } } | null };
 
 export type GetWalletQueryVariables = Exact<{
   address: Scalars['String'];
+  chainId: Scalars['Int'];
 }>;
 
 
-export type GetWalletQuery = { __typename?: 'Query', getWallet?: { __typename?: 'Wallet', address: string, links: Array<{ __typename?: 'Link', payload: { __typename?: 'EmailLink', email: string } | { __typename?: 'SocialLink', platform: string, username: string } }> } | null };
+export type GetWalletQuery = { __typename?: 'Query', getWallet?: { __typename?: 'Wallet', address: string, chainId: number, links: Array<{ __typename?: 'Link', payload: { __typename?: 'EmailLink', email: string } | { __typename?: 'SocialLink', platform: string, username: string } }> } | null };
 
 
-export const GetWalletPreviewDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWalletPreview"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getWalletPreview"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EmailLinkPreview"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SocialLinkPreview"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWalletPreviewQuery, GetWalletPreviewQueryVariables>;
-export const GetWalletDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWallet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getWallet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"links"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"payload"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EmailLink"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SocialLink"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWalletQuery, GetWalletQueryVariables>;
+export const GetWalletPreviewDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWalletPreview"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"chainId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getWalletPreview"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}},{"kind":"Argument","name":{"kind":"Name","value":"chainId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chainId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"chainId"}},{"kind":"Field","name":{"kind":"Name","value":"link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EmailLinkPreview"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SocialLinkPreview"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWalletPreviewQuery, GetWalletPreviewQueryVariables>;
+export const GetWalletDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWallet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"chainId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getWallet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}},{"kind":"Argument","name":{"kind":"Name","value":"chainId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chainId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"chainId"}},{"kind":"Field","name":{"kind":"Name","value":"links"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"payload"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EmailLink"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SocialLink"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWalletQuery, GetWalletQueryVariables>;

@@ -1,4 +1,5 @@
 import { ChainId } from '../providers/wallet/wrappers/helpers'
+import { requireEnv } from './environment'
 
 export enum ChainEnvironment {
   LOCAL = 'LOCAL',
@@ -23,15 +24,4 @@ export const GraphQLEndpoints: GraphQLEndpointsMap = {
   // Optional variable
   [ChainId.SEPOLIA]: requireEnv('NEXT_PUBLIC_SEPOLIA_GRAPH_URL', process.env.NEXT_PUBLIC_SEPOLIA_GRAPH_URL || 'http://localhost:4000/'),
   [ChainId.UNKNOWN]: undefined,
-}
-
-/** Important to use process.env.[name] directly, because it replaced during build time */
-export function requireEnv(name: string, value: string | undefined): string {
-  if (!value)
-    throw new Error(`Environment variable "${name}" not found`)
-
-  // eslint-disable-next-line no-console
-  console.log(name, value)
-
-  return value
 }

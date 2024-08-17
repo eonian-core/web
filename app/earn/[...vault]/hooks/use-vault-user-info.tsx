@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import type { Vault } from '../../../api'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '../../../providers/wallet/wrappers/types'
-import { executeAfter } from '../../../shared/async/execute-after'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { fetchVaultUserData, reset } from '../../../store/slices/vaultUserSlice'
-import { RequestStatus } from '@/store/slices/requestSlice'
+import { useRefetch } from './use-refetch'
 
 interface VaultUserInfoParams {
   autoUpdateInterval?: number
@@ -24,7 +23,7 @@ export function useVaultUserInfo({
   const { multicallAddress } = chain ?? {}
   const { address: walletAddress } = wallet ?? {}
 
-  const refetch = React.useMemo(() => {
+  const refetch = useMemo(() => {
     if (!walletAddress || !multicallAddress || !provider)
       return null
 
@@ -39,12 +38,11 @@ export function useVaultUserInfo({
     }
   }, [dispatch, walletAddress, vaultAddress, assetAddress, multicallAddress, provider])
 
-  /**
-   * Retrieves fresh data when something changed (wallet/vault/chain).
-   */
-  useEffect(() => {
-    void refetch?.()
-  }, [refetch])
+  useRefetch({
+    status: loadingStatus,
+    autoUpdateInterval,
+    forceUpdate: true,
+  }, refetch)
 
   /**
    * Resets vault-user data when wallet is disconnected.
@@ -63,19 +61,6 @@ export function useVaultUserInfo({
     },
     [dispatch],
   )
-
-  /**
-   * Performs automatic updates at fixed intervals.
-   * Only if {@link autoUpdateInterval} is specified.
-   */
-  useEffect(() => {
-    if (loadingStatus === RequestStatus.Pending || !autoUpdateInterval)
-      return
-
-    return executeAfter(autoUpdateInterval, () => {
-      void refetch?.()
-    })
-  }, [autoUpdateInterval, loadingStatus, refetch])
 
   return refetch
 }

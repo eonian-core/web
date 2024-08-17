@@ -1,7 +1,7 @@
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { ChainId } from '../providers/wallet/wrappers/helpers'
-import { makeProtocolEndpoint, makeWalletLinkingEndpoint } from './apollo.endpoints'
+import { makeProtocolEndpoint } from './apollo.endpoints'
 import { scalarTypePolicies } from './protocol/gql/graphql'
 
 function makeProtocolClientFactory(chainId: ChainId): () => ApolloClient<any> {
@@ -29,10 +29,3 @@ export function getProtocolRscClient(chainId: ChainId) {
 
   return rscProtocolClientGetters[chainId]()
 }
-
-const rscWalletLinkingClientGetter = registerApolloClient(() => new ApolloClient({
-  cache: new InMemoryCache(),
-  link: makeWalletLinkingEndpoint(),
-})).getClient
-
-export const getWalletLinkingRscClient = () => rscWalletLinkingClientGetter()

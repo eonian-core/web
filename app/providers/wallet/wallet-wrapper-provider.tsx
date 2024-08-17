@@ -1,10 +1,9 @@
 'use client'
 
 import { Web3OnboardProvider, useConnectWallet, useSetChain } from '@web3-onboard/react'
-import type { Chain as W3OChain } from '@web3-onboard/common'
 import type { ethers } from 'ethers'
 import React, { useContext, useEffect } from 'react'
-import web3Onboard, { defaultChain } from '../../web3-onboard'
+import web3Onboard from '../../web3-onboard'
 import { useMonitoringContext } from '../monitoring'
 import type { ChainId } from './wrappers/helpers'
 import type { Chain, Wallet } from './wrappers/types'

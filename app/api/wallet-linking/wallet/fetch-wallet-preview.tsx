@@ -1,11 +1,10 @@
 import { getWallet, getWalletPreview } from '../queries/get-wallet.query'
 import type { WalletPreview } from '../gql/graphql'
-import { getWalletLinkingRscClient } from '@/api/apollo.rsc-client'
+import { walletLinkingClient } from '@/api/wallet-linker.client'
 
-export async function fetchWalletLinkPreview(address: string): Promise<WalletPreview | null | undefined> {
+export async function fetchWalletLinkPreview(address: string, chainId: number): Promise<WalletPreview | null | undefined> {
   try {
-    const client = getWalletLinkingRscClient()
-    const data = await getWalletPreview(client, address)
+    const data = await getWalletPreview(walletLinkingClient, address, chainId)
     return data.getWalletPreview
   }
   catch (e) {
@@ -13,10 +12,9 @@ export async function fetchWalletLinkPreview(address: string): Promise<WalletPre
   }
 }
 
-export async function fetchWalletLink(address: string) {
+export async function fetchWalletLink(address: string, chainId: number) {
   try {
-    const client = getWalletLinkingRscClient()
-    const data = await getWallet(client, address)
+    const data = await getWallet(walletLinkingClient, address, chainId)
     return data.getWallet
   }
   catch (e) {

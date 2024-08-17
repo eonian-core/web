@@ -4,21 +4,28 @@ import type { IResolvers } from '@graphql-tools/utils'
 
 import { server } from './server'
 
+interface QueryArgs {
+  address: string
+  chainId: number
+}
+
 function resolvers(): Partial<IResolvers> {
   return {
     Query: {
-      getWalletPreview(address: string) {
+      getWalletPreview(source: any, { address, chainId }: QueryArgs, context: any, info: any) {
         return {
           address,
+          chainId,
           link: {
             __typename: 'EmailLinkPreview',
             email: 'alp***@g***.com',
           },
         }
       },
-      getWallet(address: string) {
+      getWallet(source: any, { address, chainId }: QueryArgs, context: any, info: any) {
         return {
           address,
+          chainId,
           links: [{
             payload: {
               __typename: 'EmailLink',

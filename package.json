@@ -7,7 +7,7 @@
     "dev": "concurrently -c \"auto\" \"npm:dev:next\" \"npm:check:ts:d-watch\"",
     "dev:next": "next dev",
     "dev:no-tls": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev",
-    "dev:mock": "NEXT_PUBLIC_BSC_GRAPH_URL=http://localhost:4000/ concurrently -c \"auto\"  \"npm:dev:next\" \"npm:check:ts:d-watch\" \"npm:mock:protocol\" \"npm:mock:wallet-linking\" ",
+    "dev:mock": "NEXT_PUBLIC_BSC_GRAPH_URL=http://localhost:4000/ NEXT_PUBLIC_WALLET_LINKING_GRAPH_URL=http://localhost:5000/ concurrently -c \"auto\"  \"npm:dev:next\" \"npm:check:ts:d-watch\" \"npm:mock:protocol\" \"npm:mock:wallet-linking\" ",
     "build": "next build --no-lint",
     "postbuild": "npm run release-logrocket",
     "start": "next start",
@@ -32,7 +32,7 @@
     "postinstall": "cp .hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit",
     "check:ts": "tsc --noEmit --incremental",
     "check:ts:d-watch": "sleep 5s && npm run check:ts:watch",
-    "check:ts:watch": "npm run check:ts -- --watch"
+    "check:ts:watch": "npm run check:ts -- --watch --preserveWatchOutput"
   },
   "engines": {
     "node": ">=18.17.1 <19.0.0"
