@@ -17,7 +17,7 @@ export function useCurrentWalletLinkPreview(address: string, chainId: number, st
 
   return {
     ...request,
-    data: undefined,
+    data: undefined, // clear data so it cannot confuse user when wallet is changed
   }
 }
 
