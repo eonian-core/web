@@ -23,11 +23,20 @@
     margin-bottom: var(--margin-50);
     font-size: var(--font-size-200);
     color: var(--color-text-300);
+
+    display: flex;
+    align-items: center;
   }
 
   h2 {
     font-size: var(--font-size-700);
     font-weight: var(--font-bold);
+  }
+
+  .moreInfo {
+    @media (min-width: $screen-mobile) {
+      display: none;
+    }
   }
 }
 

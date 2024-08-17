@@ -11,7 +11,6 @@ import styles from './form-input.module.scss'
 import { useAppSelector } from '@/store/hooks'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
-import { FormAction } from '@/store/slices/types'
 
 export const INPUT_ID = 'main-form-input'
 
@@ -26,10 +25,8 @@ interface FormInputProps {
 
 const FormInput: React.FC<FormInputProps> = ({ disabled }) => {
   const { displayValue, placeholderDisplayValue, onValueChange, vault, formAction } = useVaultContext()
-  const { walletBalanceBN, vaultBalanceBN } = useAppSelector(state => state.vaultUser)
+  const { walletBalanceBN } = useAppSelector(state => state.vaultUser)
   const { status } = useWalletWrapperContext()
-
-  const balanceBN = formAction === FormAction.DEPOSIT ? walletBalanceBN : vaultBalanceBN
 
   return (
     <RawFormInput
@@ -45,7 +42,7 @@ const FormInput: React.FC<FormInputProps> = ({ disabled }) => {
           <BalanceWithSetter
             {...{
               disabled,
-              balance: BigInt(balanceBN),
+              balance: BigInt(walletBalanceBN),
             }}
           />
         )
