@@ -2,7 +2,11 @@ import { Area, AreaChart, YAxis } from 'recharts'
 import type { PropsWithChildren } from 'react'
 import { useMemo } from 'react'
 import type { AxisDomain } from 'recharts/types/util/types'
-import { PercentagePriceChange, getChangeColor } from '../../components/percentage-price-change/percentage-price-change'
+import {
+  PercentagePriceChange,
+  getChangeColor,
+} from '../../components/percentage-price-change/percentage-price-change'
+import { Actions } from '../second-line/actions'
 import styles from './price-chart.module.scss'
 import { chartHeight, chartWidth } from './price-chart-skeleton'
 import { reducePriceData } from '@/shared/charts/reduce-price-data'
@@ -24,9 +28,8 @@ export function PriceChart({ symbol, currentPrice }: ChartProps) {
   if (!yearlyPriceData) {
     return (
       <div className={styles.container}>
-        <PriceInfo {...{ symbol, currentPrice }}>
-        </PriceInfo>
-        <ChartSkeleton width={chartWidth} height={chartHeight}/>
+        <PriceInfo {...{ symbol, currentPrice }}></PriceInfo>
+        <ChartSkeleton width={chartWidth} height={chartHeight} />
       </div>
     )
   }
@@ -50,7 +53,10 @@ function PriceInfo({ symbol, currentPrice, children }: PropsWithChildren<ChartPr
 
   return (
     <div className={styles.priceInfo}>
-      <h3>{symbol} Price</h3>
+      <h3>
+        {symbol} Price
+        <Actions className={styles.moreInfo} symbol={symbol} />
+      </h3>
       <div className={styles.price}>
         <h2>{currentPriceUSD}</h2>
         {children}
@@ -88,7 +94,6 @@ function Chart({ yearlyPriceData, symbol }: { yearlyPriceData: PriceData[]; symb
       <Area type="monotone" dataKey="price" stroke={color} fillOpacity={1} fill="url(#chart-bg-color)" />
 
       <YAxis domain={yAxisDomainMap[symbol]} hide />
-
     </AreaChart>
   )
 }

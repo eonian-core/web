@@ -27,6 +27,7 @@ export function FormSkeleton() {
                     placeholder={'0'}
                     inputStart={<WalletInputIcon />}
                     price={<span>$0</span>}
+                    preview
                     >0</RawFormInput>
 
                 <ArrowDividerBody />
@@ -36,6 +37,7 @@ export function FormSkeleton() {
                     placeholder={'0'}
                     inputStart={<CircleSkeleton height={24} width={24} />}
                     price={<span>$0</span>}
+                    preview
                     >0</RawFormInput>
 
                 <FormButtonBody>
