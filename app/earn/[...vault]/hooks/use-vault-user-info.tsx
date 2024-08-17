@@ -5,6 +5,7 @@ import { WalletStatus } from '../../../providers/wallet/wrappers/types'
 import { executeAfter } from '../../../shared/async/execute-after'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { fetchVaultUserData, reset } from '../../../store/slices/vaultUserSlice'
+import { RequestStatus } from '@/store/slices/requestSlice'
 
 interface VaultUserInfoParams {
   autoUpdateInterval?: number
@@ -17,7 +18,7 @@ export function useVaultUserInfo({
 { autoUpdateInterval }: VaultUserInfoParams = {},
 ) {
   const dispatch = useAppDispatch()
-  const { isLoading } = useAppSelector(state => state.vaultUser)
+  const { status: loadingStatus } = useAppSelector(state => state.vaultUser)
 
   const { wallet, provider, chain, status } = useWalletWrapperContext()
   const { multicallAddress } = chain ?? {}
@@ -68,13 +69,13 @@ export function useVaultUserInfo({
    * Only if {@link autoUpdateInterval} is specified.
    */
   useEffect(() => {
-    if (isLoading || !autoUpdateInterval)
+    if (loadingStatus === RequestStatus.Pending || !autoUpdateInterval)
       return
 
     return executeAfter(autoUpdateInterval, () => {
       void refetch?.()
     })
-  }, [autoUpdateInterval, isLoading, refetch])
+  }, [autoUpdateInterval, loadingStatus, refetch])
 
   return refetch
 }
