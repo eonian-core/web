@@ -6,11 +6,12 @@ import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import type { EmailLinkPreview, LinkPreview, SocialLinkPreview } from '@/api/wallet-linking/gql/graphql'
-import { isEmailLinked, useCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
+import { isEmailLinked, useSuspenseCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
 
 import Button from '@/components/button/button'
 import { useWalletLinkingContext } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
 import { LinkInText } from '@/components/links/link-in-text'
+import { SuspenseWithErrorBoundary } from '@/components/suspense/suspense-with-error-boundary'
 
 const NotLinkedDescription = () => <>In case of a wallet hack, insured assets will be recoverable through email.</>
 
@@ -29,15 +30,19 @@ export function WalletInsurance() {
     )
   }
 
-  return (<Suspense fallback={<LoadingWalletInsurance />}>
-    <LinkedWalletInsurance address={wallet.address} chainId={chain?.id} status={status} />
-  </Suspense>)
-}
-
-function LoadingWalletInsurance() {
-  return <WalletInsuranceBase status={<EmailStatusSkeleton />}>
-    <NotLinkedDescription />
-  </WalletInsuranceBase>
+  return (
+    <SuspenseWithErrorBoundary fallback={
+      <WalletInsuranceBase status={<EmailStatusSkeleton />}>
+        <NotLinkedDescription />
+      </WalletInsuranceBase>
+    }>
+      <LinkedWalletInsurance
+        address={wallet.address}
+        chainId={chain?.id}
+        status={status}
+      />
+    </SuspenseWithErrorBoundary>
+  )
 }
 
 export interface LinkedWalletInsuranceProps {
@@ -48,10 +53,7 @@ export interface LinkedWalletInsuranceProps {
 
 function LinkedWalletInsurance({ address, chainId, status }: LinkedWalletInsuranceProps) {
   const { open } = useWalletLinkingContext()
-  const { loading, error, data } = useCurrentWalletLinkPreview(address, chainId, status)
-  if (error || loading)
-    return <LoadingWalletInsurance />
-
+  const { data } = useSuspenseCurrentWalletLinkPreview(address, chainId, status)
   const link = data?.getWalletPreview?.link
   if (!link) {
     return (

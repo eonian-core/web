@@ -1,13 +1,13 @@
-import { useQuery } from '@apollo/client'
+import { useQuery, useSuspenseQuery } from '@apollo/client'
 import { GetWallet, GetWalletPreview } from '../queries/get-wallet.query'
 import type { EmailLinkPreview, GetWalletPreviewQuery, GetWalletQuery } from '../gql/graphql'
 import { walletLinkingClient } from '@/api/wallet-linker.client'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 
-export function useCurrentWalletLinkPreview(address: string, chainId: number, status: WalletStatus) {
-  const request = useWalletLinkPreview(address, chainId)
-  if (request.loading || request.error)
-    return request
+export const isEmailLinked = (link: any): link is EmailLinkPreview => 'email' in link
+
+export function useSuspenseCurrentWalletLinkPreview(address: string, chainId: number, status: WalletStatus) {
+  const request = useSuspenseWalletLinkPreview(address, chainId)
 
   const linkedWallet = request.data?.getWalletPreview
   const isLinkForCurrentWallet = linkedWallet?.address === address && chainId === linkedWallet.chainId
@@ -21,7 +21,20 @@ export function useCurrentWalletLinkPreview(address: string, chainId: number, st
   }
 }
 
-export const isEmailLinked = (link: any): link is EmailLinkPreview => 'email' in link
+export function useSuspenseWalletLinkPreview(address: string, chainId: number) {
+  const request = useSuspenseQuery<GetWalletPreviewQuery>(GetWalletPreview, {
+    client: walletLinkingClient,
+    variables: {
+      address,
+      chainId,
+    },
+  })
+
+  if (request.error)
+    throw request.error
+
+  return request
+}
 
 export function useWalletLinkPreview(address: string, chainId: number) {
   return useQuery<GetWalletPreviewQuery>(GetWalletPreview, {

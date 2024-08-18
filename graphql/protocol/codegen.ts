@@ -3,7 +3,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli'
 const config: CodegenConfig = {
   overwrite: true,
   schema: 'https://api.studio.thegraph.com/query/48141/eonian-bsc-development/version/latest',
-  documents: 'app/api/protocol/queries/*.{ts,tsx}',
+  documents: 'app/api/protocol/**/*.{ts,tsx}',
   generates: {
     'graphql/protocol/schema.graphql': {
       plugins: ['schema-ast'],

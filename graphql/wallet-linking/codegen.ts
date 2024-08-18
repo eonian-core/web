@@ -3,7 +3,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli'
 const config: CodegenConfig = {
   overwrite: true,
   schema: 'graphql/wallet-linking/schema.graphql',
-  documents: 'app/api/wallet-linking/queries/*.{ts,tsx}',
+  documents: 'app/api/wallet-linking/**/*.{ts,tsx}',
   generates: {
     'app/api/wallet-linking/gql/': {
       preset: 'client',
