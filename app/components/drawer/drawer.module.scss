@@ -4,6 +4,8 @@
     --header-size: 70px;
 
     section {
+        box-shadow: 0px 0px 20px 2px var(--color-green-neon-300);
+
         & > header, & > div {
             margin-left: var(--margin-100);
             margin-right: var(--margin-100);

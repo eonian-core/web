@@ -45,7 +45,7 @@ export function useWalletLinkingContext(): WalletLinkingContextProps {
 
 export function WalletLinkingDrawer(props: { opened: boolean; onClose: () => void }) {
   return (
-        <Drawer title={'Recovery email'} {...props}>
+      <Drawer title={'Recovery email'} {...props}>
         <div className={styles.formWrapper}>
           <LinkRecoveryEmailFlow />
         </div>
