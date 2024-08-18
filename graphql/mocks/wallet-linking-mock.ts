@@ -68,8 +68,8 @@ function resolvers(): Partial<IResolvers> {
     LinkPreview: { __resolveType },
     LinkPayload: { __resolveType },
     Mutation: {
-      linkEmailToWallet(_, { payload }: LinkEmailToWalletInput) {
-        const { address, chainId, link } = payload
+      linkEmailToWallet(_, { input }: { input: LinkEmailToWalletInput }) {
+        const { address, chainId, link } = input.payload
         const dbValue = { chainId, link }
         db[`${address}_${chainId}`] = dbValue
 

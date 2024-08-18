@@ -5,14 +5,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
 
-    form {
-        margin-top: -8rem;
-        max-width: var(--width-400);
-        display: flex;
-        flex-direction: column;
-        gap: var(--margin-200);
-    }
+.form, .result {
+    margin-top: -8rem;
+    max-width: var(--width-400);
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin-200);
 }
 
 .header {
@@ -44,5 +44,26 @@
         &:hover {
             border-color: var(--color-neutral-300);
         }
+    }
+}
+
+.error {
+
+    text-align: left;
+    margin-top: 0;
+
+    border: 2px dashed var(--color-error-700);
+    padding: var(--padding-200);
+    border-radius: var(--border-radius-600);
+
+    h4 {
+        font-size: var(--font-size-500);
+        font-weight: var(--font-medium);
+        margin-bottom: var(--margin-50);
+    }
+
+    p {
+        font-size: var(--font-size-300);
+        color: var(--color-neutral-400);
     }
 }
