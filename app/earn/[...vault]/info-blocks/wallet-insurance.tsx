@@ -1,17 +1,79 @@
 import { Tooltip } from '@nextui-org/react'
-import { useDisclosure } from '@mantine/hooks'
 import { Suspense } from 'react'
 import { CommonInfoBlock, InfoBlockDescription, InfoBlockList, InfoBlockTitle, InfoItem, InfoItemIcon, InfoItemTitle, InfoItemValue } from './common-info-block'
 import IconEmail from '@/components/icons/icon-email'
 import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
-import type { EmailLinkPreview, SocialLinkPreview } from '@/api/wallet-linking/gql/graphql'
+import type { EmailLinkPreview, LinkPreview, SocialLinkPreview } from '@/api/wallet-linking/gql/graphql'
 import { isEmailLinked, useCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
-import { Drawer } from '@/components/drawer/drawer'
+
 import Button from '@/components/button/button'
+import { useWalletLinkingContext } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
+import { LinkInText } from '@/components/links/link-in-text'
+
+const NotLinkedDescription = () => <>In case of a wallet hack, insured assets will be recoverable through email.</>
 
 export function WalletInsurance() {
+  const { wallet, chain, status } = useWalletWrapperContext()
+
+  if (status === WalletStatus.CONNECTING) {
+    return (
+      <WalletInsuranceBase status={<EmailStatusSkeleton />}><NotLinkedDescription /></WalletInsuranceBase>
+    )
+  }
+
+  if (status === WalletStatus.NOT_CONNECTED || !wallet?.address || !chain?.id) {
+    return (
+      <WalletInsuranceBase status={'Not linked'}><NotLinkedDescription /></WalletInsuranceBase>
+    )
+  }
+
+  return (<Suspense fallback={<LoadingWalletInsurance />}>
+    <LinkedWalletInsurance address={wallet.address} chainId={chain?.id} status={status} />
+  </Suspense>)
+}
+
+function LoadingWalletInsurance() {
+  return <WalletInsuranceBase status={<EmailStatusSkeleton />}>
+    <NotLinkedDescription />
+  </WalletInsuranceBase>
+}
+
+export interface LinkedWalletInsuranceProps {
+  address: string
+  chainId: number
+  status: WalletStatus
+}
+
+function LinkedWalletInsurance({ address, chainId, status }: LinkedWalletInsuranceProps) {
+  const { open } = useWalletLinkingContext()
+  const { loading, error, data } = useCurrentWalletLinkPreview(address, chainId, status)
+  if (error || loading)
+    return <LoadingWalletInsurance />
+
+  const link = data?.getWalletPreview?.link
+  if (!link) {
+    return (
+      <WalletInsuranceBase status={<Button gradient round size="sm" onClick={open}>Link email</Button>}>
+        <NotLinkedDescription />
+      </WalletInsuranceBase>
+    )
+  }
+
+  return (
+    <WalletInsuranceBase status={<EmailStatusContent>{link}</EmailStatusContent>}>
+      In case of wallet hack follow <LinkInText href={'https://docs.eonian.finance/basics/guides/recovering-assets-after-a-wallet-hack'}>this instructions</LinkInText> to recover your assets.
+    </WalletInsuranceBase>
+  )
+}
+
+export interface WalletInsuranceBaseProps {
+  children: React.ReactNode
+  status: React.ReactNode
+}
+
+function WalletInsuranceBase({ children: description, status }: WalletInsuranceBaseProps) {
   return (
     <CommonInfoBlock>
       <InfoBlockTitle>Wallet Insurance</InfoBlockTitle>
@@ -20,56 +82,16 @@ export function WalletInsurance() {
         <InfoItem>
           <InfoItemIcon><IconEmail /></InfoItemIcon>
           <InfoItemTitle>Recovery Email</InfoItemTitle>
-          <InfoItemValue>
-            <EmailStatus />
-          </InfoItemValue>
+          <InfoItemValue>{status}</InfoItemValue>
         </InfoItem>
       </InfoBlockList>
 
-      <InfoBlockDescription>In case of a wallet hack, insured assets will be recoverable through email.</InfoBlockDescription>
-    </CommonInfoBlock>
+    <InfoBlockDescription>{description}</InfoBlockDescription>
+  </CommonInfoBlock>
   )
 }
 
-function EmailStatus() {
-  const { wallet, chain, status } = useWalletWrapperContext()
-
-  if (status === WalletStatus.CONNECTING)
-    return <EmailStatusSkeleton />
-
-  if (status === WalletStatus.NOT_CONNECTED || !wallet?.address || !chain?.id)
-    return 'Not Linked'
-
-  return (<Suspense fallback={<EmailStatusSkeleton />}>
-    <EmailStatusContent address={wallet.address} chainId={chain?.id} status={status} />
-  </Suspense>)
-}
-
-export interface EmailStatusContentProps {
-  address: string
-  chainId: number
-  status: WalletStatus
-}
-
-function EmailStatusContent({ address, chainId, status }: EmailStatusContentProps) {
-  const [opened, { open, close }] = useDisclosure(false)
-
-  const { loading, error, data } = useCurrentWalletLinkPreview(address, chainId, status)
-  if (error || loading)
-    return <EmailStatusSkeleton />
-
-  const link = data?.getWalletPreview?.link
-  if (!link) {
-    return <>
-      <Drawer
-        title={'Authentication'}
-        opened={opened}
-        onClose={close}
-      >Drawer text</Drawer>
-      <Button gradient round size="sm" onClick={open}>Link email</Button>
-    </>
-  }
-
+function EmailStatusContent({ children: link }: { children: LinkPreview }) {
   return (
     <Tooltip content={
       <>

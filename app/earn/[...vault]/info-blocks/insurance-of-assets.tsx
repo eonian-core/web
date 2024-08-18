@@ -39,7 +39,7 @@ export function InsuranceOfAssets() {
         </Checkbox>
 
         <div className={styles.link}>
-          <ExternalLink href={resourceLink.href} icon={<IconExternal size="0.9em" />} iconAtEnd>
+          <ExternalLink href={'https://leovs09.notion.site/Insurance-Coverage-Policy-b33c682e8d49426f80fee2bd14525edd?pvs=74'} icon={<IconExternal size="0.9em" />} iconAtEnd>
             Terms & Conditions
           </ExternalLink>
         </div>

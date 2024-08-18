@@ -7,12 +7,12 @@ import '@mantine/core/styles/Paper.css'
 import '@mantine/core/styles/Drawer.css'
 
 import type { DrawerProps as MantineDrawerProps } from '@mantine/core'
-import { Button, Drawer as MantineDrawer } from '@mantine/core'
+import { Drawer as MantineDrawer } from '@mantine/core'
 import { useIsTabletOrSmaller } from '../resize-hooks/screens'
 
 import styles from './drawer.module.scss'
 
-export interface DrawerProps extends Pick<MantineDrawerProps, 'opened' | 'onClose' | 'title' | 'children'> {
+export interface DrawerProps extends MantineDrawerProps {
 
 }
 

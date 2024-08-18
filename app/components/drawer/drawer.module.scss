@@ -1,9 +1,17 @@
 .drawer {
 
+    // estimated on wallet linking drawer
+    --header-size: 70px;
+
     section {
         & > header, & > div {
             margin-left: var(--margin-100);
             margin-right: var(--margin-100);
+        }
+
+        & > div {
+            // unfortunately, current drawer styles result of height higher than real drawer size
+            height: calc(100% - var(--header-size));
         }
     }
 

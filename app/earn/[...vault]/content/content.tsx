@@ -20,6 +20,7 @@ import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 import { useHideAnimtion } from '@/components/fade-in/animation'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
+import { WalletLinkingProvider } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
 
 interface Props {
   vault: Vault
@@ -32,20 +33,22 @@ export function Content({ vault, chainId, symbol }: Props) {
 
   return (
     <VaultProvider vault={vault}>
-      <div className={styles.container}>
-        <LeftSection />
+      <WalletLinkingProvider>
+        <div className={styles.container}>
+          <LeftSection />
 
-        <section ref={formRef} className={styles.middle}>
-          <Form chainId={chainId} />
-          <LimitBlocks show={formHovering}/>
-        </section>
+          <section ref={formRef} className={styles.middle}>
+            <Form chainId={chainId} />
+            <LimitBlocks show={formHovering}/>
+          </section>
 
-        <RightSection symbol={symbol} />
-      </div>
-      <div className={styles.mobileInfoBlocks}>
-        <SafetyBlocks show/>
-        <LimitBlocks show/>
-      </div>
+          <RightSection symbol={symbol} />
+        </div>
+        <div className={styles.mobileInfoBlocks}>
+          <SafetyBlocks show/>
+          <LimitBlocks show/>
+        </div>
+      </WalletLinkingProvider>
     </VaultProvider>
   )
 }
