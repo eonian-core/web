@@ -66,8 +66,8 @@ function SafetyDescription({ children: displayAmount, proportion, amount }: Prop
     return (
       <InfoBlockDescription>
         After deposit of {displayAmount}, {proportion === 1
-        ? 'the whole portfolio will be covered by insurance.'
-        : 'the only part of portfolio in savings account will be covered by insurance.'
+        ? 'the entire portfolio will be covered by insurance.'
+        : 'only the portion of the portfolio held in a savings account will be covered by insurance.'
         }
       </InfoBlockDescription>
     )
@@ -75,9 +75,9 @@ function SafetyDescription({ children: displayAmount, proportion, amount }: Prop
 
   return (
     <InfoBlockDescription>
-      After withdaw of {displayAmount}, { proportion === 0
-      ? 'whole your portfolio will be on the wallet, that not covered by insurance.'
-      : 'the only part of portfolio in savings account will be covered by insurance.'
+      After withdrawal of {displayAmount}, { proportion === 0
+      ? 'your entire portfolio will end up in your wallet and will not be covered by insurance.'
+      : 'only the portion of the portfolio held in a savings account will be covered by insurance.'
       }
     </InfoBlockDescription>
   )
