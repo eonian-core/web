@@ -1,5 +1,5 @@
 import type { FC, FormEventHandler, PropsWithChildren } from 'react'
-import React, { createContext, useCallback, useContext } from 'react'
+import React, { createContext, useCallback, useContext, useState } from 'react'
 import { useDisclosure } from '@mantine/hooks'
 import { useForm } from 'react-hook-form'
 import { Spinner } from '@nextui-org/react'
@@ -53,13 +53,33 @@ export function WalletLinkingDrawer(props: { opened: boolean; onClose: () => voi
   )
 }
 
-function LinkRecoveryEmailFlow() {
-  const { wallet, chain } = useWalletWrapperContext()
+export function LinkRecoveryEmailFlow() {
+  const { wallet, chain, signMessage } = useWalletWrapperContext()
   const address = wallet?.address
   const chainId = chain?.id
   const isWalletConnected = !!(address && chainId)
 
   const [linkEmail, { data, loading, error }] = useLinkEmailToWallet()
+
+  const [signing, setIsSigning] = useState(false)
+
+  const signLinkingMessage = useCallback(async (input: Omit<LinkEmailToWalletInput, 'signature'>): Promise<string | null> => {
+    try {
+      setIsSigning(true)
+
+      const message = buildSignMessage(input)
+      const signature = await signMessage(message)
+
+      setIsSigning(false)
+      return signature
+    }
+    catch (error) {
+      console.warn('Failed to sign message', error)
+      setIsSigning(false)
+
+      return null
+    }
+  }, [signMessage, setIsSigning])
 
   const onSubmit = useCallback(async ({ email }: FormInputs) => {
     if (!isWalletConnected) {
@@ -67,21 +87,29 @@ function LinkRecoveryEmailFlow() {
       return
     }
 
-    const input: LinkEmailToWalletInput = {
+    const input: Omit<LinkEmailToWalletInput, 'signature'> = {
       action: MutationAction.Link,
       payload: {
         address,
         chainId,
         link: { email },
       },
-      signature: 'Sign',
       timestamp: new Date().toISOString(),
     }
     // eslint-disable-next-line no-console
     console.log('onSubmit', email, input)
 
-    await linkEmail({ variables: { input } })
-  }, [linkEmail, isWalletConnected, address, chainId])
+    const signature = await signLinkingMessage(input)
+
+    await linkEmail({
+      variables: {
+        input: {
+          ...input,
+          signature,
+        },
+      },
+    })
+  }, [linkEmail, isWalletConnected, address, chainId, signLinkingMessage])
 
   return (
     <LinkRecoveryEmailForm {...{
@@ -90,6 +118,7 @@ function LinkRecoveryEmailFlow() {
       error,
       isWalletConnected,
       address,
+      signing,
       success: !!(data && !error),
     }}/>
   )
@@ -106,10 +135,13 @@ interface LinkRecoveryEmailFormProps {
   error?: Error | ApolloError | null
   isWalletConnected?: boolean
   address?: string
+  signing?: boolean
 }
 
-function LinkRecoveryEmailForm({ onSubmit, loading, success, error, address, isWalletConnected }: LinkRecoveryEmailFormProps) {
+function LinkRecoveryEmailForm({ onSubmit, loading, success, error, address, isWalletConnected, signing }: LinkRecoveryEmailFormProps) {
   const { control, handleSubmit, formState } = useForm<FormInputs>()
+
+  const fullFormDisabled = loading || success || signing || !isWalletConnected
 
   return (
     <form onSubmit={handleSubmit(onSubmit) as FormEventHandler<any>} className={styles.form}>
@@ -125,7 +157,7 @@ function LinkRecoveryEmailForm({ onSubmit, loading, success, error, address, isW
         labelPlacement='outside'
         className={styles.input}
         variant='bordered'
-        disabled={loading || success}
+        disabled={fullFormDisabled}
         rules={{ required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i }}
         startContent={<IconEmail />}
         errorMessage={<span>Please enter a valid email address</span>}
@@ -136,9 +168,9 @@ function LinkRecoveryEmailForm({ onSubmit, loading, success, error, address, isW
         size='lg'
         className={styles.button}
         type="submit"
-        disabled={!formState.isValid || loading || !isWalletConnected || success}
+        disabled={!formState.isValid || fullFormDisabled}
       >
-         <SubmitText success={success} loading={loading} isWalletConnected={isWalletConnected} />
+         <SubmitText {...{ success, loading, isWalletConnected, signing }} />
       </Button>
 
       {error && (<div className={styles.error}>
@@ -152,18 +184,38 @@ function LinkRecoveryEmailForm({ onSubmit, loading, success, error, address, isW
 interface SubmitTextProps {
   success?: boolean
   loading?: boolean
+  signing?: boolean
   isWalletConnected?: boolean
 }
 
-function SubmitText({ success, loading, isWalletConnected }: SubmitTextProps) {
+function SubmitText({ success, loading, isWalletConnected, signing }: SubmitTextProps) {
   if (success)
     return <IconCheck />
 
   if (loading)
     return <Spinner />
 
-  if (isWalletConnected)
-    return 'Link'
+  if (signing)
+    return 'Sign linking message'
 
-  return 'Connect wallet to link'
+  if (!isWalletConnected)
+    return 'Connect wallet to link'
+
+  return 'Link'
+}
+
+function buildSignMessage({ payload, timestamp, action }: Omit<LinkEmailToWalletInput, 'signature'>) {
+  const { email } = payload.link
+
+  const firstLine = action === MutationAction.Link
+    ? `Certify Eonian that ${email} email should be linked to current wallet.`
+    : `Certify Eonian that ${email} email should be unlinked from current wallet.`
+
+  return `${firstLine}
+Detailed info:
+  - Wallet: ${payload.address}
+  - Chain id: ${payload.chainId} 
+  - Action: ${action} 
+  - Time: ${timestamp}
+`
 }

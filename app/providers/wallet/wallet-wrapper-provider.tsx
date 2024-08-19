@@ -8,7 +8,7 @@ import { useMonitoringContext } from '../monitoring'
 import type { ChainId } from './wrappers/helpers'
 import type { Chain, Wallet } from './wrappers/types'
 import { WalletStatus } from './wrappers/types'
-import { useAvailableChains, useConnect, useCurrentChain, useDisconnect, useProvider, useRecconect, useSetCurrentChain, useStatus, useWallet } from './wrappers/w3o-wallet-wrapper'
+import { useAvailableChains, useConnect, useCurrentChain, useDisconnect, useProvider, useRecconect, useSetCurrentChain, useSignMessage, useStatus, useWallet } from './wrappers/w3o-wallet-wrapper'
 
 interface Props {
   children: React.ReactNode
@@ -23,6 +23,7 @@ export interface WalletWrapperContextValue {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   setCurrentChain: (chainId: ChainId) => Promise<void>
+  signMessage: (message: string) => Promise<string | null>
 }
 
 export const WalletWrapperContext = React.createContext<WalletWrapperContextValue>({
@@ -34,6 +35,7 @@ export const WalletWrapperContext = React.createContext<WalletWrapperContextValu
   connect: () => Promise.resolve(),
   disconnect: () => Promise.resolve(),
   setCurrentChain: () => Promise.resolve(),
+  signMessage: () => Promise.resolve(null),
 })
 
 /**
@@ -68,6 +70,8 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
     identify(address, { address, label })
   }, [identify, wallet])
 
+  const signMessage = useSignMessage(provider)
+
   return <WalletWrapperContext.Provider value={{
     wallet,
     status,
@@ -77,6 +81,7 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
     connect,
     disconnect,
     setCurrentChain,
+    signMessage,
   }}>{children}</WalletWrapperContext.Provider>
 }
 

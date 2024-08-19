@@ -236,3 +236,17 @@ export function getDefaultChain(chains: Chain[]): Chain {
 
   return chain
 }
+
+export function useSignMessage(provider: ethers.BrowserProvider | null) {
+  return useCallback(async (message: string) => {
+    return await signMessage(provider, message)
+  }, [provider])
+}
+
+export async function signMessage(provider: ethers.BrowserProvider | null, message: string): Promise<string | null> {
+  const signer = await provider?.getSigner()
+  if (!signer)
+    return null
+
+  return await signer.signMessage(message)
+}
