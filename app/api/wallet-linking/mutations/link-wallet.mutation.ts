@@ -5,14 +5,34 @@ import type { LinkEmailToWalletInput, LinkEmailToWalletMutation } from '../gql/g
 export const LinkEmailToWallet = gql`
     mutation LinkEmailToWallet($input: LinkEmailToWalletInput!) {
         linkEmailToWallet(input: $input) {
+            id
             address
             chainId
             links {
+                id
                 payload {
                     ... on EmailLink {
+                        id
                         email
                     }
                     ... on SocialLink {
+                        id
+                        platform
+                        username
+                    }
+                }
+            }
+            preview {
+                id
+                address
+                chainId
+                link {
+                    ... on EmailLinkPreview {
+                        id
+                        email
+                    }
+                    ... on SocialLinkPreview {
+                        id
                         platform
                         username
                     }

@@ -36,11 +36,14 @@ type Wallet implements BaseEntity {
   """
   chainId: Int!
   links: [Link!]!
+
+  preview: WalletPreview!
 }
 
 union LinkPreview = EmailLinkPreview | SocialLinkPreview
 
 type WalletPreview {
+  id: String!
   chainId: Int!
   address: String!
   """
@@ -75,6 +78,7 @@ type EmailLink implements BaseEntity {
 }
 
 type EmailLinkPreview {
+  id: String!
   """
   Masked preview of email, ex. j***@g***.com 
   """
@@ -96,6 +100,7 @@ type SocialLink implements BaseEntity {
 }
 
 type SocialLinkPreview {
+  id: String!
   platform: String!
   """
   Masked preview of username, ex. @joh*** 

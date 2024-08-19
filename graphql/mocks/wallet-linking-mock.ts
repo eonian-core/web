@@ -31,37 +31,54 @@ interface EmailLinkInput {
   email: string
 }
 
-const db: { [address_chainId: string]: { chainId: number; link: { email: string } } } = {}
+interface DataEntity {
+  id: string
+  chainId: number
+  link: {
+    id: string
+    email: string
+  }
+}
+
+const db: { [address_chainId: string]: DataEntity } = {}
+
+function buildWalletPreview(address: string, chainId: number, data: DataEntity) {
+  return {
+    id: address,
+    address,
+    chainId,
+    link: data
+      ? {
+          __typename: 'EmailLinkPreview',
+          ...data.link,
+        }
+      : null,
+  }
+}
 
 function resolvers(): Partial<IResolvers> {
   return {
     Query: {
       getWalletPreview(source: any, { address, chainId }: QueryArgs, context: any, info: any) {
         const data = db[`${address}_${chainId}`]
-        return {
-          address,
-          chainId,
-          link: data
-            ? {
-                __typename: 'EmailLinkPreview',
-                ...data.link,
-              }
-            : null,
-        }
+        return buildWalletPreview(address, chainId, data)
       },
       getWallet(source: any, { address, chainId }: QueryArgs, context: any, info: any) {
         const data = db[`${address}_${chainId}`]
         return {
+          id: address,
           address,
           chainId,
           links: data
             ? [{
+                id: data.link.id,
                 payload: {
                   __typename: 'EmailLink',
                   ...data.link,
                 },
               }]
             : [],
+          preview: buildWalletPreview(address, chainId, data),
         }
       },
     },
@@ -70,18 +87,25 @@ function resolvers(): Partial<IResolvers> {
     Mutation: {
       linkEmailToWallet(_, { input }: { input: LinkEmailToWalletInput }) {
         const { address, chainId, link } = input.payload
-        const dbValue = { chainId, link }
-        db[`${address}_${chainId}`] = dbValue
+        const data = {
+          id: link.email,
+          chainId,
+          link: { ...link, id: link.email },
+        }
+        db[`${address}_${chainId}`] = data
 
         return {
+          id: address,
           address,
           chainId,
           links: [{
+            id: data.id,
             payload: {
               __typename: 'EmailLink',
-              ...link,
+              ...data.link,
             },
           }],
+          preview: buildWalletPreview(address, chainId, data),
         }
       },
     },
