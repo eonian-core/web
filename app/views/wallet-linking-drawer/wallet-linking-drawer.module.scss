@@ -35,6 +35,10 @@
 .button {
     width: 100% !important;
     height: 2.5rem;
+
+    &.success {
+        background-color: var(--color-success-700) !important;
+    }
 }
 
 .input {

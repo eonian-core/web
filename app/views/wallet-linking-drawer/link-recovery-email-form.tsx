@@ -2,6 +2,7 @@ import type { ApolloError } from '@apollo/client'
 import { Spinner } from '@nextui-org/react'
 import type { FormEventHandler } from 'react'
 import { useForm } from 'react-hook-form'
+import clsx from 'clsx'
 import styles from './wallet-linking-drawer.module.scss'
 import { ShrinkedAddress } from '@/components/wallet/wallet-info'
 import IconEmail from '@/components/icons/icon-email'
@@ -51,7 +52,7 @@ export function LinkRecoveryEmailForm({ onSubmit, loading, success, error, addre
                 gradient
                 wide
                 size='lg'
-                className={styles.button}
+                className={clsx(styles.button, { [styles.success]: success })}
                 type="submit"
                 disabled={!formState.isValid || fullFormDisabled}
             >
@@ -75,7 +76,7 @@ interface SubmitTextProps {
 
 function SubmitText({ success, loading, isWalletConnected, signing }: SubmitTextProps) {
   if (success)
-    return <IconCheck />
+    return <IconCheck width={32} height={32}/>
 
   if (loading)
     return <Spinner />
