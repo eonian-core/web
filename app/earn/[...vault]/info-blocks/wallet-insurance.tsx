@@ -1,5 +1,4 @@
 import { Tooltip } from '@nextui-org/react'
-import { Suspense } from 'react'
 import { CommonInfoBlock, InfoBlockDescription, InfoBlockList, InfoBlockTitle, InfoItem, InfoItemIcon, InfoItemTitle, InfoItemValue } from './common-info-block'
 import IconEmail from '@/components/icons/icon-email'
 import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
