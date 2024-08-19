@@ -7,6 +7,7 @@
 
   @media (max-width: $screen-mobile) {
     align-items: center;
+    gap: var(--margin-200);
   }
 }
 
@@ -43,9 +44,35 @@
     margin-left: -0.5rem;
     height: 24px;
   }
+}
 
+.tagsCntainer {
+  --header-width: 315px;
+
+  // Place tags in one scrollable line (for mobile)
   @media (max-width: $screen-mobile) {
-    justify-content: center;
+    overflow: hidden;
+    max-width: 100vw;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      top: 0.2rem;
+      right: 0;
+      bottom: 0.1rem;
+      width: 2rem;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0), color-mix(in srgb, var(--color-token) 50%, var(--color-background-start)) 70%);
+    }
+
+    .tags {
+      overflow-x: scroll;
+      scrollbar-width: none;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      padding-left: calc((100vw - var(--header-width)) / 2);
+    }
   }
 }
 
