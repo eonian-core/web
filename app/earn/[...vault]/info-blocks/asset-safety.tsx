@@ -53,10 +53,10 @@ function SafetyDescription({ children: displayAmount, proportion, amount }: Prop
     return (
       <InfoBlockDescription>
         {proportion === 0
-          ? 'Whole your portfolio on the wallet, that not covered by insurance, but only assets in savings account can be recovered.'
+          ? 'Your portfolio is in a wallet that is not covered by insurance, only assets in a savings account can be recovered.'
           : proportion === 1
-            ? 'Whole your portfolio in savings account is covered by insurance.'
-            : 'Only part of portfolio in savings account is covered by insurance.'
+            ? 'Your entire portfolio is in a savings account and fully insured.'
+            : 'Only the part of the portfolio that is in the savings account is covered by insurance.'
         }
       </InfoBlockDescription>
     )
