@@ -12,7 +12,7 @@ import { useWalletLinkingContext } from '@/views/wallet-linking-drawer/wallet-li
 import { LinkInText } from '@/components/links/link-in-text'
 import { SuspenseWithErrorBoundary } from '@/components/suspense/suspense-with-error-boundary'
 
-const NotLinkedDescription = () => <>In case of a wallet hack, insured assets will be recoverable through email.</>
+const NotLinkedDescription = () => <>If your wallet is hacked, insured assets can be recovered via email.</>
 
 export function WalletInsurance() {
   const { wallet, chain, status } = useWalletWrapperContext()
@@ -64,7 +64,7 @@ function LinkedWalletInsurance({ address, chainId, status }: LinkedWalletInsuran
 
   return (
     <WalletInsuranceBase status={<EmailStatusContent>{link}</EmailStatusContent>}>
-      In case of wallet hack follow <LinkInText href={'https://docs.eonian.finance/basics/guides/recovering-assets-after-a-wallet-hack'}>this instructions</LinkInText> to recover your assets.
+      If your wallet is hacked, follow <LinkInText href={'https://docs.eonian.finance/basics/guides/recovering-assets-after-a-wallet-hack'}>these instructions</LinkInText> to recover your assets.
     </WalletInsuranceBase>
   )
 }
