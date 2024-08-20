@@ -9,6 +9,7 @@ import styles from './page.module.scss'
 import { Header } from './header/header'
 import { TokenGradient } from './header/token-gradient'
 import { Content } from './content/content'
+import { PageContent } from './page-content'
 import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
 import { convertToUsd } from '@/finances/usd'
 
@@ -52,10 +53,7 @@ export default async function Page({ params }: Params) {
   return (
     <>
       <TokenGradient symbol={symbol} />
-      <div className={styles.page}>
-        <Header {...{ symbol, currentPrice }}/>
-        <Content {...{ symbol, vault, chainId }} />
-      </div>
+      <PageContent {...{ symbol, vault, chainId, currentPrice }} />
     </>
   )
 }

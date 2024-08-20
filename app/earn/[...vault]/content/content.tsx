@@ -22,16 +22,15 @@ import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provi
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 
 interface Props {
-  vault: Vault
   chainId: ChainId
   symbol: TokenSymbol
 }
 
-export function Content({ vault, chainId, symbol }: Props) {
+export function Content({ chainId, symbol }: Props) {
   const [formRef, formHovering] = useHover()
 
   return (
-    <VaultProvider vault={vault}>
+    <>
       <div className={styles.container}>
         <LeftSection />
 
@@ -46,7 +45,7 @@ export function Content({ vault, chainId, symbol }: Props) {
         <SafetyBlocks show/>
         <LimitBlocks show/>
       </div>
-    </VaultProvider>
+    </>
   )
 }
 
