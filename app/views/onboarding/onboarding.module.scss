@@ -1,0 +1,125 @@
+
+.body {
+    color: var(--color-text-400);
+    max-width: var(--width-350);
+
+    h3 {
+        color: var(--color-text-500);
+        font-size: var(--font-size-500);
+        font-weight: var(--font-bold);
+        margin-bottom: var(--margin-100);
+    }
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0rem;
+        justify-content: flex-start;
+    }
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+}
+
+.itemContent {
+    h4 {
+        font-size: var(--font-size-500);
+        font-weight: var(--font-semibold);
+    }
+
+    p {
+        font-size: var(--font-size-200);
+    }
+}
+
+.itemDescription {
+    display: none;
+    margin-top: var(--margin-50);
+}
+
+
+.icon {
+    margin: 1rem;
+    margin-top: 0rem;
+    margin-right: 0.8rem;
+    margin-left: 0;
+}
+
+.iconContent {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-neutral-200);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+.line {
+    content: '';
+    width: 3px;
+    height: calc(100% - 1.3rem);
+    background: linear-gradient(to bottom, var(--color-primary-750), var(--color-primary-500), var(--color-primary-750));
+    margin-left: 0.65rem;
+    margin-top: 0.5rem;
+    border-radius: 20px;
+
+    display: none;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--margin-100);
+    margin-top: var(--margin-200);
+    font-size: var(--font-size-200);
+}
+
+.item.active {
+    margin-bottom: var(--margin-200);
+
+    .itemContent {
+        h4 {
+            color: var(--color-text-300);
+        }
+    }
+
+    .line, .itemDescription {
+        display: block;
+    }
+}
+
+.item.completed {
+    .itemContent {
+        h4 {
+            position: relative;
+            &::after {
+                content: '';
+                background: var(--color-neutral-900);
+                opacity: 0.8;
+                position: absolute;
+                top: 0.7rem;
+                left: 0;
+                right: 0;
+                height: 2px;
+            }
+        }
+    }
+
+}
