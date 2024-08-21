@@ -7,7 +7,8 @@
   position: relative;
 
   @media (max-width: $screen-mobile) {
-    margin-top: var(--margin-300);
+    margin-top: var(--margin-400);
+    margin-bottom: var(--margin-200);
   }
 }
 

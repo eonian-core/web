@@ -4,7 +4,7 @@
   width: 100%;
   display: grid;
   grid-template-rows: auto auto;
-  grid-template-columns: auto 315px;
+  grid-template-columns: auto var(--vault-mobile-column-width);
   justify-content: space-between; 
   align-content: space-between; 
 }
