@@ -1,7 +1,11 @@
 
 .body {
     color: var(--color-text-400);
-    max-width: var(--width-350);
+    max-width: 2rem;
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    border-radius: 10px;
 
     h3 {
         color: var(--color-text-500);
@@ -14,12 +18,14 @@
 .list {
     list-style: none;
     padding: 0;
+    width: var(--width-350);
     
     ul {
         display: flex;
         flex-direction: column;
         gap: 0rem;
         justify-content: flex-start;
+        width: fit-content;
     }
 }
 
@@ -29,6 +35,8 @@
 }
 
 .itemContent {
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
     h4 {
         font-size: var(--font-size-500);
         font-weight: var(--font-semibold);
@@ -37,6 +45,45 @@
     p {
         font-size: var(--font-size-200);
     }
+}
+
+.body {
+    &:hover, &.show {
+        max-width: var(--width-350);
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: linear-gradient(to right, var(--color-background-start) 0%, var(--color-background-start) 50%, transparent 100%);
+            filter: blur(1rem);
+        }
+
+
+        .itemContent {
+            opacity: 1;
+
+            p, .actions {
+                position: relative;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0.5rem;
+                    bottom: 0;
+                    z-index: -1;
+                    background: var(--color-background-start);
+                    filter: blur(0.5rem);
+                }
+            }
+        }
+    } 
 }
 
 .itemDescription {
@@ -109,6 +156,7 @@
     .itemContent {
         h4 {
             position: relative;
+            color: var(--color-text-500);
             &::after {
                 content: '';
                 background: var(--color-neutral-900);

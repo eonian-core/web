@@ -5,6 +5,7 @@
   margin-top: var(--margin-700);
   display: flex;
   width: 100%;
+  position: relative;
 
   @media (max-width: $screen-desktop) {
     margin-top: var(--margin-300);
@@ -22,6 +23,13 @@
       display: none;
     }
   }
+}
+
+.onboardingBar {
+  position: absolute;
+  top: 0;
+  left: -3.5rem;
+  z-index: 10;
 }
 
 .left,

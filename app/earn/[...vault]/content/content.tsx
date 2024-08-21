@@ -21,6 +21,7 @@ import { useHideAnimtion } from '@/components/fade-in/animation'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import { WalletLinkingProvider } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
+import { Onboading } from '@/views/onboarding/onboarding'
 
 interface Props {
   vault: Vault
@@ -35,6 +36,8 @@ export function Content({ vault, chainId, symbol }: Props) {
     <VaultProvider vault={vault}>
       <WalletLinkingProvider>
         <div className={styles.container}>
+          <OnboardingBar />
+
           <LeftSection />
 
           <section ref={formRef} className={styles.middle}>
@@ -60,6 +63,14 @@ function useHaveWhatToDisplay() {
     return true
 
   return showPlaceholder && placeholderValue !== 0n
+}
+
+function OnboardingBar() {
+  return (
+    <div className={styles.onboardingBar}>
+      <Onboading />
+    </div>
+  )
 }
 
 function LeftSection() {

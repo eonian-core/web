@@ -9,20 +9,33 @@ export const isEmailLinked = (link: any): link is EmailLinkPreview => 'email' in
 export function useSuspenseCurrentWalletLinkPreview(address: string, chainId: number, status: WalletStatus) {
   const request = useSuspenseWalletLinkPreview(address, chainId)
 
-  const linkedWallet = request.data?.getWalletPreview
-  const isLinkForCurrentWallet = linkedWallet?.address === address && chainId === linkedWallet.chainId
+  // update directly, to not create new object, which could cause re-render
+  request.data = omitIfNotCurrentWallet(request.data, address, chainId, status)
+
+  return request
+}
+
+export function useCurrentWalletLinkPreview(address?: string, chainId?: number, status?: WalletStatus) {
+  const request = useWalletLinkPreview(address, chainId)
+
+  // update directly, to not create new object, which could cause re-render
+  request.data = omitIfNotCurrentWallet(request.data, address, chainId, status)
+
+  return request
+}
+
+function omitIfNotCurrentWallet(data?: GetWalletPreviewQuery, address?: string, chainId?: number, status?: WalletStatus): GetWalletPreviewQuery | undefined {
+  const linkedWallet = data?.getWalletPreview
+  const isLinkForCurrentWallet = linkedWallet?.address === address && chainId === linkedWallet?.chainId
 
   if (isLinkForCurrentWallet && status === WalletStatus.CONNECTED)
-    return request
+    return data
 
-  return {
-    ...request,
-    data: undefined, // clear data so it cannot confuse user when wallet is changed
-  }
+  return undefined // clear data so it cannot confuse user when wallet is changed
 }
 
 export function useSuspenseWalletLinkPreview(address: string, chainId: number) {
-  const request = useSuspenseQuery<GetWalletPreviewQuery>(GetWalletPreview, {
+  const request = useSuspenseQuery<GetWalletPreviewQuery | undefined>(GetWalletPreview, {
     client: walletLinkingClient,
     variables: {
       address,
@@ -36,9 +49,11 @@ export function useSuspenseWalletLinkPreview(address: string, chainId: number) {
   return request
 }
 
-export function useWalletLinkPreview(address: string, chainId: number) {
+/** Will skip execution if varaibles not available */
+export function useWalletLinkPreview(address?: string, chainId?: number) {
   return useQuery<GetWalletPreviewQuery>(GetWalletPreview, {
     client: walletLinkingClient,
+    skip: !address || !chainId,
     variables: {
       address,
       chainId,

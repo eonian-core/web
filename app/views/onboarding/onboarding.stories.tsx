@@ -32,7 +32,25 @@ export const Default: Story = {
   args: {
     linkEmail: () => {},
     placeholder: '200 BTC',
-    children: OnboardingStep.Unkown,
+    completed: [OnboardingStep.Unkown],
+  },
+}
+
+export const Show: Story = {
+  args: {
+    show: true,
+    linkEmail: () => {},
+    placeholder: '200 BTC',
+    completed: [OnboardingStep.Unkown],
+  },
+}
+
+export const ShowHeader: Story = {
+  args: {
+    showHeader: true,
+    linkEmail: () => {},
+    placeholder: '200 BTC',
+    completed: [OnboardingStep.Unkown],
   },
 }
 
@@ -40,7 +58,7 @@ export const AssetChosen: Story = {
   args: {
     linkEmail: () => {},
     placeholder: '200 BTC',
-    children: OnboardingStep.AssetChosen,
+    completed: [OnboardingStep.Unkown, OnboardingStep.AssetChosen],
   },
 }
 
@@ -48,7 +66,7 @@ export const AmountEntered: Story = {
   args: {
     linkEmail: () => {},
     placeholder: '200 BTC',
-    children: OnboardingStep.AmountEntered,
+    completed: [OnboardingStep.Unkown, OnboardingStep.AssetChosen, OnboardingStep.AmountEntered],
   },
 }
 
@@ -56,7 +74,7 @@ export const WalletConnected: Story = {
   args: {
     linkEmail: () => {},
     placeholder: '200 BTC',
-    children: OnboardingStep.WalletConnected,
+    completed: [OnboardingStep.Unkown, OnboardingStep.AssetChosen, OnboardingStep.AmountEntered, OnboardingStep.WalletConnected],
   },
 }
 
@@ -64,7 +82,7 @@ export const TramsactionsApproved: Story = {
   args: {
     linkEmail: () => {},
     placeholder: '200 BTC',
-    children: OnboardingStep.TramsactionsApproved,
+    completed: [OnboardingStep.Unkown, OnboardingStep.AssetChosen, OnboardingStep.AmountEntered, OnboardingStep.WalletConnected, OnboardingStep.TramsactionsApproved],
   },
 }
 
@@ -72,6 +90,6 @@ export const EmailLinked: Story = {
   args: {
     linkEmail: () => {},
     placeholder: '200 BTC',
-    children: OnboardingStep.EmailLinked,
+    completed: [OnboardingStep.Unkown, OnboardingStep.AssetChosen, OnboardingStep.AmountEntered, OnboardingStep.WalletConnected, OnboardingStep.TramsactionsApproved, OnboardingStep.EmailLinked],
   },
 }
