@@ -31,6 +31,10 @@
   h2 {
     font-size: var(--font-size-700);
     font-weight: var(--font-bold);
+
+    @media (max-width: $screen-mobile) {
+      font-size: var(--font-size-800);
+    }
   }
 
   .moreInfo {
@@ -44,6 +48,10 @@
   display: flex;
   flex-direction: row;
   align-items: baseline;
+
+  @media (max-width: $screen-mobile) {
+    margin-top: -1rem;
+  }
 }
 
 .priceChange {
