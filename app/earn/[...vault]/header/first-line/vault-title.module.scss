@@ -33,6 +33,14 @@
   }
 }
 
+.links {
+  display: inline-flex;
+  padding-top: 2px;
+  align-items: center;
+  font-size: var(--font-size-100);
+  gap: var(--margin-100);
+}
+
 .tags {
   display: flex;
   align-items: center;

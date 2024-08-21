@@ -1,32 +1,44 @@
 import type { PropsWithChildren } from 'react'
-import { ExternalAction } from '../second-line/actions'
 import { useVaultContext } from '../../hooks/use-vault-context'
 import styles from './vault-title.module.scss'
 
 import { Tag } from '@/components/chip/tag'
-import { ChainId, getChainExplorer } from '@/providers/wallet/wrappers/helpers'
+import { getChainExplorer } from '@/providers/wallet/wrappers/helpers'
+import { WrapperLink } from '@/components/links/wrapper-link'
+import IconExternal from '@/components/icons/icon-external'
 
 export function VaultTitle({ children }: PropsWithChildren) {
   return <div className={styles.container}>{children}</div>
 }
 
 function HowVaultWorks() {
-  return <ExternalAction href="https://docs.eonian.finance/basics/how-eonian-works">How Vault works?</ExternalAction>
+  return (
+    <WrapperLink href="https://docs.eonian.finance/basics/how-eonian-works" icon={<IconExternal />} iconAtEnd>
+      How Vault works?
+    </WrapperLink>
+  )
 }
 
 function ContractAddress() {
-  const { vault } = useVaultContext()
-  const url = `${getChainExplorer(ChainId.BSC_MAINNET)}/address/${vault.address}#code`
-  return <ExternalAction href={url}>How Vault works?</ExternalAction>
+  const { vault, chainId } = useVaultContext()
+  const url = `${getChainExplorer(chainId)}/address/${vault.address}#code`
+  return (
+    <WrapperLink href={url} icon={<IconExternal />} iconAtEnd>
+      Smart Contract
+    </WrapperLink>
+  )
 }
 
 export function VaultTags({ children }: PropsWithChildren) {
+  return <ul className={styles.tags}>{children}</ul>
+}
+
+export function VaultLinks() {
   return (
-    <ul className={styles.tags}>
-      {children}
+    <div className={styles.links}>
       <HowVaultWorks />
       <ContractAddress />
-    </ul>
+    </div>
   )
 }
 

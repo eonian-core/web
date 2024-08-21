@@ -17,10 +17,10 @@ interface Props {
 
 export function PageContent({ vault, symbol, currentPrice, chainId }: Props) {
   return (
-    <VaultProvider vault={vault}>
+    <VaultProvider vault={vault} chainId={chainId}>
       <div className={styles.page}>
         <Header {...{ symbol, currentPrice }} />
-        <Content {...{ symbol, chainId }} />
+        <Content {...{ symbol }} />
       </div>
     </VaultProvider>
   )

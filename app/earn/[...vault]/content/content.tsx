@@ -3,7 +3,7 @@
 import { useHover } from '@uidotdev/usehooks'
 import clsx from 'clsx'
 import Form from '../form/form'
-import { VaultProvider, useVaultContext } from '../hooks/use-vault-context'
+import { useVaultContext } from '../hooks/use-vault-context'
 import { Portfolio } from '../portfolio/portfolio'
 import { Returns } from '../returns/returns'
 import { InsuranceOfAssets } from '../info-blocks/insurance-of-assets'
@@ -15,18 +15,15 @@ import { WithdrawLimits } from '../info-blocks/withdraw-limits'
 import { VaultToken } from '../info-blocks/vault-token'
 import styles from './content.module.scss'
 import type { TokenSymbol } from '@/types'
-import type { Vault } from '@/api'
-import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 import { useHideAnimtion } from '@/components/fade-in/animation'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 
 interface Props {
-  chainId: ChainId
   symbol: TokenSymbol
 }
 
-export function Content({ chainId, symbol }: Props) {
+export function Content({ symbol }: Props) {
   const [formRef, formHovering] = useHover()
 
   return (
@@ -35,15 +32,15 @@ export function Content({ chainId, symbol }: Props) {
         <LeftSection />
 
         <section ref={formRef} className={styles.middle}>
-          <Form chainId={chainId} />
-          <LimitBlocks show={formHovering}/>
+          <Form />
+          <LimitBlocks show={formHovering} />
         </section>
 
         <RightSection symbol={symbol} />
       </div>
       <div className={styles.mobileInfoBlocks}>
-        <SafetyBlocks show/>
-        <LimitBlocks show/>
+        <SafetyBlocks show />
+        <LimitBlocks show />
       </div>
     </>
   )
@@ -64,10 +61,13 @@ function LeftSection() {
   const hide = useHideAnimtion(show, 200)
 
   return (
-    <section ref={leftSectionRef} className={clsx(styles.left, {
-      [styles.show]: show,
-      [styles.hide]: hide,
-    })}>
+    <section
+      ref={leftSectionRef}
+      className={clsx(styles.left, {
+        [styles.show]: show,
+        [styles.hide]: hide,
+      })}
+    >
       <Portfolio />
       <InsuranceOfAssets />
       <SafetyBlocks show={leftSectionHovering} />
@@ -80,10 +80,12 @@ function RightSection({ symbol }: { symbol: TokenSymbol }) {
   const hide = useHideAnimtion(show, 200)
 
   return (
-    <section className={clsx(styles.right, {
-      [styles.show]: show,
-      [styles.hide]: hide,
-    })}>
+    <section
+      className={clsx(styles.right, {
+        [styles.show]: show,
+        [styles.hide]: hide,
+      })}
+    >
       <Returns symbol={symbol} />
     </section>
   )
@@ -92,10 +94,12 @@ function RightSection({ symbol }: { symbol: TokenSymbol }) {
 function SafetyBlocks({ show }: { show: boolean }) {
   const hide = useHideAnimtion(show, 200)
   return (
-    <div className={clsx(styles.infoBlocks, {
-      [styles.show]: show,
-      [styles.hide]: hide,
-    })}>
+    <div
+      className={clsx(styles.infoBlocks, {
+        [styles.show]: show,
+        [styles.hide]: hide,
+      })}
+    >
       <AssetSafety />
       <ProtocolInsurance />
       <WalletInsurance />
@@ -106,10 +110,12 @@ function SafetyBlocks({ show }: { show: boolean }) {
 function LimitBlocks({ show }: { show: boolean }) {
   const hide = useHideAnimtion(show, 200)
   return (
-    <div className={clsx(styles.infoBlocks, {
-      [styles.show]: show,
-      [styles.hide]: hide,
-    })}>
+    <div
+      className={clsx(styles.infoBlocks, {
+        [styles.show]: show,
+        [styles.hide]: hide,
+      })}
+    >
       <Fees />
       <WithdrawLimits />
       <VaultToken />

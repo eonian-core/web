@@ -8,7 +8,7 @@ import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrappe
 import { WalletStatus } from '../../../providers/wallet/wrappers/types'
 import { FormActionStep } from '../../../store/slices/vaultActionSlice'
 import { getActiveStepSelector } from '../../../store'
-import type { ChainId } from '../../../providers/wallet/wrappers/helpers'
+import { useVaultContext } from '../hooks/use-vault-context'
 import FormButton from './form-button/form-button'
 import FormHeader from './form-header/form-header'
 import styles from './form.module.scss'
@@ -17,12 +17,8 @@ import { FormPreview } from './form-preview'
 import { BlocknativeLink } from './blocknative-link/blocknative-link'
 import { ArrowDivider } from './arrow-divider/arrow-divider'
 
-interface Props {
-  chainId: ChainId
-}
-
-const Form: React.FC<Props> = ({ chainId }) => {
-  const vaultChain = useVaultChain(chainId)
+const Form: React.FC = () => {
+  const vaultChain = useVaultChain()
 
   const hasPendingTransactions = useHasPendingTransactions()
   const isFormReady = useFormReady()
@@ -34,11 +30,11 @@ const Form: React.FC<Props> = ({ chainId }) => {
         <FormHeader />
 
         <CardBody className={styles.fragment}>
-          <FormInput {...{ disabled }}/>
+          <FormInput {...{ disabled }} />
 
           <ArrowDivider />
 
-          <FormPreview {...{ disabled }}/>
+          <FormPreview {...{ disabled }} />
 
           <FormButton vaultChain={vaultChain} disabled={!isFormReady} isLoading={hasPendingTransactions} />
         </CardBody>
@@ -53,8 +49,9 @@ function useHasPendingTransactions() {
   return activeStep !== null && activeStep !== FormActionStep.DONE
 }
 
-function useVaultChain(chainId: ChainId) {
+function useVaultChain() {
   const { chains } = useWalletWrapperContext()
+  const { chainId } = useVaultContext()
   return React.useMemo(() => chains.find(chain => chain.id === chainId)!, [chains, chainId])
 }
 
