@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { headers } from 'next/headers'
 import type { FormInputs } from './link-recovery-email-form'
 import { LinkRecoveryEmailForm } from './link-recovery-email-form'
 import { useDelay } from './use-is-processing'
@@ -83,6 +84,11 @@ function useSubmit({
           address,
           chainId,
           link: { email },
+        },
+      },
+      context: {
+        headers: {
+          'X-Signature': signature,
         },
       },
     })
