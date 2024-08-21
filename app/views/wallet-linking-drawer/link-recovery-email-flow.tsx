@@ -1,8 +1,7 @@
 import { useCallback } from 'react'
 import type { FormInputs } from './link-recovery-email-form'
 import { LinkRecoveryEmailForm } from './link-recovery-email-form'
-import { useDelay, useProcessing } from './use-is-processing'
-import type { LinkEmailToWalletInput } from '@/api/wallet-linking/gql/graphql'
+import { useDelay } from './use-is-processing'
 import { MutationAction } from '@/api/wallet-linking/gql/graphql'
 import { useLinkEmailToWallet } from '@/api/wallet-linking/wallet/use-link-email-to-wallet'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
@@ -15,21 +14,16 @@ export interface LinkRecoveryEmailFlowProps {
 }
 
 export function LinkRecoveryEmailFlow({ close }: LinkRecoveryEmailFlowProps) {
-  const { wallet, chain, signMessage } = useWalletWrapperContext()
+  const { wallet, chain, loggingIn, loginThroughSign } = useWalletWrapperContext()
   const address = wallet?.address
   const chainId = chain?.id
   const isWalletConnected = !!(address && chainId)
 
   const [linkEmail, { data, loading, error }] = useLinkEmailToWallet()
 
-  const [signLinkingMessage, signing] = useProcessing(async (input: Omit<LinkEmailToWalletInput, 'signature'>): Promise<string | null> => {
-    const message = buildSignMessage(input)
-    return await signMessage(message)
-  }, [signMessage])
-
   const onSubmit = useSubmit({
     linkEmail,
-    signLinkingMessage,
+    loginThroughSign,
     isWalletConnected,
     address,
     chainId,
@@ -45,21 +39,21 @@ export function LinkRecoveryEmailFlow({ close }: LinkRecoveryEmailFlowProps) {
   }, [success, close])
 
   return (
-        <LinkRecoveryEmailForm {...{
-          onSubmit,
-          loading,
-          error,
-          isWalletConnected,
-          address,
-          signing,
-          success,
-        }} />
+    <LinkRecoveryEmailForm {...{
+      onSubmit,
+      loading,
+      error,
+      isWalletConnected,
+      address,
+      success,
+      loggingIn,
+    }} />
   )
 }
 
 export interface SubmitOptions {
   linkEmail: ReturnType<typeof useLinkEmailToWallet>[0]
-  signLinkingMessage: (input: Omit<LinkEmailToWalletInput, 'signature'>) => Promise<string | null | undefined>
+  loginThroughSign: () => Promise<string>
   isWalletConnected: boolean
   address?: string
   chainId?: ChainId
@@ -69,7 +63,7 @@ function useSubmit({
   isWalletConnected,
   address,
   chainId,
-  signLinkingMessage,
+  loginThroughSign,
   linkEmail,
 }: SubmitOptions) {
   return useCallback(async ({ email }: FormInputs) => {
@@ -78,43 +72,19 @@ function useSubmit({
       return
     }
 
-    const input: Omit<LinkEmailToWalletInput, 'signature'> = {
-      action: MutationAction.Link,
-      payload: {
-        address,
-        chainId,
-        link: { email },
-      },
-      timestamp: new Date().toISOString(),
-    }
-    // eslint-disable-next-line no-console
-    console.log('onSubmit', email, input)
+    const signature = await loginThroughSign()
 
-    const signature = await signLinkingMessage(input)
+    // eslint-disable-next-line no-console
+    console.log('onSubmit', email, signature)
 
     await linkEmail({
       variables: {
         input: {
-          ...input,
-          signature,
+          address,
+          chainId,
+          link: { email },
         },
       },
     })
-  }, [linkEmail, isWalletConnected, address, chainId, signLinkingMessage])
-}
-
-function buildSignMessage({ payload, timestamp, action }: Omit<LinkEmailToWalletInput, 'signature'>) {
-  const { email } = payload.link
-
-  const firstLine = action === MutationAction.Link
-    ? `Certify Eonian that ${email} email should be linked to current wallet.`
-    : `Certify Eonian that ${email} email should be unlinked from current wallet.`
-
-  return `${firstLine}
-Detailed info:
-    - Wallet: ${payload.address}
-    - Chain id: ${payload.chainId} 
-    - Action: ${action} 
-    - Time: ${timestamp}
-  `
+  }, [linkEmail, isWalletConnected, address, chainId, loginThroughSign])
 }
