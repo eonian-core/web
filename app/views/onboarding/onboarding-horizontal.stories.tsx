@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import Image from 'next/image'
+import { OnboardingHorizontal } from './onboarding-horizontal'
+import { OnboardingStep } from './onboarding-body'
 
-import { OnboardingBody, OnboardingStep } from './onboarding'
-
-const meta: Meta<typeof OnboardingBody> = {
-  title: 'Components/OnboardingBody',
-  component: OnboardingBody,
+const meta: Meta<typeof OnboardingHorizontal> = {
+  title: 'Components/OnboardingHorizontal',
+  component: OnboardingHorizontal,
   tags: ['autodocs'],
   decorators: [
     Story => (
@@ -26,70 +25,40 @@ const meta: Meta<typeof OnboardingBody> = {
 }
 
 export default meta
-type Story = StoryObj<typeof OnboardingBody>
+type Story = StoryObj<typeof OnboardingHorizontal>
 
 export const Default: Story = {
   args: {
-    linkEmail: () => {},
-    placeholder: '200 BTC',
-    completed: [OnboardingStep.Unkown],
-  },
-}
-
-export const Show: Story = {
-  args: {
-    show: true,
-    linkEmail: () => {},
-    placeholder: '200 BTC',
-    completed: [OnboardingStep.Unkown],
-  },
-}
-
-export const ShowHeader: Story = {
-  args: {
-    showHeader: true,
-    linkEmail: () => {},
-    placeholder: '200 BTC',
     completed: [OnboardingStep.Unkown],
   },
 }
 
 export const AssetChosen: Story = {
   args: {
-    linkEmail: () => {},
-    placeholder: '200 BTC',
     completed: [OnboardingStep.Unkown, OnboardingStep.AssetChosen],
   },
 }
 
 export const AmountEntered: Story = {
   args: {
-    linkEmail: () => {},
-    placeholder: '200 BTC',
     completed: [OnboardingStep.Unkown, OnboardingStep.AssetChosen, OnboardingStep.AmountEntered],
   },
 }
 
 export const WalletConnected: Story = {
   args: {
-    linkEmail: () => {},
-    placeholder: '200 BTC',
     completed: [OnboardingStep.Unkown, OnboardingStep.AssetChosen, OnboardingStep.AmountEntered, OnboardingStep.WalletConnected],
   },
 }
 
 export const TramsactionsApproved: Story = {
   args: {
-    linkEmail: () => {},
-    placeholder: '200 BTC',
     completed: [OnboardingStep.Unkown, OnboardingStep.AssetChosen, OnboardingStep.AmountEntered, OnboardingStep.WalletConnected, OnboardingStep.TramsactionsApproved],
   },
 }
 
 export const EmailLinked: Story = {
   args: {
-    linkEmail: () => {},
-    placeholder: '200 BTC',
     completed: [OnboardingStep.Unkown, OnboardingStep.AssetChosen, OnboardingStep.AmountEntered, OnboardingStep.WalletConnected, OnboardingStep.TramsactionsApproved, OnboardingStep.EmailLinked],
   },
 }

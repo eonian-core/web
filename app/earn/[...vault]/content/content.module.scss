@@ -1,14 +1,18 @@
 @import '../../../screen.scss';
 @import "../../../components/styles/appear.animation.scss";
 
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .container {
-  margin-top: var(--margin-700);
   display: flex;
   width: 100%;
   position: relative;
 
   @media (max-width: $screen-desktop) {
-    margin-top: var(--margin-300);
     flex-wrap: wrap;
     justify-content: center;
 
@@ -26,10 +30,24 @@
 }
 
 .onboardingBar {
-  position: absolute;
-  top: 0;
-  left: -3.5rem;
-  z-index: 10;
+
+  &.placeholder, &.horizontal {
+    height: var(--margin-700);
+  }
+  
+  &.horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  &.vertical {
+    position: absolute;
+    top: 0;
+    left: -3.5rem;
+    z-index: 10;
+  }
 }
 
 .left,

@@ -2,6 +2,7 @@
 
 import { useHover } from '@uidotdev/usehooks'
 import clsx from 'clsx'
+import { useDisclosure } from '@mantine/hooks'
 import Form from '../form/form'
 import { VaultProvider, useVaultContext } from '../hooks/use-vault-context'
 import { Portfolio } from '../portfolio/portfolio'
@@ -22,6 +23,8 @@ import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provi
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import { WalletLinkingProvider } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
 import { Onboading } from '@/views/onboarding/onboarding'
+import { useIsUltraWideOrSmaller } from '@/components/resize-hooks/screens'
+import { OnboardingDrawer } from '@/views/onboarding/onboarding-drawer'
 
 interface Props {
   vault: Vault
@@ -31,21 +34,27 @@ interface Props {
 
 export function Content({ vault, chainId, symbol }: Props) {
   const [formRef, formHovering] = useHover()
+  const isUltraWideOrSmaller = useIsUltraWideOrSmaller()
 
   return (
     <VaultProvider vault={vault}>
       <WalletLinkingProvider>
-        <div className={styles.container}>
-          <OnboardingBar />
+        <div className={styles.wrapper}>
+          <HorizontalOnboardingBar showPlaceholder={!isUltraWideOrSmaller}/>
 
-          <LeftSection />
+          <div className={styles.container}>
+            {/** For undefined value, not display to avoid render during ssr */}
+            {isUltraWideOrSmaller === false && <VerticalOnboardingBar />}
 
-          <section ref={formRef} className={styles.middle}>
-            <Form chainId={chainId} />
-            <LimitBlocks show={formHovering}/>
-          </section>
+            <LeftSection />
 
-          <RightSection symbol={symbol} />
+            <section ref={formRef} className={styles.middle}>
+              <Form chainId={chainId} />
+              <LimitBlocks show={formHovering}/>
+            </section>
+
+            <RightSection symbol={symbol} />
+          </div>
         </div>
         <div className={styles.mobileInfoBlocks}>
           <SafetyBlocks show/>
@@ -65,11 +74,30 @@ function useHaveWhatToDisplay() {
   return showPlaceholder && placeholderValue !== 0n
 }
 
-function OnboardingBar() {
+function VerticalOnboardingBar() {
   return (
-    <div className={styles.onboardingBar}>
-      <Onboading />
+    <div className={clsx(styles.onboardingBar, styles.vertical)}>
+      <Onboading withBackground />
     </div>
+  )
+}
+
+function HorizontalOnboardingBar({ showPlaceholder }: { showPlaceholder?: boolean }) {
+  const [opened, { open, close }] = useDisclosure(false)
+
+  if (showPlaceholder) {
+    return (
+      <div className={clsx(styles.onboardingBar, styles.placeholder)}></div>
+    )
+  }
+
+  return (<>
+      <OnboardingDrawer {...{ opened, onClose: close }} />
+
+      <div className={clsx(styles.onboardingBar, styles.horizontal)} onClick={open}>
+        <Onboading horizontal />
+      </div>
+    </>
   )
 }
 
