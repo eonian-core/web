@@ -6,35 +6,35 @@ import { executeAfter } from '../../../shared/async/execute-after'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { fetchVaultUserData, reset } from '../../../store/slices/vaultUserSlice'
 
-interface Params {
+interface VaultUserInfoParams {
   autoUpdateInterval?: number
 }
 
-export function useVaultUserInfo(vault: Vault, params: Params = {}) {
-  const { autoUpdateInterval } = params
-
+export function useVaultUserInfo({
+  address: vaultAddress,
+  asset: { address: assetAddress },
+}: Vault,
+{ autoUpdateInterval }: VaultUserInfoParams = {},
+) {
   const dispatch = useAppDispatch()
   const { isLoading } = useAppSelector(state => state.vaultUser)
 
   const { wallet, provider, chain, status } = useWalletWrapperContext()
   const { multicallAddress } = chain ?? {}
   const { address: walletAddress } = wallet ?? {}
-  const { address: vaultAddress, asset } = vault
-  const { address: assetAddress } = asset
 
   const refetch = React.useMemo(() => {
     if (!walletAddress || !multicallAddress || !provider)
       return null
 
     return async () => {
-      const params = {
+      await dispatch(fetchVaultUserData({
         walletAddress,
         vaultAddress,
         assetAddress,
         multicallAddress,
         provider,
-      }
-      await dispatch(fetchVaultUserData(params))
+      }))
     }
   }, [dispatch, walletAddress, vaultAddress, assetAddress, multicallAddress, provider])
 
@@ -67,7 +67,7 @@ export function useVaultUserInfo(vault: Vault, params: Params = {}) {
    * Performs automatic updates at fixed intervals.
    * Only if {@link autoUpdateInterval} is specified.
    */
-  React.useEffect(() => {
+  useEffect(() => {
     if (isLoading || !autoUpdateInterval)
       return
 

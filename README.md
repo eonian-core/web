@@ -1,6 +1,6 @@
 # Eonian WEB App
 
-This is a repository for [the Eonian](https://eonian.finance) lending site and savings account application.
+This is a repository for [the Eonian](https://eonian.finance) landing site and savings account application.
 
 ## Requirements
 

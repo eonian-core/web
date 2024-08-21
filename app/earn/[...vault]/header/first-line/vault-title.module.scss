@@ -1,17 +1,51 @@
+@import '../../../../screen.scss';
+
 .container {
   display: flex;
   flex-direction: column;
   gap: var(--margin-400);
+
+  @media (max-width: $screen-mobile) {
+    align-items: center;
+  }
+}
+
+.backLink {
+  $size: 40px;
+
+  position: absolute;
+  top: 50%;
+  left: calc($size * -1);
+
+  transform: translateY(-50%);
+  width: $size;
+  height: $size;
+
+  & > svg {
+    width: $size;
+    height: $size;
+  
+    transform: rotateZ(180deg);
+  }
+
+  @media (min-width: $screen-ultra-wide) {
+    left: calc($size * -1.5);
+  }
 }
 
 .tags {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--margin-200);
 
   button  {
     margin-left: -0.5rem;
     height: 24px;
+  }
+
+  @media (max-width: $screen-mobile) {
+    justify-content: center;
   }
 }
 
@@ -19,6 +53,12 @@
   display: flex;
   align-items: center;
   gap: var(--margin-200);
+  position: relative;
+
+  // To fit "Back link"
+  @media (min-width: $screen-mobile) and (max-width: $screen-ultra-wide) {
+    margin-left: 27.5px;
+  }
 
   .title {
     display: flex;

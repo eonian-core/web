@@ -30,7 +30,8 @@ export const fetchVaultUserData = createAsyncThunk(
   },
 )
 
-interface VaultUserSlice {
+// TODO: add lint rule to enforce export all interfaces
+export interface VaultUserSlice {
   walletBalanceBN: string
   vaultBalanceBN: string
   assetAllowanceBN: string
@@ -40,7 +41,7 @@ interface VaultUserSlice {
   lastRequestForWallet: string
 }
 
-const initialState: VaultUserSlice = {
+export const initialState: VaultUserSlice = {
   walletBalanceBN: '0',
   vaultBalanceBN: '0',
   assetAllowanceBN: '0',

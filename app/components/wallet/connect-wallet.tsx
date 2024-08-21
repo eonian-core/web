@@ -18,15 +18,14 @@ function ConnectWallet() {
     [connect],
   )
 
-  return status === WalletStatus.CONNECTED
-    ? (
-    <WalletInfo />
-      )
-    : (
+  if (status === WalletStatus.CONNECTED)
+    return <WalletInfo />
+
+  return (
     <InternalLink href={'/earn'} onClick={handleClick}>
       <Button id="connect-button" bordered>{status === WalletStatus.CONNECTING ? 'Connecting...' : 'Connect'}</Button>
     </InternalLink>
-      )
+  )
 }
 
 export default ConnectWallet

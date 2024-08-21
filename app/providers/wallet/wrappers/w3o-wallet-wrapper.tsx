@@ -16,7 +16,6 @@ import {
 type ChainArgs = ReturnType<typeof useSetChain>
 
 const iconSize = 20
-const cachedIcons: Record<string, string> = {}
 
 /**
  * Returns the mapped "Web3Onboard" wallet, by default using the first active account.
@@ -30,7 +29,7 @@ export function getWallet(onboardWallet: WalletState | null): Wallet | null {
   return {
     label: onboardWallet.label,
     address: account.address,
-    iconImageSrc: getWalletIconSrc(onboardWallet.icon),
+    iconImageSrc: onboardWallet.icon,
   }
 }
 
@@ -42,11 +41,10 @@ export function getStatus(isConnected: boolean, isConnecting: boolean): WalletSt
   if (isConnected)
     return WalletStatus.CONNECTED
 
-  else if (isConnecting)
+  if (isConnecting)
     return WalletStatus.CONNECTING
 
-  else
-    return WalletStatus.NOT_CONNECTED
+  return WalletStatus.NOT_CONNECTED
 }
 
 /**
@@ -144,8 +142,10 @@ export async function reconnect(onboardConnect: (options?: ConnectOptions) => Pr
 /**
  * Disconnects from the connected wallet.
  */
-export async function disconnect(walletLabel: string | null,
-  onboardDisconnect: (wallet: DisconnectOptions) => Promise<WalletState[]>): Promise<void> {
+export async function disconnect(
+  walletLabel: string | null,
+  onboardDisconnect: (wallet: DisconnectOptions) => Promise<WalletState[]>,
+): Promise<void> {
   if (walletLabel)
     await onboardDisconnect({ label: walletLabel })
 
@@ -160,15 +160,6 @@ export async function setCurrentChain(chainId: ChainId, setOnboardChain: ChainAr
   const success = await setOnboardChain({ chainId: ChainId.toHex(chainId) })
   if (success)
     WalletPersistance.saveLastActiveChain(chainId)
-}
-
-function getWalletIconSrc(iconContent: string) {
-  const cachedIconSrc = cachedIcons[iconContent]
-  if (cachedIconSrc)
-    return cachedIconSrc
-
-  const svg = new Blob([iconContent], { type: 'image/svg+xml' })
-  return (cachedIcons[iconContent] = URL.createObjectURL(svg))
 }
 
 export function getDefaultChain(chains: Chain[]): Chain {
