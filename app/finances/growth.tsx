@@ -1,5 +1,5 @@
 import { convertToUsd } from './usd'
-import type { Price } from '@/api/gql/graphql'
+import type { Price } from '@/api/protocol/gql/graphql'
 
 export function getGrowthPercent(price: Price, pastYearPriceUSD: number): number {
   const currentPrice = convertToUsd(price)

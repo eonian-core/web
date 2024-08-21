@@ -18,10 +18,12 @@ function HowVaultWorks() {
 
 export function VaultTags({ children }: PropsWithChildren) {
   return (
-    <ul className={styles.tags}>
-      {children}
-      <HowVaultWorks />
-    </ul>
+    <div className={styles.tagsCntainer}>
+      <ul className={styles.tags}>
+        {children}
+        <HowVaultWorks />
+      </ul>
+    </div>
   )
 }
 

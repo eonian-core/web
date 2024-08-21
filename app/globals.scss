@@ -294,6 +294,9 @@
   --color-success-800: hsl(143, 64%, 24%);
   --color-success-900: hsl(180, 8%, 3%);
 
+  // Neon
+  --color-green-neon-300: hsla(180, 100%, 50%, 0.15);
+
   // margin
   --margin-10: 3px;
   --margin-50: 0.25rem;
@@ -338,6 +341,7 @@
   --width-150: calc(var(--width-column) + var(--width-gap));
   --width-200: calc(2 * var(--width-column) + var(--width-gap));
   --width-300: calc(3 * var(--width-column) + 2 * var(--width-gap));
+  --width-350: calc(3.5 * var(--width-column) + 2 * var(--width-gap));
   --width-400: calc(4 * var(--width-column) + 3 * var(--width-gap));
   --width-450: calc(4.5 * var(--width-column) + 3 * var(--width-gap));
   --width-500: calc(5 * var(--width-column) + 4 * var(--width-gap));

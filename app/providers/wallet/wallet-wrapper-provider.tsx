@@ -1,15 +1,14 @@
 'use client'
 
 import { Web3OnboardProvider, useConnectWallet, useSetChain } from '@web3-onboard/react'
-import type { Chain as W3OChain } from '@web3-onboard/common'
 import type { ethers } from 'ethers'
 import React, { useContext, useEffect } from 'react'
-import web3Onboard, { defaultChain } from '../../web3-onboard'
+import web3Onboard from '../../web3-onboard'
 import { useMonitoringContext } from '../monitoring'
 import type { ChainId } from './wrappers/helpers'
 import type { Chain, Wallet } from './wrappers/types'
 import { WalletStatus } from './wrappers/types'
-import * as W3O from './wrappers/w3o-wallet-wrapper'
+import { useAvailableChains, useConnect, useCurrentChain, useDisconnect, useProvider, useRecconect, useSetCurrentChain, useSignMessage, useStatus, useWallet } from './wrappers/w3o-wallet-wrapper'
 
 interface Props {
   children: React.ReactNode
@@ -24,6 +23,7 @@ export interface WalletWrapperContextValue {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   setCurrentChain: (chainId: ChainId) => Promise<void>
+  signMessage: (message: string) => Promise<string | null>
 }
 
 export const WalletWrapperContext = React.createContext<WalletWrapperContextValue>({
@@ -35,6 +35,7 @@ export const WalletWrapperContext = React.createContext<WalletWrapperContextValu
   connect: () => Promise.resolve(),
   disconnect: () => Promise.resolve(),
   setCurrentChain: () => Promise.resolve(),
+  signMessage: () => Promise.resolve(null),
 })
 
 /**
@@ -43,44 +44,22 @@ export const WalletWrapperContext = React.createContext<WalletWrapperContextValu
  */
 const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
   const [{ wallet: onboardWallet, connecting }, onboardConnect, onboardDisconnect] = useConnectWallet()
-  const provider = React.useMemo(
-    () => (onboardWallet?.provider ? W3O.getProvider(onboardWallet?.provider) : null),
-    [onboardWallet?.provider],
-  )
+  const provider = useProvider(onboardWallet?.provider)
 
-  const wallet = React.useMemo(() => W3O.getWallet(onboardWallet), [onboardWallet])
+  const wallet = useWallet(onboardWallet)
   const isWalletConnected = !!wallet
-  const status = React.useMemo(() => W3O.getStatus(isWalletConnected, connecting), [isWalletConnected, connecting])
+  const status = useStatus(isWalletConnected, connecting)
 
-  const disconnect = React.useCallback(async () => {
-    if (wallet)
-      await W3O.disconnect(wallet?.label, onboardDisconnect)
-  }, [onboardDisconnect, wallet?.label])
+  const disconnect = useDisconnect(wallet, onboardDisconnect)
 
   const [{ chains: onboardChains, connectedChain }, setOnboardChain] = useSetChain()
-  const chains = React.useMemo(
-    () => W3O.getAvailableChains(onboardChains.length === 0 ? [defaultChain as W3OChain] : onboardChains),
-    [onboardChains],
-  )
-  const chain = React.useMemo(() => W3O.getCurrentChain(chains, connectedChain?.id), [connectedChain?.id, chains])
+  const chains = useAvailableChains(onboardChains)
+  const chain = useCurrentChain(chains, connectedChain?.id)
 
-  const connect = React.useCallback(async () => {
-    const success = await W3O.connect(onboardConnect)
-    if (success)
-      await W3O.autoSelectProperChain(chain, chains, setOnboardChain)
-  }, [chain, chains, onboardConnect, setOnboardChain])
+  const connect = useConnect(chain, chains, setOnboardChain, onboardConnect)
+  const setCurrentChain = useSetCurrentChain(setOnboardChain)
 
-  const setCurrentChain = React.useCallback(
-    async (chainId: ChainId) => {
-      await W3O.setCurrentChain(chainId, setOnboardChain)
-    },
-    [setOnboardChain],
-  )
-
-  useEffect(() => {
-    void W3O.reconnect(onboardConnect)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  useRecconect(onboardConnect)
 
   const { identify } = useMonitoringContext()
   useEffect(() => {
@@ -91,6 +70,8 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
     identify(address, { address, label })
   }, [identify, wallet])
 
+  const signMessage = useSignMessage(provider)
+
   return <WalletWrapperContext.Provider value={{
     wallet,
     status,
@@ -100,6 +81,7 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
     connect,
     disconnect,
     setCurrentChain,
+    signMessage,
   }}>{children}</WalletWrapperContext.Provider>
 }
 

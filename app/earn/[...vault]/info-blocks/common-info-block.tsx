@@ -1,34 +1,41 @@
+import type { PropsWithChildren } from 'react'
 import React from 'react'
 
 import { SectionHeader } from '../components/section-header/section-header'
 import styles from './common-info-block.module.scss'
 
-export interface InfoBlockItem {
-  icon: React.ReactNode
-  title: React.ReactNode
-  value: React.ReactNode
-}
-
-interface Props {
-  title: React.ReactNode
-  items: InfoBlockItem[]
-  description?: React.ReactNode
-}
-
-export function CommonInfoBlock({ title, items, description }: Props) {
+export function CommonInfoBlock({ children }: PropsWithChildren) {
   return (
     <div className={styles.container}>
-      <SectionHeader title={title} className={styles.header} />
-      <ul>
-        {items.map((item, index) => (
-          <li key={index}>
-            <div className={styles.icon}>{item.icon}</div>
-            <div className={styles.title}>{item.title}</div>
-            <div className={styles.value}>{item.value}</div>
-          </li>
-        ))}
-      </ul>
-      {description && <div className={styles.description}>{description}</div>}
+      {children}
     </div>
   )
+}
+
+export function InfoBlockTitle({ children }: PropsWithChildren) {
+  return <SectionHeader title={children} className={styles.header} />
+}
+
+export function InfoBlockDescription({ children }: PropsWithChildren) {
+  return <div className={styles.description}>{children}</div>
+}
+
+export function InfoBlockList({ children }: PropsWithChildren) {
+  return <ul>{children}</ul>
+}
+
+export function InfoItem({ children }: PropsWithChildren) {
+  return <li>{children}</li>
+}
+
+export function InfoItemIcon({ children }: PropsWithChildren) {
+  return <div className={styles.icon}>{children}</div>
+}
+
+export function InfoItemTitle({ children }: PropsWithChildren) {
+  return <div className={styles.title}>{children}</div>
+}
+
+export function InfoItemValue({ children }: PropsWithChildren) {
+  return <div className={styles.value}>{children}</div>
 }

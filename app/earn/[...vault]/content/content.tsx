@@ -2,6 +2,7 @@
 
 import { useHover } from '@uidotdev/usehooks'
 import clsx from 'clsx'
+import { useDisclosure } from '@mantine/hooks'
 import Form from '../form/form'
 import { VaultProvider, useVaultContext } from '../hooks/use-vault-context'
 import { Portfolio } from '../portfolio/portfolio'
@@ -20,6 +21,10 @@ import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 import { useHideAnimtion } from '@/components/fade-in/animation'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
+import { WalletLinkingProvider } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
+import { Onboading } from '@/views/onboarding/onboarding'
+import { useIsUltraWideOrSmaller } from '@/components/resize-hooks/screens'
+import { OnboardingDrawer } from '@/views/onboarding/onboarding-drawer'
 
 interface Props {
   vault: Vault
@@ -29,23 +34,33 @@ interface Props {
 
 export function Content({ vault, chainId, symbol }: Props) {
   const [formRef, formHovering] = useHover()
+  const isUltraWideOrSmaller = useIsUltraWideOrSmaller()
 
   return (
     <VaultProvider vault={vault}>
-      <div className={styles.container}>
-        <LeftSection />
+      <WalletLinkingProvider>
+        <div className={styles.wrapper}>
+          <HorizontalOnboardingBar showPlaceholder={!isUltraWideOrSmaller}/>
 
-        <section ref={formRef} className={styles.middle}>
-          <Form chainId={chainId} />
-          <LimitBlocks show={formHovering}/>
-        </section>
+          <div className={styles.container}>
+            {/** For undefined value, not display to avoid render during ssr */}
+            {isUltraWideOrSmaller === false && <VerticalOnboardingBar />}
 
-        <RightSection symbol={symbol} />
-      </div>
-      <div className={styles.mobileInfoBlocks}>
-        <SafetyBlocks show/>
-        <LimitBlocks show/>
-      </div>
+            <LeftSection />
+
+            <section ref={formRef} className={styles.middle}>
+              <Form chainId={chainId} />
+              <LimitBlocks show={formHovering}/>
+            </section>
+
+            <RightSection symbol={symbol} />
+          </div>
+        </div>
+        <div className={styles.mobileInfoBlocks}>
+          <SafetyBlocks show/>
+          <LimitBlocks show/>
+        </div>
+      </WalletLinkingProvider>
     </VaultProvider>
   )
 }
@@ -57,6 +72,33 @@ function useHaveWhatToDisplay() {
     return true
 
   return showPlaceholder && placeholderValue !== 0n
+}
+
+function VerticalOnboardingBar() {
+  return (
+    <div className={clsx(styles.onboardingBar, styles.vertical)}>
+      <Onboading withBackground />
+    </div>
+  )
+}
+
+function HorizontalOnboardingBar({ showPlaceholder }: { showPlaceholder?: boolean }) {
+  const [opened, { open, close }] = useDisclosure(false)
+
+  if (showPlaceholder) {
+    return (
+      <div className={clsx(styles.onboardingBar, styles.placeholder)}></div>
+    )
+  }
+
+  return (<>
+      <OnboardingDrawer {...{ opened, onClose: close }} />
+
+      <div className={clsx(styles.onboardingBar, styles.horizontal)} onClick={open}>
+        <Onboading horizontal />
+      </div>
+    </>
+  )
 }
 
 function LeftSection() {
