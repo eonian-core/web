@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useWalletLinkingContext } from '../wallet-linking-drawer/wallet-linking-drawer'
 
 import type { OnboardingBodyProps } from './onboarding-body'
