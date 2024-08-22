@@ -1,5 +1,5 @@
 import type { DependencyList } from 'react'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 export function useDelay(time: number, genCallback: () => ((() => void) | undefined), deps: DependencyList) {
   useEffect(() => {
