@@ -21,13 +21,13 @@ export interface LinkRecoveryEmailFormProps {
   error?: Error | ApolloError | null
   isWalletConnected?: boolean
   address?: string
-  signing?: boolean
+  loggingIn?: boolean
 }
 
-export function LinkRecoveryEmailForm({ onSubmit, loading, success, error, address, isWalletConnected, signing }: LinkRecoveryEmailFormProps) {
+export function LinkRecoveryEmailForm({ onSubmit, loading, success, error, address, isWalletConnected, loggingIn }: LinkRecoveryEmailFormProps) {
   const { control, handleSubmit, formState } = useForm<FormInputs>()
 
-  const fullFormDisabled = loading || success || signing || !isWalletConnected
+  const fullFormDisabled = loading || success || loggingIn || !isWalletConnected
 
   return (
         <form onSubmit={handleSubmit(onSubmit) as FormEventHandler<any>} className={styles.form}>
@@ -56,7 +56,7 @@ export function LinkRecoveryEmailForm({ onSubmit, loading, success, error, addre
                 type="submit"
                 disabled={!formState.isValid || fullFormDisabled}
             >
-                <SubmitText {...{ success, loading, isWalletConnected, signing }} />
+                <SubmitText {...{ success, loading, isWalletConnected, loggingIn }} />
             </Button>
 
             {error && (<div className={styles.error}>
@@ -70,19 +70,19 @@ export function LinkRecoveryEmailForm({ onSubmit, loading, success, error, addre
 interface SubmitTextProps {
   success?: boolean
   loading?: boolean
-  signing?: boolean
+  loggingIn?: boolean
   isWalletConnected?: boolean
 }
 
-function SubmitText({ success, loading, isWalletConnected, signing }: SubmitTextProps) {
+function SubmitText({ success, loading, isWalletConnected, loggingIn }: SubmitTextProps) {
   if (success)
     return <IconCheck width={32} height={32}/>
 
   if (loading)
     return <Spinner />
 
-  if (signing)
-    return 'Sign linking message'
+  if (loggingIn)
+    return 'Sign login message'
 
   if (!isWalletConnected)
     return 'Connect wallet to link'

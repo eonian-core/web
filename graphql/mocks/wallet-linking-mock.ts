@@ -8,20 +8,7 @@ interface QueryArgs {
   address: string
   chainId: number
 }
-
-enum MutationAction {
-  LINK = 'LINK',
-  UNLINK = 'UNLINK',
-}
-
 interface LinkEmailToWalletInput {
-  action: MutationAction
-  timestamp: string
-  payload: LinkEmailToWalletInputPayload
-  signature: string
-}
-
-interface LinkEmailToWalletInputPayload {
   chainId: number
   address: string
   link: EmailLinkInput
@@ -86,7 +73,7 @@ function resolvers(): Partial<IResolvers> {
     LinkPayload: { __resolveType },
     Mutation: {
       linkEmailToWallet(_, { input }: { input: LinkEmailToWalletInput }) {
-        const { address, chainId, link } = input.payload
+        const { address, chainId, link } = input
         const data = {
           id: link.email,
           chainId,

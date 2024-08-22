@@ -8,7 +8,7 @@ import { useMonitoringContext } from '../monitoring'
 import type { ChainId } from './wrappers/helpers'
 import type { Chain, Wallet } from './wrappers/types'
 import { WalletStatus } from './wrappers/types'
-import { useAvailableChains, useConnect, useCurrentChain, useDisconnect, useProvider, useRecconect, useSetCurrentChain, useSignMessage, useStatus, useWallet } from './wrappers/w3o-wallet-wrapper'
+import { useAvailableChains, useConnect, useCurrentChain, useDisconnect, useLoginThroughSign, useProvider, useRecconect, useSetCurrentChain, useSignMessage, useStatus, useWallet } from './wrappers/w3o-wallet-wrapper'
 
 interface Props {
   children: React.ReactNode
@@ -23,7 +23,9 @@ export interface WalletWrapperContextValue {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   setCurrentChain: (chainId: ChainId) => Promise<void>
-  signMessage: (message: string) => Promise<string | null>
+  signMessage: (chainId: ChainId, statement: string) => Promise<string | null>
+  loginThroughSign: () => Promise<string>
+  loggingIn: boolean
 }
 
 export const WalletWrapperContext = React.createContext<WalletWrapperContextValue>({
@@ -36,6 +38,8 @@ export const WalletWrapperContext = React.createContext<WalletWrapperContextValu
   disconnect: () => Promise.resolve(),
   setCurrentChain: () => Promise.resolve(),
   signMessage: () => Promise.resolve(null),
+  loginThroughSign: () => new Promise((resolve, reject) => { reject(new Error('Not connected')) }),
+  loggingIn: false,
 })
 
 /**
@@ -71,6 +75,7 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
   }, [identify, wallet])
 
   const signMessage = useSignMessage(provider)
+  const [loginThroughSign, loggingIn] = useLoginThroughSign(provider, chain?.id)
 
   return <WalletWrapperContext.Provider value={{
     wallet,
@@ -82,6 +87,8 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
     disconnect,
     setCurrentChain,
     signMessage,
+    loginThroughSign,
+    loggingIn,
   }}>{children}</WalletWrapperContext.Provider>
 }
 
