@@ -20,9 +20,9 @@ export function getChainIcon(id: ChainId, iconSize: number): React.ReactNode {
 export function getChainExplorer(id: ChainId): string | null {
   switch (id) {
     case ChainId.SEPOLIA:
-      return 'https://sepolia.etherscan.io/'
+      return 'https://sepolia.etherscan.io'
     case ChainId.BSC_MAINNET:
-      return 'https://bscscan.com/'
+      return 'https://bscscan.com'
     case ChainId.UNKNOWN:
       return null
   }
