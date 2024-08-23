@@ -1,5 +1,6 @@
+import { VaultLinks } from './vault-links'
 import { VaultName } from './vault-name'
-import { VaultLinks, VaultTag, VaultTags, VaultTitle } from './vault-title'
+import { VaultTag, VaultTags, VaultTitle } from './vault-title'
 import type { TokenSymbol } from '@/types'
 
 // TODO: move this compoenents to mdx file
