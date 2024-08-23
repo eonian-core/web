@@ -11,20 +11,20 @@ import WalletMenu from './wallet-menu'
 function WalletInfo() {
   const { wallet } = useWalletWrapperContext()
 
-  const shrinkedAddress = React.useMemo(() => shrinkAddress(wallet!.address), [wallet])
-
   return (
     <div className={styles.container}>
       <WalletNetworkSelector />
       <WalletMenu>
         <Image src={wallet!.iconImageSrc} alt={wallet!.label} width={20} height={20} />
-        <span className={styles.address}>{shrinkedAddress}</span>
+        <span className={styles.address}>
+          <ShrinkedAddress>{wallet!.address}</ShrinkedAddress>
+        </span>
       </WalletMenu>
     </div>
   )
 }
 
-function shrinkAddress(address: string): string {
+export function ShrinkedAddress({ children: address }: { children: string }) {
   return `${address.substring(0, 6)}...${address.slice(-4)}`
 }
 

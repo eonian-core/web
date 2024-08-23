@@ -30,7 +30,7 @@ function ContractAddress() {
 }
 
 export function VaultTags({ children }: PropsWithChildren) {
-  return <ul className={styles.tags}>{children}</ul>
+  return <div className={styles.tagsCntainer}><ul className={styles.tags}>{children}</ul></div>
 }
 
 export function VaultLinks() {

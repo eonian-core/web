@@ -16,6 +16,7 @@ import FormInput from './form-input/form-input'
 import { FormPreview } from './form-preview'
 import { BlocknativeLink } from './blocknative-link/blocknative-link'
 import { ArrowDivider } from './arrow-divider/arrow-divider'
+import { RequestStatus } from '@/store/slices/requestSlice'
 
 const Form: React.FC = () => {
   const vaultChain = useVaultChain()
@@ -57,7 +58,8 @@ function useVaultChain() {
 
 function useFormReady() {
   const { wallet, status } = useWalletWrapperContext()
-  const { isLoading, lastRequestForWallet } = useAppSelector(state => state.vaultUser)
+  const { status: loadingStatus, lastRequestForWallet } = useAppSelector(state => state.vaultUser)
+  const isLoading = loadingStatus === RequestStatus.Pending
 
   const isFirstRequestFinished = lastRequestForWallet === wallet?.address
 

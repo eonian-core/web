@@ -1,0 +1,27 @@
+.wrapper {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-text-400);
+    border: 1px solid var(--color-text-400);
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    &.active {
+        color: var(--color-text-300);
+        border-color: var(--color-text-300);
+    }
+
+    &.completed {
+        color: var(--color-text-500);
+        border-color: var(--color-text-500);
+    }
+}
+

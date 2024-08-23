@@ -6,8 +6,8 @@ import type { Vault } from '@/api'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
-import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
+import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 
 export interface VaultContextType {
   inputValue?: bigint

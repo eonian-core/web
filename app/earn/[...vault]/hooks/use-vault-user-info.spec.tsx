@@ -12,6 +12,7 @@ import type { Vault } from '@/api'
 import type { Chain, Wallet } from '@/providers/wallet/wrappers/types'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
+import { RequestStatus } from '@/store/slices/requestSlice'
 
 jest.mock('@web3-onboard/react', () => ({
   Web3OnboardProvider: jest.fn(),
@@ -75,7 +76,7 @@ describe('useVaultUserInfo', () => {
   })
 
   it('should return lambda or null based on state', () => {
-    const { wrapper } = genWrapper({ isLoading: false }, { }, {
+    const { wrapper } = genWrapper({ status: RequestStatus.Succeeded }, { }, {
       wallet: { address: 'wallet-address' } as Wallet,
       chain: { multicallAddress: 'multicall-address' } as Chain,
       provider: { id: 'provider' } as any as ethers.BrowserProvider,
@@ -125,7 +126,7 @@ describe('useVaultUserInfo', () => {
   })
 
   it('should trigger dispatch fetchVaultUserData', async () => {
-    const { wrapper } = genWrapper({ isLoading: false }, { }, {
+    const { wrapper } = genWrapper({ status: RequestStatus.Succeeded }, { }, {
       wallet: { address: 'wallet-address' } as Wallet,
       chain: { multicallAddress: 'multicall-address' } as Chain,
       provider: { id: 'provider' } as any as ethers.BrowserProvider,

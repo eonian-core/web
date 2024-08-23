@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import type { Vault } from '../../../api'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '../../../providers/wallet/wrappers/types'
-import { executeAfter } from '../../../shared/async/execute-after'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { fetchVaultUserData, reset } from '../../../store/slices/vaultUserSlice'
+import { useRefetch } from './use-refetch'
 
 interface VaultUserInfoParams {
   autoUpdateInterval?: number
@@ -17,13 +17,13 @@ export function useVaultUserInfo({
 { autoUpdateInterval }: VaultUserInfoParams = {},
 ) {
   const dispatch = useAppDispatch()
-  const { isLoading } = useAppSelector(state => state.vaultUser)
+  const { status: loadingStatus } = useAppSelector(state => state.vaultUser)
 
   const { wallet, provider, chain, status } = useWalletWrapperContext()
   const { multicallAddress } = chain ?? {}
   const { address: walletAddress } = wallet ?? {}
 
-  const refetch = React.useMemo(() => {
+  const refetch = useMemo(() => {
     if (!walletAddress || !multicallAddress || !provider)
       return null
 
@@ -38,12 +38,11 @@ export function useVaultUserInfo({
     }
   }, [dispatch, walletAddress, vaultAddress, assetAddress, multicallAddress, provider])
 
-  /**
-   * Retrieves fresh data when something changed (wallet/vault/chain).
-   */
-  useEffect(() => {
-    void refetch?.()
-  }, [refetch])
+  useRefetch({
+    status: loadingStatus,
+    autoUpdateInterval,
+    forceUpdate: true,
+  }, refetch)
 
   /**
    * Resets vault-user data when wallet is disconnected.
@@ -62,19 +61,6 @@ export function useVaultUserInfo({
     },
     [dispatch],
   )
-
-  /**
-   * Performs automatic updates at fixed intervals.
-   * Only if {@link autoUpdateInterval} is specified.
-   */
-  useEffect(() => {
-    if (isLoading || !autoUpdateInterval)
-      return
-
-    return executeAfter(autoUpdateInterval, () => {
-      void refetch?.()
-    })
-  }, [autoUpdateInterval, isLoading, refetch])
 
   return refetch
 }

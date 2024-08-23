@@ -1,6 +1,6 @@
 import styles from './input-icon.module.scss'
 import type { Vault } from '@/api'
-import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
+import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 import IconCoin from '@/components/icons/icon-coin'
 import IconWallet from '@/components/icons/icon-wallet'
 

@@ -6,7 +6,7 @@ import { reducePriceData } from '@/shared/charts/reduce-price-data'
 import type { PriceData, TokenSymbol } from '@/types'
 import type { YAxisDomainOptions } from '@/components/chart/axis-domain'
 import { calcYAxisDomain } from '@/components/chart/axis-domain'
-import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
+import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 import { getYearlyApy } from '@/finances/vault-apy'
 
 interface Props {
