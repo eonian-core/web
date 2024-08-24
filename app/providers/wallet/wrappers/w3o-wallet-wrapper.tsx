@@ -4,6 +4,8 @@ import type { Chain as W3OChain } from '@web3-onboard/common'
 import { SiweMessage } from 'siwe'
 import type { ConnectOptions, DisconnectOptions, EIP1193Provider, WalletState } from '@web3-onboard/core'
 import type { DependencyList } from 'react'
+import type { DurationLike } from 'luxon'
+import { DateTime } from 'luxon'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { defaultChain } from '../../../web3-onboard'
 import type { Chain, Wallet } from './types'
@@ -245,6 +247,8 @@ export function useSignMessage(provider: ethers.BrowserProvider | null) {
   }, [provider])
 }
 
+const SIGN_EXPIRATION_INTERVAL: DurationLike = { minutes: 10 }
+
 export async function signMessage(provider: ethers.BrowserProvider | null, chainId: ChainId, statement: string): Promise<string | null> {
   const signer = await provider?.getSigner()
   if (!signer)
@@ -260,6 +264,7 @@ export async function signMessage(provider: ethers.BrowserProvider | null, chain
     uri: origin,
     version: '1',
     chainId,
+    expirationTime: DateTime.now().plus(SIGN_EXPIRATION_INTERVAL).toISO(),
   })
 
   return await signer.signMessage(message.prepareMessage())

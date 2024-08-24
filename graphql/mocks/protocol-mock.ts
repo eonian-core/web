@@ -26,7 +26,7 @@ const __dirname = dirname(__filename)
 
 void server({
   schemaPath: join(__dirname, '../protocol/schema.graphql'),
-  port: 4000,
+  port: 4004,
   mocks,
   resolvers,
 })
