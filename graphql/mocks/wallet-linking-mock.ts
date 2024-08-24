@@ -2,7 +2,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { IResolvers } from '@graphql-tools/utils'
 
-import { server } from './server'
+import { createApp, startGraphqlServer } from './server'
 
 interface QueryArgs {
   address: string
@@ -102,7 +102,13 @@ function resolvers(): Partial<IResolvers> {
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-void server({
+const app = createApp()
+
+app.get('/nonce', (req, res) => {
+  res.status(200).json({ nonce: 'lLESVFellkJfVa1Ht' })
+})
+
+void startGraphqlServer(app, '/graphql', {
   schemaPath: join(__dirname, '../wallet-linking/schema.graphql'),
   port: 5000,
   mocks: {},

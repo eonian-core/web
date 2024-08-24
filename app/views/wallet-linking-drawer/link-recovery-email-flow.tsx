@@ -71,10 +71,7 @@ function useSubmit({
       return
     }
 
-    const signature = await loginThroughSign()
-
-    // eslint-disable-next-line no-console
-    console.log('onSubmit', email, signature)
+    const signatureToken = await loginThroughSign()
 
     await linkEmail({
       variables: {
@@ -86,7 +83,7 @@ function useSubmit({
       },
       context: {
         headers: {
-          'X-Signature': signature,
+          'x-signature': signatureToken,
         },
       },
     })

@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { resolvers as scalarResolvers, mocks as scalarsMocks } from 'graphql-scalars'
 
 import vaults from './data/vaults.json' assert { type: 'json' }
-import { server } from './server'
+import { createApp, startGraphqlServer } from './server'
 
 const mocks = {
   BigInt: scalarsMocks.BigInt,
@@ -24,7 +24,9 @@ function resolvers() {
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-void server({
+const app = createApp()
+
+void startGraphqlServer(app, '/graphql', {
   schemaPath: join(__dirname, '../protocol/schema.graphql'),
   port: 4004,
   mocks,

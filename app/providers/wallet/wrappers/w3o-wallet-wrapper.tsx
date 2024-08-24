@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import * as ethers from 'ethers'
 import type { useSetChain } from '@web3-onboard/react'
 import type { Chain as W3OChain } from '@web3-onboard/common'
@@ -18,6 +19,7 @@ import {
   getMulticallAddress,
   isLoggedInWallet,
 } from './helpers'
+import { fetchNonce } from '@/api/wallet-linking/nonce/fetch-nonce'
 
 type ChainArgs = ReturnType<typeof useSetChain>
 
@@ -242,14 +244,20 @@ export function getDefaultChain(chains: Chain[]): Chain {
 }
 
 export function useSignMessage(provider: ethers.BrowserProvider | null) {
-  return useCallback(async (chainId: ChainId, statement: string) => {
-    return await signMessage(provider, chainId, statement)
+  return useCallback(async (chainId: ChainId, statement: string, nonce?: string) => {
+    return await signMessage(provider, chainId, statement, nonce)
   }, [provider])
 }
 
 const SIGN_EXPIRATION_INTERVAL: DurationLike = { minutes: 10 }
 
-export async function signMessage(provider: ethers.BrowserProvider | null, chainId: ChainId, statement: string): Promise<string | null> {
+export interface SignedMessage {
+  message: SiweMessage
+  signature: string
+}
+
+/** Returns signature token that can be used in x-signature header */
+export async function signMessage(provider: ethers.BrowserProvider | null, chainId: ChainId, statement: string, nonce?: string): Promise<SignedMessage | null> {
   const signer = await provider?.getSigner()
   if (!signer)
     return null
@@ -259,6 +267,7 @@ export async function signMessage(provider: ethers.BrowserProvider | null, chain
 
   const message = new SiweMessage({
     domain,
+    nonce,
     address: signer.address,
     statement,
     uri: origin,
@@ -267,7 +276,8 @@ export async function signMessage(provider: ethers.BrowserProvider | null, chain
     expirationTime: DateTime.now().plus(SIGN_EXPIRATION_INTERVAL).toISO(),
   })
 
-  return await signer.signMessage(message.prepareMessage())
+  const signature = await signer.signMessage(message.prepareMessage())
+  return { message, signature }
 }
 
 const SIGN_STATMENT = 'Sign in with wallet to Eonian'
@@ -277,11 +287,13 @@ export function useLoginThroughSign(provider: ethers.BrowserProvider | null, cha
     if (!provider || !chainId)
       throw new Error('Sign login failed: wallet not connected')
 
-    const signature = await signMessage(provider, chainId, SIGN_STATMENT)
-    if (!signature)
+    const { nonce } = await fetchNonce()
+    const signed = await signMessage(provider, chainId, SIGN_STATMENT, nonce)
+    if (!signed)
       throw new Error('Sign login failed: cannot sign message')
 
-    return signature
+    const { message, signature } = signed
+    return `${Buffer.from(JSON.stringify(message)).toString('base64')}.${signature}`
   }, [provider, chainId])
 }
 

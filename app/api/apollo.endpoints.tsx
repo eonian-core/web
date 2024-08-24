@@ -13,8 +13,11 @@ export function makeProtocolEndpoint(chainId: ChainId) {
   })
 }
 
+export const walletLinkingEndpoint = requireEnv('NEXT_PUBLIC_WALLET_LINKING_URL', process.env.NEXT_PUBLIC_WALLET_LINKING_URL)
+
 export function makeWalletLinkingEndpoint() {
+  const uri = new URL('/graphql', walletLinkingEndpoint)
   return new HttpLink({
-    uri: requireEnv('NEXT_PUBLIC_WALLET_LINKING_GRAPH_URL', process.env.NEXT_PUBLIC_WALLET_LINKING_GRAPH_URL),
+    uri: uri.toString(),
   })
 }
