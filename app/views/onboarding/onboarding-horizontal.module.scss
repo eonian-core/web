@@ -1,0 +1,38 @@
+
+.horizontal {
+    width: fit-content;
+    ul {
+        display: flex;
+        flex-direction: row;
+
+        justify-content: flex-start;
+        width: fit-content;
+    }
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.horizontal {
+    ul, .item {
+        gap: 0.3rem;
+    }
+}
+
+
+.line {
+    width: 0.5rem;
+    height: 1px;
+    background: var(--color-text-400);
+}
+
+.item {
+    &.completed {
+        .line {
+            background: var(--color-text-500);
+        }
+    }
+}

@@ -3,8 +3,8 @@ import { showEarn } from '../features'
 
 import styles from './page.module.scss'
 import { VaultGrid } from './components/vault-grid'
-import { VaultsProvider } from '@/api/vaults/vaults-context'
-import { fetchVaults } from '@/api/vaults/fetchVaults'
+import { VaultsProvider } from '@/api/protocol/vaults/vaults-context'
+import { fetchVaults } from '@/api/protocol/vaults/fetch-vaults'
 
 export default async function Page() {
   if (!showEarn)

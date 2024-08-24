@@ -6,7 +6,8 @@ import type { Vault } from '@/api'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
-import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
+import type { ChainId } from '@/providers/wallet/wrappers/helpers'
+import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 
 export interface VaultContextType {
   inputValue?: bigint
@@ -16,6 +17,7 @@ export interface VaultContextType {
   formAction: FormAction
   insured: boolean
   vault: Vault
+  chainId: ChainId
   showPlaceholder: boolean
   onValueChange: (value: string | bigint) => void
   onPlaceholderChange: (value: string | bigint) => void
@@ -25,9 +27,13 @@ export interface VaultContextType {
 
 export const VaultContext = createContext<VaultContextType | undefined>(undefined)
 
-export function VaultProvider({ children, vault }: PropsWithChildren<{ vault: Vault }>) {
+export function VaultProvider({ children, vault, chainId }: PropsWithChildren<{ vault: Vault; chainId: ChainId }>) {
   const { value, displayValue, onValueChange } = useNumberInputValue(undefined, vault.asset.decimals)
-  const { value: placeholderValue = 0n, displayValue: placeholderDisplayValue = '0', onValueChange: onPlaceholderChange } = useNumberInputValue(0n, vault.asset.decimals)
+  const {
+    value: placeholderValue = 0n,
+    displayValue: placeholderDisplayValue = '0',
+    onValueChange: onPlaceholderChange,
+  } = useNumberInputValue(0n, vault.asset.decimals)
   const [formAction, setFormAction] = useState<FormAction>(FormAction.DEPOSIT)
   const [insured, setInsured] = useState(true)
 
@@ -39,6 +45,7 @@ export function VaultProvider({ children, vault }: PropsWithChildren<{ vault: Va
   return (
     <VaultContext.Provider
       value={{
+        chainId,
         vault,
         inputValue: value,
         displayValue,
@@ -46,7 +53,8 @@ export function VaultProvider({ children, vault }: PropsWithChildren<{ vault: Va
         placeholderValue: status === WalletStatus.CONNECTED ? 0n : placeholderValue,
         placeholderDisplayValue: status === WalletStatus.CONNECTED ? '0' : placeholderDisplayValue,
         onPlaceholderChange,
-        showPlaceholder: status !== WalletStatus.CONNECTED && (typeof displayValue === 'undefined' || displayValue === ''),
+        showPlaceholder:
+          status !== WalletStatus.CONNECTED && (typeof displayValue === 'undefined' || displayValue === ''),
         formAction,
         setFormAction,
         insured,

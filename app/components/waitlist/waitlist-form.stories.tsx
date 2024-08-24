@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-console */
 import type { Meta, StoryObj } from '@storybook/react'
-import NextThemeProvider from '../../providers/next-theme'
+import NextThemeProvider from '../../providers/themes'
 import { WaitlistForm } from './waitlist-form'
 
 const meta: Meta<typeof WaitlistForm> = {

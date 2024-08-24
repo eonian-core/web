@@ -39,6 +39,9 @@ export function genWrapper(state: Partial<VaultUserSlice> = {}, vault: Partial<V
       connect: () => Promise.resolve(),
       disconnect: () => Promise.resolve(),
       setCurrentChain: () => Promise.resolve(),
+      signMessage: () => Promise.resolve(null),
+      loginThroughSign: () => new Promise((resolve, reject) => { reject(new Error('Not connected')) }),
+      loggingIn: false,
       ...walletContext,
     })
     const setWalletState = useCallback((wallet: Partial<WalletWrapperContextValue>) => {

@@ -2,6 +2,8 @@ import type { Provider } from 'ethers'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { MulticallRequest } from '../../shared'
 import { Multicall, createERC20Request, createVaultRequest } from '../../shared'
+import type { SliceRequestState } from './requestSlice'
+import { addRequestHandlingStates, initialRequestState } from './requestSlice'
 
 interface FetchParams {
   walletAddress: string
@@ -31,23 +33,22 @@ export const fetchVaultUserData = createAsyncThunk(
 )
 
 // TODO: add lint rule to enforce export all interfaces
-export interface VaultUserSlice {
+export interface VaultUserSlice extends SliceRequestState {
   walletBalanceBN: string
   vaultBalanceBN: string
   assetAllowanceBN: string
   vaultDecimals: number
   assetDecimals: number
-  isLoading: boolean
   lastRequestForWallet: string
 }
 
 export const initialState: VaultUserSlice = {
+  ...initialRequestState,
   walletBalanceBN: '0',
   vaultBalanceBN: '0',
   assetAllowanceBN: '0',
   vaultDecimals: 0,
   assetDecimals: 0,
-  isLoading: true,
   lastRequestForWallet: '',
 }
 
@@ -58,28 +59,19 @@ const vaultUserSlice = createSlice({
     reset: () => initialState,
   },
   extraReducers(builder) {
-    builder
-      .addCase(fetchVaultUserData.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(fetchVaultUserData.fulfilled, (state, action) => {
-        state.isLoading = false
+    addRequestHandlingStates(builder, fetchVaultUserData, (state, action) => {
+      const { data, requestForWallet } = action.payload
+      const [vaultBalance, vaultDecimals, assetBalance, assetDecimals, assetAllowance] = data
 
-        const { data, requestForWallet } = action.payload
-        const [vaultBalance, vaultDecimals, assetBalance, assetDecimals, assetAllowance] = data
+      state.assetAllowanceBN = assetAllowance
+      state.walletBalanceBN = assetBalance
+      state.assetDecimals = Number.parseInt(assetDecimals)
 
-        state.assetAllowanceBN = assetAllowance
-        state.walletBalanceBN = assetBalance
-        state.assetDecimals = Number.parseInt(assetDecimals)
+      state.vaultBalanceBN = vaultBalance
+      state.vaultDecimals = Number.parseInt(vaultDecimals)
 
-        state.vaultBalanceBN = vaultBalance
-        state.vaultDecimals = Number.parseInt(vaultDecimals)
-
-        state.lastRequestForWallet = requestForWallet
-      })
-      .addCase(fetchVaultUserData.rejected, (state) => {
-        state.isLoading = false
-      })
+      state.lastRequestForWallet = requestForWallet
+    })
   },
 })
 
