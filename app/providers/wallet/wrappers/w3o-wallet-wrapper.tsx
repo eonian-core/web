@@ -2,7 +2,7 @@ import * as ethers from 'ethers'
 import type { useSetChain } from '@web3-onboard/react'
 import type { Chain as W3OChain } from '@web3-onboard/common'
 import type { ConnectOptions, DisconnectOptions, EIP1193Provider, WalletState } from '@web3-onboard/core'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { defaultChain } from '../../../web3-onboard'
 import type { Chain, Wallet } from './types'
 import { WalletStatus } from './types'
@@ -14,7 +14,6 @@ import {
   getMulticallAddress,
   isLoggedInWallet,
 } from './helpers'
-import { fetchNonce } from '@/api/wallet-linking/nonce/fetch-nonce'
 
 type ChainArgs = ReturnType<typeof useSetChain>
 

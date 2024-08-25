@@ -1,4 +1,4 @@
-import { Buffer } from 'buffer'
+import { Buffer } from 'node:buffer'
 import type { ethers } from 'ethers'
 import type { DurationLike } from 'luxon'
 import { DateTime } from 'luxon'
