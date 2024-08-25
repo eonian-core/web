@@ -11,7 +11,6 @@ import ExternalLink from '../components/links/external-link'
 import { LinkInText } from '../components/links/link-in-text'
 import Mbr from '../components/mobile-break/mobile-break'
 import { Target } from '../components/card/card'
-import { WaitList } from '../components/waitlist/waitlist'
 import IconPalmTree from '../components/icons/icon-paml-tree'
 import IconShieldHeart from '../components/icons/icon-shield-heart'
 import IconChartLine from '../components/icons/icon-chart-line'
@@ -104,7 +103,6 @@ const components = {
   IconRobot,
   IconDiscord,
   Target,
-  WaitList,
   Problem,
   SectionCEX,
   ScrollingCexHeader,
