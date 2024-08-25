@@ -5,6 +5,7 @@ import './globals.scss'
 import 'react-toastify/dist/ReactToastify.min.css'
 
 import clsx from 'clsx'
+import Script from 'next/script'
 import Providers from './providers/providers'
 import Footer from './components/footer/footer'
 import Navigation from './components/navigation/navigation'
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang={locale} suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
+        <Analytics />
       </head>
       <GoogleAnalytics />
       <body className={clsx(robotoFont.className, 'dark text-foreground bg-background')}>
@@ -40,6 +42,18 @@ export default function RootLayout({ children }: RootLayoutProps) {
         </Providers>
       </body>
     </html>
+  )
+}
+
+function Analytics() {
+  return (
+    <Script type="text/javascript" id="analytics-ms">{`
+(function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "nsntzbdma2");
+    `}</Script>
   )
 }
 
