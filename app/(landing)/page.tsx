@@ -45,11 +45,9 @@ import {
 import HeroButton from './views/hero/button-group/hero-button'
 import HeroButtonGroup from './views/hero/button-group/hero-button-group'
 import Hero from './views/hero/hero'
-import InDevelopment from './views/in-development/in-development'
 import Founders from './views/founders/founders'
 import FoundersList from './views/founders/founders-list'
 import Founder from './views/founders/founder'
-import { MainButton } from './views/hero/main-button'
 import HeroCaptionText from './views/hero/button-group/hero-caption-text'
 import Problem from './views/problem/problem'
 import Offer from './views/offer/offer'
@@ -84,6 +82,7 @@ import SocialProof, {
 import Testimonials from './views/testimonials/testimonials'
 import Partners from './views/partners/partners'
 import { VaultCard } from '@/components/vault-card/vault-card'
+import { VaultAction } from '@/components/vault-card/vault-action'
 
 const components = {
   Hero,
@@ -104,10 +103,8 @@ const components = {
   IconExternal,
   IconRobot,
   IconDiscord,
-  InDevelopment,
   Target,
   WaitList,
-  MainButton,
   Problem,
   SectionCEX,
   ScrollingCexHeader,
@@ -128,6 +125,7 @@ const components = {
   Offer,
   Tokens,
   VaultCard,
+  VaultAction,
   TokenHeader,
   Tags,
   Tag,
