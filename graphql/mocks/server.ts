@@ -1,5 +1,11 @@
+import type { Server } from 'node:http'
+import { createServer } from 'node:http'
+import type { AddressInfo } from 'node:net'
+import { format } from 'node:url'
+import cors from 'cors'
+import express from 'express'
+import { expressMiddleware } from '@apollo/server/express4'
 import { ApolloServer } from '@apollo/server'
-import { startStandaloneServer } from '@apollo/server/standalone'
 import type { IMockStore, IMocks } from '@graphql-tools/mock'
 import { addMocksToSchema } from '@graphql-tools/mock'
 import { loadSchema } from '@graphql-tools/load'
@@ -13,7 +19,16 @@ export interface ServerOptions {
   resolvers: (store: IMockStore) => Partial<IResolvers>
 }
 
-export async function server({ schemaPath, port, mocks, resolvers }: ServerOptions) {
+export function createApp() {
+  const app: express.Express = express()
+
+  app.use(express.json())
+  app.use(cors())
+
+  return app
+}
+
+export async function startGraphqlServer(app: express.Express, path: string, { schemaPath, port, mocks, resolvers }: ServerOptions) {
   // Load schema from the file
   const schema = await loadSchema(schemaPath, {
     loaders: [new GraphQLFileLoader()],
@@ -23,13 +38,19 @@ export async function server({ schemaPath, port, mocks, resolvers }: ServerOptio
     schema: addMocksToSchema({ schema, mocks, resolvers }),
   })
 
-  // Passing an ApolloServer instance to the `startStandaloneServer` function:
-  //  1. creates an Express app
-  //  2. installs your ApolloServer instance as middleware
-  //  3. prepares your app to handle incoming requests
-  const { url } = await startStandaloneServer(server, {
-    listen: { port },
+  // instance before passing the instance to `expressMiddleware`
+  await server.start()
+
+  app.use(path, expressMiddleware(server))
+
+  const httpServer: Server = createServer(app)
+
+  // Wait for server to start listening
+  await new Promise<void>((resolve) => {
+    httpServer.listen({ port }, resolve)
   })
+
+  const url = urlForHttpServer(httpServer)
 
   // eslint-disable-next-line no-console
   console.log(`
@@ -41,4 +62,22 @@ export async function server({ schemaPath, port, mocks, resolvers }: ServerOptio
 │                                                   │
 ╰───────────────────────────────────────────────────╯
     `)
+}
+
+export function urlForHttpServer(httpServer: Server): string {
+  const { address, port } = httpServer.address() as AddressInfo
+
+  // Convert IPs which mean "any address" (IPv4 or IPv6) into localhost
+  // corresponding loopback ip. Note that the url field we're setting is
+  // primarily for consumption by our test suite. If this heuristic is wrong for
+  // your use case, explicitly specify a frontend host (in the `host` option
+  // when listening).
+  const hostname = address === '' || address === '::' ? 'localhost' : address
+
+  return format({
+    protocol: 'http',
+    hostname,
+    port,
+    pathname: '/',
+  })
 }
