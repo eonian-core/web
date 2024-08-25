@@ -37,7 +37,7 @@
     left: calc($size * -1);
   }
 
-  @media (max-width: $screen-very-small-mobile) { 
+  @media (max-width: $screen-tiny-mobile) { 
     left: calc($size * -0.2);
   }
 }
@@ -100,7 +100,7 @@
     min-width: var(--vault-mobile-column-width);
   }
 
-  @media (max-width: $screen-very-small-mobile) {
+  @media (max-width: $screen-tiny-mobile) {
     padding-left: 27.5px;
   }
 
