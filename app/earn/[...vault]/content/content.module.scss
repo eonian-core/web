@@ -53,7 +53,7 @@
 .left,
 .right,
 .infoBlocks {
-  width: 315px; // same like in header
+  width: var(--vault-mobile-column-width);
 }
 
 .middle {

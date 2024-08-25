@@ -21,7 +21,7 @@ function WalletNetworkSelector() {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button size="sm" className={styles.network}>
+        <Button size="sm" className={styles.network} variant='light'>
           {chain!.icon}
         </Button>
       </DropdownTrigger>
