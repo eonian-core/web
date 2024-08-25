@@ -1,4 +1,7 @@
-import { Buffer } from 'node:buffer'
+// eslint-disable-next-line unicorn/prefer-node-protocol
+import { Buffer } from 'buffer'
+
+// node:buffer cause build fail
 import type { ethers } from 'ethers'
 import type { DurationLike } from 'luxon'
 import { DateTime } from 'luxon'
