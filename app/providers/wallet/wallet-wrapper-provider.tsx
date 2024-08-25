@@ -8,8 +8,9 @@ import { useMonitoringContext } from '../monitoring'
 import type { ChainId } from './wrappers/helpers'
 import type { Chain, Wallet } from './wrappers/types'
 import { WalletStatus } from './wrappers/types'
-import type { SignedMessage } from './wrappers/w3o-wallet-wrapper'
-import { useAvailableChains, useConnect, useCurrentChain, useDisconnect, useLoginThroughSign, useProvider, useRecconect, useSetCurrentChain, useSignMessage, useStatus, useWallet } from './wrappers/w3o-wallet-wrapper'
+import { useAvailableChains, useConnect, useCurrentChain, useDisconnect, useProvider, useRecconect, useSetCurrentChain, useStatus, useWallet } from './wrappers/w3o-wallet-wrapper'
+import type { SignedMessage } from './wrappers/sign'
+import { useLoginThroughSign, useSignMessage } from './wrappers/sign'
 
 interface Props {
   children: React.ReactNode
