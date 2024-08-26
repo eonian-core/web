@@ -1,8 +1,15 @@
+@import '../../../../screen.scss';
+
 .container {
   display: flex;
   align-items: center;
   gap: var(--margin-300);
   position: relative;
+
+  @media (max-width: $screen-mobile) {
+    margin-top: var(--margin-400);
+    margin-bottom: var(--margin-200);
+  }
 }
 
 .priceInfo {
@@ -17,11 +24,24 @@
     margin-bottom: var(--margin-50);
     font-size: var(--font-size-200);
     color: var(--color-text-300);
+
+    display: flex;
+    align-items: center;
   }
 
   h2 {
     font-size: var(--font-size-700);
     font-weight: var(--font-bold);
+
+    @media (max-width: $screen-mobile) {
+      font-size: var(--font-size-800);
+    }
+  }
+
+  .moreInfo {
+    @media (min-width: $screen-mobile) {
+      display: none;
+    }
   }
 }
 
@@ -29,6 +49,10 @@
   display: flex;
   flex-direction: row;
   align-items: baseline;
+
+  @media (max-width: $screen-mobile) {
+    margin-top: -1rem;
+  }
 }
 
 .priceChange {

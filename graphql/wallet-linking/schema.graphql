@@ -1,0 +1,241 @@
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.This scalar is serialized to a string in ISO 8601 format and parsed from a string in ISO 8601 format.
+"""
+scalar DateTimeISO
+
+type EmailLink {
+  createdAt: DateTimeISO!
+
+  """Initiator of the create action. Ex. user, admin"""
+  createdBy: String!
+
+  """soft delete, if set then deleted"""
+  deletedAt: DateTimeISO
+
+  """Initiator of the delete action. Ex. user, admin"""
+  deltedBy: String
+  email: String!
+  id: String!
+  walletId: String
+}
+
+input EmailLinkListRelationFilter {
+  every: EmailLinkWhereInput
+  none: EmailLinkWhereInput
+  some: EmailLinkWhereInput
+}
+
+type EmailLinkPreview {
+  email: String!
+  id: String!
+  walletId: String
+}
+
+input EmailLinkWhereInput {
+  AND: [EmailLinkWhereInput!]
+  NOT: [EmailLinkWhereInput!]
+  OR: [EmailLinkWhereInput!]
+  createdBy: StringFilter
+  deltedBy: StringNullableFilter
+  email: StringFilter
+  wallet: WalletNullableRelationFilter
+  walletId: StringNullableFilter
+}
+
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+type Mutation {
+  linkEmailToWallet(email: String!): Wallet!
+}
+
+input NestedIntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+input NestedStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  isSet: Boolean
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+type Query {
+  wallet: Wallet
+  walletPreview(address: String!, chainId: Int!): WalletPreview
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+type SocialLink {
+  createdAt: DateTimeISO!
+
+  """Initiator of the create action. Ex. user, admin"""
+  createdBy: String!
+
+  """soft delete, if set then deleted"""
+  deletedAt: DateTimeISO
+
+  """Initiator of the delete action. Ex. user, admin"""
+  deltedBy: String
+  id: String!
+
+  """twitter, facebook, instagram, etc."""
+  platform: String!
+  username: String!
+  walletId: String
+}
+
+input SocialLinkListRelationFilter {
+  every: SocialLinkWhereInput
+  none: SocialLinkWhereInput
+  some: SocialLinkWhereInput
+}
+
+input SocialLinkWhereInput {
+  AND: [SocialLinkWhereInput!]
+  NOT: [SocialLinkWhereInput!]
+  OR: [SocialLinkWhereInput!]
+  createdBy: StringFilter
+  deltedBy: StringNullableFilter
+  platform: StringFilter
+  username: StringFilter
+  wallet: WalletNullableRelationFilter
+  walletId: StringNullableFilter
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  isSet: Boolean
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+type Wallet {
+  _count: WalletCount
+
+  """
+  Wallet address
+  client and network can accidentially lowercase address
+  so store it in lowercase to prevent case mismatch
+  """
+  address: String!
+
+  """Chain id, ex. 1 for Ethereum, 56 for Binance Smart Chain"""
+  chainId: Int!
+  createdAt: DateTimeISO!
+
+  """Initiator of the create action. Ex. user, admin"""
+  createdBy: String!
+
+  """soft delete, if set then deleted"""
+  deletedAt: DateTimeISO
+
+  """Initiator of the delete action. Ex. user, admin"""
+  deltedBy: String
+  emailLinks: [EmailLink!]!
+  id: String!
+  preview: WalletPreview!
+  socialLinks: [SocialLink!]!
+}
+
+type WalletCount {
+  emailLinks(where: EmailLinkWhereInput): Int!
+  socialLinks(where: SocialLinkWhereInput): Int!
+}
+
+input WalletNullableRelationFilter {
+  is: WalletWhereInput
+  isNot: WalletWhereInput
+}
+
+type WalletPreview {
+  """Wallet address"""
+  address: String!
+
+  """Chain id, ex. 1 for Ethereum, 56 for Binance Smart Chain"""
+  chainId: Int!
+  emailLink: EmailLinkPreview
+  id: String!
+}
+
+input WalletWhereInput {
+  AND: [WalletWhereInput!]
+  NOT: [WalletWhereInput!]
+  OR: [WalletWhereInput!]
+  address: StringFilter
+  chainId: IntFilter
+  createdBy: StringFilter
+  deltedBy: StringNullableFilter
+  emailLinks: EmailLinkListRelationFilter
+  socialLinks: SocialLinkListRelationFilter
+}

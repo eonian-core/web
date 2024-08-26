@@ -4,7 +4,7 @@
   width: 100%;
   display: grid;
   grid-template-rows: auto auto;
-  grid-template-columns: auto 315px;
+  grid-template-columns: auto var(--vault-mobile-column-width);
   justify-content: space-between; 
   align-content: space-between; 
 }
@@ -17,6 +17,7 @@
     justify-content: center;
     align-content: center;
     align-items: center;
+    justify-items: center;
   }
 
   // #3 - Coin action buttons

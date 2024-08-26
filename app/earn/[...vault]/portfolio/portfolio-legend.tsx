@@ -22,12 +22,12 @@ export function PortfolioLegend({ proportion, className }: Props) {
         <WalletValue {...{ walletStatus }}>{wallet}</WalletValue>
       </li>
       <li className={styles.vault}>
-        <span className={styles.label}>Vault</span>
+        <span className={styles.label}>Savings Account</span>
         <span className={styles.value}>{vault}</span>
       </li>
       <li className={styles.coverage}>
         <span className={styles.label}>Insurance Coverage</span>
-        <span className={styles.value}>100</span>
+        <span className={styles.value}>{vault}</span>
       </li>
     </ul>
   )

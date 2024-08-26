@@ -36,6 +36,10 @@ export default init({
   theme,
   wallets: getWallets(),
   chains: supportedChains,
+  connect: {
+    autoConnectLastWallet: true, // this option required to be able to properly disconnect wallet
+    removeWhereIsMyWalletWarning: true,
+  },
   accountCenter: {
     desktop: {
       enabled: false,

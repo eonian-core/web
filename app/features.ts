@@ -26,7 +26,7 @@ export const ResourcesLinks: ResourceMap = {
   Roadmap: { href: '/roadmap', label: 'Roadmap', isEnabled: showRoadmap },
   Community: { href: '/community', label: 'Community', isEnabled: showCommunity },
   Security: { href: '/security', label: 'Security', isEnabled: showSecurity },
-  Earn: { href: '/earn', label: 'Earn', isEnabled: showEarn },
+  Earn: { href: '/earn', label: 'Save', isEnabled: showEarn },
   FAQ: { href: '/faq', label: 'FAQ', isEnabled: showFaq },
   Docs: {
     href: 'https://eonian-1.gitbook.io/eonian-docs',

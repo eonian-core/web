@@ -2,8 +2,8 @@ import type { PropsWithChildren } from 'react'
 import { Suspense } from 'react'
 import TokensBody from './tokens-body'
 import styles from './offer.module.scss'
-import { useVaultsForCurrentChain } from '@/api/vaults/use-vaults'
-import { VaultsProvider } from '@/api/vaults/vaults-context'
+import { useVaultsForCurrentChain } from '@/api/protocol/vaults/use-vaults'
+import { VaultsProvider } from '@/api/protocol/vaults/vaults-context'
 import { CardSkeleton } from '@/components/vault-card/card-skeleton'
 
 export default function Tokens({ children }: PropsWithChildren) {

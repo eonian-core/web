@@ -8,7 +8,7 @@ import { getYearlyROI } from '@/finances/roi'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
-import { useVaultsContext } from '@/api/vaults/vaults-context'
+import { useVaultsContext } from '@/api/protocol/vaults/vaults-context'
 import type { TokenSymbol } from '@/types'
 import { getYearlyApy } from '@/finances/vault-apy'
 

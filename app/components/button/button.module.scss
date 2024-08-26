@@ -110,6 +110,11 @@
 
   border-radius: var(--border-radius-450);
   font-size: var(--font-size-200);
+  &:not(.bordered) {
+    &:after {
+      left: -100%;
+    }
+  }
 }
 
 .md {
@@ -180,7 +185,7 @@
   background: linear-gradient(
     112deg,     
     hsl(308, 27%, 35%) 0%, 
-    hsl(232, 69%, 37%) 100%);
+    hsl(232, 69%, 37%) 100%) !important; // override global.scss that can get higher specificity
   color: var(--color-text-200);
 }
 

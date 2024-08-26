@@ -1,6 +1,6 @@
 import { calculateVaultAPY } from './apy'
 import type { Vault } from '@/api'
-import { getAssetSymbol } from '@/api/vaults/get-asset-symbol'
+import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 import type { TokenSymbol } from '@/types'
 
 /**
