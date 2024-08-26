@@ -5,7 +5,7 @@ import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import type { EmailLinkPreview } from '@/api/wallet-linking/gql/graphql'
-import { isEmailLinked, useSuspenseCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
+import { useSuspenseCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
 
 import Button from '@/components/button/button'
 import { useWalletLinkingContext } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
