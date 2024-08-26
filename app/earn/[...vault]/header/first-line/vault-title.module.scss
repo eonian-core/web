@@ -1,12 +1,59 @@
+@import '../../../../screen.scss';
+
 .container {
   display: flex;
   flex-direction: column;
   gap: var(--margin-400);
+
+  @media (max-width: $screen-mobile) {
+    align-items: center;
+    gap: var(--margin-200);
+  }
+}
+
+.backLink {
+  $size: 40px;
+
+  position: absolute;
+  top: 50%;
+  left: calc($size * -1);
+
+  transform: translateY(-50%);
+  width: $size;
+  height: $size;
+
+  & > svg {
+    width: $size;
+    height: $size;
+  
+    transform: rotateZ(180deg);
+  }
+
+  @media (min-width: $screen-ultra-wide) {
+    left: calc($size * -1.5);
+  }
+
+  @media (max-width: $screen-mobile) { 
+    left: calc($size * -1);
+  }
+
+  @media (max-width: $screen-tiny-mobile) { 
+    left: calc($size * -0.2);
+  }
+}
+
+.links {
+  display: inline-flex;
+  padding-top: 2px;
+  align-items: center;
+  font-size: var(--font-size-100);
+  gap: var(--margin-100);
 }
 
 .tags {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--margin-200);
 
   button  {
@@ -15,10 +62,55 @@
   }
 }
 
+.tagsCntainer {
+
+  // Place tags in one scrollable line (for mobile)
+  @media (max-width: $screen-mobile) {
+    overflow: hidden;
+    max-width: 100vw;
+    position: relative;
+    margin-bottom: var(--margin-100);
+
+    &::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      top: 0.2rem;
+      right: 0;
+      bottom: 0.1rem;
+      width: 2rem;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0), color-mix(in srgb, var(--color-token) 50%, var(--color-background-start)) 70%);
+    }
+
+    .tags {
+      overflow-x: scroll;
+      scrollbar-width: none;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      padding: 0 calc((100vw - var(--vault-mobile-column-width)) / 2);
+    }
+  }
+}
+
 .info {
   display: flex;
   align-items: center;
   gap: var(--margin-200);
+  position: relative;
+
+  // To fit "Back link"
+  @media (max-width: $screen-ultra-wide) {
+    margin-left: 27.5px;
+  }
+
+  @media (max-width: $screen-mobile) { 
+    margin-left: 0;
+    min-width: var(--vault-mobile-column-width);
+  }
+
+  @media (max-width: $screen-tiny-mobile) {
+    padding-left: 27.5px;
+  }
 
   .title {
     display: flex;

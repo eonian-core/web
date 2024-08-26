@@ -1,6 +1,8 @@
 import * as ethers from 'ethers'
 import type { useSetChain } from '@web3-onboard/react'
+import type { Chain as W3OChain } from '@web3-onboard/common'
 import type { ConnectOptions, DisconnectOptions, EIP1193Provider, WalletState } from '@web3-onboard/core'
+import { useCallback, useEffect, useMemo } from 'react'
 import { defaultChain } from '../../../web3-onboard'
 import type { Chain, Wallet } from './types'
 import { WalletStatus } from './types'
@@ -16,7 +18,10 @@ import {
 type ChainArgs = ReturnType<typeof useSetChain>
 
 const iconSize = 20
-const cachedIcons: Record<string, string> = {}
+
+export function useWallet(onboardWallet: WalletState | null) {
+  return useMemo(() => getWallet(onboardWallet), [onboardWallet])
+}
 
 /**
  * Returns the mapped "Web3Onboard" wallet, by default using the first active account.
@@ -30,8 +35,12 @@ export function getWallet(onboardWallet: WalletState | null): Wallet | null {
   return {
     label: onboardWallet.label,
     address: account.address,
-    iconImageSrc: getWalletIconSrc(onboardWallet.icon),
+    iconImageSrc: onboardWallet.icon,
   }
+}
+
+export function useStatus(isConnected: boolean, isConnecting: boolean) {
+  return useMemo(() => getStatus(isConnected, isConnecting), [isConnected, isConnecting])
 }
 
 /**
@@ -42,11 +51,17 @@ export function getStatus(isConnected: boolean, isConnecting: boolean): WalletSt
   if (isConnected)
     return WalletStatus.CONNECTED
 
-  else if (isConnecting)
+  if (isConnecting)
     return WalletStatus.CONNECTING
 
-  else
-    return WalletStatus.NOT_CONNECTED
+  return WalletStatus.NOT_CONNECTED
+}
+
+export function useAvailableChains(onboardChains: W3OChain[]) {
+  return useMemo(
+    () => getAvailableChains(onboardChains.length === 0 ? [defaultChain as W3OChain] : onboardChains),
+    [onboardChains],
+  )
 }
 
 /**
@@ -67,6 +82,13 @@ export function getAvailableChains(onboardChains: ChainArgs[0]['chains']): Chain
   })
 }
 
+export function useCurrentChain(chains: Chain[], chainId?: string) {
+  return useMemo(() =>
+    getCurrentChain(chains, chainId),
+  [chains, chainId],
+  )
+}
+
 /**
  * Finds and returns the currently active chain.
  * @returns Object of the selected chain.
@@ -79,12 +101,29 @@ export function getCurrentChain(chains: Chain[], chainId?: string): Chain | null
   return chains.find(chain => chain.id === id) ?? getDummyChain(id, iconSize)
 }
 
+export function useProvider(provider?: EIP1193Provider): ethers.BrowserProvider | null {
+  return useMemo(() => (provider ? getProvider(provider) : null), [provider])
+}
+
 /**
  * Returns ethers provider.
  * @param provider - The web3-onboard's provider.
  */
 export function getProvider(provider: EIP1193Provider): ethers.BrowserProvider {
   return new ethers.BrowserProvider(provider, 'any')
+}
+
+export function useConnect(chain: Chain | null,
+  chains: Chain[],
+  setOnboardChain: ChainArgs[1],
+  onboardConnect: (options?: ConnectOptions) => Promise<WalletState[]>) {
+  return useCallback(async () => {
+    const success = await connect(onboardConnect)
+    if (success)
+      await autoSelectProperChain(chain, chains, setOnboardChain)
+  },
+  [chain, chains, onboardConnect, setOnboardChain],
+  )
 }
 
 /**
@@ -121,6 +160,13 @@ export async function autoSelectProperChain(chain: Chain | null, chains: Chain[]
   await setCurrentChain(chainId, setOnboardChain)
 }
 
+export function useRecconect(onboardConnect: (options?: ConnectOptions) => Promise<WalletState[]>) {
+  return useEffect(() => {
+    void reconnect(onboardConnect)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+}
+
 /**
  * Reconnects to the specified wallet.
  * @param onboardConnect Wallet connect function.
@@ -141,15 +187,36 @@ export async function reconnect(onboardConnect: (options?: ConnectOptions) => Pr
   })
 }
 
+export function useDisconnect(wallet: Wallet | null,
+  onboardDisconnect: (wallet: DisconnectOptions) => Promise<WalletState[]>) {
+  return useCallback(async () => {
+    if (wallet)
+      await disconnect(wallet?.label, onboardDisconnect)
+  },
+  [onboardDisconnect, wallet, wallet?.label],
+  )
+}
+
 /**
  * Disconnects from the connected wallet.
  */
-export async function disconnect(walletLabel: string | null,
-  onboardDisconnect: (wallet: DisconnectOptions) => Promise<WalletState[]>): Promise<void> {
+export async function disconnect(
+  walletLabel: string | null,
+  onboardDisconnect: (wallet: DisconnectOptions) => Promise<WalletState[]>,
+): Promise<void> {
   if (walletLabel)
     await onboardDisconnect({ label: walletLabel })
 
   WalletPersistance.removeWalletlabel()
+}
+
+export function useSetCurrentChain(setOnboardChain: ChainArgs[1]) {
+  return useCallback(
+    async (chainId: ChainId) => {
+      await setCurrentChain(chainId, setOnboardChain)
+    },
+    [setOnboardChain],
+  )
 }
 
 /**
@@ -160,15 +227,6 @@ export async function setCurrentChain(chainId: ChainId, setOnboardChain: ChainAr
   const success = await setOnboardChain({ chainId: ChainId.toHex(chainId) })
   if (success)
     WalletPersistance.saveLastActiveChain(chainId)
-}
-
-function getWalletIconSrc(iconContent: string) {
-  const cachedIconSrc = cachedIcons[iconContent]
-  if (cachedIconSrc)
-    return cachedIconSrc
-
-  const svg = new Blob([iconContent], { type: 'image/svg+xml' })
-  return (cachedIcons[iconContent] = URL.createObjectURL(svg))
 }
 
 export function getDefaultChain(chains: Chain[]): Chain {

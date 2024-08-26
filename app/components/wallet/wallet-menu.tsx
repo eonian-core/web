@@ -10,6 +10,7 @@ import { ULTRA_WIDE_SCREEN } from '../resize-hooks/screens'
 import { useWindowSize } from '../resize-hooks/useWindowSize'
 import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-provider'
 import { isAuthEnabled, useLogout } from '../../providers/auth'
+import styles from './wallet-menu.module.scss'
 
 interface ItemType extends MenuItemProps {
   key: string
@@ -103,7 +104,7 @@ const WalletMenu: React.FC<Props> = ({ children }) => {
   return (
     <Dropdown placement={menuPlacement}>
       <DropdownTrigger>
-        <Button size="sm">
+        <Button size="sm" variant="bordered" className={styles.walletButton} >
           {children}
         </Button>
       </DropdownTrigger>

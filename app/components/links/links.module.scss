@@ -29,6 +29,7 @@
   align-items: center;
   white-space: nowrap;
 
+
   .icon {
     display: flex;
     margin-right: var(--margin-100);
@@ -36,7 +37,10 @@
 
   .iconEnd {
     margin-right: 0;
-    margin-left: var(--margin-100);
+  }
+
+  svg {
+    display: inline;
   }
 }
 

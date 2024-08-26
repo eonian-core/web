@@ -1,21 +1,22 @@
 'use client'
 
 import { Web3OnboardProvider, useConnectWallet, useSetChain } from '@web3-onboard/react'
-import type { Chain as W3OChain } from '@web3-onboard/common'
 import type { ethers } from 'ethers'
 import React, { useContext, useEffect } from 'react'
-import web3Onboard, { defaultChain } from '../../web3-onboard'
+import web3Onboard from '../../web3-onboard'
 import { useMonitoringContext } from '../monitoring'
 import type { ChainId } from './wrappers/helpers'
 import type { Chain, Wallet } from './wrappers/types'
 import { WalletStatus } from './wrappers/types'
-import * as W3O from './wrappers/w3o-wallet-wrapper'
+import { useAvailableChains, useConnect, useCurrentChain, useDisconnect, useProvider, useRecconect, useSetCurrentChain, useStatus, useWallet } from './wrappers/w3o-wallet-wrapper'
+import type { SignedMessage } from './wrappers/sign'
+import { useLoginThroughSign, useSignMessage } from './wrappers/sign'
 
 interface Props {
   children: React.ReactNode
 }
 
-interface WalletWrapperContextValue {
+export interface WalletWrapperContextValue {
   wallet: Wallet | null
   status: WalletStatus
   chain: Chain | null
@@ -24,6 +25,9 @@ interface WalletWrapperContextValue {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   setCurrentChain: (chainId: ChainId) => Promise<void>
+  signMessage: (chainId: ChainId, statement: string, nonce: string) => Promise<SignedMessage | null>
+  loginThroughSign: () => Promise<string>
+  loggingIn: boolean
 }
 
 export const WalletWrapperContext = React.createContext<WalletWrapperContextValue>({
@@ -35,6 +39,9 @@ export const WalletWrapperContext = React.createContext<WalletWrapperContextValu
   connect: () => Promise.resolve(),
   disconnect: () => Promise.resolve(),
   setCurrentChain: () => Promise.resolve(),
+  signMessage: () => Promise.resolve(null),
+  loginThroughSign: () => new Promise((resolve, reject) => { reject(new Error('Not connected')) }),
+  loggingIn: false,
 })
 
 /**
@@ -42,54 +49,25 @@ export const WalletWrapperContext = React.createContext<WalletWrapperContextValu
  * Used as a wrapper for the currently used web3 library, which will allow us to easily and painlessly switch to a new library in the future (if we want to).
  */
 const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
-  const useConnectWalletOptions = useConnectWallet()
-  const { identify } = useMonitoringContext()
-  const [{ wallet: onboardWallet, connecting }, onboardConnect, onboardDisconnect] = useConnectWalletOptions
+  const [{ wallet: onboardWallet, connecting }, onboardConnect, onboardDisconnect] = useConnectWallet()
+  const provider = useProvider(onboardWallet?.provider)
 
-  const useSetChainOptions = useSetChain()
-  const [{ chains: onboardChains, connectedChain }, setOnboardChain] = useSetChainOptions
-
-  const wallet = React.useMemo(() => W3O.getWallet(onboardWallet), [onboardWallet])
-
+  const wallet = useWallet(onboardWallet)
   const isWalletConnected = !!wallet
+  const status = useStatus(isWalletConnected, connecting)
 
-  const status = React.useMemo(() => W3O.getStatus(isWalletConnected, connecting), [isWalletConnected, connecting])
+  const disconnect = useDisconnect(wallet, onboardDisconnect)
 
-  const chains = React.useMemo(
-    () => W3O.getAvailableChains(onboardChains.length === 0 ? [defaultChain as W3OChain] : onboardChains),
-    [onboardChains],
-  )
+  const [{ chains: onboardChains, connectedChain }, setOnboardChain] = useSetChain()
+  const chains = useAvailableChains(onboardChains)
+  const chain = useCurrentChain(chains, connectedChain?.id)
 
-  const chain = React.useMemo(() => W3O.getCurrentChain(chains, connectedChain?.id), [connectedChain?.id, chains])
+  const connect = useConnect(chain, chains, setOnboardChain, onboardConnect)
+  const setCurrentChain = useSetCurrentChain(setOnboardChain)
 
-  const provider = React.useMemo(
-    () => (onboardWallet?.provider ? W3O.getProvider(onboardWallet?.provider) : null),
-    [onboardWallet?.provider],
-  )
+  useRecconect(onboardConnect)
 
-  const connect = React.useCallback(async () => {
-    const success = await W3O.connect(onboardConnect)
-    if (success)
-      await W3O.autoSelectProperChain(chain, chains, setOnboardChain)
-  }, [chain, chains, onboardConnect, setOnboardChain])
-
-  const disconnect = React.useCallback(async () => {
-    if (wallet)
-      await W3O.disconnect(wallet.label, onboardDisconnect)
-  }, [onboardDisconnect, wallet])
-
-  const setCurrentChain = React.useCallback(
-    async (chainId: ChainId) => {
-      await W3O.setCurrentChain(chainId, setOnboardChain)
-    },
-    [setOnboardChain],
-  )
-
-  useEffect(() => {
-    void W3O.reconnect(onboardConnect)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
+  const { identify } = useMonitoringContext()
   useEffect(() => {
     if (!wallet)
       return
@@ -98,7 +76,10 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
     identify(address, { address, label })
   }, [identify, wallet])
 
-  const value: WalletWrapperContextValue = {
+  const signMessage = useSignMessage(provider)
+  const [loginThroughSign, loggingIn] = useLoginThroughSign(provider, chain?.id)
+
+  return <WalletWrapperContext.Provider value={{
     wallet,
     status,
     chain,
@@ -107,9 +88,10 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
     connect,
     disconnect,
     setCurrentChain,
-  }
-
-  return <WalletWrapperContext.Provider value={value}>{children}</WalletWrapperContext.Provider>
+    signMessage,
+    loginThroughSign,
+    loggingIn,
+  }}>{children}</WalletWrapperContext.Provider>
 }
 
 export const WalletWrapperProvider: React.FC<Props> = ({ children }) => (

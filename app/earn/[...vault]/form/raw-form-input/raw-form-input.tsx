@@ -19,17 +19,17 @@ export function RawFormInput({ label, preview, children: value, inputStart, head
       </div>
       <div className={styles.content}>
         <div className={styles.inputStart}>{inputStart}</div>
-        {
-          preview
-            ? (<div className={styles.input} {...restProps}>{value}</div>)
-            : (
-            <input className={styles.input} value={value as string} autoComplete="off" {...restProps} />
-              )
-        }
+        {preview
+          ? (
+          <div className={styles.input} {...restProps}>
+            {value}
+          </div>
+            )
+          : (
+          <input className={styles.input} value={value as string} autoComplete="off" {...restProps} />
+            )}
 
-        <div className={styles.description}>
-          {price}
-        </div>
+        <div className={styles.description}>{price}</div>
       </div>
     </div>
   )

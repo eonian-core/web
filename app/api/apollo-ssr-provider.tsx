@@ -5,8 +5,8 @@ import {
 } from '@apollo/experimental-nextjs-app-support/ssr'
 import type { PropsWithChildren } from 'react'
 import type { ApolloClient } from '@apollo/client'
-import { makeHttpLink } from './apollo.clients'
-import { scalarTypePolicies } from './gql/graphql'
+import { makeProtocolEndpoint } from './apollo.endpoints'
+import { scalarTypePolicies } from './protocol/gql/graphql'
 import { useChainContext } from '@/shared/web3/chain-context'
 import { ChainId } from '@/providers/wallet/wrappers/helpers'
 
@@ -14,7 +14,7 @@ function makeSsrClientFactory(chainId: ChainId): () => ApolloClient<any> {
   return () => {
     return new NextSSRApolloClient({
       cache: new NextSSRInMemoryCache({ typePolicies: scalarTypePolicies }),
-      link: makeHttpLink(chainId),
+      link: makeProtocolEndpoint(chainId),
     })
   }
 }

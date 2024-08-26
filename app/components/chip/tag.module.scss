@@ -1,5 +1,6 @@
 .tag {
-    border-color: var(--color-text-400);
-    border-width: 1px;
-    height: var(--font-size-600);
-  }
+  // !important is required due to conflict with tw
+  border-color: var(--color-text-400) !important;
+  border-width: 1px !important;
+  height: var(--font-size-600) !important;
+}

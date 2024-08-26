@@ -1,5 +1,6 @@
 // Media
 // css variables not work in media queries https://bholmes.dev/blog/alternative-to-css-variable-media-queries/
+$screen-tiny-mobile: 375px; // Iphone SE
 $screen-small-mobile: 430px;
 $screen-mobile: 640px;
 $screen-tablet: 768px; // or big phones
