@@ -32,6 +32,14 @@
   @media (min-width: $screen-ultra-wide) {
     left: calc($size * -1.5);
   }
+
+  @media (max-width: $screen-mobile) { 
+    left: calc($size * -1);
+  }
+
+  @media (max-width: $screen-tiny-mobile) { 
+    left: calc($size * -0.2);
+  }
 }
 
 .links {
@@ -55,13 +63,13 @@
 }
 
 .tagsCntainer {
-  --header-width: 315px;
 
   // Place tags in one scrollable line (for mobile)
   @media (max-width: $screen-mobile) {
     overflow: hidden;
     max-width: 100vw;
     position: relative;
+    margin-bottom: var(--margin-100);
 
     &::after {
       content: "";
@@ -79,7 +87,7 @@
       scrollbar-width: none;
       flex-direction: row;
       flex-wrap: nowrap;
-      padding: 0 calc((100vw - var(--header-width)) / 2);
+      padding: 0 calc((100vw - var(--vault-mobile-column-width)) / 2);
     }
   }
 }
@@ -91,8 +99,17 @@
   position: relative;
 
   // To fit "Back link"
-  @media (min-width: $screen-mobile) and (max-width: $screen-ultra-wide) {
+  @media (max-width: $screen-ultra-wide) {
     margin-left: 27.5px;
+  }
+
+  @media (max-width: $screen-mobile) { 
+    margin-left: 0;
+    min-width: var(--vault-mobile-column-width);
+  }
+
+  @media (max-width: $screen-tiny-mobile) {
+    padding-left: 27.5px;
   }
 
   .title {

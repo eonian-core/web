@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import type { FormInputs } from './link-recovery-email-form'
 import { LinkRecoveryEmailForm } from './link-recovery-email-form'
 import { useDelay } from './use-is-processing'
-import { useLinkEmailToWallet } from '@/api/wallet-linking/wallet/use-link-email-to-wallet'
+import { useLinkEmail } from './use-link-email'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 
@@ -13,16 +13,15 @@ export interface LinkRecoveryEmailFlowProps {
 }
 
 export function LinkRecoveryEmailFlow({ close }: LinkRecoveryEmailFlowProps) {
-  const { wallet, chain, loggingIn, loginThroughSign } = useWalletWrapperContext()
+  const { wallet, chain, loggingIn } = useWalletWrapperContext()
   const address = wallet?.address
   const chainId = chain?.id
   const isWalletConnected = !!(address && chainId)
 
-  const [linkEmail, { data, loading, error }] = useLinkEmailToWallet()
+  const [signAndLink, { data, loading, error }] = useLinkEmail()
 
   const onSubmit = useSubmit({
-    linkEmail,
-    loginThroughSign,
+    signAndLink,
     isWalletConnected,
     address,
     chainId,
@@ -51,8 +50,7 @@ export function LinkRecoveryEmailFlow({ close }: LinkRecoveryEmailFlowProps) {
 }
 
 export interface SubmitOptions {
-  linkEmail: ReturnType<typeof useLinkEmailToWallet>[0]
-  loginThroughSign: () => Promise<string>
+  signAndLink: ReturnType<typeof useLinkEmail>[0]
   isWalletConnected: boolean
   address?: string
   chainId?: ChainId
@@ -62,8 +60,7 @@ function useSubmit({
   isWalletConnected,
   address,
   chainId,
-  loginThroughSign,
-  linkEmail,
+  signAndLink,
 }: SubmitOptions) {
   return useCallback(async ({ email }: FormInputs) => {
     if (!isWalletConnected || !address || !chainId) {
@@ -71,24 +68,6 @@ function useSubmit({
       return
     }
 
-    const signature = await loginThroughSign()
-
-    // eslint-disable-next-line no-console
-    console.log('onSubmit', email, signature)
-
-    await linkEmail({
-      variables: {
-        input: {
-          address,
-          chainId,
-          link: { email },
-        },
-      },
-      context: {
-        headers: {
-          'X-Signature': signature,
-        },
-      },
-    })
-  }, [linkEmail, isWalletConnected, address, chainId, loginThroughSign])
+    await signAndLink({ address, chainId, email })
+  }, [signAndLink, isWalletConnected, address, chainId])
 }

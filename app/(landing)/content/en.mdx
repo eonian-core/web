@@ -6,7 +6,9 @@
     All in the first decentralized savings account.
 
     <HeroButtonGroup>
-        <MainButton />
+        <HeroButton href="/earn" bold>
+          Save
+        </HeroButton>
 
         <HeroButton href="https://discord.gg/8mcUPPYJmj" bordered icon={<IconDiscord />}>
             Ask our Community
@@ -146,43 +148,18 @@
 
     <Tokens>
         <VaultCard symbol="ETH" state='in-development'>
-          <TokenAction href="#get-exclusive-to-savings-account">Join the Waitlist</TokenAction>
-          <FrictionRemover>Coming soon</FrictionRemover>
+          <VaultAction symbol="ETH" />
         </VaultCard>
 
         <VaultCard symbol="BTCB" state='in-development'>
-          <TokenAction href="#get-exclusive-to-savings-account">Join the Waitlist</TokenAction>
-          <FrictionRemover>Coming soon</FrictionRemover>
+          <VaultAction symbol="BTCB" />
         </VaultCard>
 
         <VaultCard symbol="USDT" state='in-development'>
-          <TokenAction href="#get-exclusive-to-savings-account">Join the Waitlist</TokenAction>
-          <FrictionRemover>Coming soon</FrictionRemover>
+          <VaultAction symbol="USDT" />
         </VaultCard>
     </Tokens>
 </Offer>
-
-<InDevelopment>
-    ## Get Exclusive <Mbr>Early Access</Mbr> to Savings Account
-
-    Join the waitlist to receive access sooner. 
-    Only 100 spots are left for the beta test. 
-    We will notify you when your turn will come.
-    
-    <WaitList frictionRemover={
-        <span>Receive higher returns as a beta tester reward.</span>      
-    }>
-        ### Thank You for Joining!
-
-        You are now in our queue for early access. 
-        you can open the dashboard to see your place in the queue. 
-        Share your unique link with friends to move up in the queue and gain access sooner.
-
-        <Target isExternal={false}>Open Dashboard</Target>
-          
-    </WaitList>
-
-</InDevelopment>
 
 <SocialProof>
   <SocialProofHeader>

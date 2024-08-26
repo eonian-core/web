@@ -7,7 +7,6 @@ import { store } from '../store/store'
 import ThemesProvider from './themes'
 import { WalletWrapperProvider } from './wallet/wallet-wrapper-provider'
 import { AuthProvider } from './auth'
-import { WaitlistProvider } from './waitlist'
 import { MonitoringProvider } from './monitoring'
 import { ChainProvider } from '@/shared/web3/chain-context'
 import { ApolloSsrProvider } from '@/api/apollo-ssr-provider'
@@ -23,7 +22,6 @@ export default function Providers({ children }: Props) {
       <ThemesProvider>
         <ReduxProvider store={store}>
           <WalletWrapperProvider>
-            <WaitlistProvider>
               <AuthProvider>
                 <ChainProvider>
                   <ApolloSsrProvider>
@@ -31,7 +29,6 @@ export default function Providers({ children }: Props) {
                   </ApolloSsrProvider>
                 </ChainProvider>
               </AuthProvider>
-            </WaitlistProvider>
           </WalletWrapperProvider>
         </ReduxProvider>
       </ThemesProvider>

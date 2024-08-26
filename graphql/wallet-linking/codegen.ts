@@ -2,9 +2,12 @@ import type { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: 'graphql/wallet-linking/schema.graphql',
+  schema: 'https://wallet-linker.fly.dev/graphql',
   documents: 'app/api/wallet-linking/**/*.{ts,tsx}',
   generates: {
+    'graphql/wallet-linking/schema.graphql': {
+      plugins: ['schema-ast'],
+    },
     'app/api/wallet-linking/gql/': {
       preset: 'client',
       config: {

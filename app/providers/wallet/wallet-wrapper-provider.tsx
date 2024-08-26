@@ -8,7 +8,9 @@ import { useMonitoringContext } from '../monitoring'
 import type { ChainId } from './wrappers/helpers'
 import type { Chain, Wallet } from './wrappers/types'
 import { WalletStatus } from './wrappers/types'
-import { useAvailableChains, useConnect, useCurrentChain, useDisconnect, useLoginThroughSign, useProvider, useRecconect, useSetCurrentChain, useSignMessage, useStatus, useWallet } from './wrappers/w3o-wallet-wrapper'
+import { useAvailableChains, useConnect, useCurrentChain, useDisconnect, useProvider, useRecconect, useSetCurrentChain, useStatus, useWallet } from './wrappers/w3o-wallet-wrapper'
+import type { SignedMessage } from './wrappers/sign'
+import { useLoginThroughSign, useSignMessage } from './wrappers/sign'
 
 interface Props {
   children: React.ReactNode
@@ -23,7 +25,7 @@ export interface WalletWrapperContextValue {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   setCurrentChain: (chainId: ChainId) => Promise<void>
-  signMessage: (chainId: ChainId, statement: string) => Promise<string | null>
+  signMessage: (chainId: ChainId, statement: string, nonce: string) => Promise<SignedMessage | null>
   loginThroughSign: () => Promise<string>
   loggingIn: boolean
 }

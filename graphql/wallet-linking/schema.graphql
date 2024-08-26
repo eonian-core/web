@@ -1,182 +1,241 @@
 """
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
+"""
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.This scalar is serialized to a string in ISO 8601 format and parsed from a string in ISO 8601 format.
 """
 scalar DateTimeISO
 
-"""
-Base meta information about the entity, support soft delete
-"""
-interface BaseEntity {
-  id: String!
+type EmailLink {
   createdAt: DateTimeISO!
-  """
-  Initiator of the create action. Ex. user, admin
-  """
+
+  """Initiator of the create action. Ex. user, admin"""
   createdBy: String!
-  """
-  soft delete, if set then deleted
-  """
+
+  """soft delete, if set then deleted"""
   deletedAt: DateTimeISO
-  """
-  Initiator of the delete action. Ex. user, admin
-  """
-  deletedBy: String
-}
 
-type Wallet implements BaseEntity {
-  id: String!
-  createdAt: DateTimeISO!
-  createdBy: String!
-  deletedAt: DateTimeISO
-  deletedBy: String
-
-  address: String!
-  """
-  Chain id, ex. 1 for Ethereum, 56 for Binance Smart Chain
-  """
-  chainId: Int!
-  links: [Link!]!
-
-  preview: WalletPreview!
-}
-
-union LinkPreview = EmailLinkPreview | SocialLinkPreview
-
-type WalletPreview {
-  id: String!
-  chainId: Int!
-  address: String!
-  """
-  If not empty, then the wallet is linked to an email or social account
-  Will return only last linked account
-  """
-  link: LinkPreview
-}
-
-union LinkPayload = EmailLink | SocialLink
-
-type Link implements BaseEntity {
-  id: String!
-  createdAt: DateTimeISO!
-  createdBy: String!
-  deletedAt: DateTimeISO
-  deletedBy: String
-
-  wallet: Wallet!
-  walletId: String!
-  payload: LinkPayload!
-}
-
-type EmailLink implements BaseEntity {
-  id: String!
-  createdAt: DateTimeISO!
-  createdBy: String!
-  deletedAt: DateTimeISO
-  deletedBy: String
-
+  """Initiator of the delete action. Ex. user, admin"""
+  deltedBy: String
   email: String!
+  id: String!
+  walletId: String
+}
+
+input EmailLinkListRelationFilter {
+  every: EmailLinkWhereInput
+  none: EmailLinkWhereInput
+  some: EmailLinkWhereInput
 }
 
 type EmailLinkPreview {
-  id: String!
-  """
-  Masked preview of email, ex. j***@g***.com 
-  """
   email: String!
-} 
-
-type SocialLink implements BaseEntity {
   id: String!
-  createdAt: DateTimeISO!
-  createdBy: String!
-  deletedAt: DateTimeISO
-  deletedBy: String
-
-  """
-  twitter, facebook, instagram, etc.
-  """
-  platform: String!
-  username: String!
+  walletId: String
 }
 
-type SocialLinkPreview {
-  id: String!
-  platform: String!
-  """
-  Masked preview of username, ex. @joh*** 
-  """
-  username: String!
+input EmailLinkWhereInput {
+  AND: [EmailLinkWhereInput!]
+  NOT: [EmailLinkWhereInput!]
+  OR: [EmailLinkWhereInput!]
+  createdBy: StringFilter
+  deltedBy: StringNullableFilter
+  email: StringFilter
+  wallet: WalletNullableRelationFilter
+  walletId: StringNullableFilter
 }
 
-type Query {
-  """
-  Only one route that not require authentication
-  Not inlcude deleted wallets and all data is masked
-  """
-  getWalletPreview(address: String!, chainId: Int!): WalletPreview
-
-  """
-  Requires authentication header with wallet address signature
-  """
-  getWallet(address: String!, chainId: Int!): Wallet
-  """
-  Requires admin authentication header
-  """
-  getWallets(includeDeleted: Boolean = false): [Wallet!]!
-
-  getLinks(includeDeleted: Boolean = false): [Link!]!
-  getEmailLinks(includeDeleted: Boolean = false): [EmailLink!]!
-  getSocialLinks(includeDeleted: Boolean = false): [SocialLink!]!
-}
-
-input LinkEmailToWalletInput {
-    chainId: Int!
-    address: String!
-    link: EmailLinkInput!
-}
-
-input EmailLinkInput {
-    email: String!
-}
-
-input LinkSocialToWalletInput {
-    chainId: Int!
-    address: String!
-    link: SocialLinkInput!
-}
-
-input LinkSocialToWalletInputPayload {
-    chainId: Int!
-    address: String!
-    link: SocialLinkInput!
-}
-
-input SocialLinkInput {
-    platform: String!
-    username: String!
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
 }
 
 type Mutation {
-  """
-  Link wallet to email.
-  If wallet not exist then will create new wallet
-  """
-  linkEmailToWallet(input: LinkEmailToWalletInput!): Wallet! 
-
-  """
-  Link wallet to social.
-  If wallet not exist then will create new wallet
-  """
-  linkSocialToWallet(input: LinkSocialToWalletInput!): Wallet! 
-  """
-  Unlink wallet from email
-  Apply soft delete strategy for the link
-  """
-  deleteEmailLink(input: LinkEmailToWalletInput!): Link! 
-  """
-  Unlink wallet from social
-  Apply soft delete strategy for the link
-  """
-  deleteSocialLink(input: LinkSocialToWalletInput!): Link!
+  linkEmailToWallet(email: String!): Wallet!
 }
 
+input NestedIntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+input NestedStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  isSet: Boolean
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+type Query {
+  wallet: Wallet
+  walletPreview(address: String!, chainId: Int!): WalletPreview
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+type SocialLink {
+  createdAt: DateTimeISO!
+
+  """Initiator of the create action. Ex. user, admin"""
+  createdBy: String!
+
+  """soft delete, if set then deleted"""
+  deletedAt: DateTimeISO
+
+  """Initiator of the delete action. Ex. user, admin"""
+  deltedBy: String
+  id: String!
+
+  """twitter, facebook, instagram, etc."""
+  platform: String!
+  username: String!
+  walletId: String
+}
+
+input SocialLinkListRelationFilter {
+  every: SocialLinkWhereInput
+  none: SocialLinkWhereInput
+  some: SocialLinkWhereInput
+}
+
+input SocialLinkWhereInput {
+  AND: [SocialLinkWhereInput!]
+  NOT: [SocialLinkWhereInput!]
+  OR: [SocialLinkWhereInput!]
+  createdBy: StringFilter
+  deltedBy: StringNullableFilter
+  platform: StringFilter
+  username: StringFilter
+  wallet: WalletNullableRelationFilter
+  walletId: StringNullableFilter
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  isSet: Boolean
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+type Wallet {
+  _count: WalletCount
+
+  """
+  Wallet address
+  client and network can accidentially lowercase address
+  so store it in lowercase to prevent case mismatch
+  """
+  address: String!
+
+  """Chain id, ex. 1 for Ethereum, 56 for Binance Smart Chain"""
+  chainId: Int!
+  createdAt: DateTimeISO!
+
+  """Initiator of the create action. Ex. user, admin"""
+  createdBy: String!
+
+  """soft delete, if set then deleted"""
+  deletedAt: DateTimeISO
+
+  """Initiator of the delete action. Ex. user, admin"""
+  deltedBy: String
+  emailLinks: [EmailLink!]!
+  id: String!
+  preview: WalletPreview!
+  socialLinks: [SocialLink!]!
+}
+
+type WalletCount {
+  emailLinks(where: EmailLinkWhereInput): Int!
+  socialLinks(where: SocialLinkWhereInput): Int!
+}
+
+input WalletNullableRelationFilter {
+  is: WalletWhereInput
+  isNot: WalletWhereInput
+}
+
+type WalletPreview {
+  """Wallet address"""
+  address: String!
+
+  """Chain id, ex. 1 for Ethereum, 56 for Binance Smart Chain"""
+  chainId: Int!
+  emailLink: EmailLinkPreview
+  id: String!
+}
+
+input WalletWhereInput {
+  AND: [WalletWhereInput!]
+  NOT: [WalletWhereInput!]
+  OR: [WalletWhereInput!]
+  address: StringFilter
+  chainId: IntFilter
+  createdBy: StringFilter
+  deltedBy: StringNullableFilter
+  emailLinks: EmailLinkListRelationFilter
+  socialLinks: SocialLinkListRelationFilter
+}
