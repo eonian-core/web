@@ -185,7 +185,7 @@
   background: linear-gradient(
     112deg,     
     hsl(308, 27%, 35%) 0%, 
-    hsl(232, 69%, 37%) 100%);
+    hsl(232, 69%, 37%) 100%) !important; // override global.scss that can get higher specificity
   color: var(--color-text-200);
 }
 
