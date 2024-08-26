@@ -4,7 +4,7 @@ import IconEmail from '@/components/icons/icon-email'
 import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
-import type { EmailLinkPreview, LinkPreview, SocialLinkPreview } from '@/api/wallet-linking/gql/graphql'
+import type { EmailLinkPreview } from '@/api/wallet-linking/gql/graphql'
 import { isEmailLinked, useSuspenseCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
 
 import Button from '@/components/button/button'
@@ -53,7 +53,7 @@ export interface LinkedWalletInsuranceProps {
 function LinkedWalletInsurance({ address, chainId, status }: LinkedWalletInsuranceProps) {
   const { open } = useWalletLinkingContext()
   const { data } = useSuspenseCurrentWalletLinkPreview(address, chainId, status)
-  const link = data?.getWalletPreview?.link
+  const link = data?.walletPreview?.emailLink
   if (!link) {
     return (
       <WalletInsuranceBase status={<Button gradient round size="sm" onClick={open}>Link email</Button>}>
@@ -92,14 +92,11 @@ function WalletInsuranceBase({ children: description, status }: WalletInsuranceB
   )
 }
 
-function EmailStatusContent({ children: link }: { children: LinkPreview }) {
+function EmailStatusContent({ children: link }: { children: EmailLinkPreview }) {
   return (
     <Tooltip content={
       <>
-        Linked to {isEmailLinked(link)
-        ? <EmailWalletLinked>{link}</EmailWalletLinked>
-        : <SocialWalletLinked>{link}</SocialWalletLinked>
-        }
+        Linked to {<EmailWalletLinked>{link}</EmailWalletLinked>}
       </>
     }>
       <span>Linked</span>
@@ -117,8 +114,4 @@ export function EmailStatusSkeleton() {
 
 export function EmailWalletLinked({ children: link }: { children: EmailLinkPreview }) {
   return link.email
-}
-
-export function SocialWalletLinked({ children: link }: { children: SocialLinkPreview }) {
-  return <>{link.username} on {link.platform}</>
 }

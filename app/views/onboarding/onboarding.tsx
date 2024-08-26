@@ -30,7 +30,7 @@ export function Onboading({ initialSteps, horizontal, onButtonClick, ...props }:
     walletStatus: status,
     initialSteps: initialSteps || DEFAULT_INITIAL_STEPS,
     vaultBalanceBN,
-    isLinked: !!data?.getWalletPreview?.link,
+    isLinked: !!data?.walletPreview?.emailLink,
   })
 
   const { open } = useWalletLinkingContext()
