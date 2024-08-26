@@ -25,7 +25,7 @@ export function useCurrentWalletLinkPreview(address?: string, chainId?: number, 
 }
 
 function omitIfNotCurrentWallet(data?: GetWalletPreviewQuery, address?: string, chainId?: number, status?: WalletStatus): GetWalletPreviewQuery | undefined {
-  const linkedWallet = data?.getWalletPreview
+  const linkedWallet = data?.walletPreview
   const isLinkForCurrentWallet = linkedWallet?.address === address && chainId === linkedWallet?.chainId
 
   if (isLinkForCurrentWallet && status === WalletStatus.CONNECTED)

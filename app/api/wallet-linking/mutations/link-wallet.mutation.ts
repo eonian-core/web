@@ -1,41 +1,20 @@
 import type { ApolloClient } from '@apollo/client'
 import { gql } from '@apollo/client'
-import type { LinkEmailToWalletInput, LinkEmailToWalletMutation } from '../gql/graphql'
+import type { LinkEmailToWalletMutation } from '../gql/graphql'
 
 export const LinkEmailToWallet = gql`
-    mutation LinkEmailToWallet($input: LinkEmailToWalletInput!) {
-        linkEmailToWallet(input: $input) {
+    mutation LinkEmailToWallet($email: String!) {
+        linkEmailToWallet(email: $email) {
             id
             address
             chainId
-            links {
-                id
-                payload {
-                    ... on EmailLink {
-                        id
-                        email
-                    }
-                    ... on SocialLink {
-                        id
-                        platform
-                        username
-                    }
-                }
-            }
             preview {
                 id
                 address
                 chainId
-                link {
-                    ... on EmailLinkPreview {
-                        id
-                        email
-                    }
-                    ... on SocialLinkPreview {
-                        id
-                        platform
-                        username
-                    }
+                emailLink {
+                    id
+                    email
                 }
             }
         }
@@ -45,11 +24,11 @@ export const LinkEmailToWallet = gql`
 /**
  * Link email to wallet
  */
-export async function linkEmailToWallet(client: ApolloClient<any>, input: LinkEmailToWalletInput) {
+export async function linkEmailToWallet(client: ApolloClient<any>, email: string) {
   const { data, errors } = await client.mutate<LinkEmailToWalletMutation>({
     mutation: LinkEmailToWallet,
     variables: {
-      input,
+      email,
     },
   })
   if (errors)

@@ -17,11 +17,7 @@ export function useLinkEmail() {
 
     await linkEmail({
       variables: {
-        input: {
-          address,
-          chainId,
-          link: { email },
-        },
+        email,
       },
       context: {
         headers: {

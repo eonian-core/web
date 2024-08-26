@@ -4,20 +4,13 @@ import type { GetWalletPreviewQuery, GetWalletQuery } from '../gql/graphql'
 
 export const GetWalletPreview = gql`
   query GetWalletPreview($address: String!, $chainId: Int!) {
-    getWalletPreview(address: $address, chainId: $chainId) {
+    walletPreview(address: $address, chainId: $chainId) {
       id
       address
       chainId
-      link {
-        ... on EmailLinkPreview {
-          id
-          email
-        }
-        ... on SocialLinkPreview {
-          id
-          platform
-          username
-        }
+      emailLink {
+        id
+        email
       }
     }
   }
@@ -41,24 +34,19 @@ export async function getWalletPreview(client: ApolloClient<any>, address: strin
 }
 
 export const GetWallet = gql`
-  query GetWallet($address: String!, $chainId: Int!) {
-    getWallet(address: $address, chainId: $chainId) {
+  query GetWallet {
+    wallet {
       id
       address
       chainId
-      links {
+      emailLinks {
         id
-        payload {
-          ... on EmailLink {
-            id
-            email
-          }
-          ... on SocialLink {
-            id
-            platform
-            username
-          }
-        }
+        email
+      }
+      socialLinks {
+        id
+        platform
+        username
       }
     }
   }
