@@ -3,7 +3,6 @@
 import React from 'react'
 import Image from 'next/image'
 import { Spinner } from '@nextui-org/react'
-import { ZeroAddress } from 'ethers'
 import { useWalletWrapperContext } from '../../../../providers/wallet/wallet-wrapper-provider'
 import { useAppSelector } from '../../../../store/hooks'
 import { FormAction, FormActionStep } from '../../../../store/slices/vaultActionSlice'
@@ -13,9 +12,7 @@ import { toStringNumberFromDecimals } from '../../../../shared'
 import styles from './vault-action-toast.module.scss'
 import { useSuspenseCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
 import { useWalletLinkingContext } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
-import { ChainId } from '@/providers/wallet/wrappers/helpers'
 import type { WalletStatus } from '@/providers/wallet/wrappers/types'
-import { InternalLink } from '@/components/links/links'
 
 export function VaultActionToast() {
   const [total, confirmed] = useTransactionCounters()
