@@ -16,6 +16,8 @@
 
   .tokenAmount {
     font-weight: var(--font-medium);
+    display: flex;
+    align-items: center;
 
     .asset {
       margin: 0 var(--margin-50);
