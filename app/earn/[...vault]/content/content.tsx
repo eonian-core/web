@@ -33,7 +33,7 @@ export function Content({ symbol }: Props) {
   const isUltraWideOrSmaller = useIsUltraWideOrSmaller()
 
   return (
-    <WalletLinkingProvider>
+    <>
       <div className={styles.wrapper}>
         <HorizontalOnboardingBar showPlaceholder={!isUltraWideOrSmaller} />
 
@@ -55,7 +55,7 @@ export function Content({ symbol }: Props) {
         <SafetyBlocks show />
         <LimitBlocks show />
       </div>
-    </WalletLinkingProvider>
+    </>
   )
 }
 
