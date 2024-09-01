@@ -1,3 +1,5 @@
+'use client'
+
 import { useHover } from '@uidotdev/usehooks'
 import Form from '../form/form'
 import styles from './content.module.scss'

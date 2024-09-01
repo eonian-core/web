@@ -1,3 +1,5 @@
+'use client'
+
 import { Area, AreaChart, YAxis } from 'recharts'
 import type { PropsWithChildren } from 'react'
 import { useMemo } from 'react'

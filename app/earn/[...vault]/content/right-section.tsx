@@ -1,3 +1,5 @@
+'use client'
+
 import clsx from 'clsx'
 import { Returns } from '../returns/returns'
 import { useHaveWhatToDisplay } from './useHaveWhatToDisplay'

@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useMemo, useState } from 'react'
 import { Area, ComposedChart, Line, ResponsiveContainer, YAxis } from 'recharts'
 import { useVaultContext } from '../hooks/use-vault-context'

@@ -1,5 +1,3 @@
-'use client'
-
 import { VaultProvider } from './hooks/use-vault-context'
 import { Header } from './header/header'
 import { Content } from './content/content'

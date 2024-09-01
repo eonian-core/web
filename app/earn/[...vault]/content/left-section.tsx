@@ -1,3 +1,5 @@
+'use client'
+
 import clsx from 'clsx'
 import { useHover } from '@uidotdev/usehooks'
 import { InsuranceOfAssets } from '../info-blocks/insurance-of-assets'

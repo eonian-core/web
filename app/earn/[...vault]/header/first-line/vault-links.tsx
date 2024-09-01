@@ -1,3 +1,5 @@
+'use client'
+
 import { useVaultContext } from '../../hooks/use-vault-context'
 import styles from './vault-title.module.scss'
 import { WrapperLink } from '@/components/links/wrapper-link'
