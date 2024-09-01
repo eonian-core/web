@@ -20,6 +20,13 @@ jest.mock('@web3-onboard/react', () => ({
   useSetChain: jest.fn(),
 }))
 
+jest.mock('@apollo/client', () => ({
+  ApolloClient: jest.fn(),
+  HttpLink: jest.fn(),
+  gql: jest.fn(),
+  InMemoryCache: jest.fn(),
+}))
+
 jest.mock('@web3-onboard/injected-wallets', () => jest.fn())
 jest.mock('@web3-onboard/walletconnect', () => jest.fn())
 jest.mock('@web3-onboard/core', () => jest.fn())
@@ -76,22 +83,29 @@ describe('useVaultUserInfo', () => {
   })
 
   it('should return lambda or null based on state', () => {
-    const { wrapper } = genWrapper({ status: RequestStatus.Succeeded }, { }, {
-      wallet: { address: 'wallet-address' } as Wallet,
-      chain: { multicallAddress: 'multicall-address' } as Chain,
-      provider: { id: 'provider' } as any as ethers.BrowserProvider,
-      status: WalletStatus.NOT_CONNECTED,
-    })
+    const { wrapper } = genWrapper(
+      { status: RequestStatus.Succeeded },
+      {},
+      {
+        wallet: { address: 'wallet-address' } as Wallet,
+        chain: { multicallAddress: 'multicall-address' } as Chain,
+        provider: { id: 'provider' } as any as ethers.BrowserProvider,
+        status: WalletStatus.NOT_CONNECTED,
+      },
+    )
     const vault = { address: 'vault-address', asset: { address: 'asset-address' } } as Vault
     const autoUpdateInterval = undefined
 
-    const { result } = renderHook(() => {
-      // @ts-expect-error
-      const { setWalletState } = useWalletWrapperContext()
-      const vaultUserInfo = useVaultUserInfo(vault, { autoUpdateInterval })
+    const { result } = renderHook(
+      () => {
+        // @ts-expect-error
+        const { setWalletState } = useWalletWrapperContext()
+        const vaultUserInfo = useVaultUserInfo(vault, { autoUpdateInterval })
 
-      return { vaultUserInfo, setWalletState }
-    }, { wrapper })
+        return { vaultUserInfo, setWalletState }
+      },
+      { wrapper },
+    )
     expect(result.current.vaultUserInfo).toBeFunctionOrLambda()
 
     act(() => {
@@ -126,22 +140,29 @@ describe('useVaultUserInfo', () => {
   })
 
   it('should trigger dispatch fetchVaultUserData', async () => {
-    const { wrapper } = genWrapper({ status: RequestStatus.Succeeded }, { }, {
-      wallet: { address: 'wallet-address' } as Wallet,
-      chain: { multicallAddress: 'multicall-address' } as Chain,
-      provider: { id: 'provider' } as any as ethers.BrowserProvider,
-      status: WalletStatus.CONNECTED,
-    })
+    const { wrapper } = genWrapper(
+      { status: RequestStatus.Succeeded },
+      {},
+      {
+        wallet: { address: 'wallet-address' } as Wallet,
+        chain: { multicallAddress: 'multicall-address' } as Chain,
+        provider: { id: 'provider' } as any as ethers.BrowserProvider,
+        status: WalletStatus.CONNECTED,
+      },
+    )
     const vault = { address: 'vault-address', asset: { address: 'asset-address' } } as Vault
     const autoUpdateInterval = undefined
 
-    const { result } = renderHook(() => {
-      // @ts-expect-error
-      const { setWalletState } = useWalletWrapperContext()
-      const vaultUserInfo = useVaultUserInfo(vault, { autoUpdateInterval })
+    const { result } = renderHook(
+      () => {
+        // @ts-expect-error
+        const { setWalletState } = useWalletWrapperContext()
+        const vaultUserInfo = useVaultUserInfo(vault, { autoUpdateInterval })
 
-      return { vaultUserInfo, setWalletState }
-    }, { wrapper })
+        return { vaultUserInfo, setWalletState }
+      },
+      { wrapper },
+    )
 
     expect(result.current.vaultUserInfo).toBeFunctionOrLambda()
     expect(fetchVaultUserData).toHaveBeenCalledTimes(1)

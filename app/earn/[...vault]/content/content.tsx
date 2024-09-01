@@ -19,7 +19,6 @@ import type { TokenSymbol } from '@/types'
 import { useHideAnimtion } from '@/components/fade-in/animation'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
-import { WalletLinkingProvider } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
 import { Onboading } from '@/views/onboarding/onboarding'
 import { useIsUltraWideOrSmaller } from '@/components/resize-hooks/screens'
 import { OnboardingDrawer } from '@/views/onboarding/onboarding-drawer'
@@ -33,7 +32,7 @@ export function Content({ symbol }: Props) {
   const isUltraWideOrSmaller = useIsUltraWideOrSmaller()
 
   return (
-    <WalletLinkingProvider>
+    <>
       <div className={styles.wrapper}>
         <HorizontalOnboardingBar showPlaceholder={!isUltraWideOrSmaller} />
 
@@ -55,7 +54,7 @@ export function Content({ symbol }: Props) {
         <SafetyBlocks show />
         <LimitBlocks show />
       </div>
-    </WalletLinkingProvider>
+    </>
   )
 }
 

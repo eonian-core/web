@@ -45,7 +45,7 @@ export function OnboardingBody({ completed, placeholder, linkEmail, show, showHe
             <ul>
                 <OnboardingItem
                     currentStep={OnboardingStep.AssetChosen}
-                    title="Chose Cryptocurrency"
+                    title="Choose Cryptocurrency"
                     {...{ active, completed }}
                 >
                     <p>Choose the cryptocurrency you want to invest in</p>
