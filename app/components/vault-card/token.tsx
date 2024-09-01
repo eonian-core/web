@@ -4,7 +4,7 @@ import type { FC, PropsWithChildren } from 'react'
 import { Progress } from '@nextui-org/react'
 
 import clsx from 'clsx'
-import { createContext, useContext, useMemo } from 'react'
+import { createContext, useContext } from 'react'
 import styles from './token.module.scss'
 import { DisplaySymbol } from './display-symbol'
 import { getTokenColorStyle } from './token-helpers'
