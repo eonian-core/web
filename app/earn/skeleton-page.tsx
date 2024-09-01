@@ -1,11 +1,9 @@
-'use client'
-
 import pageStyles from './page.module.scss'
 import { Header } from './components/header'
 import gridStyles from './components/vault-grid.module.scss'
 import { VaultGridSkeleton } from './components/vault-grid-skeleton'
 
-export default function Loading() {
+export default function SkeletonPage() {
   return (
     <div className={pageStyles.page}>
     <div>
