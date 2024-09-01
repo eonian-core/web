@@ -33,34 +33,36 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
   const handlePress = useHandlePress(vaultChain.id, isOnDifferentChain, submit)
 
   const shouldBeAbleToSubmit = status === WalletStatus.CONNECTED
+  const isInProgress = isLoading || isSubmiting
+  const isDisabled = disabled || isInProgress || (shouldBeAbleToSubmit ? !canSubmit : false)
   return (
-    <FormButtonBody
-      onPress={handlePress}
-      disabled={
-        (disabled || isLoading || isSubmiting)
-        || (shouldBeAbleToSubmit ? !canSubmit : false)
-      }
-      {...restProps}
-    >
-      {(isLoading || isSubmiting)
-        ? <Spinner color="current" size="md" />
-        : <ButtonText {...{
-          insured,
-          status,
-          isOnDifferentChain,
-          chainName: vaultChain.name,
-          formAction,
-          walletAvailable,
-          haveInputValue,
-          haveEnoughAssets,
-        }} />}
+    <FormButtonBody onPress={isDisabled ? undefined : handlePress} disabled={isDisabled} {...restProps}>
+      {isInProgress && <Spinner color="current" size="md" />}
+      {!isInProgress && (
+        <ButtonText
+          {...{
+            insured,
+            status,
+            isOnDifferentChain,
+            chainName: vaultChain.name,
+            formAction,
+            walletAvailable,
+            haveInputValue,
+            haveEnoughAssets,
+          }}
+        />
+      )}
     </FormButtonBody>
   )
 }
 
 export default FormButton
 
-function useHandlePress(vaultChainId: ChainId, isOnDifferentChain: boolean, submit: (formAction: FormAction) => Promise<void>) {
+function useHandlePress(
+  vaultChainId: ChainId,
+  isOnDifferentChain: boolean,
+  submit: (formAction: FormAction) => Promise<void>,
+) {
   const { status, connect, setCurrentChain } = useWalletWrapperContext()
   const { formAction, insured, setInsured } = useVaultContext()
 
@@ -103,38 +105,41 @@ export function useSubmit() {
     haveEnoughAssets,
     canSubmit,
     isSubmiting,
-    submit: useCallback(async (formAction: FormAction) => {
-      if (!canSubmit) {
-        toast('Looks like something is wrong, try refreshing the page', {
-          type: 'error',
-        })
-        return
-      }
-      setIsSubmiting(true)
-
-      try {
-        // Refresh vault <-> user data before the transaction to make sure all calculations are correct.
-        await refetechVaultUserData()
-
-        // Execute Deposit/Withdraw transaction
-        const success = await executeTransaction(formAction, vault, inputValue)
-        if (success) {
-          // Refresh wallet balance & vault deposit after the transaction executed.
-          void refetechVaultUserData()
-
-          // Reset form input
-          onValueChange(0n)
+    submit: useCallback(
+      async (formAction: FormAction) => {
+        if (!canSubmit) {
+          toast('Looks like something is wrong, try refreshing the page', {
+            type: 'error',
+          })
+          return
         }
-      }
-      catch (error) {
-        console.error('Error during submit', error)
-        toast('An error occurred, please try refreshing the page', {
-          type: 'error',
-        })
-      }
+        setIsSubmiting(true)
 
-      setIsSubmiting(false)
-    }, [refetechVaultUserData, onValueChange, inputValue, vault, setIsSubmiting, canSubmit]),
+        try {
+          // Refresh vault <-> user data before the transaction to make sure all calculations are correct.
+          await refetechVaultUserData()
+
+          // Execute Deposit/Withdraw transaction
+          const success = await executeTransaction(formAction, vault, inputValue)
+          if (success) {
+            // Refresh wallet balance & vault deposit after the transaction executed.
+            void refetechVaultUserData()
+
+            // Reset form input
+            onValueChange(0n)
+          }
+        }
+        catch (error) {
+          console.error('Error during submit', error)
+          toast('An error occurred, please try refreshing the page', {
+            type: 'error',
+          })
+        }
+
+        setIsSubmiting(false)
+      },
+      [refetechVaultUserData, onValueChange, inputValue, vault, setIsSubmiting, canSubmit],
+    ),
   }
 }
 

@@ -9,6 +9,13 @@ jest.mock('@web3-onboard/react', () => ({
   useSetChain: jest.fn(),
 }))
 
+jest.mock('@apollo/client', () => ({
+  ApolloClient: jest.fn(),
+  HttpLink: jest.fn(),
+  gql: jest.fn(),
+  InMemoryCache: jest.fn(),
+}))
+
 jest.mock('@web3-onboard/injected-wallets', () => jest.fn())
 jest.mock('@web3-onboard/walletconnect', () => jest.fn())
 jest.mock('@web3-onboard/core', () => jest.fn())

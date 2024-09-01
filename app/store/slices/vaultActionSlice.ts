@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { UpdateOptions } from 'react-toastify'
 import { toast } from 'react-toastify'
 import type { Vault } from '../../api'
-import { createVaultActionToast } from '../../earn/[...vault]/components'
+import { createVaultActionToast } from '../../earn/[...vault]/components/vault-action-toast/vault-action-toast'
 import { parseError } from '../../shared'
 import { FormAction, FormActionStep } from './types'
 
