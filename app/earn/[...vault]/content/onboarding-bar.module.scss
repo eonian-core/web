@@ -1,0 +1,28 @@
+@import '../../../screen.scss';
+
+.onboardingBar {
+  &.placeholder,
+  &.horizontal {
+    height: var(--margin-700);
+  }
+
+  &.horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  &.vertical {
+    display: none;
+
+    position: absolute;
+    top: 0;
+    left: -3.5rem;
+    z-index: 10;
+
+    @media (min-width: $screen-ultra-wide) {
+      display: block;
+    }
+  }
+}

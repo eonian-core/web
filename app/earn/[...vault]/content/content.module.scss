@@ -1,5 +1,5 @@
 @import '../../../screen.scss';
-@import "../../../components/styles/appear.animation.scss";
+@import '../../../components/styles/appear.animation.scss';
 
 .wrapper {
   width: 100%;
@@ -29,26 +29,7 @@
   }
 }
 
-.onboardingBar {
 
-  &.placeholder, &.horizontal {
-    height: var(--margin-700);
-  }
-  
-  &.horizontal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-
-  &.vertical {
-    position: absolute;
-    top: 0;
-    left: -3.5rem;
-    z-index: 10;
-  }
-}
 
 .left,
 .right,
@@ -70,7 +51,8 @@
   gap: var(--margin-400);
 }
 
-.left, .right {
+.left,
+.right {
   opacity: 0;
 }
 
@@ -88,21 +70,6 @@
 
 .right.show {
   animation: appearToRight 0.2s ease-in forwards;
-}
-
-.infoBlocks {
-  opacity: 0;
-  & > * {
-    width: 100%;
-  }
-}
-
-.infoBlocks.hide {
-  animation: appearDown 0.2s ease-in forwards reverse;
-}
-
-.infoBlocks.show {
-  animation: appearDown 0.2s ease-in forwards;
 }
 
 .mobileInfoBlocks {
