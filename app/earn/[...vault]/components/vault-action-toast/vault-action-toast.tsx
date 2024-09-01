@@ -10,6 +10,9 @@ import { FormAction, FormActionStep } from '../../../../store/slices/vaultAction
 import { getActiveStepSelector } from '../../../../store'
 import { toStringNumberFromDecimals } from '../../../../shared'
 import styles from './vault-action-toast.module.scss'
+import { useSuspenseCurrentWalletLinkPreview } from '@/api/wallet-linking/wallet/use-wallet-link'
+import { useWalletLinkingContext } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
+import type { WalletStatus } from '@/providers/wallet/wrappers/types'
 
 export function VaultActionToast() {
   const [total, confirmed] = useTransactionCounters()
@@ -24,7 +27,39 @@ export function VaultActionToast() {
           {confirmed} / {total} Transaction confirmed
         </h4>
         {description && <div className={styles.description}>{description}</div>}
+        <LinkEmailWrapper />
       </div>
+    </div>
+  )
+}
+
+function LinkEmailWrapper() {
+  const { wallet, chain, status } = useWalletWrapperContext()
+  const address = wallet?.address
+  const chainId = chain?.id
+  if (!address || !chainId)
+    return null
+
+  return <LinkEmail address={address} chainId={+chainId} status={status} />
+}
+
+function LinkEmail({ address, chainId, status }: { address: string; chainId: number; status: WalletStatus }) {
+  const { activeAction } = useAppSelector(state => state.vaultAction)
+  const activeStep = useAppSelector(getActiveStepSelector)
+  const { open } = useWalletLinkingContext()
+
+  const { data } = useSuspenseCurrentWalletLinkPreview(address, chainId, status)
+  const isDepositDone = activeAction === FormAction.DEPOSIT && activeStep === FormActionStep.DONE
+  if (!isDepositDone)
+    return null
+
+  const link = data?.walletPreview?.emailLink as unknown
+  if (link)
+    return null
+
+  return (
+    <div className={styles.recovery}>
+      To enable wallet recovery, please <a href="#" onClick={open}>link your e-mail address</a>
     </div>
   )
 }

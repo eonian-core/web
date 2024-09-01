@@ -10,6 +10,7 @@ import { AuthProvider } from './auth'
 import { MonitoringProvider } from './monitoring'
 import { ChainProvider } from '@/shared/web3/chain-context'
 import { ApolloSsrProvider } from '@/api/apollo-ssr-provider'
+import { WalletLinkingProvider } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
 
 interface Props {
   locale: string
@@ -22,13 +23,13 @@ export default function Providers({ children }: Props) {
       <ThemesProvider>
         <ReduxProvider store={store}>
           <WalletWrapperProvider>
-              <AuthProvider>
-                <ChainProvider>
-                  <ApolloSsrProvider>
-                    {children}
-                  </ApolloSsrProvider>
-                </ChainProvider>
-              </AuthProvider>
+            <AuthProvider>
+              <ChainProvider>
+                <ApolloSsrProvider>
+                  <WalletLinkingProvider>{children}</WalletLinkingProvider>
+                </ApolloSsrProvider>
+              </ChainProvider>
+            </AuthProvider>
           </WalletWrapperProvider>
         </ReduxProvider>
       </ThemesProvider>

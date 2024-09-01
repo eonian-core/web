@@ -11,11 +11,11 @@
 }
 
 .checkboxBase {
-  display: flex;
+  display: flex !important;
   flex-direction: row-reverse;
-  justify-content: space-between;
+  justify-content: space-between !important;
   width: 100%;
-  max-width: 100%;
+  max-width: 100% !important;
   border-radius: 0.8rem;
   border: 1px solid var(--color-dark-500);
   margin: 0 !important;
@@ -54,7 +54,7 @@
 }
 
 .checkboxWrapper {
-  margin-right: 0.5rem;
+  margin-right: 0.5rem !important;
   margin-top: 0;
   margin-left: auto;
 }
@@ -72,7 +72,7 @@
   .description {
     font-size: var(--font-size-200);
     color: var(--color-text-450);
-  }  
+  }
 }
 
 .tag {
@@ -82,7 +82,7 @@
 .link {
   display: flex;
   justify-content: flex-end;
-  
+
   margin-top: var(--margin-100);
   font-size: var(--font-size-200);
   a {

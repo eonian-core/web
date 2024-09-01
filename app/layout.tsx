@@ -46,6 +46,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
 }
 
 function Analytics() {
+  if (process.env.VERCEL_ENV !== 'production')
+    return null
+
   return (
     <Script type="text/javascript" id="analytics-ms">{`
 (function(c,l,a,r,i,t,y){

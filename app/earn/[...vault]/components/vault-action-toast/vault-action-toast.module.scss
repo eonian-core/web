@@ -7,6 +7,11 @@
   margin-right: var(--margin-200);
 }
 
+.recovery,
 .description {
   margin-top: var(--margin-100);
+}
+
+.recovery a {
+  text-decoration: underline;
 }
