@@ -11,6 +11,11 @@ export const links = [
 ].filter(({ isEnabled }) => isEnabled)
 
 export const mobileLinks: Array<ResourceItem> = [
-  { href: '/', label: 'Home' },
+  {
+    href: '/',
+    label: 'Home',
+    external: false,
+    isEnabled: true,
+  },
   ...links,
 ]
