@@ -1,7 +1,5 @@
 import styles from './blocknative-link.module.scss'
-import ExternalLink from '@/components/links/external-link'
 import IconShieldHeart from '@/components/icons/icon-shield-heart'
-import IconExternal from '@/components/icons/icon-external'
 import { WrapperLink } from '@/components/links/wrapper-link'
 
 export function BlocknativeLink() {

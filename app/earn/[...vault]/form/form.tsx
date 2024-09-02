@@ -18,7 +18,6 @@ import { BlocknativeLink } from './blocknative-link/blocknative-link'
 import { ArrowDivider } from './arrow-divider/arrow-divider'
 import { RequestStatus } from '@/store/slices/requestSlice'
 import { WrapperLink } from '@/components/links/wrapper-link'
-import { ResourcesLinks } from '@/features'
 import { getChainExplorer } from '@/providers/wallet/wrappers/helpers'
 
 const Form: React.FC = () => {
