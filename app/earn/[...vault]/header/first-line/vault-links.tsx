@@ -7,8 +7,8 @@ export function VaultLinks() {
     <div className={styles.links}>
       <HowVaultWorks />
       <WrapperLink href={ResourcesLinks.TOS.href} withIcon>
-          {ResourcesLinks.TOS.label}
-        </WrapperLink>
+        {ResourcesLinks.TOS.label}
+      </WrapperLink>
     </div>
   )
 }
