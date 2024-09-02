@@ -21,7 +21,7 @@ export interface ResourceMap {
   [key: string]: ResourceItem
 }
 
-export const ResourcesLinks: ResourceMap = {
+export const ResourcesLinks = {
   Mission: { href: '/mission', label: 'Mission', isEnabled: showMission },
   Roadmap: { href: '/roadmap', label: 'Roadmap', isEnabled: showRoadmap },
   Community: { href: '/community', label: 'Community', isEnabled: showCommunity },
@@ -46,4 +46,4 @@ export const ResourcesLinks: ResourceMap = {
     isEnabled: showTOS,
     external: true,
   },
-}
+} satisfies ResourceMap

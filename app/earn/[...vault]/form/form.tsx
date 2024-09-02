@@ -17,6 +17,8 @@ import { FormPreview } from './form-preview'
 import { BlocknativeLink } from './blocknative-link/blocknative-link'
 import { ArrowDivider } from './arrow-divider/arrow-divider'
 import { RequestStatus } from '@/store/slices/requestSlice'
+import { WrapperLink } from '@/components/links/wrapper-link'
+import { ResourcesLinks } from '@/features'
 
 const Form: React.FC = () => {
   const vaultChain = useVaultChain()
@@ -40,7 +42,13 @@ const Form: React.FC = () => {
           <FormButton vaultChain={vaultChain} disabled={!isFormReady} isLoading={hasPendingTransactions} />
         </CardBody>
       </Card>
-      <BlocknativeLink />
+
+      <div className={styles.links}>
+        <BlocknativeLink />
+        <WrapperLink href={ResourcesLinks.TOS.href} withIcon>
+          {ResourcesLinks.TOS.label}
+        </WrapperLink>
+      </div>
     </div>
   )
 }

@@ -2,17 +2,17 @@ import styles from './blocknative-link.module.scss'
 import ExternalLink from '@/components/links/external-link'
 import IconShieldHeart from '@/components/icons/icon-shield-heart'
 import IconExternal from '@/components/icons/icon-external'
+import { WrapperLink } from '@/components/links/wrapper-link'
 
 export function BlocknativeLink() {
   return (
-    <ExternalLink
+    <WrapperLink
       className={styles.container}
       href="https://www.blocknative.com/"
-      icon={<IconExternal size="0.85em" />}
-      iconAtEnd
+      withIcon
     >
       <IconShieldHeart className={styles.icon} />
       Secured by Blocknative
-    </ExternalLink>
+    </WrapperLink>
   )
 }
