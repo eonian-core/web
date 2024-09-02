@@ -4,9 +4,10 @@ import type { FC, PropsWithChildren } from 'react'
 import { Progress } from '@nextui-org/react'
 
 import clsx from 'clsx'
-import { createContext, useContext, useMemo } from 'react'
+import { createContext, useContext } from 'react'
 import styles from './token.module.scss'
 import { DisplaySymbol } from './display-symbol'
+import { getTokenColorStyle } from './token-helpers'
 import type { ButtonProps } from '@/components/button/button'
 import Button from '@/components/button/button'
 import { InternalLink } from '@/components/links/links'
@@ -37,16 +38,21 @@ export const TokenContext = createContext<{
 
 export const useToken = () => useContext(TokenContext)
 
-export const getTokenColor = (token: TokenSymbol) => ({ '--color-token': `var(--color-token-${token})` }) as React.CSSProperties
-export const useTokenColor = (token: TokenSymbol) => useMemo(() => getTokenColor(token), [token])
-
-export function Token({ token, children, state = TokenState.Active, className, contentClassName, style = {} }: PropsWithChildren<TokenProps>) {
-  const color = useTokenColor(token)
-
+export function Token({
+  token,
+  children,
+  state = TokenState.Active,
+  className,
+  contentClassName,
+  style = {},
+}: PropsWithChildren<TokenProps>) {
   return (
-    <div className={clsx(styles.token, styles[token], className, {
-      [styles.planned]: state === TokenState.Planned,
-    })} style={{ ...color, ...style }} >
+    <div
+      className={clsx(styles.token, styles[token], className, {
+        [styles.planned]: state === TokenState.Planned,
+      })}
+      style={{ ...getTokenColorStyle(token), ...style }}
+    >
       <TokenContext.Provider value={{ token, state }}>
         <div className={clsx(styles.content, contentClassName)}>
           <Logo />
@@ -63,7 +69,9 @@ export function TokenHeader({ children }: PropsWithChildren) {
 
   return (
     <div className={clsx(styles.header, styles[token])}>
-      <span className={styles.symbol}><DisplaySymbol>{token}</DisplaySymbol></span>
+      <span className={styles.symbol}>
+        <DisplaySymbol>{token}</DisplaySymbol>
+      </span>
 
       <h3>{children}</h3>
     </div>
@@ -94,7 +102,11 @@ export function Tag({ bordered, children, icon }: PropsWithChildren<{ bordered?:
 
   return (
     <li>
-      <Chip variant="bordered" size="small" className={clsx(styles.borderedTag, { [styles.plannedTag]: state === TokenState.Planned })}>
+      <Chip
+        variant="bordered"
+        size="small"
+        className={clsx(styles.borderedTag, { [styles.plannedTag]: state === TokenState.Planned })}
+      >
         {children}
       </Chip>
     </li>

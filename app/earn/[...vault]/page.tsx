@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 import type { Vault } from '../../api'
 import { getProtocolRscClient, getVaultBySymbol, getVaultsSymbols } from '../../api'
 import { ChainId } from '../../providers/wallet/wrappers/helpers'
@@ -7,6 +8,7 @@ import { showEarn } from '../../features'
 
 import { TokenGradient } from './header/token-gradient'
 import { PageContent } from './page-content'
+import Loading from './loading'
 import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 import { convertToUsd } from '@/finances/usd'
 
@@ -48,10 +50,10 @@ export default async function Page({ params }: Params) {
   const currentPrice = convertToUsd(vault.asset.price)
 
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <TokenGradient symbol={symbol} />
       <PageContent {...{ symbol, vault, chainId, currentPrice }} />
-    </>
+    </Suspense>
   )
 }
 
