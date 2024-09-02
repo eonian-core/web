@@ -1,3 +1,5 @@
+'use client'
+
 import { H2, H3 } from '../../components/heading/heading'
 
 export function Header() {
