@@ -19,6 +19,7 @@ import { ArrowDivider } from './arrow-divider/arrow-divider'
 import { RequestStatus } from '@/store/slices/requestSlice'
 import { WrapperLink } from '@/components/links/wrapper-link'
 import { ResourcesLinks } from '@/features'
+import { getChainExplorer } from '@/providers/wallet/wrappers/helpers'
 
 const Form: React.FC = () => {
   const vaultChain = useVaultChain()
@@ -45,11 +46,19 @@ const Form: React.FC = () => {
 
       <div className={styles.links}>
         <BlocknativeLink />
-        <WrapperLink href={ResourcesLinks.TOS.href} withIcon>
-          {ResourcesLinks.TOS.label}
-        </WrapperLink>
+        <ContractAddress />
       </div>
     </div>
+  )
+}
+
+function ContractAddress() {
+  const { vault, chainId } = useVaultContext()
+  const url = `${getChainExplorer(chainId)}/address/${vault.address}#code`
+  return (
+    <WrapperLink href={url} withIcon>
+      Smart Contract
+    </WrapperLink>
   )
 }
 
