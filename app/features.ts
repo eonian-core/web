@@ -13,21 +13,17 @@ export const showRoadmap = process.env.NEXT_PUBLIC_FEATURE_ROADMAP_PAGE === 'tru
 export interface ResourceItem {
   href: string
   label: string
-  external: boolean
-  isEnabled: boolean
+  external?: boolean
+  isEnabled?: boolean
 }
 
-export interface ResourceMap {
-  [key: string]: ResourceItem
-}
-
-export const ResourcesLinks = {
-  Mission: { href: '/mission', label: 'Mission', external: false, isEnabled: showMission },
-  Roadmap: { href: '/roadmap', label: 'Roadmap', external: false, isEnabled: showRoadmap },
-  Community: { href: '/community', label: 'Community', external: false, isEnabled: showCommunity },
-  Security: { href: '/security', label: 'Security', external: false, isEnabled: showSecurity },
-  Earn: { href: '/earn', label: 'Save', external: false, isEnabled: showEarn },
-  FAQ: { href: '/faq', label: 'FAQ', external: false, isEnabled: showFaq },
+const resources = {
+  Mission: { href: '/mission', label: 'Mission', isEnabled: showMission },
+  Roadmap: { href: '/roadmap', label: 'Roadmap', isEnabled: showRoadmap },
+  Community: { href: '/community', label: 'Community', isEnabled: showCommunity },
+  Security: { href: '/security', label: 'Security', isEnabled: showSecurity },
+  Earn: { href: '/earn', label: 'Save', isEnabled: showEarn },
+  FAQ: { href: '/faq', label: 'FAQ', isEnabled: showFaq },
   Docs: {
     href: 'https://eonian-1.gitbook.io/eonian-docs',
     label: 'Docs',
@@ -46,4 +42,6 @@ export const ResourcesLinks = {
     isEnabled: showTOS,
     external: true,
   },
-} satisfies ResourceMap
+} satisfies Record<string, ResourceItem>
+
+export const ResourcesLinks = resources as Record<keyof typeof resources, ResourceItem>

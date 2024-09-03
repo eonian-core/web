@@ -10,12 +10,4 @@ export const links = [
   ResourcesLinks.Docs,
 ].filter(({ isEnabled }) => isEnabled)
 
-export const mobileLinks: Array<ResourceItem> = [
-  {
-    href: '/',
-    label: 'Home',
-    external: false,
-    isEnabled: true,
-  },
-  ...links,
-]
+export const mobileLinks: Array<ResourceItem> = [{ href: '/', label: 'Home' }, ...links]
