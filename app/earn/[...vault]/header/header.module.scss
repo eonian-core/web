@@ -5,8 +5,15 @@
   display: grid;
   grid-template-rows: auto auto;
   grid-template-columns: auto var(--vault-mobile-column-width);
-  justify-content: space-between; 
-  align-content: space-between; 
+  justify-content: space-between;
+  align-content: space-between;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--margin-200);
 }
 
 @media (max-width: $screen-mobile) {
@@ -18,6 +25,10 @@
     align-content: center;
     align-items: center;
     justify-items: center;
+  }
+  
+  .links {
+    justify-content: center;
   }
 
   // #3 - Coin action buttons
