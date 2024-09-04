@@ -17,11 +17,7 @@ export interface ResourceItem {
   isEnabled?: boolean
 }
 
-export interface ResourceMap {
-  [key: string]: ResourceItem
-}
-
-export const ResourcesLinks: ResourceMap = {
+const resources = {
   Mission: { href: '/mission', label: 'Mission', isEnabled: showMission },
   Roadmap: { href: '/roadmap', label: 'Roadmap', isEnabled: showRoadmap },
   Community: { href: '/community', label: 'Community', isEnabled: showCommunity },
@@ -46,4 +42,6 @@ export const ResourcesLinks: ResourceMap = {
     isEnabled: showTOS,
     external: true,
   },
-}
+} satisfies Record<string, ResourceItem>
+
+export const ResourcesLinks = resources as Record<keyof typeof resources, ResourceItem>

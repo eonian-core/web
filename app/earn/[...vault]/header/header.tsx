@@ -4,6 +4,7 @@ import { PriceChart } from './first-line/price-chart'
 import { Actions } from './second-line/actions'
 import { Protected } from './second-line/protected'
 import { firstLineHeaderMap } from './first-line/content'
+import { SmartContractLink } from './second-line/smart-contract-link'
 import type { TokenSymbol } from '@/types'
 import { getTokenColorStyle } from '@/components/vault-card/token-helpers'
 
@@ -18,7 +19,10 @@ export function Header({ symbol, currentPrice }: Props) {
     <header className={styles.container} style={{ ...getTokenColorStyle(symbol) }}>
       <VaultTitle />
       <PriceChart {...{ symbol, currentPrice }} />
-      <Protected />
+      <div className={styles.links}>
+        <Protected />
+        <SmartContractLink />
+      </div>
       <Actions symbol={symbol} />
     </header>
   )

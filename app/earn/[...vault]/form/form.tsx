@@ -40,7 +40,10 @@ const Form: React.FC = () => {
           <FormButton vaultChain={vaultChain} disabled={!isFormReady} isLoading={hasPendingTransactions} />
         </CardBody>
       </Card>
-      <BlocknativeLink />
+
+      <div className={styles.links}>
+        <BlocknativeLink />
+      </div>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-@import "../../../screen.scss";
+@import '../../../screen.scss';
 
 @keyframes animatedGradient {
   0% {
@@ -14,8 +14,6 @@
   }
 }
 
-
-
 .container {
   width: 470px;
   padding: var(--padding-200);
@@ -23,7 +21,7 @@
   position: relative;
 
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     top: 1.5rem;
     left: 4rem;
@@ -34,7 +32,7 @@
     background: var(--color-accent-background-gradient);
     border-radius: 0;
     background-size: 300% 300%;
-    mix-blend-mode:  screen;
+    mix-blend-mode: screen;
     filter: blur(3rem);
     transition: all 0.2s ease;
     opacity: 0.7;
@@ -44,12 +42,12 @@
     }
   }
 
-  &:focus-within:before, &:hover:before {
+  &:focus-within:before,
+  &:hover:before {
     transform: scale(1.02);
     opacity: 1;
     animation: animatedGradient 10s ease alternate infinite;
   }
-
 
   @media (max-width: $screen-mobile) {
     width: 100%;
@@ -76,4 +74,13 @@
   padding: var(--padding-400);
   padding-top: var(--padding-200);
   padding-bottom: 0;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--margin-200);
+  font-size: var(--font-size-300);
+  padding: var(--padding-200);
+  justify-content: center;
 }
