@@ -1,0 +1,11 @@
+@import '../../../../screen.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-300);
+
+  @media (max-width: $screen-mobile) {
+    min-width: var(--vault-mobile-column-width);
+  }
+}
