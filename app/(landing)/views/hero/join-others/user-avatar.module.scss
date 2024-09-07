@@ -1,0 +1,13 @@
+.base {
+  background-color: var(--bg-avatar-color);
+  opacity: 0.9;
+
+  width: 1.5rem;
+  height: 1.5rem;
+
+  transform: translateX(calc(var(--avatar-index) * -8px));
+}
+
+.icon {
+  color: #fff;
+}

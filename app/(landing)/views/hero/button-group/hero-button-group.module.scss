@@ -2,7 +2,7 @@
 
 .container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 
   min-height: 48px;
@@ -20,6 +20,7 @@
   @media (max-width: $screen-mobile) {
     align-self: stretch;
     flex-direction: column;
+    align-items: center;
 
     margin-top: var(--margin-400);
 
