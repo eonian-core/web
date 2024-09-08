@@ -10,6 +10,7 @@ import IconCheck from '@/components/icons/icon-check'
 import { FormInput } from '@/components/form-input/form-input'
 import Button from '@/components/button/button'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
+import { emailPattern } from '@/validators'
 
 export interface FormInputs {
   email: string
@@ -57,7 +58,7 @@ export function LinkRecoveryEmailForm({
         className={styles.input}
         variant="bordered"
         disabled={fullFormDisabled}
-        rules={{ required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i }}
+        rules={{ required: true, pattern: emailPattern }}
         startContent={<IconEmail />}
         errorMessage={<span>Please enter a valid email address</span>}
       />
