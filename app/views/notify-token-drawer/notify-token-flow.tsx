@@ -44,16 +44,3 @@ export function NotifyTokenFlow({ close }: LinkRecoveryEmailFlowProps) {
     </>
   )
 }
-//
-// export interface SubmitOptions {
-//   signAndLink: ReturnType<typeof useNotifyForm>[0]
-// }
-//
-// function useSubmit({
-//   signAndLink,
-// }: SubmitOptions) {
-//   return useCallback(async ({ email }: FormInputs) => {
-//
-//     await signAndLink({ address, chainId, email })
-//   }, [signAndLink, isWalletConnected, address, chainId])
-// }
