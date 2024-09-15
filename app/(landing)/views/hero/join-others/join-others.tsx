@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import React from 'react'
 import Image from 'next/image'
+import { unstable_cache } from 'next/cache'
 import tweets from '../../testimonials/tweets.json'
 import styles from './join-others.module.scss'
 
@@ -12,7 +13,13 @@ interface TweetWithUser {
   | undefined
 }
 
-export function JoinOthers() {
+const getTime = unstable_cache(
+  () => Promise.resolve((new Date().getHours())),
+  ['time'],
+  { revalidate: 3600, tags: ['time'] },
+)
+
+export async function JoinOthers() {
   const images = Object.values(tweets as unknown as TweetWithUser[])
     .map(tweet => tweet?.user?.profile_image_url_https)
     .filter(Boolean) as string[]
@@ -20,7 +27,7 @@ export function JoinOthers() {
   const placeholder = createPlaceholder() // In case if some URL is broken
 
   const toShow = 3
-  const currentIndex = (new Date().getHours() + toShow) % images.length
+  const currentIndex = (await getTime() + toShow) % images.length
   const visibleAvatars = images.slice(currentIndex, currentIndex + toShow)
   if (visibleAvatars.length < toShow)
     visibleAvatars.push(...images.slice(0, toShow - visibleAvatars.length))
