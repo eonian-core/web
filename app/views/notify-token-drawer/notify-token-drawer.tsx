@@ -34,7 +34,7 @@ export function useNotifyTokenContext(): NotifyTokenContextProps {
 
 export function NotifyTokenDrawer(props: { opened: boolean; onClose: () => void }) {
   return (
-      <Drawer title={'Notify token'} {...props}>
+      <Drawer title={'Suggest token'} {...props}>
         <div className={styles.formWrapper}>
           <NotifyTokenFlow close={props.onClose}/>
         </div>
