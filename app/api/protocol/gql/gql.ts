@@ -13,6 +13,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  query GetDeposits($offset: Int!, $limit: Int!) {\n    deposits(first: $limit, skip: $offset, orderBy: blockTimestamp, orderDirection: desc) {\n      caller\n    }\n  }\n": types.GetDepositsDocument,
     "\n  query VaultBySymbol($symbol: String!) {\n    vaults(where: { symbol: $symbol }) {\n      asset {\n        address\n        name\n        symbol\n        decimals\n        price {\n          value\n          decimals\n        }\n      }\n      rates(first: 1, where: { side: LENDER }) {\n        perBlock\n        apy {\n          yearly\n        }\n      }\n      address\n      name\n      symbol\n      decimals\n      fundAssets\n      fundAssetsUSD\n    }\n  }\n": types.VaultBySymbolDocument,
     "\n  query GetVaults {\n    vaults(orderBy: name, orderDirection: asc) {\n      asset {\n        address\n        name\n        symbol\n        decimals\n        price {\n          value\n          decimals\n        }\n      }\n      rates(first: 1, where: { side: LENDER }) {\n        perBlock\n        apy {\n          yearly\n        }\n      }\n      address\n      name\n      symbol\n      decimals\n      fundAssets\n      fundAssetsUSD\n    }\n  }\n": types.GetVaultsDocument,
     "\n  query GetVaultsSymbols {\n    vaults(orderBy: name, orderDirection: asc) {\n      symbol\n    }\n  }\n": types.GetVaultsSymbolsDocument,
@@ -32,6 +33,10 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetDeposits($offset: Int!, $limit: Int!) {\n    deposits(first: $limit, skip: $offset, orderBy: blockTimestamp, orderDirection: desc) {\n      caller\n    }\n  }\n"): (typeof documents)["\n  query GetDeposits($offset: Int!, $limit: Int!) {\n    deposits(first: $limit, skip: $offset, orderBy: blockTimestamp, orderDirection: desc) {\n      caller\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

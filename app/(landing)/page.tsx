@@ -80,6 +80,8 @@ import SocialProof, {
 } from './views/social-proof/social-proof'
 import Testimonials from './views/testimonials/testimonials'
 import Partners from './views/partners/partners'
+import { JoinOthers } from './views/hero/join-others/join-others'
+import { JoinOthersWrapper } from './views/hero/join-others/join-others-wrapper'
 import { VaultCard } from '@/components/vault-card/vault-card'
 import { VaultAction } from '@/components/vault-card/vault-action'
 
@@ -162,6 +164,8 @@ const components = {
   TokenFooter,
   FrictionRemover,
   TokenAction,
+  JoinOthersWrapper,
+  JoinOthers,
 }
 
 export default function Home() {
