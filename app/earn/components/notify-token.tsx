@@ -6,6 +6,6 @@ import { useNotifyTokenContext } from '@/views/notify-token-drawer/notify-token-
 export function NotifyToken() {
   const { open } = useNotifyTokenContext()
   return <>
-    Dont have the token you want to save? <a href="#" onClick={open}>Request it here</a>
+    <a href="#" onClick={open}>More cryptocurrencies</a>
   </>
 }
