@@ -5,6 +5,13 @@
   animation: appearWithDelay 1s ease-in;
 }
 
+.image {
+  filter: grayscale(100%) contrast(0.9);
+  border-radius: 50%;
+  overflow: hidden;
+  transform: translateX(calc(var(--avatar-index) * -6px));
+}
+
 @keyframes appearWithDelay {
   0% {
     opacity: 0;

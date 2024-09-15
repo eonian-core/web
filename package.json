@@ -79,6 +79,7 @@
     "react-wrap-balancer": "^0.4.0",
     "recharts": "^2.12.7",
     "redux": "^4.2.1",
+    "sharp": "^0.33.5",
     "siwe": "^2.3.2",
     "typescript": "^5.2.2"
   },
