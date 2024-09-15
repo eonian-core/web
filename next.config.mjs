@@ -30,6 +30,18 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
   },
+
+  images: {
+    // Used for `JoinOthers` component
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pbs.twimg.com',
+        port: '',
+        pathname: '**',
+      },
+    ],
+  },
 }
 
 const withMDX = createMDX({
