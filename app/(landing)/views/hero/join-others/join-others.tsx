@@ -46,7 +46,7 @@ export function JoinOthers() {
             alt="avatar"
             width={28}
             height={28}
-            placeholder={placeholder}
+            placeholder="blur"
             onError={(event) => {
               const image = event.target as HTMLImageElement
               image.src = placeholder
