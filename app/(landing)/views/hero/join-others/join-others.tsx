@@ -1,7 +1,8 @@
+'use client'
+
 import type { CSSProperties } from 'react'
 import React from 'react'
 import Image from 'next/image'
-import { unstable_cache } from 'next/cache'
 import tweets from '../../testimonials/tweets.json'
 import styles from './join-others.module.scss'
 
@@ -13,21 +14,22 @@ interface TweetWithUser {
   | undefined
 }
 
-const getTime = unstable_cache(
-  () => Promise.resolve((new Date().getHours())),
-  ['time'],
-  { revalidate: 3600, tags: ['time'] },
-)
+const placeholder = createPlaceholder() // In case if some URL is broken
 
-export async function JoinOthers() {
+export function JoinOthers() {
+  const [hours, setHours] = React.useState(new Date().getHours())
+
   const images = Object.values(tweets as unknown as TweetWithUser[])
     .map(tweet => tweet?.user?.profile_image_url_https)
     .filter(Boolean) as string[]
 
-  const placeholder = createPlaceholder() // In case if some URL is broken
+  React.useEffect(() => {
+    const hours = new Date().getHours()
+    setHours(hours)
+  }, [])
 
   const toShow = 3
-  const currentIndex = (await getTime() + toShow) % images.length
+  const currentIndex = (hours + toShow) % images.length
   const visibleAvatars = images.slice(currentIndex, currentIndex + toShow)
   if (visibleAvatars.length < toShow)
     visibleAvatars.push(...images.slice(0, toShow - visibleAvatars.length))
@@ -39,7 +41,6 @@ export async function JoinOthers() {
           <Image
             style={{ '--avatar-index': index } as CSSProperties}
             className={styles.image}
-            loader={({ src }) => src}
             key={src}
             src={src}
             alt="avatar"
@@ -48,7 +49,7 @@ export async function JoinOthers() {
             placeholder={placeholder}
             onError={(event) => {
               const image = event.target as HTMLImageElement
-              image.srcset = placeholder
+              image.src = placeholder
             }}
           />
         )
