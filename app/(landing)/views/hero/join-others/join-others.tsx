@@ -1,52 +1,47 @@
 'use client'
 
-import type { CSSProperties } from 'react'
-import React from 'react'
+import type { CSSProperties, PropsWithChildren } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import tweets from '../../testimonials/tweets.json'
 import styles from './join-others.module.scss'
-
-interface TweetWithUser {
-  user:
-  | {
-    profile_image_url_https: string | undefined
-  }
-  | undefined
-}
+import { useInterval } from './use-interval'
+import { avatars } from './images/images'
 
 const placeholder = createPlaceholder() // In case if some URL is broken
 
-export function JoinOthers() {
-  const [hours, setHours] = React.useState(new Date().getHours())
+const ONE_SECOND = 1000 // ms
 
-  const images = Object.values(tweets as unknown as TweetWithUser[])
-    .map(tweet => tweet?.user?.profile_image_url_https)
-    .filter(Boolean) as string[]
-
-  React.useEffect(() => {
-    const hours = new Date().getHours()
-    setHours(hours)
-  }, [])
+export function JoinOthers({ children }: PropsWithChildren) {
+  const [index, setIndex] = useState(0)
 
   const toShow = 3
-  const currentIndex = (hours + toShow) % images.length
-  const visibleAvatars = images.slice(currentIndex, currentIndex + toShow)
+  useInterval(() => {
+    if (index + 2 * toShow < avatars.length) {
+      setIndex(index + toShow)
+      return
+    }
+
+    setIndex(0)
+  }, 3 * ONE_SECOND)
+
+  const visibleAvatars = avatars.slice(index, index + toShow)
   if (visibleAvatars.length < toShow)
-    visibleAvatars.push(...images.slice(0, toShow - visibleAvatars.length))
+    visibleAvatars.push(...avatars.slice(0, toShow - visibleAvatars.length))
 
   return (
     <div className={styles.container}>
-      {visibleAvatars.map((src, index) => {
+      {visibleAvatars.map((avatar, index) => {
         return (
           <Image
             style={{ '--avatar-index': index } as CSSProperties}
             className={styles.image}
-            key={src}
-            src={src}
+            key={index}
+            src={avatar}
             alt="avatar"
             width={28}
             height={28}
             placeholder="blur"
+            blurDataURL={placeholder}
             onError={(event) => {
               const image = event.target as HTMLImageElement
               image.src = placeholder
@@ -54,7 +49,7 @@ export function JoinOthers() {
           />
         )
       })}
-      <span>Join 99+ others</span>
+      <span>{children}</span>
     </div>
   )
 }

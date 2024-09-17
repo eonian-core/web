@@ -3,13 +3,20 @@
   align-items: center;
 
   animation: appearWithDelay 1s ease-in;
+
+  span {
+    margin-bottom: -0.5rem;
+    margin-left: 0.5rem;
+  }
 }
 
 .image {
-  filter: grayscale(100%) contrast(0.9);
+  filter: grayscale(100%) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
   border-radius: 50%;
   overflow: hidden;
-  transform: translateX(calc(var(--avatar-index) * -6px));
+  animation: bounce 3s ease-in infinite;
+  animation-delay: calc((var(--avatar-index) + 1) * 0.1s);
+  margin-left: calc(var(--avatar-index) * -6px);
 }
 
 @keyframes appearWithDelay {
@@ -26,5 +33,25 @@
   70% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: grayscale(100%) blur(0) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
+  }
+
+  5% {
+    transform: translateY(-0.3rem);
+    opacity: 0.5;
+    filter: grayscale(100%) blur(3px) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
+  }
+
+  15%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: grayscale(100%) blur(0) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
   }
 }
