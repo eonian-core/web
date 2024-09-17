@@ -1,8 +1,8 @@
 import { requireEnv } from '@/api/environment'
 
-const tokenEntryId = requireEnv('NEXT_NOTIFY_TOKEN_ENTRY_ID', process.env.NEXT_NOTIFY_TOKEN_ENTRY_ID)
-const emailEntryId = requireEnv('NEXT_NOTIFY_TOKEN_EMAIL_ENTRY_ID', process.env.NEXT_NOTIFY_TOKEN_EMAIL_ENTRY_ID)
-const formUrl = requireEnv('NEXT_NOTIFY_TOKEN_URL', process.env.NEXT_NOTIFY_TOKEN_URL)
+const tokenEntryId = requireEnv('NEXT_PUBLIC_NOTIFY_TOKEN_ENTRY_ID', process.env.NEXT_PUBLIC_NOTIFY_TOKEN_ENTRY_ID)
+const emailEntryId = requireEnv('NEXT_PUBLIC_NOTIFY_TOKEN_EMAIL_ENTRY_ID', process.env.NEXT_PUBLIC_NOTIFY_TOKEN_EMAIL_ENTRY_ID)
+const formUrl = requireEnv('NEXT_PUBLIC_NOTIFY_TOKEN_URL', process.env.NEXT_PUBLIC_NOTIFY_TOKEN_URL)
 
 interface FormEntry {
   name: string
