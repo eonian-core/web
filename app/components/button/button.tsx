@@ -24,6 +24,7 @@ const Button: React.FC<ButtonProps> = ({
   bordered = false,
   gradient = false,
   dark = false,
+  gray = false,
   wide = false,
   round = false,
   disabled = false,
