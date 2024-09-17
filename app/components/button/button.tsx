@@ -30,6 +30,7 @@ const Button: React.FC<ButtonProps> = ({
   gradient = false,
   lightGradient = false,
   dark = false,
+  gray = false,
   wide = false,
   round = false,
   slightlyRound = false,

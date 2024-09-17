@@ -2,7 +2,7 @@ import type { ApolloError } from '@apollo/client'
 import type { FormEventHandler } from 'react'
 import { useForm } from 'react-hook-form'
 import clsx from 'clsx'
-import styles from './wallet-linking-drawer.module.scss'
+import styles from './notify-token-drawer.module.scss'
 import { FormInput } from '@/components/form-input/form-input'
 import Button from '@/components/button/button'
 import { emailPattern } from '@/validators'
@@ -32,7 +32,7 @@ export function NotifyEmailForm({
   return (
     <form onSubmit={handleSubmit(onSubmit) as FormEventHandler<any>} className={styles.form}>
       <div className={styles.header}>
-        <h3>Thank you!<br/>We can notify you when we add it</h3>
+        <h3>Thank you!<br />We can notify you when we add it</h3>
       </div>
       <FormInput
         data-autofocus
@@ -49,20 +49,20 @@ export function NotifyEmailForm({
         errorMessage={<span>Please enter a valid email address</span>}
       />
 
-      <Button
-        gradient
-        wide
-        size="lg"
-        className={clsx(styles.button, { [styles.success]: success })}
-        type="submit"
-        disabled={!formState.isValid || fullFormDisabled}
-      >
-        Get me know
-      </Button>
+        <Button
+          gradient
+          wide
+          size="lg"
+          className={clsx(styles.button, { [styles.success]: success })}
+          type="submit"
+          disabled={!formState.isValid || fullFormDisabled}
+        >
+          Get me know
+        </Button>
 
-      <p>
-        We don’t share it with anyone
-      </p>
+        <p className={styles.description}>
+          We don’t share it with anyone
+        </p>
 
       {error && (
         <div className={styles.error}>
