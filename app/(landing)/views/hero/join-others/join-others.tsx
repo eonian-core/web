@@ -1,61 +1,85 @@
 'use client'
 
-import type { CSSProperties } from 'react'
-import React from 'react'
+import type { CSSProperties, PropsWithChildren } from 'react'
+import { createRef, useState } from 'react'
+import {
+  CSSTransition,
+  TransitionGroup,
+} from 'react-transition-group'
 import Image from 'next/image'
-import tweets from '../../testimonials/tweets.json'
 import styles from './join-others.module.scss'
-
-interface TweetWithUser {
-  user:
-  | {
-    profile_image_url_https: string | undefined
-  }
-  | undefined
-}
+import { useInterval } from './use-interval'
+import { avatars } from './images/images'
 
 const placeholder = createPlaceholder() // In case if some URL is broken
 
-export function JoinOthers() {
-  const [hours, setHours] = React.useState(new Date().getHours())
+const ONE_SECOND = 1000 // ms
 
-  const images = Object.values(tweets as unknown as TweetWithUser[])
-    .map(tweet => tweet?.user?.profile_image_url_https)
-    .filter(Boolean) as string[]
-
-  React.useEffect(() => {
-    const hours = new Date().getHours()
-    setHours(hours)
-  }, [])
+export function JoinOthers({ children }: PropsWithChildren) {
+  const [indexes, setIndexes] = useState([0, 1, 2])
+  const [itemToChange, setItemToChange] = useState(0)
 
   const toShow = 3
-  const currentIndex = (hours + toShow) % images.length
-  const visibleAvatars = images.slice(currentIndex, currentIndex + toShow)
-  if (visibleAvatars.length < toShow)
-    visibleAvatars.push(...images.slice(0, toShow - visibleAvatars.length))
+  useInterval(() => {
+    if (itemToChange < indexes.length) {
+      const index = indexes[itemToChange]
+      const newIndexes = [...indexes]
+      if (index + 2 * toShow < avatars.length)
+        newIndexes[itemToChange] = index + toShow
+      else
+        newIndexes[itemToChange] = itemToChange
+
+      setIndexes(newIndexes)
+    }
+
+    setItemToChange((itemToChange + 1) % 20) // allow skip 17 ticks
+  }, 0.2 * ONE_SECOND)
+
+  const [avatarsWithRefs] = useState(() => avatars.map(avatar => ({
+    ref: createRef<any>(),
+    avatar,
+  })))
+
+  const visibleAvatars = indexes.map(i => avatarsWithRefs[i])
 
   return (
-    <div className={styles.container}>
-      {visibleAvatars.map((src, index) => {
-        return (
-          <Image
-            style={{ '--avatar-index': index } as CSSProperties}
-            className={styles.image}
-            key={src}
-            src={src}
-            alt="avatar"
-            width={28}
-            height={28}
-            placeholder="blur"
-            onError={(event) => {
-              const image = event.target as HTMLImageElement
-              image.src = placeholder
+      <TransitionGroup className={styles.container}>
+        {visibleAvatars.map(({ avatar, ref }, index) => {
+          return (
+            <CSSTransition
+            key={avatar.src}
+            nodeRef={ref}
+            timeout={500}
+            classNames={{
+              enter: styles.itemEnter,
+              enterActive: styles.itemEnterActive,
+              enterDone: styles.itemEnterDone,
+              exit: styles.itemExit,
+              exitActive: styles.itemExitActive,
+              exitDone: styles.itemExitDone,
             }}
-          />
-        )
-      })}
-      <span>Join 99+ others</span>
-    </div>
+          >
+            <Image
+              ref={ref}
+              style={{ '--avatar-index': index } as CSSProperties}
+              className={styles.image}
+              src={avatar}
+              alt="avatar"
+              width={28}
+              height={28}
+              placeholder="blur"
+              blurDataURL={placeholder}
+              onError={(event) => {
+                const image = event.target as HTMLImageElement
+                image.src = placeholder
+              }}
+            />
+          </CSSTransition>
+          )
+        })}
+        <span>{children}</span>
+      </TransitionGroup>
+
   )
 }
 

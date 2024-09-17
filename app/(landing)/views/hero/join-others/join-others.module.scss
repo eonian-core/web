@@ -3,13 +3,22 @@
   align-items: center;
 
   animation: appearWithDelay 1s ease-in;
+
+  span {
+    margin-bottom: -0.5rem;
+    margin-left: 0.5rem;
+  }
 }
 
 .image {
-  filter: grayscale(100%) contrast(0.9);
+  filter: grayscale(100%) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
   border-radius: 50%;
   overflow: hidden;
-  transform: translateX(calc(var(--avatar-index) * -6px));
+  animation-delay: calc((var(--avatar-index) + 1) * 0.1s);
+  margin-left: calc(var(--avatar-index) * -6px);
+  transition: all 0.3s;
+
+
 }
 
 @keyframes appearWithDelay {
@@ -27,4 +36,31 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.itemExit, .itemExitActive, .itemExitDone {
+  transform: translateY(-0.3rem);
+  opacity: 0;
+  filter: grayscale(100%) blur(3px) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
+}
+
+
+.itemExitDone {
+  display: none;
+}
+
+.itemEnter {
+  position: absolute;
+  opacity: 0;
+}
+
+.itemEnterActive {
+  transform: translateY(-0.3rem);
+  filter: grayscale(100%) blur(3px) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
+}
+
+.itemEnterDone {
+  transform: translateY(0);
+  opacity: 1;
+  filter: grayscale(100%) blur(0) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
 }
