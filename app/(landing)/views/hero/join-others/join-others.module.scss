@@ -10,12 +10,21 @@
   }
 }
 
+.avatars {
+  display: flex;
+  align-items: center;
+  
+  // prevents layout shifts during animation and image loading
+  width: 66px;
+  height: 28px;
+}
+
 .image {
   filter: grayscale(100%) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
   border-radius: 50%;
   overflow: hidden;
   animation-delay: calc((var(--avatar-index) + 1) * 0.1s);
-  margin-left: calc(var(--avatar-index) * -6px);
+  margin-left: -6px;
   transition: all 0.3s;
 
 

@@ -32,7 +32,7 @@ export function JoinOthers({ children }: PropsWithChildren) {
       setIndexes(newIndexes)
     }
 
-    setItemToChange((itemToChange + 1) % 20) // allow skip 17 ticks
+    setItemToChange((itemToChange + 1) % 15) // allow skip 12 ticks
   }, 0.2 * ONE_SECOND)
 
   const [avatarsWithRefs] = useState(() => avatars.map(avatar => ({
@@ -43,42 +43,44 @@ export function JoinOthers({ children }: PropsWithChildren) {
   const visibleAvatars = indexes.map(i => avatarsWithRefs[i])
 
   return (
-      <TransitionGroup className={styles.container}>
-        {visibleAvatars.map(({ avatar, ref }, index) => {
-          return (
-            <CSSTransition
-            key={avatar.src}
-            nodeRef={ref}
-            timeout={500}
-            classNames={{
-              enter: styles.itemEnter,
-              enterActive: styles.itemEnterActive,
-              enterDone: styles.itemEnterDone,
-              exit: styles.itemExit,
-              exitActive: styles.itemExitActive,
-              exitDone: styles.itemExitDone,
-            }}
-          >
-            <Image
-              ref={ref}
-              style={{ '--avatar-index': index } as CSSProperties}
-              className={styles.image}
-              src={avatar}
-              alt="avatar"
-              width={28}
-              height={28}
-              placeholder="blur"
-              blurDataURL={placeholder}
-              onError={(event) => {
-                const image = event.target as HTMLImageElement
-                image.src = placeholder
+      <div className={styles.container}>
+        <TransitionGroup className={styles.avatars}>
+          {visibleAvatars.map(({ avatar, ref }, index) => {
+            return (
+              <CSSTransition
+              key={avatar.src}
+              nodeRef={ref}
+              timeout={500}
+              classNames={{
+                enter: styles.itemEnter,
+                enterActive: styles.itemEnterActive,
+                enterDone: styles.itemEnterDone,
+                exit: styles.itemExit,
+                exitActive: styles.itemExitActive,
+                exitDone: styles.itemExitDone,
               }}
-            />
-          </CSSTransition>
-          )
-        })}
+            >
+              <Image
+                ref={ref}
+                style={{ '--avatar-index': index } as CSSProperties}
+                className={styles.image}
+                src={avatar}
+                alt="avatar"
+                width={28}
+                height={28}
+                placeholder="blur"
+                blurDataURL={placeholder}
+                onError={(event) => {
+                  const image = event.target as HTMLImageElement
+                  image.src = placeholder
+                }}
+              />
+            </CSSTransition>
+            )
+          })}
+        </TransitionGroup>
         <span>{children}</span>
-      </TransitionGroup>
+      </div>
 
   )
 }
