@@ -8,7 +8,7 @@ import { showEarn } from '../../features'
 
 import { TokenGradient } from './header/token-gradient'
 import { PageContent } from './page-content'
-import Loading from './loading'
+import SkeletonPage from './skeleton-page'
 import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 import { convertToUsd } from '@/finances/usd'
 
@@ -50,7 +50,7 @@ export default async function Page({ params }: Params) {
   const currentPrice = convertToUsd(vault.asset.price)
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<SkeletonPage />}>
       <TokenGradient symbol={symbol} />
       <PageContent {...{ symbol, vault, chainId, currentPrice }} />
     </Suspense>
