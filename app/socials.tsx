@@ -21,7 +21,7 @@ export const socials: LocalesSocials = {
     {
       name: 'Telegram',
       icon: <IconTelegram />,
-      href: 'https://t.me/+9yTj0kBHbMozMDAy',
+      href: 'https://t.me/eonian_news',
     },
     {
       name: 'Medium',
