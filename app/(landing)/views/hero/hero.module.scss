@@ -8,21 +8,10 @@
         left: 3rem;
     }
 
-    // 25% {
-
-    //     opacity: 0.3;
-    //     left: 5rem;
-    // }
-
     50% {
-        opacity: 0.6;
+        opacity: 0.4;
         left: 7rem;
     }
-
-    // 75% {
-    //     opacity: 0.3;
-    //     left: 10rem;
-    // }
 
     100% {
         opacity: 0;
@@ -103,9 +92,9 @@
         font-size: var(--font-size-700);
         line-height: var(--line-height-500);
         text-align: center;
-        margin-top: var(--margin-600);
+        margin-top: var(--margin-300);
         font-weight: var(--font-normal);
-        color: var(--color-text-300);
+        color: var(--color-text-200);
 
         animation: appearFrom09 0.5s ease-out;
     }
@@ -203,10 +192,6 @@
             font-size: var(--font-size-600);
             line-height: var(--line-height-600);
             margin-top: var(--margin-400);
-
-            br {
-                display: none;
-            }
         }
     }
 }
