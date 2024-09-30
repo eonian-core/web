@@ -82,6 +82,8 @@ import Testimonials from './views/testimonials/testimonials'
 import Partners from './views/partners/partners'
 import { JoinOthers } from './views/hero/join-others/join-others'
 import { JoinOthersWrapper } from './views/hero/join-others/join-others-wrapper'
+import { AwardNumber, AwardText } from './views/awards/award-text/award-text'
+import { Awards } from './views/awards/awards'
 import { VaultCard } from '@/components/vault-card/vault-card'
 import { VaultAction } from '@/components/vault-card/vault-action'
 
@@ -166,6 +168,9 @@ const components = {
   TokenAction,
   JoinOthersWrapper,
   JoinOthers,
+  Awards,
+  AwardText,
+  AwardNumber,
 }
 
 export default function Home() {

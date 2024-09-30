@@ -1,0 +1,51 @@
+@import "../../../../screen.scss";
+@import "../../../../components/styles/gradient-text.mixin.scss";
+@import "../../../../components/styles/appear.animation.scss";
+
+.container {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    color: var(--color-text-500);
+
+    svg {
+        width: 3rem;
+        height: 3.5rem;
+    }
+
+    // animation: appearUp 0.2s ease-in forwards;
+    // animation-delay: 1.5s;
+}
+
+.wreath {
+    transform: rotate(-20deg);
+    margin-right: -1rem;
+}
+
+.wreath.mirror {
+    transform: rotate(20deg) scaleX(-1);
+    margin-left: -1rem;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: var(--width-200);
+
+    font-size: var(--font-size-400);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-400);
+}
+
+.number {
+    font-size: var(--font-size-750);
+    font-weight: var(--font-bold);
+    line-height: var(--line-height-750);
+    color: var(--color-text-400);
+
+}
