@@ -1,18 +1,11 @@
 import type { PropsWithChildren } from 'react'
 import clsx from 'clsx'
-import awardStyles from '../awards.module.scss'
 import styles from './award-text.module.scss'
 import IconLaurelWreath from '@/components/icons/laurel-wreath'
 
-export interface AwardTextProps extends PropsWithChildren {
-  fullWidth?: boolean
-}
-
-export function AwardText({ children, fullWidth }: AwardTextProps) {
+export function AwardText({ children }: PropsWithChildren) {
   return (
-        <div className={clsx(styles.container, {
-          [awardStyles.fullWidth]: fullWidth,
-        })}>
+        <div className={styles.container}>
             <IconLaurelWreath className={styles.wreath} />
             <div className={styles.content}>
                 {children}

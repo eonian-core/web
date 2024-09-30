@@ -41,6 +41,7 @@ import {
   TokenStats,
   YearlyReturns,
 } from '../components/vault-card/token'
+import { AwardNumber, AwardText } from '../components/award-text/award-text'
 import HeroButton from './views/hero/button-group/hero-button'
 import HeroButtonGroup from './views/hero/button-group/hero-button-group'
 import Hero from './views/hero/hero'
@@ -82,8 +83,7 @@ import Testimonials from './views/testimonials/testimonials'
 import Partners from './views/partners/partners'
 import { JoinOthers } from './views/hero/join-others/join-others'
 import { JoinOthersWrapper } from './views/hero/join-others/join-others-wrapper'
-import { AwardNumber, AwardText } from './views/awards/award-text/award-text'
-import { Awards } from './views/awards/awards'
+import { Audits, AuditsItem } from './views/audits/audits'
 import { VaultCard } from '@/components/vault-card/vault-card'
 import { VaultAction } from '@/components/vault-card/vault-action'
 
@@ -168,9 +168,10 @@ const components = {
   TokenAction,
   JoinOthersWrapper,
   JoinOthers,
-  Awards,
   AwardText,
   AwardNumber,
+  Audits,
+  AuditsItem,
 }
 
 export default function Home() {

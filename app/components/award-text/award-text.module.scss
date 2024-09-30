@@ -1,6 +1,6 @@
-@import "../../../../screen.scss";
-@import "../../../../components/styles/gradient-text.mixin.scss";
-@import "../../../../components/styles/appear.animation.scss";
+@import "../../screen.scss";
+@import "../styles/gradient-text.mixin.scss";
+@import "../styles/appear.animation.scss";
 
 .container {
 
@@ -14,9 +14,6 @@
         width: 3rem;
         height: 3.5rem;
     }
-
-    // animation: appearUp 0.2s ease-in forwards;
-    // animation-delay: 1.5s;
 }
 
 .wreath {
