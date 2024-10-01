@@ -20,11 +20,12 @@ export function JoinOthers({ children }: PropsWithChildren) {
   const [itemToChange, setItemToChange] = useState(0)
 
   const toShow = 3
-  useInterval(() => {
+  useInterval(0.2 * ONE_SECOND, () => {
     if (itemToChange < indexes.length) {
       const index = indexes[itemToChange]
       const newIndexes = [...indexes]
-      if (index + 2 * toShow < avatars.length)
+
+      if (index + toShow < avatars.length)
         newIndexes[itemToChange] = index + toShow
       else
         newIndexes[itemToChange] = itemToChange
@@ -33,7 +34,7 @@ export function JoinOthers({ children }: PropsWithChildren) {
     }
 
     setItemToChange((itemToChange + 1) % 15) // allow skip 12 ticks
-  }, 0.2 * ONE_SECOND)
+  })
 
   const [avatarsWithRefs] = useState(() => avatars.map(avatar => ({
     ref: createRef<any>(),
