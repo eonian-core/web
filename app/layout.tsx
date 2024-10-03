@@ -67,7 +67,7 @@ const VERCEL_PROJECT_PRODUCTION_URL = logEnv('VERCEL_PROJECT_PRODUCTION_URL', pr
 const NEXT_PUBLIC_APP_URL = logEnv('NEXT_PUBLIC_APP_URL', process.env.NEXT_PUBLIC_APP_URL)
 
 // Based on https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
-const metadataBase: string = VERCEL_BRANCH_URL || VERCEL_URL || VERCEL_PROJECT_PRODUCTION_URL || NEXT_PUBLIC_APP_URL || 'https://eonian.finance/'
+const metadataBase: string = addHttpIfNeed(VERCEL_BRANCH_URL || VERCEL_URL || VERCEL_PROJECT_PRODUCTION_URL || NEXT_PUBLIC_APP_URL || 'https://eonian.finance/')
 // eslint-disable-next-line no-console
 console.log('Metadata Base', metadataBase)
 
@@ -104,4 +104,11 @@ export const metadata: Metadata = {
     },
   },
   manifest: '/site.webmanifest',
+}
+
+function addHttpIfNeed(url: string): string {
+  if (url.startsWith('http'))
+    return url
+
+  return `https://${url}`
 }
