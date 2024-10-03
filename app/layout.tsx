@@ -16,6 +16,7 @@ import { store } from './store/store'
 import { setLocale } from './store/slices/localeSlice'
 import { ToastContainerWrapperDynamic } from './components'
 import { robotoFont } from './shared/fonts/Roboto'
+import { addHttpIfNeed, logEnv } from './api/environment'
 
 export interface RootLayoutProps {
   children: React.ReactNode
@@ -60,21 +61,32 @@ function Analytics() {
   )
 }
 
+const VERCEL_BRANCH_URL = logEnv('VERCEL_BRANCH_URL', process.env.VERCEL_BRANCH_URL)
+const VERCEL_URL = logEnv('VERCEL_URL', process.env.VERCEL_URL)
+const VERCEL_PROJECT_PRODUCTION_URL = logEnv('VERCEL_PROJECT_PRODUCTION_URL', process.env.VERCEL_PROJECT_PRODUCTION_URL)
+const NEXT_PUBLIC_APP_URL = logEnv('NEXT_PUBLIC_APP_URL', process.env.NEXT_PUBLIC_APP_URL)
+
+// Based on https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+const metadataBase: string = addHttpIfNeed(VERCEL_BRANCH_URL || VERCEL_URL || VERCEL_PROJECT_PRODUCTION_URL || NEXT_PUBLIC_APP_URL || 'https://eonian.finance/')
+// eslint-disable-next-line no-console
+console.log('Metadata Base', metadataBase)
+
 export const metadata: Metadata = {
+  metadataBase: new URL(metadataBase),
   title: {
-    template: '%s | Eonian Protocol',
-    default: 'Eonian Protocol',
+    template: '%s | Eonian',
+    default: 'Eonian DAO',
   },
-  description: 'Decentralized and secure protocol for passive investments with peace of mind.',
+  description: 'The first insured decentralized savings account protocol that allows you to earn crypto passively',
   openGraph: {
     type: 'website',
-    locale: 'en_IE',
-    url: 'https://eonian.finance/',
+    locale: 'en_US',
+    url: metadataBase,
     title: {
-      template: '%s | Eonian Protocol',
-      default: 'Eonian | Crypto yield aggregator that cares about security',
+      template: '%s | Eonian',
+      default: 'Eonian DAO | The first decentralized savings account',
     },
-    description: 'Decentralized and secure real yeild protocol for passive investments with peace of mind.',
+    description: 'The first insured decentralized savings account that allows you to earn crypto passively',
     siteName: 'Eonian DAO',
   },
   twitter: {
