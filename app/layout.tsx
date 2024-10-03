@@ -16,7 +16,7 @@ import { store } from './store/store'
 import { setLocale } from './store/slices/localeSlice'
 import { ToastContainerWrapperDynamic } from './components'
 import { robotoFont } from './shared/fonts/Roboto'
-import { logEnv } from './api/environment'
+import { addHttpIfNeed, logEnv } from './api/environment'
 
 export interface RootLayoutProps {
   children: React.ReactNode
@@ -104,11 +104,4 @@ export const metadata: Metadata = {
     },
   },
   manifest: '/site.webmanifest',
-}
-
-function addHttpIfNeed(url: string): string {
-  if (url.startsWith('http'))
-    return url
-
-  return `https://${url}`
 }
