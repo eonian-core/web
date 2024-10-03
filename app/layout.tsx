@@ -46,8 +46,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   )
 }
 
+const VERCEL_ENV = logEnv('VERCEL_ENV', process.env.VERCEL_ENV)
+const isProduction = VERCEL_ENV === 'production'
+
 function Analytics() {
-  if (process.env.VERCEL_ENV !== 'production')
+  if (!isProduction)
     return null
 
   return (
@@ -67,7 +70,10 @@ const VERCEL_PROJECT_PRODUCTION_URL = logEnv('VERCEL_PROJECT_PRODUCTION_URL', pr
 const NEXT_PUBLIC_APP_URL = logEnv('NEXT_PUBLIC_APP_URL', process.env.NEXT_PUBLIC_APP_URL)
 
 // Based on https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
-const metadataBase: string = addHttpIfNeed(VERCEL_BRANCH_URL || VERCEL_URL || VERCEL_PROJECT_PRODUCTION_URL || NEXT_PUBLIC_APP_URL || 'https://eonian.finance/')
+const metadataBase: string = addHttpIfNeed(
+  (isProduction ? VERCEL_PROJECT_PRODUCTION_URL : VERCEL_BRANCH_URL || VERCEL_URL)
+  || NEXT_PUBLIC_APP_URL || 'https://eonian.finance/',
+)
 // eslint-disable-next-line no-console
 console.log('Metadata Base', metadataBase)
 
