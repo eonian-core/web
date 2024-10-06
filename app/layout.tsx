@@ -5,36 +5,39 @@ import './globals.scss'
 import 'react-toastify/dist/ReactToastify.min.css'
 
 import clsx from 'clsx'
-import Script from 'next/script'
+
+import type { PropsWithChildren } from 'react'
 import Providers from './providers/providers'
 import Footer from './components/footer/footer'
 import Navigation from './components/navigation/navigation'
 import PageLoaderTop from './components/page-loading-top/page-loader-top'
 import SlidingFooter from './components/sliding-footer/sliding-footer'
-import GoogleAnalytics from './google-analytics'
+import GoogleAnalytics from './analytics/google-analytics'
 import { store } from './store/store'
 import { setLocale } from './store/slices/localeSlice'
 import { ToastContainerWrapperDynamic } from './components'
 import { robotoFont } from './shared/fonts/Roboto'
-import { addHttpIfNeed, logEnv } from './api/environment'
-
-export interface RootLayoutProps {
-  children: React.ReactNode
-}
+import { addHttpIfNeed, isProduction, logEnv } from './analytics/env'
+import { Clarity } from './analytics/clarity'
+import { GoogleTagFooter, GoogleTagHead } from './analytics/google-tag'
 
 const locale = 'en'
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: PropsWithChildren) {
   store.dispatch(setLocale(locale))
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
-        <Analytics />
+        <Clarity />
+        <GoogleTagHead />
       </head>
       <GoogleAnalytics />
+
       <body className={clsx(robotoFont.className, 'dark text-foreground bg-background')}>
+        <GoogleTagFooter />
+
         <Providers locale={locale}>
           <PageLoaderTop />
           <Navigation />
@@ -43,24 +46,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
         </Providers>
       </body>
     </html>
-  )
-}
-
-const VERCEL_ENV = logEnv('VERCEL_ENV', process.env.VERCEL_ENV)
-const isProduction = VERCEL_ENV === 'production'
-
-function Analytics() {
-  if (!isProduction)
-    return null
-
-  return (
-    <Script type="text/javascript" id="analytics-ms">{`
-(function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "nsntzbdma2");
-    `}</Script>
   )
 }
 

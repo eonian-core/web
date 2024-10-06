@@ -8,6 +8,7 @@ import React from 'react'
 
 import type { ScriptProps } from 'next/script'
 import Script from 'next/script' // not allow lazy load component
+import { logEnv } from './env'
 
 interface GoogleAnalyticsProps {
   gaMeasurementId?: string
@@ -26,14 +27,15 @@ type WithIgnoreHashChange = GoogleAnalyticsProps & {
   }
 }
 
+const NEXT_PUBLIC_GA_MEASUREMENT_ID = logEnv('NEXT_PUBLIC_GA_MEASUREMENT_ID', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID)
+
 export default function GoogleAnalytics({
   debugMode = false,
   gaMeasurementId,
   gtagUrl = 'https://www.googletagmanager.com/gtag/js',
   strategy = 'afterInteractive',
 }: WithPageView | WithIgnoreHashChange): JSX.Element | null {
-  const _gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? gaMeasurementId
-
+  const _gaMeasurementId = NEXT_PUBLIC_GA_MEASUREMENT_ID ?? gaMeasurementId
   if (!_gaMeasurementId)
     return null
 
