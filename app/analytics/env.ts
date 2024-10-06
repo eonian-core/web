@@ -8,6 +8,13 @@ export function requireEnv(name: string, value: string | undefined): string {
   return value
 }
 
+export function addHttpIfNeed(url: string): string {
+  if (url.startsWith('http'))
+    return url
+
+  return `https://${url}`
+}
+
 /** Important to use process.env.[name] directly, because it replaced during build time */
 export function logEnv<T = undefined | string>(name: string, value: T): T {
   // eslint-disable-next-line no-console
@@ -16,9 +23,5 @@ export function logEnv<T = undefined | string>(name: string, value: T): T {
   return value
 }
 
-export function addHttpIfNeed(url: string): string {
-  if (url.startsWith('http'))
-    return url
-
-  return `https://${url}`
-}
+export const VERCEL_ENV = logEnv('VERCEL_ENV', process.env.VERCEL_ENV)
+export const isProduction = VERCEL_ENV === 'production'
