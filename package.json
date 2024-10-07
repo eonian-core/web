@@ -19,6 +19,7 @@
     "production": "next build && next start",
     "open:next": "opener http://localhost:3000",
     "test": "npm run jest",
+    "test:update": "npm run jest -- -u",
     "test:watch": "npm run jest -- --watchAll",
     "test:ci": "npm run jest --ci",
     "jest": "node --experimental-vm-modules --experimental-specifier-resolution=node ./node_modules/.bin/jest",
