@@ -3,7 +3,6 @@
 import type { PropsWithChildren } from 'react'
 import { toast } from 'react-toastify'
 import React, { useCallback, useState } from 'react'
-import type { ButtonProps } from '@nextui-org/react'
 import { Spinner } from '@nextui-org/react'
 
 import { useWalletWrapperContext } from '../../../../providers/wallet/wallet-wrapper-provider'
@@ -17,6 +16,7 @@ import { FormButtonBody } from './form-button-body'
 import { ButtonText } from './button-text'
 import { useAppSelector } from '@/store/hooks'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
+import type { ButtonProps } from '@/components/button/button'
 
 interface Props extends Omit<ButtonProps, 'onSubmit'> {
   vaultChain: Chain
@@ -36,7 +36,7 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
   const isInProgress = isLoading || isSubmiting
   const isDisabled = disabled || isInProgress || (shouldBeAbleToSubmit ? !canSubmit : false)
   return (
-    <FormButtonBody onPress={isDisabled ? undefined : handlePress} disabled={isDisabled} {...restProps}>
+    <FormButtonBody onClick={isDisabled ? undefined : handlePress} disabled={isDisabled} {...restProps}>
       {isInProgress && <Spinner color="current" size="md" />}
       {!isInProgress && (
         <ButtonText

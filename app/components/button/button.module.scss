@@ -142,6 +142,10 @@
   }
 }
 
+.slightlyRound {
+  border-radius: var(--border-radius-600);
+}
+
 .round {
   border-radius: 9999px;
 }
@@ -189,6 +193,14 @@
   color: var(--color-text-200);
 }
 
+.lightGradient {
+  background: linear-gradient(
+    112deg,  
+    hsl(239 84% 67%) 50%, 
+    hsl(265, 61%, 66%) 100%) !important; // override global.scss that can get higher specificity
+  color: var(--color-text-200);
+}
+
 .disabled {
   background: var(--color-neutral-600) !important;
   color: var(--color-text-200) !important;
@@ -198,6 +210,10 @@
     background: none !important;
     border-color: var(--color-neutral-600) !important;
     color: var(--color-text-100) !important;
+  }
+
+  &.lightGradient {
+    background-color: var(--color-dark-400) !important;
   }
 }
 

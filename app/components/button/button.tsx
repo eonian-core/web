@@ -8,9 +8,11 @@ export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 's
   size?: 'sm' | 'md' | 'lg'
   bordered?: boolean
   gradient?: boolean
+  lightGradient?: boolean
   dark?: boolean
   wide?: boolean
   round?: boolean
+  slightlyRound?: boolean
   disabled?: boolean
   development?: boolean
   icon?: React.ReactNode
@@ -24,9 +26,11 @@ const Button: React.FC<ButtonProps> = ({
   size = 'md',
   bordered = false,
   gradient = false,
+  lightGradient = false,
   dark = false,
   wide = false,
   round = false,
+  slightlyRound = false,
   disabled = false,
   development = false,
   icon,
@@ -39,10 +43,12 @@ const Button: React.FC<ButtonProps> = ({
   const classes = clsx(styles.button, styles[size], className, {
     [styles.bordered]: bordered,
     [styles.gradient]: gradient,
+    [styles.lightGradient]: lightGradient,
     [styles.dark]: dark,
     [styles.icon]: !!icon,
     [styles.wide]: wide,
     [styles.round]: round,
+    [styles.slightlyRound]: slightlyRound,
     [styles.disabled]: disabled,
     [styles.inDevelopment]: development,
     [styles.iconLeft]: iconPosition === 'left',
