@@ -17,6 +17,7 @@ import { useButtonText } from './use-button-text'
 import { useAppSelector } from '@/store/hooks'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 import type { ButtonProps } from '@/components/button/button'
+import { clarityAdapter } from '@/analytics/clarity-adapter'
 
 interface Props extends Omit<ButtonProps, 'onSubmit'> {
   vaultChain: Chain
@@ -107,6 +108,7 @@ export function useSubmit() {
     isSubmiting,
     submit: useCallback(
       async (formAction: FormAction) => {
+        clarityAdapter.trackEvent(`start execute ${formAction}`)
         if (!canSubmit) {
           toast('Looks like something is wrong, try refreshing the page', {
             type: 'error',
@@ -121,6 +123,7 @@ export function useSubmit() {
 
           // Execute Deposit/Withdraw transaction
           const success = await executeTransaction(formAction, vault, inputValue)
+          clarityAdapter.trackEvent(`execute ${formAction} result: ${success}`)
           if (success) {
             // Refresh wallet balance & vault deposit after the transaction executed.
             void refetechVaultUserData()

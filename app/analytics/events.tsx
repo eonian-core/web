@@ -1,25 +1,39 @@
+'use client'
+import { usePathname } from 'next/navigation'
 import type React from 'react'
-import type { PropsWithChildren } from 'react'
+import { type PropsWithChildren, useCallback } from 'react'
+import { clarityAdapter } from './clarity-adapter'
 
-declare global {
-  interface Window {
-    clarity: (type: string, name: string) => void
-  }
+export const isVaultPageReg = /\/earn\/\w+\/\w+/
+
+function mapPathnameToRoute(pathname: string) {
+  if (isVaultPageReg.test(pathname))
+    return '/earn/[...vault]'
+
+  return pathname
 }
 
-export function track(name: React.ReactNode) {
-  if (
-    typeof window === 'undefined'
-        || !window.clarity
-        || typeof window.clarity !== 'function'
-  ) {
-    console.warn('Clarity is not loaded to publish event', name)
-    return
-  }
+export function useTrack() {
+  const pathname = usePathname()
 
+  return useCallback((name: React.ReactNode) => {
+    return trackNodeEvent({
+      context: mapPathnameToRoute(pathname),
+      name,
+    })
+  }, [pathname])
+}
+
+export interface TrackEvent {
+  context?: string | null
+  name: React.ReactNode
+}
+
+export function trackNodeEvent({ context, name }: TrackEvent) {
   try {
-    const eventName = getNodeText(name)
-    window.clarity('event', eventName)
+    const nodeText = getNodeText(name)
+    const eventName = typeof context === 'string' ? `${context}/${nodeText}` : nodeText
+    clarityAdapter.trackEvent(eventName)
   }
   catch (error) {
     console.error('Failed to push event to Clarity', name, error)
@@ -33,10 +47,8 @@ function getNodeText(node: React.ReactNode): string {
   switch (typeof node) {
     case 'string':
     case 'number':
-      return node.toString()
-
     case 'boolean':
-      return node ? 'true' : 'false'
+      return `${node}`
 
     case 'object': {
       if (Array.isArray(node))

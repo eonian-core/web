@@ -4,7 +4,7 @@ import React, { useCallback } from 'react'
 
 import clsx from 'clsx'
 import styles from './button.module.scss'
-import * as events from '@/analytics/events'
+import { useTrack } from '@/analytics/events'
 
 export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'size' | 'type'> {
   size?: 'sm' | 'md' | 'lg'
@@ -56,11 +56,12 @@ const Button: React.FC<ButtonProps> = ({
     [styles.iconLeft]: iconPosition === 'left',
   })
 
+  const trackEvent = useTrack()
   const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    events.track(children)
+    trackEvent(children)
 
     onClick?.(event)
-  }, [onClick, children])
+  }, [onClick, children, trackEvent])
 
   return (
     <button className={classes} onClick={handleClick} {...restProps}>
