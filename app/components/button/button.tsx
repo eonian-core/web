@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import clsx from 'clsx'
 import styles from './button.module.scss'
+import * as events from '@/analytics/events'
 
 export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'size' | 'type'> {
   size?: 'sm' | 'md' | 'lg'
@@ -32,6 +33,7 @@ const Button: React.FC<ButtonProps> = ({
   iconPosition = 'right',
   children,
   className,
+  onClick,
   ...restProps
 }) => {
   const classes = clsx(styles.button, styles[size], className, {
@@ -45,8 +47,15 @@ const Button: React.FC<ButtonProps> = ({
     [styles.inDevelopment]: development,
     [styles.iconLeft]: iconPosition === 'left',
   })
+
+  const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    events.track(children)
+
+    onClick?.(event)
+  }, [onClick, children])
+
   return (
-    <button className={classes} {...restProps}>
+    <button className={classes} onClick={handleClick} {...restProps}>
       {iconPosition === 'left' && icon}
       {children}
       {iconPosition === 'right' && icon}
