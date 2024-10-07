@@ -13,7 +13,7 @@ import { useExecuteTransaction, useVaultUserInfo } from '../../hooks'
 import { useVaultContext } from '../../hooks/use-vault-context'
 import styles from './form-button.module.scss'
 import { FormButtonBody } from './form-button-body'
-import { ButtonText } from './button-text'
+import { useButtonText } from './use-button-text'
 import { useAppSelector } from '@/store/hooks'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 import type { ButtonProps } from '@/components/button/button'
@@ -35,23 +35,23 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
   const shouldBeAbleToSubmit = status === WalletStatus.CONNECTED
   const isInProgress = isLoading || isSubmiting
   const isDisabled = disabled || isInProgress || (shouldBeAbleToSubmit ? !canSubmit : false)
+
+  const text = useButtonText({
+    insured,
+    status,
+    isOnDifferentChain,
+    chainName: vaultChain.name,
+    formAction,
+    walletAvailable,
+    haveInputValue,
+    haveEnoughAssets,
+  })
   return (
     <FormButtonBody onClick={isDisabled ? undefined : handlePress} disabled={isDisabled} {...restProps}>
-      {isInProgress && <Spinner color="current" size="md" />}
-      {!isInProgress && (
-        <ButtonText
-          {...{
-            insured,
-            status,
-            isOnDifferentChain,
-            chainName: vaultChain.name,
-            formAction,
-            walletAvailable,
-            haveInputValue,
-            haveEnoughAssets,
-          }}
-        />
-      )}
+      {isInProgress
+        ? <Spinner color="current" size="md" />
+        : text
+      }
     </FormButtonBody>
   )
 }

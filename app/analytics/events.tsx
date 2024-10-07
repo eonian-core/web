@@ -40,7 +40,7 @@ function getNodeText(node: React.ReactNode): string {
 
     case 'object': {
       if (Array.isArray(node))
-        return node.map(getNodeText).join('')
+        return node.map(getNodeText).join(' ')
 
       if ('props' in node)
         return getNodeText((node.props as PropsWithChildren).children as React.ReactNode)
