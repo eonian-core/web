@@ -5,13 +5,12 @@ import fs from 'fs/promises'
 import { unstable_cache } from 'next/cache'
 import type { Tweet } from 'react-tweet/api'
 import { getTweet as _getTweet } from 'react-tweet/api'
+import { tweets } from './tweets'
 
 let cacheFlushTimeout: NodeJS.Timeout | undefined
-let fileCache: Partial<Record<string, Tweet>> | undefined
+const fileCache = tweets as unknown as Partial<Record<string, Tweet>>
 
 export const getTweet = unstable_cache(async (id: string) => {
-  fileCache ??= await import('./tweets.json') as unknown as Partial<Record<string, Tweet>>
-
   let tweet = fileCache[id]
   if (tweet)
     return tweet
