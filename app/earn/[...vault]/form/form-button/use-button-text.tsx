@@ -1,8 +1,11 @@
+import { RefillNativeToken } from './refill-native-token'
+import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import { FormAction } from '@/store/slices/types'
 
 interface ButtonTextProps {
   insured: boolean
+  chainId: ChainId
   status: WalletStatus
   isOnDifferentChain?: boolean
   chainName?: string
@@ -10,10 +13,22 @@ interface ButtonTextProps {
   walletAvailable?: boolean
   haveInputValue?: boolean
   haveEnoughAssets?: boolean
+  haveEnoughForGasPayment?: boolean
 }
 
 /** Important to keep it as hook, to use rendered text for event tracking */
-export function useButtonText({ insured, status, isOnDifferentChain, chainName, formAction, walletAvailable, haveInputValue, haveEnoughAssets }: ButtonTextProps) {
+export function useButtonText({
+  insured,
+  chainId,
+  status,
+  isOnDifferentChain,
+  chainName,
+  formAction,
+  walletAvailable,
+  haveInputValue,
+  haveEnoughAssets,
+  haveEnoughForGasPayment,
+}: ButtonTextProps) {
   if (!insured)
     return 'Asset Insurance Required'
 
@@ -22,8 +37,6 @@ export function useButtonText({ insured, status, isOnDifferentChain, chainName, 
 
   if (status === WalletStatus.CONNECTING)
     return 'Connecting wallet...'
-
-  // wallet connected...
 
   if (isOnDifferentChain)
     return `Switch to ${chainName}`
@@ -36,6 +49,9 @@ export function useButtonText({ insured, status, isOnDifferentChain, chainName, 
 
   if (!haveEnoughAssets)
     return formAction === FormAction.DEPOSIT ? 'Insufficient wallet balance' : 'Insufficient account balance'
+
+  if (!haveEnoughForGasPayment)
+    return <RefillNativeToken chainId={chainId} />
 
   if (formAction === FormAction.DEPOSIT)
     return 'Save'
