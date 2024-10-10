@@ -1,15 +1,20 @@
-import React from 'react'
+'use client'
+
+import React, { useCallback } from 'react'
 
 import clsx from 'clsx'
 import styles from './button.module.scss'
+import { useTrack } from '@/analytics/events'
 
 export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'size' | 'type'> {
   size?: 'sm' | 'md' | 'lg'
   bordered?: boolean
   gradient?: boolean
+  lightGradient?: boolean
   dark?: boolean
   wide?: boolean
   round?: boolean
+  slightlyRound?: boolean
   disabled?: boolean
   development?: boolean
   icon?: React.ReactNode
@@ -23,30 +28,43 @@ const Button: React.FC<ButtonProps> = ({
   size = 'md',
   bordered = false,
   gradient = false,
+  lightGradient = false,
   dark = false,
   wide = false,
   round = false,
+  slightlyRound = false,
   disabled = false,
   development = false,
   icon,
   iconPosition = 'right',
   children,
   className,
+  onClick,
   ...restProps
 }) => {
   const classes = clsx(styles.button, styles[size], className, {
     [styles.bordered]: bordered,
     [styles.gradient]: gradient,
+    [styles.lightGradient]: lightGradient,
     [styles.dark]: dark,
     [styles.icon]: !!icon,
     [styles.wide]: wide,
     [styles.round]: round,
+    [styles.slightlyRound]: slightlyRound,
     [styles.disabled]: disabled,
     [styles.inDevelopment]: development,
     [styles.iconLeft]: iconPosition === 'left',
   })
+
+  const trackEvent = useTrack()
+  const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    trackEvent(children)
+
+    onClick?.(event)
+  }, [onClick, children, trackEvent])
+
   return (
-    <button className={classes} {...restProps}>
+    <button className={classes} onClick={handleClick} {...restProps}>
       {iconPosition === 'left' && icon}
       {children}
       {iconPosition === 'right' && icon}

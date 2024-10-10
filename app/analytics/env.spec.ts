@@ -1,4 +1,4 @@
-import { requireEnv } from './environment'
+import { requireEnv } from './env'
 
 describe('requireEnv', () => {
   it('returns the value when it exists', () => {

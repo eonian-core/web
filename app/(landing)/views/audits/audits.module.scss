@@ -1,0 +1,66 @@
+@import "../../../screen.scss";
+
+.container {
+    margin: 0 0 var(--margin-1100);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--margin-500);
+    flex-wrap: wrap;
+}
+
+.audits {
+    display: flex;
+    flex-direction: row;
+    gap: var(--margin-400);
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 var(--margin-1100);
+}
+
+.auditsItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--margin-100);
+
+    svg {
+        margin-top: -0.3rem;
+    }
+}
+
+@media (max-width: $screen-mobile) {
+    .audits {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--margin-400);
+    }
+
+    .auditsItem:last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+
+@media (max-width: $screen-small-mobile) {
+    .audits {
+        gap: var(--margin-200);
+        row-gap: var(--margin-300);
+    }
+
+    .auditsItem {
+        font-size: var(--font-size-300);
+    }
+}
+
+@media (max-width: $screen-tiny-mobile) {
+    .audits {
+        grid-template-columns: 1fr;
+    }
+
+    .auditsItem {
+        justify-content: flex-start;
+    }
+}

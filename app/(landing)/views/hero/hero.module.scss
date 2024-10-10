@@ -5,28 +5,17 @@
 @keyframes shine {
     0% {
         opacity: 0;
-        left: 38rem;
-    }
-
-    25% {
-
-        opacity: 0.3;
-        left: 40rem;
+        left: 3rem;
     }
 
     50% {
-        opacity: 0.7;
-        left: 43rem;
-    }
-
-    75% {
-        opacity: 0.3;
-        left: 45rem;
+        opacity: 0.4;
+        left: 7rem;
     }
 
     100% {
         opacity: 0;
-        left: 46rem;
+        left: 15rem;
     }
 }
 
@@ -91,11 +80,11 @@
 
         &::after {
             background: var(--accent-glow);
-            width: 20rem;
-            height: 15rem;
+            width: 50rem;
+            height: 10rem;
             z-index: -1;
-            bottom: -2rem;
-            animation: shine 10s ease-in-out infinite;
+            bottom: 0rem;
+            animation: shine 5s ease-in-out infinite;
         }
     }
 
@@ -103,9 +92,9 @@
         font-size: var(--font-size-700);
         line-height: var(--line-height-500);
         text-align: center;
-        margin-top: var(--margin-600);
+        margin-top: var(--margin-300);
         font-weight: var(--font-normal);
-        color: var(--color-text-300);
+        color: var(--color-text-200);
 
         animation: appearFrom09 0.5s ease-out;
     }
@@ -135,28 +124,17 @@
     0% {
 
         opacity: 0;
-        left: 29rem;
-    }
-
-    25% {
-
-        opacity: 0.3;
-        left: 30rem;
+        left: 3rem;
     }
 
     50% {
         opacity: 0.55;
-        left: 31rem;
-    }
-
-    75% {
-        opacity: 0.3;
-        left: 32rem;
+        left: 7rem;
     }
 
     100% {
         opacity: 0;
-        left: 36rem;
+        left: 10rem;
     }
 }
 
@@ -167,8 +145,11 @@
         letter-spacing: var(--letter-spacing-black-400);
 
         &::after {
-            bottom: -3rem;
-            animation: shineDesktop 10s ease-in-out infinite;
+            bottom: 0rem;
+            width: 38rem;
+            height: 8rem;
+            left: 7rem;
+            animation: shineDesktop 5s ease-in-out infinite;
         }
     }
 }
@@ -177,28 +158,17 @@
     0% {
 
         opacity: 0;
-        left: 20rem;
-    }
-
-    25% {
-
-        opacity: 0.5;
-        left: 21rem;
+        left: 0rem;
     }
 
     50% {
         opacity: 0.8;
-        left: 22.5rem;
-    }
-
-    75% {
-        opacity: 0.5;
-        left: 23rem;
+        left: 5rem;
     }
 
     100% {
         opacity: 0;
-        left: 26rem;
+        left: 10rem;
     }
 }
 
@@ -210,22 +180,18 @@
             letter-spacing: var(--letter-spacing-black-300);
 
             &::after {
-                width: 15rem;
-                height: 10rem;
-                bottom: -2rem;
-                animation: shineLaptop 10s ease-in-out infinite;
+                width: 30rem;
+                height: 3rem;
+                bottom: 1.5rem;
+                animation: shineLaptop 5s ease-in-out infinite;
             }
         }
 
         &>p {
             max-width: var(--width-700);
-            font-size: var(--font-size-750);
-            line-height: var(--line-height-700);
+            font-size: var(--font-size-600);
+            line-height: var(--line-height-600);
             margin-top: var(--margin-400);
-
-            br {
-                display: none;
-            }
         }
     }
 }
@@ -233,27 +199,17 @@
 @keyframes shineTablet {
     0% {
         opacity: 0;
-        left: 11rem;
-    }
-
-    25% {
-        opacity: 0.5;
-        left: 12rem;
+        left: 0rem;
     }
 
     50% {
         opacity: 0.9;
-        left: 13rem;
-    }
-
-    75% {
-        opacity: 0.5;
-        left: 14rem;
+        left: 1rem;
     }
 
     100% {
         opacity: 0;
-        left: 15rem;
+        left: 10rem;
     }
 }
 
@@ -273,11 +229,10 @@
             letter-spacing: var(--letter-spacing-black-400);
 
             &::after {
-
-                width: 15rem;
-                height: 10rem;
-                bottom: -1rem;
-                animation: shineTablet 10s ease-in-out infinite;
+                width: 30rem;
+                height: 3rem;
+                bottom: 1rem;
+                animation: shineTablet 5s ease-in-out infinite;
             }
 
             &::before {
@@ -304,28 +259,17 @@
 @keyframes shineMobile {
     0% {
         opacity: 0;
-        left: 6rem;
-    }
-
-    25% {
-        opacity: 0.5;
-        left: 7rem;
+        left: 0rem;
     }
 
     50% {
-        opacity: 0.7;
-        left: 8rem;
-    }
-
-    75% {
-        opacity: 0.5;
-        left: 9rem;
+        opacity: 0.9;
+        left: 0rem;
     }
 
     100% {
-
         opacity: 0;
-        left: 10rem;
+        left: 3rem;
     }
 }
 
@@ -338,10 +282,10 @@
             letter-spacing: var(--letter-spacing-black-300);
 
             &::after {
-                width: 15rem;
-                height: 10rem;
-                bottom: -2.5rem;
-                animation: shineMobile 10s ease-in-out infinite;
+                width: 20rem;
+                height: 2rem;
+                bottom: 1rem;
+                animation: shineMobile 5s ease-in-out infinite;
             }
         }
 
@@ -356,28 +300,17 @@
 @keyframes shineSmallMobile {
     0% {
         opacity: 0;
-        left: 3.5rem;
-    }
-
-    25% {
-        opacity: 0.5;
-        left: 4rem;
+        left: 0rem;
     }
 
     50% {
         opacity: 0.9;
-        left: 5rem;
-    }
-
-    75% {
-        opacity: 0.5;
-        left: 6rem;
+        left: 0rem;
     }
 
     100% {
-
         opacity: 0;
-        left: 6.5rem;
+        left: 3rem;
     }
 }
 
@@ -389,11 +322,11 @@
             line-height: var(--line-height-1000);
 
             &::after {
-                width: 10rem;
-                height: 7rem;
-                bottom: -1.5rem;
+                width: 20rem;
+                height: 1rem;
+                bottom: 1rem;
 
-                animation: shineSmallMobile 10s ease-in-out infinite;
+                animation: shineSmallMobile 5s ease-in-out infinite;
             }
 
             &::before {

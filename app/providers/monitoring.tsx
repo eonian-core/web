@@ -1,9 +1,15 @@
 /* eslint-disable no-console */
 import LogRocket from 'logrocket'
 import React, { useContext } from 'react'
+import { clarityAdapter } from '@/analytics/clarity-adapter'
+
+export interface MonitoringProperties {
+  label: string
+  address: string
+}
 
 interface MonitoringContextValue {
-  identify: (uid: string, properties: Record<string, any>) => void
+  identify: (uid: string, properties: MonitoringProperties) => void
   reportError: (error: Error, source: string) => void
 }
 
@@ -33,11 +39,13 @@ export function MonitoringProvider({ children }: React.PropsWithChildren) {
     console.debug('Monitoring is disabled')
   }, [])
 
-  const identify = React.useCallback((uid: string, properties: Record<string, any>) => {
+  const identify = React.useCallback((uid: string, properties: MonitoringProperties) => {
     if (process.env.NODE_ENV !== 'production')
       return
 
-    LogRocket.identify(uid, properties)
+    clarityAdapter.trackTag('address', uid)
+    clarityAdapter.trackTag('label', properties.label)
+    LogRocket.identify(uid, properties as Record<string, any>)
     console.debug('User identification is set')
   }, [])
 

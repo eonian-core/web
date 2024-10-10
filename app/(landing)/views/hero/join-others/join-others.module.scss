@@ -17,10 +17,13 @@
   // prevents layout shifts during animation and image loading
   width: 66px;
   height: 28px;
+
+  --blured-join-avatar: grayscale(100%) blur(3px) drop-shadow(0 1px 5px var(--color-dark-900));
+  --normal-join-avatar: grayscale(100%) blur(0) drop-shadow(0 1px 5px var(--color-dark-900));
 }
 
 .image {
-  filter: grayscale(100%) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
+  filter: var(--normal-join-avatar);
   border-radius: 50%;
   overflow: hidden;
   animation-delay: calc((var(--avatar-index) + 1) * 0.1s);
@@ -50,7 +53,7 @@
 .itemExit, .itemExitActive, .itemExitDone {
   transform: translateY(-0.3rem);
   opacity: 0;
-  filter: grayscale(100%) blur(3px) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
+  filter: var(--blured-join-avatar);
 }
 
 
@@ -65,11 +68,11 @@
 
 .itemEnterActive {
   transform: translateY(-0.3rem);
-  filter: grayscale(100%) blur(3px) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
+  filter: var(--blured-join-avatar);
 }
 
 .itemEnterDone {
   transform: translateY(0);
   opacity: 1;
-  filter: grayscale(100%) blur(0) drop-shadow(0 1px 5px rgba(4, 4, 107, 1));
+  filter: var(--normal-join-avatar);
 }
