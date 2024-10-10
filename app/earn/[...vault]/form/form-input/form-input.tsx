@@ -24,7 +24,7 @@ interface FormInputProps {
 }
 
 const FormInput: React.FC<FormInputProps> = ({ disabled }) => {
-  const { displayValue, placeholderDisplayValue, onValueChange, vault, formAction } = useVaultContext()
+  const { displayValue, placeholderDisplayValue, onValueChange, vault } = useVaultContext()
   const { walletBalanceBN } = useAppSelector(state => state.vaultUser)
   const { status } = useWalletWrapperContext()
 
