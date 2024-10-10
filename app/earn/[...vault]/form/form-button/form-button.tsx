@@ -33,9 +33,10 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
   const isOnDifferentChain = vaultChain.id !== chain?.id
   const handlePress = useHandlePress(vaultChain.id, isOnDifferentChain, submit)
 
-  const shouldBeAbleToSubmit = status === WalletStatus.CONNECTED
+  const isWrongChainSelected = chain?.id === -1 || chain?.id !== vaultChain.id
+  const isAbleToSubmit = !isWrongChainSelected && status === WalletStatus.CONNECTED
   const isInProgress = isLoading || isSubmiting
-  const isDisabled = disabled || isInProgress || (shouldBeAbleToSubmit ? !canSubmit : false)
+  const isDisabled = disabled || isInProgress || (isAbleToSubmit ? !canSubmit : false)
 
   const text = useButtonText({
     insured,
