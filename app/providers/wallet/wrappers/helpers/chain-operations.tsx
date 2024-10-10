@@ -16,7 +16,7 @@ export function getChainNativeToken(id: ChainId): string | null {
 export function getChainNativeTokenTutorialLink(id: ChainId): string {
   const linkLookupMap: Record<ChainId, string | null> = {
     [ChainId.BSC_MAINNET]: 'https://www.binance.com/en/how-to-buy/bnb',
-    [ChainId.SEPOLIA]: null,
+    [ChainId.SEPOLIA]: 'https://blog.chain.link/sepolia-eth/',
     [ChainId.UNKNOWN]: null,
   }
   return linkLookupMap[id] ?? 'https://portfolio.metamask.io/buy/build-quote'
