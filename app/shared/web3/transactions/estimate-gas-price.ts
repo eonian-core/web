@@ -12,7 +12,7 @@ const MAX_GAS_ESTIMATION_ATTEMPTS = 3
 const FALLBACK_DEPOSIT_GAS = 295000n
 const FALLBACK_WITHDRAW_GAS = 305000n
 
-let attempts = 0
+const attempts: Record<string, number> = {}
 
 export async function estimateGasPriceOfActions(
   vaultAddress: string,
@@ -34,7 +34,8 @@ export async function estimateGasPriceOfActions(
   if (gasPrice === null)
     return null
 
-  if (attempts >= MAX_GAS_ESTIMATION_ATTEMPTS) {
+  const attempt = attempts[vaultAddress] ?? 0
+  if (attempt >= MAX_GAS_ESTIMATION_ATTEMPTS) {
     return {
       deposit: FALLBACK_DEPOSIT_GAS * gasPrice,
       withdraw: FALLBACK_WITHDRAW_GAS * gasPrice,
@@ -50,7 +51,8 @@ export async function estimateGasPriceOfActions(
   }
   catch (e) {
     console.warn('Unable to estimate gas:', e)
-    attempts++
+    attempts[vaultAddress] ??= 0
+    attempts[vaultAddress] += 1
   }
 
   return {
