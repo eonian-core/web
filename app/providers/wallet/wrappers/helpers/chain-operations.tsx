@@ -4,6 +4,24 @@ import type { Chain } from '../types'
 import { ChainId } from './wallet-chain-id'
 import type { TokenSymbol } from '@/types'
 
+export function getChainNativeToken(id: ChainId): string | null {
+  const tokenLookupMap: Record<ChainId, string | null> = {
+    [ChainId.SEPOLIA]: 'ETH',
+    [ChainId.BSC_MAINNET]: 'BNB',
+    [ChainId.UNKNOWN]: null,
+  }
+  return tokenLookupMap[id]
+}
+
+export function getChainNativeTokenTutorialLink(id: ChainId): string {
+  const linkLookupMap: Record<ChainId, string | null> = {
+    [ChainId.BSC_MAINNET]: 'https://www.binance.com/en/how-to-buy/bnb',
+    [ChainId.SEPOLIA]: null,
+    [ChainId.UNKNOWN]: null,
+  }
+  return linkLookupMap[id] ?? 'https://portfolio.metamask.io/buy/build-quote'
+}
+
 export function getChainIcon(id: ChainId, iconSize: number): React.ReactNode {
   const iconLookupMap: Record<ChainId, TokenSymbol | null> = {
     [ChainId.SEPOLIA]: 'ETH',

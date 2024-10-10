@@ -15,7 +15,7 @@ import styles from './form-button.module.scss'
 import { FormButtonBody } from './form-button-body'
 import { useButtonText } from './use-button-text'
 import { useAppSelector } from '@/store/hooks'
-import type { ChainId } from '@/providers/wallet/wrappers/helpers'
+import { ChainId, getChainNativeTokenTutorialLink } from '@/providers/wallet/wrappers/helpers'
 import type { ButtonProps } from '@/components/button/button'
 import { clarityAdapter } from '@/analytics/clarity-adapter'
 
@@ -26,20 +26,24 @@ interface Props extends Omit<ButtonProps, 'onSubmit'> {
 
 const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restProps }) => {
   const { status, chain } = useWalletWrapperContext()
+  const chainId = chain?.id ?? ChainId.UNKNOWN
+
+  const haveEnoughForGasPayment = useCheckEnoughForGasPayment()
 
   const { formAction, insured } = useVaultContext()
   const { submit, walletAvailable, haveInputValue, haveEnoughAssets, canSubmit, isSubmiting } = useSubmit()
 
-  const isOnDifferentChain = vaultChain.id !== chain?.id
-  const handlePress = useHandlePress(vaultChain.id, isOnDifferentChain, submit)
+  const isOnDifferentChain = vaultChain.id !== chainId
+  const handlePress = useHandlePress(vaultChain.id, isOnDifferentChain, haveEnoughForGasPayment, submit)
 
-  const isWrongChainSelected = chain?.id === -1 || chain?.id !== vaultChain.id
+  const isWrongChainSelected = chainId === -1 || chainId !== vaultChain.id
   const isAbleToSubmit = !isWrongChainSelected && status === WalletStatus.CONNECTED
   const isInProgress = isLoading || isSubmiting
   const isDisabled = disabled || isInProgress || (isAbleToSubmit ? !canSubmit : false)
 
   const text = useButtonText({
     insured,
+    chainId,
     status,
     isOnDifferentChain,
     chainName: vaultChain.name,
@@ -47,9 +51,11 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
     walletAvailable,
     haveInputValue,
     haveEnoughAssets,
+    haveEnoughForGasPayment,
   })
+
   return (
-    <FormButtonBody onClick={isDisabled ? undefined : handlePress} disabled={isDisabled} {...restProps}>
+    <FormButtonBody onClick={isDisabled ? undefined : handlePress} disabled={isDisabled} className={styles.button} {...restProps}>
       {isInProgress
         ? <Spinner color="current" size="md" />
         : text
@@ -63,12 +69,16 @@ export default FormButton
 function useHandlePress(
   vaultChainId: ChainId,
   isOnDifferentChain: boolean,
+  haveEnoughForGasPayment: boolean,
   submit: (formAction: FormAction) => Promise<void>,
 ) {
   const { status, connect, setCurrentChain } = useWalletWrapperContext()
   const { formAction, insured, setInsured } = useVaultContext()
 
   return useCallback(() => {
+    if (!haveEnoughForGasPayment)
+      return window.open(getChainNativeTokenTutorialLink(vaultChainId), '_blank')
+
     if (!insured)
       return setInsured(true)
 
@@ -83,7 +93,7 @@ function useHandlePress(
     }
 
     void submit(formAction)
-  }, [insured, setInsured, status, isOnDifferentChain, formAction, connect, setCurrentChain, submit, vaultChainId])
+  }, [haveEnoughForGasPayment, insured, setInsured, status, isOnDifferentChain, submit, formAction, connect, setCurrentChain, vaultChainId])
 }
 
 export function useSubmit() {
@@ -142,7 +152,7 @@ export function useSubmit() {
 
         setIsSubmiting(false)
       },
-      [refetechVaultUserData, onValueChange, inputValue, vault, setIsSubmiting, canSubmit],
+      [canSubmit, refetechVaultUserData, executeTransaction, vault, inputValue, onValueChange],
     ),
   }
 }
@@ -159,4 +169,11 @@ export function useHaveEnoughAssets() {
 // TODO: find proper way to integrate
 export function FrictionRemover({ children }: PropsWithChildren) {
   return <span className={styles.frictionRemover}>{children}</span>
+}
+
+function useCheckEnoughForGasPayment(): boolean {
+  const { depositGasPriceBN, withdrawGasPriceBN, nativeWalletBalanceBN } = useAppSelector(state => state.vaultUser)
+  const { formAction } = useVaultContext()
+  const gasPrice = formAction === FormAction.DEPOSIT ? depositGasPriceBN : withdrawGasPriceBN
+  return BigInt(nativeWalletBalanceBN) >= BigInt(gasPrice)
 }
