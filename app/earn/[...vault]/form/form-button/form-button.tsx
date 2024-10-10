@@ -3,7 +3,6 @@
 import type { PropsWithChildren } from 'react'
 import { toast } from 'react-toastify'
 import React, { useCallback, useState } from 'react'
-import type { ButtonProps } from '@nextui-org/react'
 import { Spinner } from '@nextui-org/react'
 
 import { useWalletWrapperContext } from '../../../../providers/wallet/wallet-wrapper-provider'
@@ -14,9 +13,11 @@ import { useExecuteTransaction, useVaultUserInfo } from '../../hooks'
 import { useVaultContext } from '../../hooks/use-vault-context'
 import styles from './form-button.module.scss'
 import { FormButtonBody } from './form-button-body'
-import { ButtonText } from './button-text'
+import { useButtonText } from './use-button-text'
 import { useAppSelector } from '@/store/hooks'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
+import type { ButtonProps } from '@/components/button/button'
+import { clarityAdapter } from '@/analytics/clarity-adapter'
 
 interface Props extends Omit<ButtonProps, 'onSubmit'> {
   vaultChain: Chain
@@ -35,23 +36,23 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
   const shouldBeAbleToSubmit = status === WalletStatus.CONNECTED
   const isInProgress = isLoading || isSubmiting
   const isDisabled = disabled || isInProgress || (shouldBeAbleToSubmit ? !canSubmit : false)
+
+  const text = useButtonText({
+    insured,
+    status,
+    isOnDifferentChain,
+    chainName: vaultChain.name,
+    formAction,
+    walletAvailable,
+    haveInputValue,
+    haveEnoughAssets,
+  })
   return (
-    <FormButtonBody onPress={isDisabled ? undefined : handlePress} disabled={isDisabled} {...restProps}>
-      {isInProgress && <Spinner color="current" size="md" />}
-      {!isInProgress && (
-        <ButtonText
-          {...{
-            insured,
-            status,
-            isOnDifferentChain,
-            chainName: vaultChain.name,
-            formAction,
-            walletAvailable,
-            haveInputValue,
-            haveEnoughAssets,
-          }}
-        />
-      )}
+    <FormButtonBody onClick={isDisabled ? undefined : handlePress} disabled={isDisabled} {...restProps}>
+      {isInProgress
+        ? <Spinner color="current" size="md" />
+        : text
+      }
     </FormButtonBody>
   )
 }
@@ -107,6 +108,7 @@ export function useSubmit() {
     isSubmiting,
     submit: useCallback(
       async (formAction: FormAction) => {
+        clarityAdapter.trackEvent(`start execute ${formAction}`)
         if (!canSubmit) {
           toast('Looks like something is wrong, try refreshing the page', {
             type: 'error',
@@ -121,6 +123,7 @@ export function useSubmit() {
 
           // Execute Deposit/Withdraw transaction
           const success = await executeTransaction(formAction, vault, inputValue)
+          clarityAdapter.trackEvent(`execute ${formAction} result: ${success}`)
           if (success) {
             // Refresh wallet balance & vault deposit after the transaction executed.
             void refetechVaultUserData()

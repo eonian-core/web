@@ -7,7 +7,7 @@ export interface UseIntervalOptions {
   autoInvoke?: boolean
 }
 
-export function useInterval(fn: () => void, time: number, options?: UseIntervalOptions) {
+export function useInterval(time: number, fn: () => void, options?: UseIntervalOptions) {
   const interval = useMantineInterval(fn, time, options)
 
   useEffect(() => {

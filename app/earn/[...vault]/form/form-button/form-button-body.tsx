@@ -1,16 +1,15 @@
-import type { ButtonProps } from '@nextui-org/react'
-import { Button } from '@nextui-org/react'
 import styles from './form-button.module.scss'
+import type { ButtonProps } from '@/components/button/button'
+import Button from '@/components/button/button'
 
 /** Minimal logic, will be used in skeleton */
 export function FormButtonBody(props: ButtonProps) {
   return (
     <div className={styles.wrapper}>
       <Button
-        auto
-        color="primary"
+        lightGradient
+        slightlyRound
         size="lg"
-        className={styles.button}
         {...props}
         />
   </div>

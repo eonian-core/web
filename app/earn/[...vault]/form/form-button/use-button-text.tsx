@@ -12,7 +12,8 @@ interface ButtonTextProps {
   haveEnoughAssets?: boolean
 }
 
-export function ButtonText({ insured, status, isOnDifferentChain, chainName, formAction, walletAvailable, haveInputValue, haveEnoughAssets }: ButtonTextProps) {
+/** Important to keep it as hook, to use rendered text for event tracking */
+export function useButtonText({ insured, status, isOnDifferentChain, chainName, formAction, walletAvailable, haveInputValue, haveEnoughAssets }: ButtonTextProps) {
   if (!insured)
     return 'Asset Insurance Required'
 
@@ -42,4 +43,4 @@ export function ButtonText({ insured, status, isOnDifferentChain, chainName, for
   return 'Withdraw'
 }
 
-export default ButtonText
+export default useButtonText

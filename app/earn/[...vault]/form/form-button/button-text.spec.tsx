@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import ButtonText from './button-text'
+import ButtonText from './use-button-text'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import { FormAction } from '@/store/slices/types'
 

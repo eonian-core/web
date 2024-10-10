@@ -8,7 +8,7 @@ export function SmartContractLink() {
   const url = `${getChainExplorer(chainId)}/address/${vault.address}#code`
   return (
     <WrapperLink className={styles.container} href={url} withIcon>
-      Vault Smart Contract
+      Smart Contract
     </WrapperLink>
   )
 }
