@@ -1,4 +1,4 @@
-import { requireEnv } from '@/api/environment'
+import { requireEnv } from '@/utils/env'
 
 export class UserFeedback {
   private apiKey: string
