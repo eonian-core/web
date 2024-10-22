@@ -4,9 +4,17 @@
 
   animation: appearWithDelay 1s ease-in;
 
+  cursor: pointer;
+
   span {
     margin-bottom: -0.5rem;
     margin-left: 0.5rem;
+  }
+
+  &:hover {
+    span {
+      color: var(--color-text-100)
+    }
   }
 }
 
@@ -29,8 +37,6 @@
   animation-delay: calc((var(--avatar-index) + 1) * 0.1s);
   margin-left: -6px;
   transition: all 0.3s;
-
-
 }
 
 @keyframes appearWithDelay {
