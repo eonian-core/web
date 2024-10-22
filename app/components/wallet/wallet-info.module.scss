@@ -8,6 +8,8 @@
 }
 
 .address {
+  margin-left: var(--margin-50);
+  font-weight: var(--font-bold);
 
   @media (max-width: $screen-small-mobile) {
     display: none;

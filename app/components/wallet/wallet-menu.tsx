@@ -104,7 +104,7 @@ const WalletMenu: React.FC<Props> = ({ children }) => {
   return (
     <Dropdown placement={menuPlacement}>
       <DropdownTrigger>
-        <Button size="sm" variant="bordered" className={styles.walletButton} >
+        <Button size="sm" variant="light" className={styles.walletButton} >
           {children}
         </Button>
       </DropdownTrigger>

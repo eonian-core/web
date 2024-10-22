@@ -16,7 +16,6 @@ function WalletInfo() {
 
   return (
     <div className={styles.container}>
-      <WalletNetworkSelector />
       <WalletMenu>
         <WalletIcon src={wallet?.iconImageSrc} alt={wallet?.label} />
 
@@ -24,6 +23,8 @@ function WalletInfo() {
           <ShrinkedAddress>{wallet!.address}</ShrinkedAddress>
         </span>
       </WalletMenu>
+
+      <WalletNetworkSelector />
     </div>
   )
 }
