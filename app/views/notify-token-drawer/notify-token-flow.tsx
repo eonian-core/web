@@ -1,33 +1,47 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import type { NotifyTokenFormInput } from './notify-token-form'
+import { useCallback, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import { NotifyTokenForm } from './notify-token-form'
-import type { NotifyEmailFormInput } from './notify-email-form'
 import { NotifyEmailForm } from './notify-email-form'
-import { notifyEmail, notifyToken } from '@/api/notify-token/notify-token'
+import { useInsertToken } from '@/api/user-feedback/hooks/useInsertToken'
+import { useUpdateTokenEmail } from '@/api/user-feedback/hooks/useUpdateTokenEmail'
 
-export interface LinkRecoveryEmailFlowProps {
+interface NotifyTokenFormInput {
+  token: string
+}
+
+interface NotifyEmailFormInput {
+  email: string
+}
+
+export interface NotifyTokenFlowProps {
   close: () => void
 }
 
-export function NotifyTokenFlow({ close }: LinkRecoveryEmailFlowProps) {
+export function NotifyTokenFlow({ close }: NotifyTokenFlowProps) {
   const [step, setStep] = useState(1)
-  const [token, setToken] = useState('')
-  const tokenRef = useRef(token)
-
-  useEffect(() => {
-    tokenRef.current = token
-  }, [token])
+  const [uuid] = useState<string>(uuidv4())
+  const insertToken = useInsertToken()
+  const updateEmail = useUpdateTokenEmail()
 
   const handleTokenSubmit = useCallback(async ({ token }: NotifyTokenFormInput) => {
-    await notifyToken(token)
-    setStep(2)
-    setToken(token)
-  }, [])
+    try {
+      await insertToken(uuid, token)
+      setStep(2)
+    }
+    catch (err) {
+      console.error('Error sending token:', err)
+    }
+  }, [insertToken, uuid])
 
   const handleEmailSubmit = useCallback(async ({ email }: NotifyEmailFormInput) => {
-    await notifyEmail(tokenRef.current, email)
-    close()
-  }, [close])
+    try {
+      await updateEmail(uuid, email)
+      close()
+    }
+    catch (err) {
+      console.error('Error updating email:', err)
+    }
+  }, [updateEmail, uuid, close])
 
   return (
     <>

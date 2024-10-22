@@ -12,7 +12,7 @@ export function useLinkEmail() {
   const { loginThroughSign } = useWalletWrapperContext()
   const [linkEmail, state] = useLinkEmailToWallet()
 
-  const signAndLink = useCallback(async ({ address, chainId, email }: LinkEmailOptions) => {
+  const signAndLink = useCallback(async ({ email }: LinkEmailOptions) => {
     const signatureToken = await loginThroughSign()
 
     await linkEmail({
