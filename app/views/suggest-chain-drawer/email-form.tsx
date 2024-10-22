@@ -38,9 +38,8 @@ export function EmailForm({
         name="email"
         control={control}
         type="email"
-        label="Email"
-        labelPlacement="outside"
         className={styles.input}
+        placeholder="love@eonian.finance"
         variant="bordered"
         disabled={fullFormDisabled}
         rules={{ required: true, pattern: emailPattern }}

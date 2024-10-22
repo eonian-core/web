@@ -34,7 +34,7 @@ export function useSuggestTokenContext(): SuggestTokenContextProps {
 
 export function SuggestTokenDrawer(props: { opened: boolean; onClose: () => void }) {
   return (
-      <Drawer title={'Suggest token'} {...props}>
+      <Drawer {...props}>
         <div className={styles.formWrapper}>
           <SuggestTokenFlow close={props.onClose}/>
         </div>

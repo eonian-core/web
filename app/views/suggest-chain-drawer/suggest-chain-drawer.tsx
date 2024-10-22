@@ -34,7 +34,7 @@ export function useSuggestChainContext(): SuggestChainContextProps {
 
 export function SuggestChainDrawer(props: { opened: boolean; onClose: () => void }) {
   return (
-      <Drawer title={'Suggest chain'} {...props}>
+      <Drawer {...props}>
         <div className={styles.formWrapper}>
           <SuggestChainFlow close={props.onClose}/>
         </div>

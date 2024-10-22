@@ -14,6 +14,7 @@ export interface SuggestTokenFlowProps {
 export function SuggestTokenFlow({ close }: SuggestTokenFlowProps) {
   const [step, setStep] = useState(1)
   const [uuid] = useState<string>(uuidv4())
+  const [error, setError] = useState<Error | null>(null)
   const insertToken = useInsertToken()
   const updateEmail = useUpdateTokenEmail()
 
@@ -21,9 +22,10 @@ export function SuggestTokenFlow({ close }: SuggestTokenFlowProps) {
     try {
       await insertToken(uuid, token)
       setStep(2)
+      setError(null)
     }
     catch (err) {
-      console.error('Error sending token:', err)
+      setError(err as Error)
     }
   }, [insertToken, uuid])
 
@@ -31,9 +33,10 @@ export function SuggestTokenFlow({ close }: SuggestTokenFlowProps) {
     try {
       await updateEmail(uuid, email)
       close()
+      setError(null)
     }
     catch (err) {
-      console.error('Error updating email:', err)
+      setError(err as Error)
     }
   }, [updateEmail, uuid, close])
 
@@ -42,11 +45,13 @@ export function SuggestTokenFlow({ close }: SuggestTokenFlowProps) {
       {step === 1 && (
         <SuggestTokenForm
           onSubmit={handleTokenSubmit}
+          error={error}
         />
       )}
       {step === 2 && (
         <EmailForm
           onSubmit={handleEmailSubmit}
+          error={error}
         />
       )}
     </>

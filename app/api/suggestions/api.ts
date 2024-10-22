@@ -45,11 +45,11 @@ export class SuggestionsApi {
       throw new Error('Failed request')
   }
 
-  async insertChain(id: string, token: string): Promise<void> {
+  async insertChain(id: string, chain: string): Promise<void> {
     const response = await fetch(`${this.baseUrl}/rest/v1/Chains`, {
       method: 'POST',
       headers: this.getHeaders(),
-      body: JSON.stringify({ id, token }),
+      body: JSON.stringify({ id, chain }),
     })
 
     if (!response.ok)

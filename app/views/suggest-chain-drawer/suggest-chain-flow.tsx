@@ -16,28 +16,42 @@ export interface SuggestChainFlowProps {
 export function SuggestChainFlow({ close }: SuggestChainFlowProps) {
   const [step, setStep] = useState(1)
   const [uuid] = useState<string>(uuidv4())
+  const [error, setError] = useState<Error | null>(null)
   const insertChain = useInsertChain()
   const updateChainEmail = useUpdateChainEmail()
 
   const handleChainSubmit = useCallback(async ({ chain }: SuggestChainFormInput) => {
-    await insertChain(uuid, chain)
-    setStep(2)
-  }, [])
+    try {
+      await insertChain(uuid, chain)
+      setStep(2)
+      setError(null)
+    }
+    catch (err) {
+      setError(err as Error)
+    }
+  }, [insertChain, uuid])
 
   const handleEmailSubmit = useCallback(async ({ email }: EmailFormInput) => {
-    await updateChainEmail(uuid, email)
-    close()
-  }, [uuid, close])
+    try {
+      await updateChainEmail(uuid, email)
+      close()
+    }
+    catch (err) {
+      setError(err as Error)
+    }
+  }, [updateChainEmail, uuid, close])
 
   return (
     <>
       {step === 1 && (
         <SuggestChainForm
+          error={error}
           onSubmit={handleChainSubmit}
         />
       )}
       {step === 2 && (
         <EmailForm
+          error={error}
           onSubmit={handleEmailSubmit}
         />
       )}

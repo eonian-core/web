@@ -29,7 +29,7 @@ export function SuggestChainForm({
   return (
     <form onSubmit={handleSubmit(onSubmit) as FormEventHandler<any>} className={styles.form}>
       <div className={styles.header}>
-        <h3>What chain do you use?</h3>
+        <h3>What chains do you use?</h3>
       </div>
 
       <FormInput
@@ -37,13 +37,13 @@ export function SuggestChainForm({
         name="chain"
         control={control}
         type="text"
-        placeholder="TODO: TBD"
+        placeholder="Poligon, Airbitrum, ..."
         labelPlacement="inside"
         className={styles.input}
         variant="bordered"
         disabled={fullFormDisabled}
         rules={{ required: true }}
-        errorMessage={<span>Please enter what chain do you use?</span>}
+        errorMessage={<span>Please enter what chains do you use?</span>}
       />
 
         <Button
@@ -65,7 +65,7 @@ export function SuggestChainForm({
       )}
 
       <p className={styles.description}>
-        TBD TBD // TODO set correct text
+        We working on adding more, you can share chains that we missing and we will prioritize it.
       </p>
     </form>
   )

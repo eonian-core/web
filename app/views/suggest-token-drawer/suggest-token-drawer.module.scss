@@ -1,6 +1,8 @@
 .formWrapper {
     height: 100%;
     width: 100%;
+    max-width: 500px;
+    margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
