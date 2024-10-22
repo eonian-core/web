@@ -11,7 +11,8 @@ import { MonitoringProvider } from './monitoring'
 import { ChainProvider } from '@/shared/web3/chain-context'
 import { ApolloSsrProvider } from '@/api/apollo-ssr-provider'
 import { WalletLinkingProvider } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
-import { NotifyTokenProvider } from '@/views/notify-token-drawer/notify-token-drawer'
+import { SuggestTokenProvider } from '@/views/suggest-token-drawer/suggest-token-drawer'
+import { SuggestChainProvider } from '@/views/suggest-chain-drawer/suggest-chain-drawer'
 
 interface Props {
   locale: string
@@ -28,7 +29,9 @@ export default function Providers({ children }: Props) {
               <ChainProvider>
                 <ApolloSsrProvider>
                   <WalletLinkingProvider>
-                    <NotifyTokenProvider>{children}</NotifyTokenProvider>
+                    <SuggestTokenProvider>
+                      <SuggestChainProvider>{children}</SuggestChainProvider>
+                    </SuggestTokenProvider>
                   </WalletLinkingProvider>
                 </ApolloSsrProvider>
               </ChainProvider>

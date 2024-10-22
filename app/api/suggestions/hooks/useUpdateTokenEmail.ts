@@ -1,10 +1,10 @@
 import { useCallback } from 'react'
-import { userFeedbackClient } from '@/api/user-feedback/user-feedback.client'
+import { suggestionsApi } from '@/api/suggestions/suggestions.api'
 
-export function useUpdateChainEmail() {
+export function useUpdateTokenEmail() {
   return useCallback(async (id: string, email: string) => {
     try {
-      await userFeedbackClient.updateChainWithEmail(id, email)
+      await suggestionsApi.updateTokenWithEmail(id, email)
     }
     catch (error) {
       console.error('Error updating email:', error)

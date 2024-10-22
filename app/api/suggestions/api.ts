@@ -1,12 +1,12 @@
 import { requireEnv } from '@/utils/env'
 
-export class UserFeedback {
+export class SuggestionsApi {
   private apiKey: string
   private baseUrl: string
 
   constructor() {
-    this.apiKey = requireEnv('NEXT_PUBLIC_USER_FEEDBACK_ANON_KEY', process.env.NEXT_PUBLIC_USER_FEEDBACK_ANON_KEY)
-    this.baseUrl = requireEnv('NEXT_PUBLIC_USER_FEEDBACK_API_URL', process.env.NEXT_PUBLIC_USER_FEEDBACK_API_URL)
+    this.apiKey = requireEnv('NEXT_PUBLIC_SUGGESTIONS_ANON_KEY', process.env.NEXT_PUBLIC_SUGGESTIONS_ANON_KEY)
+    this.baseUrl = requireEnv('NEXT_PUBLIC_SUGGESTIONS_API_URL', process.env.NEXT_PUBLIC_SUGGESTIONS_API_URL)
   }
 
   private getHeaders(): HeadersInit {

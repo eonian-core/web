@@ -16,7 +16,7 @@ import { useVaultsContext } from '@/api/protocol/vaults/vaults-context'
 import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 import { useChainContext } from '@/shared/web3/chain-context'
 import { buildFadeInAnitionStyles, useAnimation } from '@/components/fade-in/fade-in-child-list'
-import { NotifyTokenButton } from '@/earn/components/notify-token-button'
+import { SuggestTokenButton } from '@/earn/components/suggest-token-button'
 
 const bySymbolOrder = (a: Vault, b: Vault) => TokenOrder.indexOf(getAssetSymbol(a)) - TokenOrder.indexOf(getAssetSymbol(b))
 
@@ -57,7 +57,7 @@ export function VaultGrid() {
         </div>
           )}
 
-        <NotifyTokenButton />
+        <SuggestTokenButton />
     </div>
   )
 }

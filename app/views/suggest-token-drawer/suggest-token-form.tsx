@@ -1,29 +1,28 @@
-import type { ApolloError } from '@apollo/client'
 import type { FormEventHandler } from 'react'
 import { useForm } from 'react-hook-form'
 import clsx from 'clsx'
-import styles from './notify-token-drawer.module.scss'
+import styles from './suggest-token-drawer.module.scss'
 import { FormInput } from '@/components/form-input/form-input'
 import Button from '@/components/button/button'
 
-export interface NotifyTokenFormInput {
+export interface SuggestTokenFormInput {
   token: string
 }
 
-export interface NotifyTokenFormProps {
-  onSubmit: (data: NotifyTokenFormInput) => void | Promise<void>
+export interface SuggestTokenFormProps {
+  onSubmit: (data: SuggestTokenFormInput) => void | Promise<void>
   success?: boolean
   loading?: boolean
-  error?: Error | ApolloError | null
+  error?: Error | null
 }
 
-export function NotifyTokenForm({
+export function SuggestTokenForm({
   onSubmit,
   loading,
   success,
   error,
-}: NotifyTokenFormProps) {
-  const { control, handleSubmit, formState } = useForm<NotifyTokenFormInput>()
+}: SuggestTokenFormProps) {
+  const { control, handleSubmit, formState } = useForm<SuggestTokenFormInput>()
 
   const fullFormDisabled = loading || success
 

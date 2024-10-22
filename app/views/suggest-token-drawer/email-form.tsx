@@ -1,50 +1,51 @@
-import type { ApolloError } from '@apollo/client'
 import type { FormEventHandler } from 'react'
 import { useForm } from 'react-hook-form'
 import clsx from 'clsx'
-import styles from './notify-token-drawer.module.scss'
+import styles from './suggest-token-drawer.module.scss'
 import { FormInput } from '@/components/form-input/form-input'
 import Button from '@/components/button/button'
+import { emailPattern } from '@/validators'
+import IconEmail from '@/components/icons/icon-email'
 
-export interface NotifyChainFormInput {
-  chain: string
+export interface EmailFormInput {
+  email: string
 }
 
-export interface NotifyChainFormProps {
-  onSubmit: (data: NotifyChainFormInput) => void | Promise<void>
+export interface EmailFormProps {
+  onSubmit: (data: EmailFormInput) => void | Promise<void>
   success?: boolean
   loading?: boolean
-  error?: Error | ApolloError | null
+  error?: Error | null
 }
 
-export function NotifyChainForm({
+export function EmailForm({
   onSubmit,
   loading,
   success,
   error,
-}: NotifyChainFormProps) {
-  const { control, handleSubmit, formState } = useForm<NotifyChainFormInput>()
+}: EmailFormProps) {
+  const { control, handleSubmit, formState } = useForm<EmailFormInput>()
 
   const fullFormDisabled = loading || success
 
   return (
     <form onSubmit={handleSubmit(onSubmit) as FormEventHandler<any>} className={styles.form}>
       <div className={styles.header}>
-        <h3>What chain do you use?</h3>
+        <h3>Thank you!<br />We can notify you when we add it</h3>
       </div>
-
       <FormInput
         data-autofocus
-        name="token"
+        name="email"
         control={control}
-        type="text"
-        placeholder="TODO: TBD"
-        labelPlacement="inside"
+        type="email"
+        label="Email"
+        labelPlacement="outside"
         className={styles.input}
         variant="bordered"
         disabled={fullFormDisabled}
-        rules={{ required: true }}
-        errorMessage={<span>Please enter what chain do you use?</span>}
+        rules={{ required: true, pattern: emailPattern }}
+        startContent={<IconEmail />}
+        errorMessage={<span>Please enter a valid email address</span>}
       />
 
         <Button
@@ -55,8 +56,12 @@ export function NotifyChainForm({
           type="submit"
           disabled={!formState.isValid || fullFormDisabled}
         >
-          Suggest
+          Get me know
         </Button>
+
+        <p className={styles.description}>
+          We don’t share it with anyone
+        </p>
 
       {error && (
         <div className={styles.error}>
@@ -65,9 +70,6 @@ export function NotifyChainForm({
         </div>
       )}
 
-      <p className={styles.description}>
-        TBD TBD
-      </p>
     </form>
   )
 }

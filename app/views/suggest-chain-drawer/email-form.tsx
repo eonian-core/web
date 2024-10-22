@@ -1,31 +1,30 @@
-import type { ApolloError } from '@apollo/client'
 import type { FormEventHandler } from 'react'
 import { useForm } from 'react-hook-form'
 import clsx from 'clsx'
-import styles from './notify-token-drawer.module.scss'
+import styles from './suggest-chain-drawer.module.scss'
 import { FormInput } from '@/components/form-input/form-input'
 import Button from '@/components/button/button'
 import { emailPattern } from '@/validators'
 import IconEmail from '@/components/icons/icon-email'
 
-export interface NotifyEmailFormInput {
+export interface EmailFormInput {
   email: string
 }
 
-export interface NotifyEmailFormProps {
-  onSubmit: (data: NotifyEmailFormInput) => void | Promise<void>
+export interface EmailFormProps {
+  onSubmit: (data: EmailFormInput) => void | Promise<void>
   success?: boolean
   loading?: boolean
-  error?: Error | ApolloError | null
+  error?: Error | null
 }
 
-export function NotifyEmailForm({
+export function EmailForm({
   onSubmit,
   loading,
   success,
   error,
-}: NotifyEmailFormProps) {
-  const { control, handleSubmit, formState } = useForm<NotifyEmailFormInput>()
+}: EmailFormProps) {
+  const { control, handleSubmit, formState } = useForm<EmailFormInput>()
 
   const fullFormDisabled = loading || success
 
