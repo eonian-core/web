@@ -1,6 +1,7 @@
 import { usePromise } from '../use-promise'
 import type { PriceData, TokenSymbol } from '@/types'
 import { isOnServer } from '@/components/resize-hooks/isOnServer'
+import { VERCEL_ENV } from '@/utils/env'
 
 const ONE_HOUR = 3600 // in seconds
 
@@ -12,10 +13,10 @@ function getPrefix() {
   if (!isOnServer())
     return '' // will use relative path on client
 
-  if (!process.env.VERCEL_ENV)
+  if (!VERCEL_ENV)
     return 'http://localhost:3000' // local
 
-  if (process.env.VERCEL_ENV === 'production')
+  if (VERCEL_ENV === 'production')
     return 'https://eonian.finance' // production
 
   return process.env.VERCEL_URL ?? '' // preview

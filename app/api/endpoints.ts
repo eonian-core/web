@@ -1,5 +1,5 @@
-import { ChainId } from '../providers/wallet/wrappers/helpers'
-import { requireEnv } from '@/analytics/env'
+import { ChainId } from '@/providers/wallet/wrappers/helpers'
+import { requireEnv } from '@/utils/env'
 
 export enum ChainEnvironment {
   LOCAL = 'LOCAL',
