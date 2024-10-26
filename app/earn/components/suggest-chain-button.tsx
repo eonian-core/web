@@ -8,7 +8,7 @@ export function SuggestChainButton() {
   const { open } = useSuggestChainContext()
   return <div className={styles.suggestChain}>
     <button className={styles.button} onClick={open}>
-      More chains
+      Other chains
     </button>
   </div>
 }

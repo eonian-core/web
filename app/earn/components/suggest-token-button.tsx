@@ -8,7 +8,7 @@ export function SuggestTokenButton() {
   const { open } = useSuggestTokenContext()
   return <div className={styles.suggestToken}>
     <button className={styles.button} onClick={open}>
-      More cryptocurrencies
+      More Cryptocurrencies
     </button>
   </div>
 }

@@ -59,8 +59,6 @@ export function VaultGrid() {
           )}
 
         <SuggestTokenButton />
-
-        <SuggestChainButton />
     </div>
   )
 }
