@@ -1,4 +1,4 @@
-import type { FormEventHandler } from 'react'
+import type { FormEventHandler, PropsWithChildren, ReactNode } from 'react'
 import { createContext, useContext } from 'react'
 import type { Control, FormState } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
@@ -18,7 +18,7 @@ export interface OneInputFormProps extends Omit<React.DetailedHTMLProps<React.Fo
   success?: boolean
   loading?: boolean
   disabled?: boolean
-  error?: Error | any | null
+  error?: ReactNode
 }
 
 export interface OneInputFormContextProps {
@@ -63,7 +63,7 @@ export function OneInputForm({
             <OneInputFormContext.Provider value={{ control, formState, success, loading, disabled: fullFormDisabled }}>
                 {children}
 
-                <FormError error={error as Error} />
+                {error}
             </OneInputFormContext.Provider>
         </form>
   )
@@ -113,6 +113,14 @@ export function FrictionRemover({ className, ...props }: React.DetailedHTMLProps
   return <p className={clsx(styles.frictionRemover, className)} {...props} />
 }
 
+export function BaseFormError({ children }: PropsWithChildren) {
+  return (
+        <div className={styles.error}>
+            {children}
+        </div>
+  )
+}
+
 export interface FormErrorProps {
   error?: Error | any | null
 }
@@ -121,12 +129,10 @@ export function FormError({ error }: FormErrorProps) {
   if (!error)
     return null
 
-  const message = typeof error === 'object' ? (error as Error).message : error as string
-
   return (
-        <div className={styles.error}>
-          <h4>Error during request, please try again</h4>
-          <p>{message}</p>
-        </div>
+    <BaseFormError>
+        <h4>Error during request, please try again</h4>
+        <p>{((error || {}) as Error).message}</p>
+    </BaseFormError>
   )
 }

@@ -81,6 +81,11 @@
         font-size: var(--font-size-300);
         color: var(--color-neutral-400);
     }
+
+    a {
+        color: var(--color-primary-500);
+        text-decoration: none;
+    }
 }
 
 

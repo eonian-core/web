@@ -1,5 +1,6 @@
-import type { OneInputFormProps } from '../one-input-form/one-input-form'
-import { FormHeader, FrictionRemover, OneInputForm, SimpleFormInput, Submit } from '../one-input-form/one-input-form'
+import type { FormErrorProps, OneInputFormProps } from '../one-input-form/one-input-form'
+import { BaseFormError, FormHeader, FrictionRemover, OneInputForm, SimpleFormInput, Submit } from '../one-input-form/one-input-form'
+import { socialsMap } from '@/socials'
 
 export function SuggestChainForm(props: OneInputFormProps) {
   return (
@@ -24,5 +25,18 @@ export function SuggestChainForm(props: OneInputFormProps) {
         We working on adding more, you can share chains that we missing and we will prioritize it.
       </FrictionRemover>
     </OneInputForm>
+  )
+}
+
+export function SuggestionFormError({ error }: FormErrorProps) {
+  if (!error)
+    return null
+
+  return (
+      <BaseFormError>
+        <h4>😥 Error during saving your suggestion</h4>
+        <p>Please share it with us on <a href={socialsMap.en.Discord.href}>Discord</a> or <a href={socialsMap.en.Telegram.href}>Telegram</a>.</p>
+        <p>We want to hear it!</p>
+      </BaseFormError>
   )
 }

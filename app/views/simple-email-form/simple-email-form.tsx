@@ -1,7 +1,8 @@
-import type { OneInputFormProps } from '../one-input-form/one-input-form'
-import { FormHeader, FrictionRemover, OneInputForm, SimpleFormInput, Submit } from '../one-input-form/one-input-form'
+import type { FormErrorProps, OneInputFormProps } from '../one-input-form/one-input-form'
+import { BaseFormError, FormHeader, FrictionRemover, OneInputForm, SimpleFormInput, Submit } from '../one-input-form/one-input-form'
 import { emailPattern } from '@/validators'
 import IconEmail from '@/components/icons/icon-email'
+import { socialsMap } from '@/socials'
 
 export function SimpleEmailForm(props: OneInputFormProps) {
   return (
@@ -28,5 +29,18 @@ export function SimpleEmailForm(props: OneInputFormProps) {
       </FrictionRemover>
 
     </OneInputForm>
+  )
+}
+
+export function SimpleEmailFormError({ error }: FormErrorProps) {
+  if (!error)
+    return null
+
+  return (
+      <BaseFormError>
+        <h4>😥 Error during saving your email</h4>
+        <p>Please share it with us on <a href={socialsMap.en.Discord.href}>Discord</a> or <a href={socialsMap.en.Telegram.href}>Telegram</a>.</p>
+        <p>We want to hear about you!</p>
+      </BaseFormError>
   )
 }

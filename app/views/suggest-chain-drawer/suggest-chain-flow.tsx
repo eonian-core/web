@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import { SimpleEmailForm } from '../simple-email-form/simple-email-form'
-import type { OneInputFormState } from '../one-input-form/one-input-form'
+import { SimpleEmailForm, SimpleEmailFormError } from '../simple-email-form/simple-email-form'
+import { type OneInputFormState } from '../one-input-form/one-input-form'
 import { useAsyncCallbackWithCatch } from '../one-input-form/async-callback-with-catch'
-import { SuggestChainForm } from './suggest-chain-form'
+import { SuggestChainForm, SuggestionFormError } from './suggest-chain-form'
 
 import { useInsertChain } from '@/api/suggestions/hooks/useInsertChain'
 import { useUpdateChainEmail } from '@/api/suggestions/hooks/useUpdateChainEmail'
@@ -34,13 +34,13 @@ export function SuggestChainFlow({ close }: SuggestChainFlowProps) {
       {!isChainSubmited
         ? (
         <SuggestChainForm
-          error={chainError}
+          error={<SuggestionFormError error={chainError} />}
           onSubmit={handleChainSubmit}
         />
           )
         : (
         <SimpleEmailForm
-          error={emailError}
+          error={<SimpleEmailFormError error={emailError} />}
           onSubmit={handleEmailSubmit}
         />
           )}

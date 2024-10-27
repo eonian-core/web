@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import type { OneInputFormState } from '../one-input-form/one-input-form'
+import { type OneInputFormState } from '../one-input-form/one-input-form'
 import { useAsyncCallbackWithCatch } from '../one-input-form/async-callback-with-catch'
-import { SimpleEmailForm } from '../simple-email-form/simple-email-form'
+import { SimpleEmailForm, SimpleEmailFormError } from '../simple-email-form/simple-email-form'
+import { SuggestionFormError } from '../suggest-chain-drawer/suggest-chain-form'
 import { SuggestTokenForm } from './suggest-token-form'
 import { useInsertToken } from '@/api/suggestions/hooks/useInsertToken'
 import { useUpdateTokenEmail } from '@/api/suggestions/hooks/useUpdateTokenEmail'
@@ -30,16 +31,16 @@ export function SuggestTokenFlow({ close }: SuggestTokenFlowProps) {
   return (<>
       {!isTokenSubmited
         ? (
-        <SuggestTokenForm
-          onSubmit={handleTokenSubmit}
-          error={tokenError}
-        />
+          <SuggestTokenForm
+            onSubmit={handleTokenSubmit}
+            error={<SuggestionFormError error={tokenError} />}
+          />
           )
         : (
-        <SimpleEmailForm
-          onSubmit={handleEmailSubmit}
-          error={emailError}
-        />
+          <SimpleEmailForm
+            onSubmit={handleEmailSubmit}
+            error={<SimpleEmailFormError error={emailError} />}
+          />
           )}
   </>)
 }
