@@ -3,7 +3,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
 
   h2 {
     margin-bottom: var(--margin-100);
@@ -12,12 +12,6 @@
   h3 {
     font-size: var(--font-size-600);
     margin-bottom: 0;
-  }
-}
-
-@media (max-width: $screen-laptop) {
-  .header {
-    align-items: center;
   }
 }
 
