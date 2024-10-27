@@ -1,9 +1,9 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import type { SuggestTokenFormInput } from './suggest-token-form'
+import type { OneInputFormState } from '../one-input-form/one-input-form'
+import { useAsyncCallbackWithCatch } from '../one-input-form/async-callback-with-catch'
+import { SimpleEmailForm } from '../simple-email-form/simple-email-form'
 import { SuggestTokenForm } from './suggest-token-form'
-import type { EmailFormInput } from './email-form'
-import { EmailForm } from './email-form'
 import { useInsertToken } from '@/api/suggestions/hooks/useInsertToken'
 import { useUpdateTokenEmail } from '@/api/suggestions/hooks/useUpdateTokenEmail'
 
@@ -12,48 +12,34 @@ export interface SuggestTokenFlowProps {
 }
 
 export function SuggestTokenFlow({ close }: SuggestTokenFlowProps) {
-  const [step, setStep] = useState(1)
+  const [isTokenSubmited, setTokenSubmited] = useState(false)
   const [uuid] = useState<string>(uuidv4())
-  const [error, setError] = useState<Error | null>(null)
   const insertToken = useInsertToken()
   const updateEmail = useUpdateTokenEmail()
 
-  const handleTokenSubmit = useCallback(async ({ token }: SuggestTokenFormInput) => {
-    try {
-      await insertToken(uuid, token)
-      setStep(2)
-      setError(null)
-    }
-    catch (err) {
-      setError(err as Error)
-    }
-  }, [insertToken, uuid])
+  const [handleTokenSubmit, tokenError] = useAsyncCallbackWithCatch(async ({ input: token }: OneInputFormState) => {
+    await insertToken(uuid, token)
+    setTokenSubmited(true)
+  }, [insertToken, uuid, setTokenSubmited])
 
-  const handleEmailSubmit = useCallback(async ({ email }: EmailFormInput) => {
-    try {
-      await updateEmail(uuid, email)
-      close()
-      setError(null)
-    }
-    catch (err) {
-      setError(err as Error)
-    }
+  const [handleEmailSubmit, emailError] = useAsyncCallbackWithCatch(async ({ input: email }: OneInputFormState) => {
+    await updateEmail(uuid, email)
+    close()
   }, [updateEmail, uuid, close])
 
-  return (
-    <>
-      {step === 1 && (
+  return (<>
+      {!isTokenSubmited
+        ? (
         <SuggestTokenForm
           onSubmit={handleTokenSubmit}
-          error={error}
+          error={tokenError}
         />
-      )}
-      {step === 2 && (
-        <EmailForm
+          )
+        : (
+        <SimpleEmailForm
           onSubmit={handleEmailSubmit}
-          error={error}
+          error={emailError}
         />
-      )}
-    </>
-  )
+          )}
+  </>)
 }

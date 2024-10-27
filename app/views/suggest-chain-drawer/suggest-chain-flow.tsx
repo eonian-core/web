@@ -1,10 +1,10 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import type { SuggestChainFormInput } from './suggest-chain-form'
+import { SimpleEmailForm } from '../simple-email-form/simple-email-form'
+import type { OneInputFormState } from '../one-input-form/one-input-form'
+import { useAsyncCallbackWithCatch } from '../one-input-form/async-callback-with-catch'
 import { SuggestChainForm } from './suggest-chain-form'
-import type { EmailFormInput } from './email-form'
-import { EmailForm } from './email-form'
 
 import { useInsertChain } from '@/api/suggestions/hooks/useInsertChain'
 import { useUpdateChainEmail } from '@/api/suggestions/hooks/useUpdateChainEmail'
@@ -14,47 +14,36 @@ export interface SuggestChainFlowProps {
 }
 
 export function SuggestChainFlow({ close }: SuggestChainFlowProps) {
-  const [step, setStep] = useState(1)
+  const [isChainSubmited, setIsChainSumbited] = useState(false)
   const [uuid] = useState<string>(uuidv4())
-  const [error, setError] = useState<Error | null>(null)
   const insertChain = useInsertChain()
   const updateChainEmail = useUpdateChainEmail()
 
-  const handleChainSubmit = useCallback(async ({ chain }: SuggestChainFormInput) => {
-    try {
-      await insertChain(uuid, chain)
-      setStep(2)
-      setError(null)
-    }
-    catch (err) {
-      setError(err as Error)
-    }
+  const [handleChainSubmit, chainError] = useAsyncCallbackWithCatch(async ({ input: chain }: OneInputFormState) => {
+    await insertChain(uuid, chain)
+    setIsChainSumbited(true)
   }, [insertChain, uuid])
 
-  const handleEmailSubmit = useCallback(async ({ email }: EmailFormInput) => {
-    try {
-      await updateChainEmail(uuid, email)
-      close()
-    }
-    catch (err) {
-      setError(err as Error)
-    }
+  const [handleEmailSubmit, emailError] = useAsyncCallbackWithCatch(async ({ input: email }: OneInputFormState) => {
+    await updateChainEmail(uuid, email)
+    close()
   }, [updateChainEmail, uuid, close])
 
   return (
     <>
-      {step === 1 && (
+      {!isChainSubmited
+        ? (
         <SuggestChainForm
-          error={error}
+          error={chainError}
           onSubmit={handleChainSubmit}
         />
-      )}
-      {step === 2 && (
-        <EmailForm
-          error={error}
+          )
+        : (
+        <SimpleEmailForm
+          error={emailError}
           onSubmit={handleEmailSubmit}
         />
-      )}
+          )}
     </>
   )
 }

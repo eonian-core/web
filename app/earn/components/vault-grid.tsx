@@ -17,7 +17,6 @@ import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 import { useChainContext } from '@/shared/web3/chain-context'
 import { buildFadeInAnitionStyles, useAnimation } from '@/components/fade-in/fade-in-child-list'
 import { SuggestTokenButton } from '@/earn/components/suggest-token-button'
-import { SuggestChainButton } from '@/earn/components/suggest-chain-button'
 
 const bySymbolOrder = (a: Vault, b: Vault) => TokenOrder.indexOf(getAssetSymbol(a)) - TokenOrder.indexOf(getAssetSymbol(b))
 
