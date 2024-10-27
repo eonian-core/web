@@ -1,7 +1,7 @@
 import { HttpLink } from '@apollo/client'
-import type { ChainId } from '../providers/wallet/wrappers/helpers'
 import { GraphQLEndpoints } from './endpoints'
-import { requireEnv } from '@/analytics/env'
+import type { ChainId } from '@/providers/wallet/wrappers/helpers'
+import { requireEnv } from '@/utils/env'
 
 export function makeProtocolEndpoint(chainId: ChainId) {
   const uri = GraphQLEndpoints[chainId]

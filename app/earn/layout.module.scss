@@ -13,6 +13,7 @@
 
   @media (max-width: $screen-mobile) {
     padding: 0;
+    padding-bottom: var(--navigation-height);
   }
 
   // Used for the indication of positive/negative price changes

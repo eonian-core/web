@@ -17,9 +17,10 @@ import { store } from './store/store'
 import { setLocale } from './store/slices/localeSlice'
 import { ToastContainerWrapperDynamic } from './components'
 import { robotoFont } from './shared/fonts/Roboto'
-import { addHttpIfNeed, isProduction, logEnv } from './analytics/env'
 import { Clarity } from './analytics/clarity'
 import { GoogleTagFooter, GoogleTagHead } from './analytics/google-tag'
+import { addHttpIfNeed } from '@/utils/addHttpIfNeeded'
+import { isProduction, logEnv } from '@/utils/env'
 
 const locale = 'en'
 
