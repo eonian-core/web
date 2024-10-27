@@ -15,13 +15,25 @@
   }
 }
 
+@media (max-width: $screen-laptop) {
+  .header {
+    align-items: center;
+  }
+}
+
 @media (max-width: $screen-mobile) {
   .header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
 
-    & > button {
-      margin-top: var(--margin-500);
+    h2, h3 {
+      text-align: center;
+    }
+
+
+
+    div:last-child {
+      margin-top: var(--margin-400);
     }
   }
 }
@@ -35,6 +47,12 @@
   gap: 2rem;
   justify-content: center;
   display: flex;
+}
+
+@media (max-width: $screen-mobile) {
+  .cards {
+    margin-top: var(--margin-600);
+  }
 }
 
 .body {
