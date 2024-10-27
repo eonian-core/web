@@ -8,6 +8,7 @@ import ThemesProvider from './themes'
 import { WalletWrapperProvider } from './wallet/wallet-wrapper-provider'
 import { AuthProvider } from './auth'
 import { MonitoringProvider } from './monitoring'
+import { PlasmicClientRootProvider } from './plasmic-init-client'
 import { ChainProvider } from '@/shared/web3/chain-context'
 import { ApolloSsrProvider } from '@/api/apollo-ssr-provider'
 import { WalletLinkingProvider } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
@@ -19,20 +20,22 @@ interface Props {
 
 export default function Providers({ children }: Props) {
   return (
-    <MonitoringProvider>
-      <ThemesProvider>
-        <ReduxProvider store={store}>
-          <WalletWrapperProvider>
-            <AuthProvider>
-              <ChainProvider>
-                <ApolloSsrProvider>
-                  <WalletLinkingProvider>{children}</WalletLinkingProvider>
-                </ApolloSsrProvider>
-              </ChainProvider>
-            </AuthProvider>
-          </WalletWrapperProvider>
-        </ReduxProvider>
-      </ThemesProvider>
-    </MonitoringProvider>
+    <PlasmicClientRootProvider>
+      <MonitoringProvider>
+        <ThemesProvider>
+          <ReduxProvider store={store}>
+            <WalletWrapperProvider>
+              <AuthProvider>
+                <ChainProvider>
+                  <ApolloSsrProvider>
+                    <WalletLinkingProvider>{children}</WalletLinkingProvider>
+                  </ApolloSsrProvider>
+                </ChainProvider>
+              </AuthProvider>
+            </WalletWrapperProvider>
+          </ReduxProvider>
+        </ThemesProvider>
+      </MonitoringProvider>
+    </PlasmicClientRootProvider>
   )
 }
