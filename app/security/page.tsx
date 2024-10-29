@@ -8,7 +8,7 @@ import ImageCard, { Target } from '../components/image-card/image-card'
 import Card from '../components/card/card'
 import styles from './page.module.scss'
 import Column from './columns/columns'
-import Approach from './views/approach/approach'
+import Approach, { ApproachAwards, ApproachBody } from './views/approach/approach'
 import SecOps from './views/secops/secops'
 import SecOpsDescription from './views/secops/secops-description'
 import SecOpsCards from './views/secops/secops-cards'
@@ -20,6 +20,7 @@ import strong from './views/secops/secops-indicator-label-green'
 import DeepSecurity from './views/deepsecurity/deepsecurity'
 import DeepSecurityDescription from './views/deepsecurity/deepsecurity-description'
 import Content from './content/en.mdx'
+import { AwardNumber, AwardText } from '@/components/award-text/award-text'
 
 const components: MDXComponents = {
   h1: heading.H1,
@@ -44,6 +45,10 @@ const components: MDXComponents = {
   strong: strong as any,
   DeepSecurity,
   DeepSecurityDescription,
+  ApproachBody,
+  ApproachAwards,
+  AwardText,
+  AwardNumber,
 }
 
 export default function Home() {

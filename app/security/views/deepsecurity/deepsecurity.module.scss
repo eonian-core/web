@@ -39,7 +39,7 @@
     z-index: -1;
 
     &:before {
-        --blur-size: 1rem;
+        --blur-size: 2rem;
 
         content: "";
         position: absolute;
@@ -50,11 +50,11 @@
 
         background: linear-gradient(to bottom,
                 #090de7,
+                #12f0f8,
+                #12f0f8,
                 #5e2fa7,
                 #5e2fa7,
-                #12f0f8,
-                #12f0f8,
-                #12f0f8,
+                #5e2fa7,
                 #5e2fa7,
                 #5e2fa7,
                 #090de7);
@@ -69,7 +69,8 @@
         width: 50vw;
 
         max-width: var(--width-600);
-        box-shadow: 0 16px 31px -10px rgb(5, 6, 17);
+        mask-image: radial-gradient(black 55%, transparent 80%);
+        border-radius: var(--border-radius-400);
     }
 }
 
