@@ -18,11 +18,10 @@ export default function SecOpsCodeReview({ children }: SecOpsCodeReviewProps) {
 
   return (
     <ImageCard
-      href={'/security/all-reviews'}
+      href={'https://github.com/eonian-core/farm'}
       image={<Image src={magnifierPic} alt={'robot picture'} placeholder="blur" />}
       isVertical={!!isTabletOrSmaller}
       className={styles.secOpsImageCard}
-      disabled
     >
       {children}
     </ImageCard>
