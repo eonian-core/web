@@ -40,7 +40,6 @@ export function ImageCard({
       [styles.disabled]: disabled,
     })}
     target="_blank"
-    rel="noopener noreferrer"
     data-testid="image-card"
   >
     {image}
