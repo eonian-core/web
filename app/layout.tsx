@@ -17,13 +17,16 @@ import { setLocale } from './store/slices/localeSlice'
 import { ToastContainerWrapperDynamic } from './components'
 import { robotoFont } from './shared/fonts/Roboto'
 import { AfterHeadAnalytics, AroundBodyProviderAnalytics, InBodyProviderAnalytics, InHeadAnalytics } from './analytics/analytics-provider'
+import { bootstrapExeperiments } from './experiments/bootstrap'
 import { addHttpIfNeed } from '@/utils/addHttpIfNeeded'
 import { isProduction, logEnv } from '@/utils/env'
 
 const locale = 'en'
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default async function RootLayout({ children }: PropsWithChildren) {
   store.dispatch(setLocale(locale))
+
+  const experiments = await bootstrapExeperiments()
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -33,7 +36,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       </head>
       <AfterHeadAnalytics />
 
-      <AroundBodyProviderAnalytics>
+      <AroundBodyProviderAnalytics bootstrap={experiments}>
         <body className={clsx(robotoFont.className, 'dark text-foreground bg-background')}>
           <InBodyProviderAnalytics>
 

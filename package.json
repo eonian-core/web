@@ -69,6 +69,7 @@
     "luxon": "^3.5.0",
     "next": "^14.2.8",
     "posthog-js": "^1.180.1",
+    "posthog-node": "^4.2.1",
     "react": "^18.3.1",
     "react-content-loader": "^7.0.2",
     "react-dom": "^18.3.1",
@@ -84,7 +85,8 @@
     "sharp": "^0.33.5",
     "siwe": "^2.3.2",
     "typescript": "5.3.3",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "uuidv7": "^1.0.2"
   },
   "devDependencies": {
     "@apollo/server": "^4.9.3",

@@ -1,22 +1,28 @@
 // app/providers.js
 'use client'
 
+import type { BootstrapConfig } from 'posthog-js'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
 
-import type { PropsWithChildren } from 'react'
-import { logEnv } from '@/utils/env'
+import { type PropsWithChildren } from 'react'
+import { NEXT_PUBLIC_POSTHOG_HOST, NEXT_PUBLIC_POSTHOG_KEY } from './posthog-env'
 
-const NEXT_PUBLIC_POSTHOG_KEY = logEnv('NEXT_PUBLIC_POSTHOG_KEY', process.env.NEXT_PUBLIC_POSTHOG_KEY)
-const NEXT_PUBLIC_POSTHOG_HOST = logEnv('NEXT_PUBLIC_POSTHOG_HOST', process.env.NEXT_PUBLIC_POSTHOG_HOST)
-
-if (typeof window !== 'undefined' && NEXT_PUBLIC_POSTHOG_KEY && NEXT_PUBLIC_POSTHOG_HOST) {
-  posthog.init(NEXT_PUBLIC_POSTHOG_KEY, {
-    api_host: NEXT_PUBLIC_POSTHOG_HOST,
-    person_profiles: 'always', // or 'identified_only' to ignore anonymous users
-  })
+export interface CSPostHogProviderProps extends PropsWithChildren {
+  bootstrap?: BootstrapConfig
 }
-export function CSPostHogProvider({ children }: PropsWithChildren) {
+
+export function CSPostHogProvider({ children, bootstrap }: CSPostHogProviderProps) {
+  if (typeof window !== 'undefined' && NEXT_PUBLIC_POSTHOG_KEY && NEXT_PUBLIC_POSTHOG_HOST) {
+    posthog.init(NEXT_PUBLIC_POSTHOG_KEY, {
+      api_host: NEXT_PUBLIC_POSTHOG_HOST,
+      person_profiles: 'always', // or 'identified_only' to ignore anonymous users
+      capture_pageview: false, // Disable automatic pageview capture, as we capture manually
+      capture_pageleave: true,
+      bootstrap,
+    })
+  }
+
   return (
       <PostHogProvider client={posthog}>
         {children}

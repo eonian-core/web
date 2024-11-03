@@ -1,12 +1,14 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import clsx from 'clsx'
+import { usePostHog } from 'posthog-js/react'
 import { useIsDesktopOrSmaller } from '../../../../components/resize-hooks/screens'
 import { WrapperLink } from '../../../../components/links/wrapper-link'
 import type { ButtonProps } from '../../../../components/button/button'
 import Button from '../../../../components/button/button'
 import styles from './hero-button.module.scss'
+import { FeatureFlags } from '@/experiments/feature-flags'
 
 interface Props extends ButtonProps {
   children: React.ReactNode
@@ -24,6 +26,13 @@ const HeroButton: React.FC<Props> = ({
   ...restProps
 }) => {
   const isDesktop = useIsDesktopOrSmaller()
+  const posthog = usePostHog()
+  const [text, setText] = useState(children)
+
+  useEffect(() => {
+    const flag = posthog.getFeatureFlag(FeatureFlags.LANDING_MAIN_CTA)
+    setText(flag === 'test' ? 'Just Click It!' : 'Click me')
+  }, [setText, posthog])
 
   return (
     <WrapperLink className={clsx(styles.button, {
@@ -39,7 +48,7 @@ const HeroButton: React.FC<Props> = ({
         bordered={bordered}
         iconPosition='left'
         {...restProps}>
-        {children}
+        {text}
       </Button>
     </WrapperLink>
   )
