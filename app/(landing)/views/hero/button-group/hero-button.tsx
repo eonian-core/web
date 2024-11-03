@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import clsx from 'clsx'
-import { usePostHog } from 'posthog-js/react'
 import { useIsDesktopOrSmaller } from '../../../../components/resize-hooks/screens'
 import { WrapperLink } from '../../../../components/links/wrapper-link'
 import type { ButtonProps } from '../../../../components/button/button'
