@@ -12,13 +12,11 @@ import Footer from './components/footer/footer'
 import Navigation from './components/navigation/navigation'
 import PageLoaderTop from './components/page-loading-top/page-loader-top'
 import SlidingFooter from './components/sliding-footer/sliding-footer'
-import GoogleAnalytics from './analytics/google-analytics'
 import { store } from './store/store'
 import { setLocale } from './store/slices/localeSlice'
 import { ToastContainerWrapperDynamic } from './components'
 import { robotoFont } from './shared/fonts/Roboto'
-import { Clarity } from './analytics/clarity'
-import { GoogleTagFooter, GoogleTagHead } from './analytics/google-tag'
+import { AfterHeadAnalytics, InBodyProviderAnalytics, InHeadAnalytics } from './analytics/analytics-provider'
 import { addHttpIfNeed } from '@/utils/addHttpIfNeeded'
 import { isProduction, logEnv } from '@/utils/env'
 
@@ -31,20 +29,20 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang={locale} suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
-        <Clarity />
-        <GoogleTagHead />
+        <InHeadAnalytics />
       </head>
-      <GoogleAnalytics />
+      <AfterHeadAnalytics />
 
       <body className={clsx(robotoFont.className, 'dark text-foreground bg-background')}>
-        <GoogleTagFooter />
 
-        <Providers locale={locale}>
-          <PageLoaderTop />
-          <Navigation />
-          <ToastContainerWrapperDynamic />
-          <SlidingFooter footer={<Footer />}>{children}</SlidingFooter>
-        </Providers>
+        <InBodyProviderAnalytics>
+          <Providers locale={locale}>
+            <PageLoaderTop />
+            <Navigation />
+            <ToastContainerWrapperDynamic />
+            <SlidingFooter footer={<Footer />}>{children}</SlidingFooter>
+          </Providers>
+        </InBodyProviderAnalytics>
       </body>
     </html>
   )

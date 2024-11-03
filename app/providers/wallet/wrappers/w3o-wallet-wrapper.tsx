@@ -14,7 +14,7 @@ import {
   getMulticallAddress,
   isLoggedInWallet,
 } from './helpers'
-import { clarityAdapter } from '@/analytics/clarity-adapter'
+import { analytics } from '@/analytics/analytics'
 
 type ChainArgs = ReturnType<typeof useSetChain>
 
@@ -119,10 +119,10 @@ export function useConnect(chain: Chain | null,
   setOnboardChain: ChainArgs[1],
   onboardConnect: (options?: ConnectOptions) => Promise<WalletState[]>) {
   return useCallback(async () => {
-    clarityAdapter.trackEvent('start wallet connect')
+    analytics.track('start wallet connect')
 
     const success = await connect(onboardConnect)
-    clarityAdapter.trackEvent(`wallet connect: ${success}`)
+    analytics.track('wallet connect', { success })
 
     if (success)
       await autoSelectProperChain(chain, chains, setOnboardChain)
@@ -198,7 +198,7 @@ export function useDisconnect(wallet: Wallet | null,
     if (wallet)
       await disconnect(wallet?.label, onboardDisconnect)
   },
-  [onboardDisconnect, wallet, wallet?.label],
+  [onboardDisconnect, wallet],
   )
 }
 
@@ -229,10 +229,10 @@ export function useSetCurrentChain(setOnboardChain: ChainArgs[1]) {
  * @param chainId Identifier of the chain to which you need to connect.
  */
 export async function setCurrentChain(chainId: ChainId, setOnboardChain: ChainArgs[1]): Promise<void> {
-  clarityAdapter.trackEvent('start chain change')
+  analytics.track('start chain change', { chainHex: ChainId.toHex(chainId), chainName: ChainId.getName(chainId) })
   const success = await setOnboardChain({ chainId: ChainId.toHex(chainId) })
 
-  clarityAdapter.trackEvent(`chain change: ${success}`)
+  analytics.track('chain change', { success })
   if (success)
     WalletPersistance.saveLastActiveChain(chainId)
 }

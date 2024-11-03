@@ -40,7 +40,7 @@ export class ClarityAdapter {
     this.track('consent')
   }
 
-  trachIdentify({ customId, customSessionId, customPageId, friendlyName }: { customId: string; customSessionId?: string; customPageId?: string; friendlyName?: string }) {
+  trackIdentify({ customId, customSessionId, customPageId, friendlyName }: { customId: string; customSessionId?: string; customPageId?: string; friendlyName?: string }) {
     this.track('identify', customId, customSessionId, customPageId, friendlyName)
   }
 
