@@ -18,6 +18,7 @@ import { ToastContainerWrapperDynamic } from './components'
 import { robotoFont } from './shared/fonts/Roboto'
 import { AfterHeadAnalytics, AroundBodyProviderAnalytics, InBodyProviderAnalytics, InHeadAnalytics } from './analytics/analytics-provider'
 import { bootstrapExeperiments } from './experiments/bootstrap'
+import { FeatureFlagsProvider } from './experiments/feature-flags'
 import { addHttpIfNeed } from '@/utils/addHttpIfNeeded'
 import { isProduction, logEnv } from '@/utils/env'
 
@@ -41,10 +42,12 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           <InBodyProviderAnalytics>
 
             <Providers locale={locale}>
-              <PageLoaderTop />
-              <Navigation />
-              <ToastContainerWrapperDynamic />
-              <SlidingFooter footer={<Footer />}>{children}</SlidingFooter>
+              <FeatureFlagsProvider flags={experiments?.featureFlags}>
+                <PageLoaderTop />
+                <Navigation />
+                <ToastContainerWrapperDynamic />
+                <SlidingFooter footer={<Footer />}>{children}</SlidingFooter>
+              </FeatureFlagsProvider>
             </Providers>
 
           </InBodyProviderAnalytics>
