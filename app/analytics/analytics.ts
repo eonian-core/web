@@ -1,4 +1,5 @@
 import LogRocket from 'logrocket'
+import posthog from 'posthog-js'
 import type { AbstractAnalyticsSubscriber } from './abstract-analytics'
 import { AbstractAnalyticsPublisher } from './abstract-analytics'
 import { clarityAdapter } from './clarity-adapter'
@@ -10,6 +11,16 @@ class LogRocketAnalyticsAdapter implements AbstractAnalyticsSubscriber {
 
   identify(userId: string, traits?: Record<string, any>) {
     LogRocket.identify(userId, traits)
+  };
+}
+
+class PosthogAnalyticsAdapter implements AbstractAnalyticsSubscriber {
+  track(eventName: string, payload?: Record<string, any>) {
+    posthog.capture(eventName, payload)
+  };
+
+  identify(userId: string, traits?: Record<string, any>) {
+    posthog.identify(userId, traits)
   };
 }
 
@@ -43,5 +54,6 @@ class ClarityAnalyticsAdapter implements AbstractAnalyticsSubscriber {
 
 export const analytics = new AbstractAnalyticsPublisher({
   logRocket: new LogRocketAnalyticsAdapter(),
+  posthog: new PosthogAnalyticsAdapter(),
   clarity: new ClarityAnalyticsAdapter(),
 })

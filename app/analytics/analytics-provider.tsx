@@ -3,6 +3,7 @@ import { Clarity } from './clarity'
 import GoogleAnalytics from './google-analytics'
 import { GoogleTagFooter, GoogleTagHead } from './google-tag'
 import { MonitoringProvider } from './monitoring'
+import { CSPostHogProvider } from './posthog-provider'
 
 export function InHeadAnalytics() {
   return (
@@ -17,6 +18,16 @@ export function AfterHeadAnalytics() {
   return (
         <>
             <GoogleAnalytics />
+        </>
+  )
+}
+
+export function AroundBodyProviderAnalytics({ children }: PropsWithChildren) {
+  return (
+        <>
+            <CSPostHogProvider>
+                {children}
+            </CSPostHogProvider>
         </>
   )
 }

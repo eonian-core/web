@@ -16,7 +16,7 @@ import { store } from './store/store'
 import { setLocale } from './store/slices/localeSlice'
 import { ToastContainerWrapperDynamic } from './components'
 import { robotoFont } from './shared/fonts/Roboto'
-import { AfterHeadAnalytics, InBodyProviderAnalytics, InHeadAnalytics } from './analytics/analytics-provider'
+import { AfterHeadAnalytics, AroundBodyProviderAnalytics, InBodyProviderAnalytics, InHeadAnalytics } from './analytics/analytics-provider'
 import { addHttpIfNeed } from '@/utils/addHttpIfNeeded'
 import { isProduction, logEnv } from '@/utils/env'
 
@@ -33,17 +33,20 @@ export default function RootLayout({ children }: PropsWithChildren) {
       </head>
       <AfterHeadAnalytics />
 
-      <body className={clsx(robotoFont.className, 'dark text-foreground bg-background')}>
+      <AroundBodyProviderAnalytics>
+        <body className={clsx(robotoFont.className, 'dark text-foreground bg-background')}>
+          <InBodyProviderAnalytics>
 
-        <InBodyProviderAnalytics>
-          <Providers locale={locale}>
-            <PageLoaderTop />
-            <Navigation />
-            <ToastContainerWrapperDynamic />
-            <SlidingFooter footer={<Footer />}>{children}</SlidingFooter>
-          </Providers>
-        </InBodyProviderAnalytics>
-      </body>
+            <Providers locale={locale}>
+              <PageLoaderTop />
+              <Navigation />
+              <ToastContainerWrapperDynamic />
+              <SlidingFooter footer={<Footer />}>{children}</SlidingFooter>
+            </Providers>
+
+          </InBodyProviderAnalytics>
+        </body>
+      </AroundBodyProviderAnalytics>
     </html>
   )
 }
