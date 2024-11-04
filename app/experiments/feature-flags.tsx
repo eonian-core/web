@@ -5,6 +5,7 @@ import React, { createContext, useContext } from 'react'
 
 export enum FeatureFlags {
   LANDING_MAIN_CTA = 'landing-main-cta',
+  LANDING_HERO_COPY_V1_1 = 'landing-hero-copy-v1_1',
 }
 
 interface FeatureFlagsContextProps {
@@ -27,4 +28,14 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
 
 export function useFeatureFlags(): FeatureFlagsContextProps {
   return useContext(FeatureFlagsContext)
+}
+
+export function useFlag(flag: FeatureFlags): string | boolean | undefined {
+  const { flags } = useFeatureFlags()
+  return flags[flag]
+}
+
+export function useIsTestForFlag(flag: FeatureFlags): boolean {
+  const featureFlag = useFlag(flag)
+  return featureFlag === 'test'
 }

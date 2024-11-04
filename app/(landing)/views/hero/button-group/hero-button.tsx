@@ -7,7 +7,6 @@ import { WrapperLink } from '../../../../components/links/wrapper-link'
 import type { ButtonProps } from '../../../../components/button/button'
 import Button from '../../../../components/button/button'
 import styles from './hero-button.module.scss'
-import { FeatureFlags, useFeatureFlags } from '@/experiments/feature-flags'
 
 interface Props extends ButtonProps {
   children: React.ReactNode
@@ -25,8 +24,6 @@ const HeroButton: React.FC<Props> = ({
   ...restProps
 }) => {
   const isDesktop = useIsDesktopOrSmaller()
-  const { flags } = useFeatureFlags()
-  const flag = flags[FeatureFlags.LANDING_MAIN_CTA]
 
   return (
     <WrapperLink className={clsx(styles.button, {
@@ -42,7 +39,7 @@ const HeroButton: React.FC<Props> = ({
         bordered={bordered}
         iconPosition='left'
         {...restProps}>
-        {flag === 'test' ? 'Just Click It!' : children}
+        {children}
       </Button>
     </WrapperLink>
   )
