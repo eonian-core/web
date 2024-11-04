@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 import { useIsDesktopOrSmaller } from '../../../components/resize-hooks/screens'
 import IconChevron from '../../../components/icons/icon-chevron'
@@ -10,9 +10,13 @@ import { showEarn } from '../../../features'
 import styles from './testimonials.module.scss'
 import CustomTweet from './custom-tweet'
 import StaticContent from './static-content'
+import { useTrackIsInView } from '@/analytics/use-track-in-view'
 
 export default function Testimonials({ children }: React.PropsWithChildren) {
-  return <Container className={styles.testimonials}>{children}</Container>
+  const ref = useRef(null)
+  useTrackIsInView(ref, { 'Component Name': 'Testimonials' })
+
+  return <Container ref={ref} className={styles.testimonials}>{children}</Container>
 }
 
 function CTA({ children, href }: React.PropsWithChildren<LinkWithIconProps>) {

@@ -12,40 +12,47 @@ import Footer from './components/footer/footer'
 import Navigation from './components/navigation/navigation'
 import PageLoaderTop from './components/page-loading-top/page-loader-top'
 import SlidingFooter from './components/sliding-footer/sliding-footer'
-import GoogleAnalytics from './analytics/google-analytics'
 import { store } from './store/store'
 import { setLocale } from './store/slices/localeSlice'
 import { ToastContainerWrapperDynamic } from './components'
 import { robotoFont } from './shared/fonts/Roboto'
-import { Clarity } from './analytics/clarity'
-import { GoogleTagFooter, GoogleTagHead } from './analytics/google-tag'
+import { AfterHeadAnalytics, AroundBodyProviderAnalytics, InBodyProviderAnalytics, InHeadAnalytics } from './analytics/analytics-provider'
+import { bootstrapExeperiments } from './experiments/bootstrap'
+import { FeatureFlagsProvider } from './experiments/feature-flags'
 import { addHttpIfNeed } from '@/utils/addHttpIfNeeded'
 import { isProduction, logEnv } from '@/utils/env'
 
 const locale = 'en'
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default async function RootLayout({ children }: PropsWithChildren) {
   store.dispatch(setLocale(locale))
+
+  const experiments = await bootstrapExeperiments()
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
-        <Clarity />
-        <GoogleTagHead />
+        <InHeadAnalytics />
       </head>
-      <GoogleAnalytics />
+      <AfterHeadAnalytics />
 
-      <body className={clsx(robotoFont.className, 'dark text-foreground bg-background')}>
-        <GoogleTagFooter />
+      <AroundBodyProviderAnalytics bootstrap={experiments}>
+        <body className={clsx(robotoFont.className, 'dark text-foreground bg-background')}>
+          <InBodyProviderAnalytics>
 
-        <Providers locale={locale}>
-          <PageLoaderTop />
-          <Navigation />
-          <ToastContainerWrapperDynamic />
-          <SlidingFooter footer={<Footer />}>{children}</SlidingFooter>
-        </Providers>
-      </body>
+            <Providers locale={locale}>
+              <FeatureFlagsProvider flags={experiments?.featureFlags}>
+                <PageLoaderTop />
+                <Navigation />
+                <ToastContainerWrapperDynamic />
+                <SlidingFooter footer={<Footer />}>{children}</SlidingFooter>
+              </FeatureFlagsProvider>
+            </Providers>
+
+          </InBodyProviderAnalytics>
+        </body>
+      </AroundBodyProviderAnalytics>
     </html>
   )
 }

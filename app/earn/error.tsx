@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useMonitoringContext } from '../providers/monitoring'
+import { useMonitoringContext } from '../analytics/monitoring'
 import styles from './layout.module.scss'
 import IconDeathX from '@/components/icons/icon-death-x'
 import IconRobot from '@/components/icons/icon-robot'
