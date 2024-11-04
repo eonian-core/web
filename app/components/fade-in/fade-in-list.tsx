@@ -1,10 +1,12 @@
 import type { ForwardRefComponent } from 'framer-motion'
 import { motion } from 'framer-motion'
 import type { PropsWithChildren } from 'react'
-import React, { useRef } from 'react'
+import React, { use, useRef } from 'react'
 import { useInView } from '../use-in-view/use-in-view'
 import type { FadeInChildListProps } from './fade-in-child-list'
 import FadeInChildList from './fade-in-child-list'
+import type { IsInViewEventOptions } from '@/analytics/use-track-in-view'
+import { useTrackIsInViewDirectly } from '@/analytics/use-track-in-view'
 
 export interface FadeInListProps extends FadeInWrapperProps, FadeInChildListProps {
   /** Class for children item wrappers */
@@ -47,6 +49,9 @@ export interface FadeInWrapperProps extends PropsWithChildren {
 
   /** Override is in view */
   isInView?: boolean
+
+  /** Analytics tracking */
+  event?: IsInViewEventOptions
 }
 
 export function FadeInWrapper({
@@ -57,10 +62,13 @@ export function FadeInWrapper({
   isList,
   isSection,
   isInView: isInViewOverride,
+  event,
 }: FadeInWrapperProps) {
   const ref = useRef(null)
   const isInViewBasedOnRef = useInView(ref, { once, amount })
   const isInView = isInViewOverride ?? isInViewBasedOnRef
+
+  useTrackIsInViewDirectly(isInView, event)
 
   // Possible to pass wrapper component through props
   // but it in some situations breaks react refs on mobile

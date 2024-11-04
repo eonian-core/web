@@ -88,6 +88,7 @@ import { Audits, AuditsItem } from './views/audits/audits'
 import { VaultCard } from '@/components/vault-card/vault-card'
 import { VaultAction } from '@/components/vault-card/vault-action'
 import { FeatureFlags, useFlag, useIsTestForFlag } from '@/experiments/feature-flags'
+import { useTrackScroll } from '@/analytics/use-track-scroll'
 
 const components = {
   Hero,
@@ -177,6 +178,8 @@ const components = {
 }
 
 export default function Home() {
+  useTrackScroll()
+
   const shouldShowCopyV1_1 = useIsTestForFlag(FeatureFlags.LANDING_HERO_COPY_V1_1)
 
   return (

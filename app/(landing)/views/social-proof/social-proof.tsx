@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useLocalSocials } from '../../../socials'
 import ExternalLink from '../../../components/links/external-link'
 import { interFont } from '../../../shared/fonts/Inter'
 import styles from './social-proof.module.scss'
+import { useTrackIsInView } from '@/analytics/use-track-in-view'
 
 export interface SocialProofProps {
   children: React.ReactNode
 }
 
 export default function SocialProof({ children }: SocialProofProps) {
+  const ref = useRef(null)
+  useTrackIsInView(ref, { 'Component Name': 'SocialProof' })
+
   return (
-    <div className={styles.container}>
+    <div ref={ref} className={styles.container}>
       <div className={styles.socialProof}>
         {children}
       </div>
