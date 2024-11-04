@@ -1,7 +1,7 @@
 import type { UseInViewOptions } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import type { MutableRefObject } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { analytics } from './analytics'
 
 export interface IsInViewEventOptions {

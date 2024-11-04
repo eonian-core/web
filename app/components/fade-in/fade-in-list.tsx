@@ -1,7 +1,7 @@
 import type { ForwardRefComponent } from 'framer-motion'
 import { motion } from 'framer-motion'
 import type { PropsWithChildren } from 'react'
-import React, { use, useRef } from 'react'
+import React, { useRef } from 'react'
 import { useInView } from '../use-in-view/use-in-view'
 import type { FadeInChildListProps } from './fade-in-child-list'
 import FadeInChildList from './fade-in-child-list'
