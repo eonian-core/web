@@ -8,6 +8,12 @@ import { PostHogProvider } from 'posthog-js/react'
 import { type PropsWithChildren } from 'react'
 import { NEXT_PUBLIC_POSTHOG_HOST, NEXT_PUBLIC_POSTHOG_KEY } from './posthog-env'
 
+declare global {
+  interface Window {
+    posthog: typeof posthog | undefined
+  }
+}
+
 export interface CSPostHogProviderProps extends PropsWithChildren {
   bootstrap?: BootstrapConfig
 }
@@ -21,6 +27,8 @@ export function CSPostHogProvider({ children, bootstrap }: CSPostHogProviderProp
       capture_pageleave: true,
       bootstrap,
     })
+
+    window.posthog = posthog
   }
 
   return (
