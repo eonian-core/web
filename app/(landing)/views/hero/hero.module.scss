@@ -224,7 +224,7 @@
 
         h1 {
             text-align: left;
-            font-size: var(--font-size-1160);
+            font-size: var(--font-size-1150);
             line-height: var(--line-height-1150);
             letter-spacing: var(--letter-spacing-black-400);
 
@@ -318,7 +318,7 @@
 @media (max-width: $screen-small-mobile) {
     .hero {
         h1 {
-            font-size: var(--font-size-1120);
+            font-size: var(--font-size-1050);
             line-height: var(--line-height-1000);
 
             &::after {
@@ -346,3 +346,13 @@
         }
     }
 }
+
+@media (max-width: $screen-tiny-mobile) {
+    .hero {
+        &>p {
+            font-size: var(--font-size-400);
+            line-height: var(--line-height-200);
+        }
+    }
+ }
+
