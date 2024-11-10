@@ -1,113 +1,116 @@
-@import "../../screen.scss";
-@import "../styles/gradient-text.mixin.scss";
-@import "../styles/appear.animation.scss";
+@import '../../screen.scss';
+@import '../styles/gradient-text.mixin.scss';
+@import '../styles/appear.animation.scss';
 
 .container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-    color: var(--color-text-500);
+  color: var(--color-text-500);
 
-    svg {
-        width: 3rem;
-        height: 3.5rem;
-    }
+  svg {
+    width: 3rem;
+    height: 3.5rem;
+  }
 }
 
 .wreath {
-    transform: rotate(-20deg);
-    margin-right: -1rem;
+  transform: rotate(-20deg);
+  margin-right: -1rem;
 }
 
 .wreath.mirror {
-    transform: rotate(20deg) scaleX(-1);
-    margin-left: -1rem;
+  transform: rotate(20deg) scaleX(-1);
+  margin-left: -1rem;
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-    min-width: calc(var(--width-200) + var(--margin-300));
+  min-width: calc(var(--width-200) + var(--margin-300));
 
-    font-size: var(--font-size-400);
-    font-weight: var(--font-semibold);
-    color: var(--color-text-400);
+  font-size: var(--font-size-400);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-400);
 
-    p {
-        margin-bottom: 0;
-    }
+  p {
+    margin-bottom: 0;
+  }
 }
 
 .number {
-    font-size: var(--font-size-750);
-    font-weight: var(--font-bold);
-    line-height: var(--line-height-750);
-    color: var(--color-text-400);
-
+  font-size: var(--font-size-750);
+  font-weight: var(--font-bold);
+  line-height: var(--line-height-750);
+  color: var(--color-text-400);
 }
 
 @media (max-width: $screen-laptop) {
-    .container {
-        // wreath margin causing incorrect witdth calulation, need adgust
-        position: relative;
-        left: -1.5rem;
+  .container {
+    // wreath margin causing incorrect witdth calulation, need adgust
+    position: relative;
+    left: -1.5rem;
 
-        .content p{
-            font-size: var(--font-size-500);
-        }
+    .content p {
+      font-size: var(--font-size-500);
+    }
+  }
 
+  .number {
+    font-size: var(--font-size-600);
+    line-height: var(--line-height-600);
+  }
 
+  .wreath {
+    margin-right: -2.5rem;
+  }
+
+  .wreath.mirror {
+    margin-left: -2.5rem;
+  }
+}
+
+@mixin small {
+  .container {
+    .content p {
+      font-size: var(--font-size-300);
     }
 
-    .number {
-        font-size: var(--font-size-600);
-        line-height: var(--line-height-600);
+    svg {
+      width: 2rem;
+      height: 2.5rem;
     }
+  }
 
-    .wreath {
-        margin-right: -2.5rem;
-    }
+  .number {
+    font-size: var(--font-size-500);
+    line-height: var(--line-height-200);
+    color: var(--color-text-300);
+  }
 
-    .wreath.mirror {
-        margin-left: -2.5rem;
-    }
+  .wreath {
+    margin-right: -2.5rem;
+  }
 
+  .wreath.mirror {
+    margin-left: -2.5rem;
+  }
+}
+
+.container.small {
+  @include small();
 }
 
 @media (max-width: $screen-tablet) {
-    .container {
-        .content p{
-            font-size: var(--font-size-300);
-            
-        }
-
-        svg {
-            width: 2rem;
-            height: 2.5rem;
-        }
-    }
-
-    .number {
-        font-size: var(--font-size-500);
-        line-height: var(--line-height-200);
-        color: var(--color-text-300);
-    }
-
-    .wreath {
-        margin-right: -2.5rem;
-    }
-
-    .wreath.mirror {
-        margin-left: -2.5rem;
-    }
+  @include small();
 }
 
 @media (max-width: $screen-mobile) {
-    .container {
-        left: -1.3rem;
-    }
+  .container {
+    left: -1.3rem;
+  }
 }
