@@ -119,25 +119,16 @@
 
   margin-right: 3em;
 
-  @media (max-height: 900px) {
-    display: none !important;
-  }
-
-  @media (max-width: $screen-laptop) {
+  @media (max-height: 900px) or (max-width: $screen-small-mobile) {
     margin-right: 0;
-    gap: var(--margin-500);
-
-    svg {
+    & > *:nth-child(2) {
       display: none !important;
     }
-
-    & > * {
-      left: 0 !important;
-    }
+    --award-text-min-width: 175px;
   }
 
   @media (max-width: $screen-mobile) {
-    gap: var(--margin-300);
+    gap: var(--margin-800);
   }
 }
 

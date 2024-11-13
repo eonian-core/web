@@ -31,7 +31,7 @@
   align-items: center;
   justify-content: center;
 
-  min-width: calc(var(--width-200) + var(--margin-300));
+  min-width: var(--award-text-min-width);
 
   font-size: var(--font-size-400);
   font-weight: var(--font-semibold);
