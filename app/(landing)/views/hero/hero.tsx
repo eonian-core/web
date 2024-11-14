@@ -2,7 +2,6 @@ import type { PropsWithChildren } from 'react'
 import React from 'react'
 import clsx from 'clsx'
 import Container from '../../../components/contrainer/container'
-import IconScroll from '../../../components/icons/icon-scroll'
 import { useIsScrolled } from '../../../components/parallax/useIsScrolled'
 import styles from './hero.module.scss'
 
