@@ -7,10 +7,11 @@ import { store } from '../store/store'
 import ThemesProvider from './themes'
 import { WalletWrapperProvider } from './wallet/wallet-wrapper-provider'
 import { AuthProvider } from './auth'
-import { MonitoringProvider } from './monitoring'
 import { ChainProvider } from '@/shared/web3/chain-context'
 import { ApolloSsrProvider } from '@/api/apollo-ssr-provider'
 import { WalletLinkingProvider } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
+import { SuggestTokenProvider } from '@/views/suggest-token-drawer/suggest-token-drawer'
+import { SuggestChainProvider } from '@/views/suggest-chain-drawer/suggest-chain-drawer'
 
 interface Props {
   locale: string
@@ -19,20 +20,22 @@ interface Props {
 
 export default function Providers({ children }: Props) {
   return (
-    <MonitoringProvider>
       <ThemesProvider>
         <ReduxProvider store={store}>
           <WalletWrapperProvider>
             <AuthProvider>
               <ChainProvider>
                 <ApolloSsrProvider>
-                  <WalletLinkingProvider>{children}</WalletLinkingProvider>
+                  <WalletLinkingProvider>
+                    <SuggestTokenProvider>
+                      <SuggestChainProvider>{children}</SuggestChainProvider>
+                    </SuggestTokenProvider>
+                  </WalletLinkingProvider>
                 </ApolloSsrProvider>
               </ChainProvider>
             </AuthProvider>
           </WalletWrapperProvider>
         </ReduxProvider>
       </ThemesProvider>
-    </MonitoringProvider>
   )
 }

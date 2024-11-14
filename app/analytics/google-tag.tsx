@@ -3,7 +3,7 @@ import React from 'react'
 import Script from 'next/script'
 
 // not allow lazy load component
-import { logEnv } from './env'
+import { logEnv } from '@/utils/env'
 
 export interface GoogleTagProps {
   measurementId?: string

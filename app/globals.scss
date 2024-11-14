@@ -5,7 +5,6 @@
 @tailwind utilities;
 
 @layer utilities {
-
   /* This two helpers apply a -50% to the translate x/y, and add
    * a --y/--x css variable to it. This util is only here to make writing this class
    * a bit easier to read in the HTML :)   */
@@ -20,6 +19,8 @@
 
 :root {
   color-scheme: dark;
+
+  --award-text-min-width: calc(var(--width-200) + var(--margin-300));
 }
 
 /**
@@ -44,8 +45,8 @@
 ::before {
   // Token-related colors
   --color-token-USDC: hsl(210, 71%, 46%);
-  --color-token-BTC: hsl(35, 92%, 58%); 
-  --color-token-BTCB: var(--color-token-BTC); 
+  --color-token-BTC: hsl(35, 92%, 58%);
+  --color-token-BTCB: var(--color-token-BTC);
   --color-token-USDT: hsla(142, 71%, 45%, 60%);
   --color-token-ETH: hsl(291, 29%, 54%);
   --color-token-DAI: transparent;
@@ -56,7 +57,7 @@
   --font-size-200: 0.825rem;
   --font-size-300: 0.875rem;
   --font-size-400: 0.9rem;
-  --font-size-500: 1rem; // Default size, by default equal 16px 
+  --font-size-500: 1rem; // Default size, by default equal 16px
   --font-size-600: 1.125rem;
   --font-size-700: 1.25rem;
   --font-size-750: 1.5rem;
@@ -81,10 +82,8 @@
   --font-size-1300: 25rem;
 
   // font families
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-
+  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
+    'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
   // font weight
   --font-thin: 100;
@@ -110,7 +109,7 @@
   --line-height-200: 1.35rem;
   --line-height-300: 1.5rem;
   --line-height-400: 1.625rem;
-  --line-height-500: 1.75rem; // Default size, by default equal 16px 
+  --line-height-500: 1.75rem; // Default size, by default equal 16px
   --line-height-600: 2rem;
   --line-height-700: 2.25rem;
   --line-height-750: 2.5rem;
@@ -127,20 +126,21 @@
   --line-height-1180: 9rem;
   --line-height-1200: 11.5rem;
 
-
   // Colors
   --callout-rgb: 20, 20, 20;
   --callout-border-rgb: 108, 108, 108;
 
   --tile-start-color: rgba(2, 13, 46, 1);
   --tile-end-color: rgba(2, 5, 19, 1);
-  --tile-border-color: conic-gradient(hsla(0, 0%, 100%, 0.502),
-      hsla(0, 0%, 100%, 0.251),
-      hsla(0, 0%, 100%, 0.188),
-      hsla(0, 0%, 100%, 0.125),
-      hsla(0, 0%, 100%, 0.063),
-      hsla(0, 0%, 100%, 0.063),
-      hsla(0, 0%, 100%, 0.502));
+  --tile-border-color: conic-gradient(
+    hsla(0, 0%, 100%, 0.502),
+    hsla(0, 0%, 100%, 0.251),
+    hsla(0, 0%, 100%, 0.188),
+    hsla(0, 0%, 100%, 0.125),
+    hsla(0, 0%, 100%, 0.063),
+    hsla(0, 0%, 100%, 0.063),
+    hsla(0, 0%, 100%, 0.502)
+  );
 
   // Text
   --color-text-10: hsl(0, 0%, 100%);
@@ -158,7 +158,12 @@
   --color-text-900: hsl(240, 6%, 10%);
   --color-text-background-500: hsla(240, 4%, 5%, 0.3);
 
-  --title-gradient: linear-gradient(to bottom right, var(--color-text-300) 35%, var(--color-text-400) 50%, var(--color-text-200) 55%);
+  --title-gradient: linear-gradient(
+    to bottom right,
+    var(--color-text-300) 35%,
+    var(--color-text-400) 50%,
+    var(--color-text-200) 55%
+  );
 
   // Dark
   --color-dark-100: hsl(210, 2%, 58%);
@@ -187,13 +192,14 @@
   --color-primary-900: hsl(242, 47%, 34%);
   --color-primary-1000: hsl(242, 49%, 25%);
 
-
-  --primary-glow: linear-gradient(to bottom right,
-      rgba(142, 81, 195, 0.397) 0%,
-      rgba(153, 47, 202, 0.212) 29%,
-      rgba(195, 55, 99, 0.247) 48%,
-      rgba(36, 38, 112, 0.384) 74%,
-      rgba(39, 45, 93, 0.342) 100%);
+  --primary-glow: linear-gradient(
+    to bottom right,
+    rgba(142, 81, 195, 0.397) 0%,
+    rgba(153, 47, 202, 0.212) 29%,
+    rgba(195, 55, 99, 0.247) 48%,
+    rgba(36, 38, 112, 0.384) 74%,
+    rgba(39, 45, 93, 0.342) 100%
+  );
 
   // Secondary
   --color-secondary-50: hsl(340, 69%, 97%);
@@ -210,15 +216,34 @@
   // Background
   --color-background-start: hsl(240, 4%, 6%);
   --color-background-end: hsl(240, 5%, 9%);
-  --color-background-highlight: hsl(180, 7%, 17%);
-  --color-neutral-background-gradient: linear-gradient(to bottom,
+  --color-background-highlight: hsl(180, 8%, 12%);
+  --color-neutral-background-gradient: linear-gradient(
+      to bottom,
       var(--color-background-start),
-      var(--color-background-end)) var(--color-background-start);
+      var(--color-background-end)
+    )
+    var(--color-background-start);
 
   --color-primary-gradient-start: var(--color-secondary-500);
-  --color-primary-gradient: linear-gradient(to bottom right, var(--color-primary-gradient-start), hsl(270, 35%, 50%), hsl(229, 80%, 66%), hsl(256, 77%, 60%));
-  --color-accent-background-gradient: linear-gradient(to bottom right, #f79533, #f37055, #ef4e7b, #ff00cc, #a166ab, #333399, #5073b8, #2657eb, #2657eb);
-
+  --color-primary-gradient: linear-gradient(
+    to bottom right,
+    var(--color-primary-gradient-start),
+    hsl(270, 35%, 50%),
+    hsl(229, 80%, 66%),
+    hsl(256, 77%, 60%)
+  );
+  --color-accent-background-gradient: linear-gradient(
+    to bottom right,
+    #f79533,
+    #f37055,
+    #ef4e7b,
+    #ff00cc,
+    #a166ab,
+    #333399,
+    #5073b8,
+    #2657eb,
+    #2657eb
+  );
 
   // Neutral
   --color-neutral-50: hsl(0, 0%, 98%);
@@ -237,13 +262,16 @@
   --color-neutral-875: hsl(0, 0%, 10%);
   --color-neutral-900: hsl(0, 0%, 9%);
 
-
   // Accent
 
-  --accent-glow: linear-gradient(to right,
-      rgba(251, 245, 183, 0.514),
-      rgba(191, 148, 63, 0.651), rgba(252, 246, 186, 0.925),
-      rgba(233, 191, 118, 0.671), rgba(179, 135, 40, 0.521));
+  --accent-glow: linear-gradient(
+    to right,
+    rgba(251, 245, 183, 0.514),
+    rgba(191, 148, 63, 0.651),
+    rgba(252, 246, 186, 0.925),
+    rgba(233, 191, 118, 0.671),
+    rgba(179, 135, 40, 0.521)
+  );
 
   // Highlight
   --color-highlight-50: hsl(48, 100%, 96%);
@@ -280,7 +308,6 @@
   --color-error-700: hsl(0, 74%, 42%);
   --color-error-800: hsl(0, 70%, 35%);
   --color-error-900: hsl(0, 63%, 31%);
-
 
   // Success
   --color-success-50: hsl(138, 76%, 97%);
@@ -387,7 +414,6 @@ html,
 body {
   max-width: 100vw;
 }
-
 
 body {
   color: var(--color-text-500);

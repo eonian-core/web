@@ -1,6 +1,8 @@
 'use client'
 
 import { MDXProvider } from '@mdx-js/react'
+
+import React from 'react'
 import { H2, H3 } from '../components/heading/heading'
 import IconDiscord from '../components/icons/icon-discord'
 import IconExternal from '../components/icons/icon-external'
@@ -25,7 +27,6 @@ import IconToggleSwitch from '../components/icons/icon-toggle-switch'
 import IconVault from '../components/icons/icon-vault'
 import IconWallet from '../components/icons/icon-wallet'
 import IconWindowGrid from '../components/icons/icon-window-grid'
-
 import { AppearMark, AppearMarkOnScroll } from '../components/appear-mark/appear-mark'
 import {
   Distribution,
@@ -42,6 +43,9 @@ import {
   YearlyReturns,
 } from '../components/vault-card/token'
 import { AwardNumber, AwardText } from '../components/award-text/award-text'
+import ContentV1_2 from './content/en-v1.2.mdx'
+import ContentV1_1 from './content/en-v1.1.mdx'
+import ContentV1 from './content/en-v1.mdx'
 import HeroButton from './views/hero/button-group/hero-button'
 import HeroButtonGroup from './views/hero/button-group/hero-button-group'
 import Hero from './views/hero/hero'
@@ -71,7 +75,6 @@ import SectionWallets, {
 } from './views/problem/section-wallets/section-wallets'
 import { Column } from './views/problem/components/column'
 import styles from './page.module.css'
-import Content from './content/en.mdx'
 import Warning from './views/hero/warning'
 import SocialProof, {
   SocialProofBody,
@@ -86,6 +89,8 @@ import { JoinOthersWrapper } from './views/hero/join-others/join-others-wrapper'
 import { Audits, AuditsItem } from './views/audits/audits'
 import { VaultCard } from '@/components/vault-card/vault-card'
 import { VaultAction } from '@/components/vault-card/vault-action'
+import { FeatureFlags, useFlag, useIsTestForFlag } from '@/experiments/feature-flags'
+import { useTrackScroll } from '@/analytics/use-track-scroll'
 
 const components = {
   Hero,
@@ -175,10 +180,23 @@ const components = {
 }
 
 export default function Home() {
+  useTrackScroll()
+
+  const shouldShowCopyV1_1 = useIsTestForFlag(FeatureFlags.LANDING_HERO_COPY_V1_1)
+  const flag = useFlag(FeatureFlags.LANDING_HERO_COPY_V1_2)
+
+  let content: React.ReactNode
+  if (shouldShowCopyV1_1)
+    content = <ContentV1_1 />
+  else if (flag === 'testA')
+    content = <ContentV1_2 />
+  else
+    content = <ContentV1 />
+
   return (
     <main className={styles.main}>
       <MDXProvider components={components}>
-        <Content />
+        {content}
       </MDXProvider>
     </main>
   )

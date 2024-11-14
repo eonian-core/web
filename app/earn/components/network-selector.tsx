@@ -1,48 +1,21 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 import React from 'react'
 import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-provider'
-import { ChainId } from '../../providers/wallet/wrappers/helpers'
 
 import styles from './network-selector.module.scss'
 import { useChainContext } from '@/shared/web3/chain-context'
+import Button from '@/components/button/button'
+import { useSuggestChainContext } from '@/views/suggest-chain-drawer/suggest-chain-drawer'
 
 export const NetworkSelector: React.FC = () => {
-  const { chainId: value, setChainId: onChange } = useChainContext()
-
+  const { chainId: value } = useChainContext()
   const { chains } = useWalletWrapperContext()
-
   const chain = chains.find(({ id }) => id === value)!
 
-  const handleSelectionChanged = React.useCallback(
-    (keys: 'all' | Set<string | number>) => {
-      const set = keys as Set<string>
-      const [stringId] = Array.from(set)
-      const chainId = ChainId.parse(stringId)
-      onChange(chainId)
-    },
-    [onChange],
-  )
+  const { open } = useSuggestChainContext()
 
-  return (
-    <Dropdown>
-      <DropdownTrigger>
-        <Button size="lg">
-          <span className={styles.icon}>{chain.icon}</span>
-          {chain.name}
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu
-        disallowEmptySelection
-        selectionMode="single"
-        selectedKeys={[String(chain.id)]}
-        onSelectionChange={handleSelectionChanged}
-      >
-        {chains.map(chain => (
-          <DropdownItem key={chain.id} startContent={chain.icon}>
-            {chain.name}
-          </DropdownItem>
-        ))}
-      </DropdownMenu>
-    </Dropdown>
-  )
+  return (<div className={styles.wrapper}>
+
+    <Button bordered dark round onClick={open} icon={chain.icon} iconPosition='left'>{chain.name}</Button>
+
+    </div>)
 }

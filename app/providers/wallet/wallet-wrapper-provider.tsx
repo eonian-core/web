@@ -4,7 +4,7 @@ import { Web3OnboardProvider, useConnectWallet, useSetChain } from '@web3-onboar
 import type { ethers } from 'ethers'
 import React, { useContext, useEffect } from 'react'
 import web3Onboard from '../../web3-onboard'
-import { useMonitoringContext } from '../monitoring'
+import { useMonitoringContext } from '../../analytics/monitoring'
 import type { ChainId } from './wrappers/helpers'
 import type { Chain, Wallet } from './wrappers/types'
 import { WalletStatus } from './wrappers/types'

@@ -1,12 +1,13 @@
 'use client'
 
 import type { CSSProperties, PropsWithChildren } from 'react'
-import { createRef, useState } from 'react'
+import { createRef, useCallback, useState } from 'react'
 import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import styles from './join-others.module.scss'
 import { useInterval } from './use-interval'
 import { avatars } from './images/images'
@@ -15,7 +16,16 @@ const placeholder = createPlaceholder() // In case if some URL is broken
 
 const ONE_SECOND = 1000 // ms
 
-export function JoinOthers({ children }: PropsWithChildren) {
+export interface JoinOthersProps extends PropsWithChildren {
+  href: string
+}
+
+export function JoinOthers({ children, href }: JoinOthersProps) {
+  const router = useRouter()
+  const clickHandler = useCallback(() => {
+    router.push(href)
+  }, [router])
+
   const [indexes, setIndexes] = useState([0, 1, 2])
   const [itemToChange, setItemToChange] = useState(0)
 
@@ -44,7 +54,7 @@ export function JoinOthers({ children }: PropsWithChildren) {
   const visibleAvatars = indexes.map(i => avatarsWithRefs[i])
 
   return (
-      <div className={styles.container}>
+      <div className={styles.container} onClick={clickHandler}>
         <TransitionGroup className={styles.avatars}>
           {visibleAvatars.map(({ avatar, ref }, index) => {
             return (

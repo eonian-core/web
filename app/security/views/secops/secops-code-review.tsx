@@ -1,9 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 import ImageCard from '../../../components/image-card/image-card'
-import { useIsTabletOrSmaller } from '../../../components/resize-hooks/screens'
 import magnifierPic from './assets/magnifier.png'
 import styles from './secops.module.scss'
+import { useIsTabletOrSmallerOnClient } from '@/components/resize-hooks/useOnClientSize'
 
 export interface SecOpsCodeReviewProps {
   /**
@@ -14,15 +14,14 @@ export interface SecOpsCodeReviewProps {
 }
 
 export default function SecOpsCodeReview({ children }: SecOpsCodeReviewProps) {
-  const isTabletOrSmaller = useIsTabletOrSmaller()
+  const isTabletOrSmaller = useIsTabletOrSmallerOnClient()
 
   return (
     <ImageCard
-      href={'/security/all-reviews'}
-      image={<Image src={magnifierPic} alt={'robot picture'} placeholder="blur" />}
-      isVertical={!!isTabletOrSmaller}
+      href={'https://github.com/eonian-core/farm'}
+      image={<Image src={magnifierPic} alt={'magnifier picture'} placeholder="blur" />}
+      isVertical={isTabletOrSmaller === true}
       className={styles.secOpsImageCard}
-      disabled
     >
       {children}
     </ImageCard>
