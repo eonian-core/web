@@ -1,7 +1,8 @@
+'use client'
 /* eslint-disable no-console */
 import LogRocket from 'logrocket'
-import React, { useContext } from 'react'
-import { clarityAdapter } from '@/analytics/clarity-adapter'
+import React, { createContext, useCallback, useContext, useEffect } from 'react'
+import { analytics } from './analytics'
 
 export interface MonitoringProperties {
   label: string
@@ -13,13 +14,13 @@ interface MonitoringContextValue {
   reportError: (error: Error, source: string) => void
 }
 
-export const MonitoringContext = React.createContext<MonitoringContextValue>({
+export const MonitoringContext = createContext<MonitoringContextValue>({
   identify: () => {},
   reportError: () => {},
 })
 
 export function MonitoringProvider({ children }: React.PropsWithChildren) {
-  React.useEffect(() => {
+  useEffect(() => {
     const env = process.env.NODE_ENV
     if (env !== 'production') {
       console.debug(`Monitoring is disabled, ENV is not "production" (${env})`)
@@ -39,17 +40,14 @@ export function MonitoringProvider({ children }: React.PropsWithChildren) {
     console.debug('Monitoring is disabled')
   }, [])
 
-  const identify = React.useCallback((uid: string, properties: MonitoringProperties) => {
+  const identify = useCallback((uid: string, properties: MonitoringProperties) => {
     if (process.env.NODE_ENV !== 'production')
       return
 
-    clarityAdapter.trackTag('address', uid)
-    clarityAdapter.trackTag('label', properties.label)
-    LogRocket.identify(uid, properties as Record<string, any>)
-    console.debug('User identification is set')
+    analytics.identify(uid, properties as Record<string, any>)
   }, [])
 
-  const reportError = React.useCallback((error: Error, source: string) => {
+  const reportError = useCallback((error: Error, source: string) => {
     LogRocket.captureException(error, {
       tags: { source },
     })

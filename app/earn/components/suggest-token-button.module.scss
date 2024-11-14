@@ -1,0 +1,24 @@
+.suggestToken {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--margin-100);
+}
+
+.button {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    min-width: fit-content;
+    font-size: var(--font-size-400);
+    padding: var(--padding-250);
+    max-height: var(--line-height-300);
+    line-height: var(--line-height-300);
+    border-radius: var(--border-radius-600);
+    background: var(--color-text-800);
+    color: var(--color-text-200);
+    transition: background-color 0.3s ease;
+
+  &:hover {
+    background: var(--color-text-700);
+  }
+}

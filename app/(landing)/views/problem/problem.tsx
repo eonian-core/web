@@ -6,6 +6,7 @@ import { useIsTabletOrSmaller } from '../../../components/resize-hooks/screens'
 
 import RainbowFrame from './components/rainbow-frame'
 import styles from './problem.module.scss'
+import { useTrackIsInView } from '@/analytics/use-track-in-view'
 
 interface ScrollContextState {
   scroll: MotionValue<number>
@@ -19,6 +20,8 @@ export const useScrollContext = () => React.useContext(ScrollContext) as ScrollC
 
 export default function Problem({ children }: React.PropsWithChildren) {
   const targetRef = React.useRef(null)
+  useTrackIsInView(targetRef, { 'Component Name': 'Problem' })
+
   const { scrollYProgress } = useScroll({
     target: targetRef,
   })

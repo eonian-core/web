@@ -2,7 +2,7 @@
 import type { ImageProps } from 'next/image'
 import Image from 'next/image'
 import type { StaticImageData } from 'next/dist/shared/lib/get-img-props'
-import React from 'react'
+import React, { useRef } from 'react'
 import clsx from 'clsx'
 import ExternalLink from '../../../components/links/external-link'
 import styles from './partners.module.scss'
@@ -31,6 +31,7 @@ import TheGraph from './logos/TheGraph.svg'
 import BSC from './logos/BSC.svg'
 import Hardhat from './logos/Hardhat.svg'
 import SafeGlobal from './logos/SafeGlobal.svg'
+import { useTrackIsInView } from '@/analytics/use-track-in-view'
 
 interface ItemProps extends Omit<ImageProps, 'alt' | 'src'> {
   href: string
@@ -42,7 +43,10 @@ interface ItemProps extends Omit<ImageProps, 'alt' | 'src'> {
 }
 
 export default function Partners({ children }: React.PropsWithChildren) {
-  return <div className={styles.container}>{children}</div>
+  const ref = useRef(null)
+  useTrackIsInView(ref, { 'Component Name': 'Partners' })
+
+  return <div ref={ref} className={styles.container}>{children}</div>
 }
 
 function Sheet({ children }: React.PropsWithChildren) {

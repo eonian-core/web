@@ -2,7 +2,8 @@
 import { usePathname } from 'next/navigation'
 import type React from 'react'
 import { type PropsWithChildren, useCallback } from 'react'
-import { clarityAdapter } from './clarity-adapter'
+import type { AbstarctTrackEvent } from './analytics'
+import { analytics } from './analytics'
 
 export const isVaultPageReg = /\/earn\/\w+\/\w+/
 
@@ -18,22 +19,21 @@ export function useTrack() {
 
   return useCallback((name: React.ReactNode) => {
     return trackNodeEvent({
+      pathname,
       context: mapPathnameToRoute(pathname),
       name,
     })
   }, [pathname])
 }
 
-export interface TrackEvent {
-  context?: string | null
+export interface TrackEvent extends AbstarctTrackEvent {
   name: React.ReactNode
 }
 
-export function trackNodeEvent({ context, name }: TrackEvent) {
+export function trackNodeEvent({ context, pathname, name }: TrackEvent) {
   try {
     const nodeText = getNodeText(name)
-    const eventName = typeof context === 'string' ? `${context}/${nodeText}` : nodeText
-    clarityAdapter.trackEvent(eventName)
+    analytics.track(nodeText, { context, pathname })
   }
   catch (error) {
     console.error('Failed to push event to Clarity', name, error)

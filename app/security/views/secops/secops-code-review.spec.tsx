@@ -29,8 +29,8 @@ describe('SecOpsCodeReview component', () => {
 
     render(<SecOpsCodeReview>{child}</SecOpsCodeReview>)
 
-    const imageCard = screen.getByRole('img', { name: 'robot picture' })
+    const imageCard = screen.getByRole('img', { name: 'magnifier picture' })
 
-    expect(imageCard.closest('a')).toHaveAttribute('href', '/security/all-reviews')
+    expect(imageCard.closest('a')).toHaveAttribute('href', 'https://github.com/eonian-core/farm')
   })
 })

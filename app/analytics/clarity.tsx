@@ -1,5 +1,5 @@
 import Script from 'next/script'
-import { isProduction } from './env'
+import { isProduction } from '@/utils/env'
 
 export function Clarity() {
   if (!isProduction)

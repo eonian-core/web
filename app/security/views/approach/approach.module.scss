@@ -13,6 +13,8 @@
     max-width: var(--width-1100);
     perspective: 50rem;
 
+    position: relative;
+
     h1 {
         width: 100%;
         margin-bottom: 0;
@@ -42,16 +44,33 @@
     }
 }
 
+@keyframes bounce {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
 .imageContainer {
     position: relative;
     margin-right: var(--margin-500);
 
-    box-shadow: 0 16px 31px -10px rgb(5, 6, 17);
+    // box-shadow: 0 16px 31px -10px rgb(5, 6, 17);
+    
 
     img {
         height: auto;
         width: 40vw;
-        max-width: var(--width-500);
+        max-width: var(--width-400);
+        border-radius: 0.5rem;
     }
 
     &::before {
@@ -60,9 +79,9 @@
         content: "";
         position: absolute;
         top: var(--blur-size);
-        left: var(--blur-size);
+        left: 15%;
         height: calc(100% - 2 * var(--blur-size));
-        width: calc(100% - 2 * var(--blur-size));
+        width: 70%;
 
         background: linear-gradient(to bottom,
                 #024e7a,
@@ -75,11 +94,21 @@
                 #5428BF,
                 #101445,
                 #0B1D51);
-        border-radius: calc(2 * var(--border-radius-400));
+        border-radius: 50%;
         z-index: -1;
         mix-blend-mode: screen;
         filter: blur(3rem);
+
+        animation: bounce 3s infinite;
     }
+}
+
+.awards {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--margin-900);
+    margin-top: var(--margin-800);
 }
 
 @media (max-width: $screen-laptop) {
@@ -100,10 +129,33 @@
 
     .imageContainer {
         margin-right: 0;
+        position: absolute;
+        top: -10rem;
 
         img {
-            width: 80vw;
+            width: 100%;
+            max-width: var(--width-500);
+            z-index: 1;
+
+            mask-image: linear-gradient(to top, transparent 65%, black);
+
         }
+
+        &::before {
+            animation: none;
+            height: 40%;
+        }
+    }
+
+    .description {
+        z-index: 2;
+    }
+
+    .awards {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: var(--margin-800);
+        margin-top: var(--margin-700);
     }
 }
 
@@ -112,6 +164,23 @@
         h1 {
             font-size: var(--font-size-900);
             line-height: var(--line-height-900);
+        }
+    }
+
+    .imageContainer {
+        top: -15vh;
+    }
+
+
+    .awards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+        div:last-child {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 }
