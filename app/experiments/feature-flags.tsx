@@ -6,6 +6,7 @@ import React, { createContext, useContext } from 'react'
 export enum FeatureFlags {
   LANDING_MAIN_CTA = 'landing-main-cta',
   LANDING_HERO_COPY_V1_1 = 'landing-hero-copy-v1_1',
+  LANDING_HERO_COPY_V1_2 = 'landing-hero-copy-v1_2',
 }
 
 interface FeatureFlagsContextProps {
