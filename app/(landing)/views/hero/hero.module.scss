@@ -139,13 +139,14 @@
   transform: translateZ(0);
   height: 1rem;
   bottom: 0rem;
-  // animation: bottomShine 5s ease-in-out infinite;
-  transition: opacity 0.5s;
-  opacity: 0.95;
+  opacity: 0;
   z-index: 100;
 
   width: 50rem;
   border-radius: 50%;
+
+  animation: appearUp 0.2s ease-in forwards;
+  animation-delay: 1.5s;
 
   @media (max-width: $screen-laptop) {
     width: 100%;
@@ -153,7 +154,7 @@
 }
 
 .hidden {
-  opacity: 0;
+  animation: appearUpReverse 0.2s ease-in forwards;
 }
 
 @media (prefers-reduced-motion) {
