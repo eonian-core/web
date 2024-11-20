@@ -91,6 +91,7 @@ import { VaultCard } from '@/components/vault-card/vault-card'
 import { VaultAction } from '@/components/vault-card/vault-action'
 import { FeatureFlags, useFlag, useIsTestForFlag } from '@/experiments/feature-flags'
 import { useTrackScroll } from '@/analytics/use-track-scroll'
+import IconCalendar from '@/components/icons/icon-calendar'
 
 const components = {
   Hero,
@@ -177,18 +178,18 @@ const components = {
   AwardNumber,
   Audits,
   AuditsItem,
+  IconCalendar,
 }
 
 export default function Home() {
   useTrackScroll()
 
-  const shouldShowCopyV1_1 = useIsTestForFlag(FeatureFlags.LANDING_HERO_COPY_V1_1)
   const flag = useFlag(FeatureFlags.LANDING_HERO_COPY_V1_2)
 
   let content: React.ReactNode
-  if (shouldShowCopyV1_1)
+  if (flag === 'testA')
     content = <ContentV1_1 />
-  else if (flag === 'testA')
+  if (flag === 'testB')
     content = <ContentV1_2 />
   else
     content = <ContentV1 />
