@@ -43,8 +43,8 @@ import {
   YearlyReturns,
 } from '../components/vault-card/token'
 import { AwardNumber, AwardText } from '../components/award-text/award-text'
-import ContentV1_2 from './content/en-v1.2.mdx'
-import ContentV1_1 from './content/en-v1.1.mdx'
+import ContentV1_2_A from './content/en-v1.2.a.mdx'
+import ContentV1_2_B from './content/en-v1.2.b.mdx'
 import ContentV1 from './content/en-v1.mdx'
 import HeroButton from './views/hero/button-group/hero-button'
 import HeroButtonGroup from './views/hero/button-group/hero-button-group'
@@ -188,9 +188,9 @@ export default function Home() {
 
   let content: React.ReactNode
   if (flag === 'testA')
-    content = <ContentV1_1 />
+    content = <ContentV1_2_A />
   if (flag === 'testB')
-    content = <ContentV1_2 />
+    content = <ContentV1_2_B />
   else
     content = <ContentV1 />
 
