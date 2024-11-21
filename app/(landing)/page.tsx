@@ -89,7 +89,7 @@ import { JoinOthersWrapper } from './views/hero/join-others/join-others-wrapper'
 import { Audits, AuditsItem } from './views/audits/audits'
 import { VaultCard } from '@/components/vault-card/vault-card'
 import { VaultAction } from '@/components/vault-card/vault-action'
-import { FeatureFlags, useFlag, useIsTestForFlag } from '@/experiments/feature-flags'
+import { FeatureFlags, useFlag } from '@/experiments/feature-flags'
 import { useTrackScroll } from '@/analytics/use-track-scroll'
 import IconCalendar from '@/components/icons/icon-calendar'
 
