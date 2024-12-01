@@ -26,10 +26,18 @@ export class AbstractAnalyticsPublisher {
     })
     console.debug('User identified as', userId, traits)
   }
+
+  public tag(tags: Record<string, string>) {
+    Object.values(this.subscribers).forEach((subscriber) => {
+      subscriber.tag(tags)
+    })
+  }
 }
 
 export interface AbstractAnalyticsSubscriber {
   track: (eventName: string, payload?: Record<string, any>) => void
 
   identify: (userId: string, traits?: Record<string, any>) => void
+
+  tag: (tags: Record<string, string>) => void
 }
