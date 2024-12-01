@@ -89,6 +89,7 @@ import { JoinOthersWrapper } from './views/hero/join-others/join-others-wrapper'
 import { Audits, AuditsItem } from './views/audits/audits'
 import { VaultCard } from '@/components/vault-card/vault-card'
 import { VaultAction } from '@/components/vault-card/vault-action'
+import type { FlagValue } from '@/experiments/feature-flags'
 import { FeatureFlags, useFlag } from '@/experiments/feature-flags'
 import { useTrackScroll } from '@/analytics/use-track-scroll'
 import IconCalendar from '@/components/icons/icon-calendar'
@@ -186,19 +187,21 @@ export default function Home() {
 
   const flag = useFlag(FeatureFlags.LANDING_HERO_COPY_V1_2)
 
-  let content: React.ReactNode
-  if (flag === 'testA')
-    content = <ContentV1_2_A />
-  if (flag === 'testB')
-    content = <ContentV1_2_B />
-  else
-    content = <ContentV1 />
-
   return (
     <main className={styles.main}>
       <MDXProvider components={components}>
-        {content}
+        <Content flag={flag} />
       </MDXProvider>
     </main>
   )
+}
+
+function Content({ flag }: { flag: FlagValue | undefined }) {
+  if (flag === 'testA')
+    return <ContentV1_2_A />
+
+  if (flag === 'testB')
+    return <ContentV1_2_B />
+
+  return <ContentV1 />
 }
