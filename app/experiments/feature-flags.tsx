@@ -2,6 +2,8 @@
 
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext } from 'react'
+import { toStringMap } from './string-map'
+import { analytics } from '@/analytics/analytics'
 
 export enum FeatureFlags {
   LANDING_MAIN_CTA = 'landing-main-cta',
@@ -20,6 +22,8 @@ export interface FeatureFlagsProviderProps extends PropsWithChildren {
 }
 
 export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ children, flags = {} }) => {
+  analytics.tag(toStringMap(flags))
+
   return (
     <FeatureFlagsContext.Provider value={{ flags }}>
       {children}
