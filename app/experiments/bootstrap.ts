@@ -3,7 +3,9 @@ import { cookies } from 'next/headers'
 import type { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import type { BootstrapConfig } from 'posthog-js'
 import { generateUuid } from './uuid'
+import { toStringMap } from './string-map'
 import { NEXT_PUBLIC_POSTHOG_HOST, NEXT_PUBLIC_POSTHOG_KEY } from '@/analytics/posthog-env'
+import { analytics } from '@/analytics/analytics'
 
 const cookieName = `ph_${NEXT_PUBLIC_POSTHOG_KEY}_posthog`
 
@@ -25,6 +27,8 @@ export async function bootstrapExeperiments(): Promise<BootstrapConfig | undefin
     host: NEXT_PUBLIC_POSTHOG_HOST,
   })
   const flags = await client.getAllFlags(distinct_id)
+  analytics.tag(toStringMap(flags))
+
   const bootstrap: BootstrapConfig = {
     distinctID: distinct_id,
     featureFlags: flags,

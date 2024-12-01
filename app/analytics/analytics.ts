@@ -12,6 +12,12 @@ class LogRocketAnalyticsAdapter implements AbstractAnalyticsSubscriber {
   identify(userId: string, traits?: Record<string, any>) {
     LogRocket.identify(userId, traits)
   };
+
+  tag(tags: Record<string, string>) {
+    Object.entries(tags).forEach(([key, value]) => {
+      LogRocket.track(key, { value })
+    })
+  };
 }
 
 class PosthogAnalyticsAdapter implements AbstractAnalyticsSubscriber {
@@ -21,6 +27,10 @@ class PosthogAnalyticsAdapter implements AbstractAnalyticsSubscriber {
 
   identify(userId: string, traits?: Record<string, any>) {
     posthog.identify(userId, traits)
+  };
+
+  tag(tags: Record<string, string>) {
+    posthog.setPersonProperties(tags)
   };
 }
 
@@ -49,6 +59,12 @@ class ClarityAnalyticsAdapter implements AbstractAnalyticsSubscriber {
     clarityAdapter.trackIdentify({ customId: userId })
     clarityAdapter.trackTag('address', userId)
     clarityAdapter.trackTag('label', (traits?.label || 'unknown') as string)
+  };
+
+  tag(tags: Record<string, string>) {
+    Object.entries(tags).forEach(([key, value]) => {
+      clarityAdapter.trackTag(key, value)
+    })
   };
 }
 
