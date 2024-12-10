@@ -1,5 +1,5 @@
 import type { Provider } from 'ethers'
-import { Contract, Interface } from 'ethers'
+import { Contract, Interface, JsonRpcProvider } from 'ethers'
 import { MULTICALL_ABI } from './multicall-abi'
 
 export interface MulticallRequest {
@@ -7,12 +7,13 @@ export interface MulticallRequest {
   abi: any
   functionName: string
   args: any[]
+  takeValues?: number[]
   allowFailure?: boolean
 }
 
-export interface MulticallResponse {
+export interface MulticallResponse<T = unknown> {
   success: boolean
-  data: any
+  data: T
 }
 
 interface Aggregate3Request {
@@ -49,12 +50,12 @@ export class Multicall {
    * Performs the multicall request.
    * @returns A list of responses that correspond the specified requests.
    */
-  public async makeRequest(): Promise<MulticallResponse[]> {
+  public async makeRequest<T>(): Promise<MulticallResponse<T>[]> {
     const results = (await this.contract.aggregate3.staticCall(this.requestData)) as Aggregate3Response[]
     return results.map(
-      ({ success, returnData }, index): MulticallResponse => ({
+      ({ success, returnData }, index): MulticallResponse<T> => ({
         success,
-        data: this.responseDecoders[index](returnData) as unknown,
+        data: this.responseDecoders[index](returnData) as T,
       }),
     )
   }
@@ -87,10 +88,12 @@ export class Multicall {
    * @returns The decoders list.
    */
   private createResponseDecoders(): Aggregate3ReturnDataDecoder[] {
-    return this.requests.map(
-      ({ functionName }, index) =>
-        (returnData: string) =>
-          this.interfaces[index].decodeFunctionResult(functionName, returnData)[0] as unknown,
-    )
+    return this.requests.map(({ functionName, takeValues }, index) => (returnData: string) => {
+      const result = this.interfaces[index].decodeFunctionResult(functionName, returnData)
+      if (!takeValues || !takeValues.length)
+        return result[0] as unknown
+
+      return Array.from(result).filter((_, index) => takeValues.includes(index)) as Aggregate3ReturnDataDecoder[]
+    })
   }
 }

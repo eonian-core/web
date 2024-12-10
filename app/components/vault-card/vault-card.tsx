@@ -7,10 +7,10 @@ import { getGrowthPercent } from '@/finances/growth'
 import { getYearlyROI } from '@/finances/roi'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
-import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 import { useVaultsContext } from '@/api/protocol/vaults/vaults-context'
 import type { TokenSymbol } from '@/types'
 import { getYearlyApy } from '@/finances/vault-apy'
+import { useHistoricalTokenPrice } from '@/api/coin-gecko/price-historical/useHistoricalTokenPrice'
 
 export interface VaultCardProps extends PropsWithChildren {
   symbol: TokenSymbol
@@ -25,7 +25,7 @@ export function VaultCard({ symbol, children, style }: VaultCardProps) {
 
   const apy = getYearlyApy(vault, 100)
 
-  const { data } = useTokenPrice(symbol)
+  const { data } = useHistoricalTokenPrice(symbol)
   const pastYearPrice = data?.pastYearPrice
   const growth = isNumber(pastYearPrice) && getGrowthPercent(vault.asset.price, pastYearPrice)
 
@@ -33,27 +33,27 @@ export function VaultCard({ symbol, children, style }: VaultCardProps) {
 
   return (
     <DefinedToken style={style}>
-        <TokenStats>
-            <YearlyReturns>{isNumber(growth)
-              ? `${getYearlyROI(apy, growth)}%`
-              : <OneLineSkeleton />
-            }</YearlyReturns>
-            <Distribution>
-                <TokenFees>0%</TokenFees>
-                <TokenApy>{apy}%</TokenApy>
-                <TokenGrowth>{isNumber(growth)
-                  ? `${growth.toFixed(2)}%`
-                  : <OneLineSkeleton />
-                }</TokenGrowth>
-            </Distribution>
-        </TokenStats>
+      <TokenStats>
+        <YearlyReturns>{isNumber(growth)
+          ? `${getYearlyROI(apy, growth)}%`
+          : <OneLineSkeleton />
+        }</YearlyReturns>
+        <Distribution>
+          <TokenFees>0%</TokenFees>
+          <TokenApy>{apy}%</TokenApy>
+          <TokenGrowth>{isNumber(growth)
+            ? `${growth.toFixed(2)}%`
+            : <OneLineSkeleton />
+          }</TokenGrowth>
+        </Distribution>
+      </TokenStats>
 
-        <TokenFooter
-            balance={walletStatus === WalletStatus.NOT_CONNECTED
-              ? undefined
-              : <VaultUserBalance vault={vault} />
-            }
-        >{children}</TokenFooter>
+      <TokenFooter
+        balance={walletStatus === WalletStatus.NOT_CONNECTED
+          ? undefined
+          : <VaultUserBalance vault={vault} />
+        }
+      >{children}</TokenFooter>
 
     </DefinedToken>
   )
