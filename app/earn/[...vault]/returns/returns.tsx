@@ -12,12 +12,12 @@ import type { Vault } from '@/api'
 import type { PriceData, TokenSymbol } from '@/types'
 import CompactNumber from '@/components/compact-number/compact-number'
 import { getYearlyROI } from '@/finances/roi'
-import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 import { getPriceChangeDuringTimeline } from '@/finances/price'
 import { convertToUsd } from '@/finances/usd'
 import { ChartSkeleton } from '@/components/loader/skeleton-chart'
 import { getYearlyApy } from '@/finances/vault-apy'
+import { useHistoricalTokenPrice } from '@/api/coin-gecko/price-historical/useHistoricalTokenPrice'
 
 interface Props {
   symbol: TokenSymbol
@@ -39,7 +39,7 @@ export function Returns({ symbol }: Props) {
   const [timeframe, setTimeframe] = useState<Timeframe>('Year')
   const days = timeLookupMap[timeframe]
 
-  const { data } = useTokenPrice(symbol)
+  const { data } = useHistoricalTokenPrice(symbol)
   const yearlyPriceData = data?.prices
 
   return (
@@ -49,28 +49,32 @@ export function Returns({ symbol }: Props) {
       </SectionHeader>
       <div className={styles.chart}>
         {!yearlyPriceData
-          ? <ChartSkeleton width={chartWidth} height={chartHeight}/>
+          ? (
+            <ChartSkeleton width={chartWidth} height={chartHeight} />
+            )
           : (
-          <ReturnsChart
-            days={days}
-            vault={vault}
-            yearlyPriceData={yearlyPriceData}
-            width="100%"
-            height={chartHeight}
-            colorGrowth="var(--color-growth)"
-            colorPremium="var(--color-premium)"
-          />
+            <ReturnsChart
+              days={days}
+              vault={vault}
+              yearlyPriceData={yearlyPriceData}
+              width="100%"
+              height={chartHeight}
+              colorGrowth="var(--color-growth)"
+              colorPremium="var(--color-premium)"
+            />
             )}
         {yearlyPriceData && <AmountOfReturns vault={vault} days={days} yearPriceData={yearlyPriceData} />}
       </div>
       <TimeframePicker {...{ timeframe, setTimeframe }} />
       {!yearlyPriceData
-        ? (<>
-        <OneLineSkeleton marginTop={5} width={chartWidth} />
-        <OneLineSkeleton marginTop={5} width={chartWidth} />
-      </>)
+        ? (
+          <>
+            <OneLineSkeleton marginTop={5} width={chartWidth} />
+            <OneLineSkeleton marginTop={5} width={chartWidth} />
+          </>
+          )
         : (
-        <ReturnsLegend days={days} yearlyPriceData={yearlyPriceData} />
+          <ReturnsLegend days={days} yearlyPriceData={yearlyPriceData} />
           )}
     </div>
   )
@@ -128,7 +132,7 @@ function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
     return depositInUSD + (depositInUSD * scaled) / denominator
   }, [apy, growth, decimals, depositInUSD, days])
 
-  const changeAPY = (apy / 365 * days) / 100 + 1
+  const changeAPY = ((apy / 365) * days) / 100 + 1
 
   return (
     <div className={styles.returns}>
@@ -137,7 +141,11 @@ function AmountOfReturns({ vault, days, yearPriceData }: AmountOfReturnsProps) {
           <>$</>
         </CompactNumber>
       </div>
-      <PercentagePriceChange className={styles.percent} currentPrice={currentPrice * changeAPY} previousPrice={previousPrice} />
+      <PercentagePriceChange
+        className={styles.percent}
+        currentPrice={currentPrice * changeAPY}
+        previousPrice={previousPrice}
+      />
     </div>
   )
 }

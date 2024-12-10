@@ -1,5 +1,6 @@
+import { isOnServer } from '@/components/resize-hooks/isOnServer'
 import { ChainId } from '@/providers/wallet/wrappers/helpers'
-import { requireEnv } from '@/utils/env'
+import { VERCEL_ENV, requireEnv } from '@/utils/env'
 
 export enum ChainEnvironment {
   LOCAL = 'LOCAL',
@@ -24,4 +25,17 @@ export const GraphQLEndpoints: GraphQLEndpointsMap = {
   // Optional variable
   [ChainId.SEPOLIA]: requireEnv('NEXT_PUBLIC_SEPOLIA_GRAPH_URL', process.env.NEXT_PUBLIC_SEPOLIA_GRAPH_URL || 'http://localhost:4000/'),
   [ChainId.UNKNOWN]: undefined,
+}
+
+export function getVercelHostPrefix() {
+  if (!isOnServer())
+    return '' // will use relative path on client
+
+  if (!VERCEL_ENV)
+    return 'http://localhost:3000' // local
+
+  if (VERCEL_ENV === 'production')
+    return 'https://eonian.finance' // production
+
+  return process.env.VERCEL_URL ?? '' // preview
 }
