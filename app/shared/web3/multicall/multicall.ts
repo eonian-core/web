@@ -1,5 +1,5 @@
 import type { Provider } from 'ethers'
-import { Contract, Interface, JsonRpcProvider } from 'ethers'
+import { Contract, Interface } from 'ethers'
 import { MULTICALL_ABI } from './multicall-abi'
 
 export interface MulticallRequest {
