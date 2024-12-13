@@ -12,9 +12,9 @@ import { chartHeight, chartWidth } from './price-chart-skeleton'
 import { reducePriceData } from '@/shared/charts/reduce-price-data'
 import type { PriceData, TokenSymbol } from '@/types'
 import { formatUSD } from '@/finances/humanize/format-currency'
-import { useTokenPrice } from '@/api/coin-gecko/useTokenPrice'
 import { getPriceChangeDuringTimeline } from '@/finances/price'
 import { ChartSkeleton } from '@/components/loader/skeleton-chart'
+import { useHistoricalTokenPrice } from '@/api/coin-gecko/price-historical/useHistoricalTokenPrice'
 
 interface ChartProps {
   symbol: TokenSymbol
@@ -22,7 +22,7 @@ interface ChartProps {
 }
 
 export function PriceChart({ symbol, currentPrice }: ChartProps) {
-  const { data } = useTokenPrice(symbol)
+  const { data } = useHistoricalTokenPrice(symbol)
   const yearlyPriceData = data?.prices
 
   if (!yearlyPriceData) {
