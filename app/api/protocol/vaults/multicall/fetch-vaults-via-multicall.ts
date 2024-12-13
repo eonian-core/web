@@ -7,7 +7,7 @@ import type { MulticallRequest, MulticallResponse } from '@/shared'
 import { ChainId, getRPCEndpoint } from '@/providers/wallet/wrappers/helpers'
 import VaultABI from '@/shared/web3/abi/Vault.json'
 import { getBlocksPerDay } from '@/shared/web3/blocks-per-day'
-import { convertInterestRateToAPY } from '@/shared/web3/interest-rate-to-apy'
+import { calculateAPYAsBN } from '@/finances/apy'
 
 const vaultToAddressLookupMap: Partial<Record<ChainId, string[]>> = {
   [ChainId.BSC_MAINNET]: [
@@ -107,7 +107,7 @@ function createVault(chainId: ChainId, intermediateVaultModel: IntermediateVault
 
 function computeAPY(chainId: ChainId, intermediateVaultModel: IntermediateVaultModel, unitsPerYear: number): bigint {
   const blocksPerDay = getBlocksPerDay(chainId)
-  const yearlyAPY = convertInterestRateToAPY(
+  const yearlyAPY = calculateAPYAsBN(
     intermediateVaultModel.interestRatePerBlock,
     intermediateVaultModel.decimals,
     blocksPerDay,

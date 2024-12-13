@@ -10,3 +10,8 @@ export function calculateAPY(interestRatePerBlock: bigint | number, decimals: nu
   const dailyReward = (Number(interestRatePerBlock) / mantissa) * blocksPerDay + 1
   return (dailyReward ** 365 - 1) * 100
 }
+
+export function calculateAPYAsBN(interestRatePerBlock: bigint, decimals: number, blocksPerDay: number): bigint {
+  const mantissa = 10 ** decimals
+  return BigInt(calculateAPY(interestRatePerBlock, decimals, blocksPerDay) * mantissa)
+}
