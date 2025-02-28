@@ -3,7 +3,6 @@ import injectedModule from '@web3-onboard/injected-wallets'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import init from '@web3-onboard/core'
 import { ChainId, getRPCEndpoint } from './providers/wallet/wrappers/helpers'
-import { connectModalID } from './providers/wallet/web3-onboard-container'
 
 const theme: ThemingMap = {
   '--w3o-background-color': 'var(--color-background-start)',
