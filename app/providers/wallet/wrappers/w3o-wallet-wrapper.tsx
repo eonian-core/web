@@ -114,7 +114,8 @@ export function getProvider(provider: EIP1193Provider): ethers.BrowserProvider {
   return new ethers.BrowserProvider(provider, 'any')
 }
 
-export function useConnect(chain: Chain | null,
+export function useConnect(
+  chain: Chain | null,
   chains: Chain[],
   setOnboardChain: ChainArgs[1],
   onboardConnect: (options?: ConnectOptions) => Promise<WalletState[]>) {

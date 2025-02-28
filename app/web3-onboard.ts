@@ -40,14 +40,10 @@ export default init({
     autoConnectLastWallet: true, // this option required to be able to properly disconnect wallet
     removeWhereIsMyWalletWarning: true,
   },
-  accountCenter: {
-    desktop: {
-      enabled: false,
-    },
-    mobile: {
-      enabled: false,
-    },
-  },
+  // accountCenter option breaks whole connect flow,
+  // and reproducable only on production 50% of times.
+  // do not add this propertly at all
+  // more info in old fix, that not actually fixed issue https://github.com/blocknative/web3-onboard/issues/1156
   appMetadata: {
     name: 'Eonian DAO',
     icon: `
