@@ -23,7 +23,13 @@ function ConnectWallet() {
 
   return (
     <InternalLink href={'/earn'} onClick={handleClick}>
-      <Button id="connect-button" bordered>{status === WalletStatus.CONNECTING ? 'Connecting...' : 'Connect'}</Button>
+      <Button
+      id="connect-button"
+      round
+      bordered={status !== WalletStatus.CONNECTING}
+      lightGradient={status === WalletStatus.CONNECTING}
+      size='sm'
+      >Connect</Button>
     </InternalLink>
   )
 }
