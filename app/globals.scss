@@ -21,6 +21,9 @@
   color-scheme: dark;
 
   --award-text-min-width: calc(var(--width-200) + var(--margin-300));
+
+  // fix for removing account center from web3-onboard
+  --account-center-z-index: -100;
 }
 
 /**
