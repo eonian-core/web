@@ -2,8 +2,9 @@
 
 import { Web3OnboardProvider, useConnectWallet, useSetChain } from '@web3-onboard/react'
 import type { ethers } from 'ethers'
-import React, { useContext, useEffect } from 'react'
-import web3Onboard from '../../web3-onboard'
+import React, { useContext, useEffect, useState } from 'react'
+import type { OnboardAPI } from '@web3-onboard/core'
+import { initWeb3Onboard } from '../../web3-onboard'
 import { useMonitoringContext } from '../../analytics/monitoring'
 import type { ChainId } from './wrappers/helpers'
 import type { Chain, Wallet } from './wrappers/types'
@@ -94,10 +95,20 @@ const WalletWrapperImplementationProvider: React.FC<Props> = ({ children }) => {
   }}>{children}</WalletWrapperContext.Provider>
 }
 
-export const WalletWrapperProvider: React.FC<Props> = ({ children }) => (
-  <Web3OnboardProvider web3Onboard={web3Onboard}>
-    <WalletWrapperImplementationProvider>{children}</WalletWrapperImplementationProvider>
-  </Web3OnboardProvider>
-)
+export const WalletWrapperProvider: React.FC<Props> = ({ children }) => {
+  const [web3Onboard, setWeb3Onboard] = useState<OnboardAPI | null>(null)
+  useEffect(() => {
+    setWeb3Onboard(initWeb3Onboard())
+  }, [setWeb3Onboard]) // render after hydration succesfull
+
+  if (!web3Onboard)
+    return <>{children}</>
+
+  return (
+    <Web3OnboardProvider web3Onboard={web3Onboard}>
+      <WalletWrapperImplementationProvider>{children}</WalletWrapperImplementationProvider>
+    </Web3OnboardProvider>
+  )
+}
 
 export const useWalletWrapperContext = () => useContext(WalletWrapperContext)

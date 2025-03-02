@@ -20,7 +20,7 @@ import type { ButtonProps } from '@/components/button/button'
 import { analytics } from '@/analytics/analytics'
 
 interface Props extends Omit<ButtonProps, 'onSubmit'> {
-  vaultChain: Chain
+  vaultChain: Chain | undefined
   isLoading?: boolean
 }
 
@@ -33,10 +33,10 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
   const { formAction, insured } = useVaultContext()
   const { submit, walletAvailable, haveInputValue, haveEnoughAssets, canSubmit, isSubmiting } = useSubmit()
 
-  const isOnDifferentChain = vaultChain.id !== chainId
-  const handlePress = useHandlePress(vaultChain.id, isOnDifferentChain, haveEnoughForGasPayment, submit)
+  const isOnDifferentChain = vaultChain?.id !== chainId
+  const handlePress = useHandlePress(vaultChain?.id, isOnDifferentChain, haveEnoughForGasPayment, submit)
 
-  const isWrongChainSelected = chainId === -1 || chainId !== vaultChain.id
+  const isWrongChainSelected = chainId === -1 || chainId !== vaultChain?.id
   const isAbleToSubmit = !isWrongChainSelected && status === WalletStatus.CONNECTED
   const isInProgress = isLoading || isSubmiting
   const isDisabled = disabled || isInProgress || (isAbleToSubmit ? !canSubmit : false)
@@ -46,7 +46,7 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
     chainId,
     status,
     isOnDifferentChain,
-    chainName: vaultChain.name,
+    chainName: vaultChain?.name,
     formAction,
     walletAvailable,
     haveInputValue,
@@ -67,7 +67,7 @@ const FormButton: React.FC<Props> = ({ vaultChain, isLoading, disabled, ...restP
 export default FormButton
 
 function useHandlePress(
-  vaultChainId: ChainId,
+  vaultChainId: ChainId | undefined,
   isOnDifferentChain: boolean,
   haveEnoughForGasPayment: boolean,
   submit: (formAction: FormAction) => Promise<void>,
@@ -88,6 +88,9 @@ function useHandlePress(
     }
 
     if (isOnDifferentChain) {
+      if (vaultChainId === undefined)
+        return
+
       void setCurrentChain(vaultChainId)
       return
     }

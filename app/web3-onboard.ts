@@ -32,35 +32,26 @@ const supportedChains = Object.values(chains).filter(chain => !!chain.rpcUrl)
 
 const dappUrl = 'https://eonian.finance/'
 
-export default init({
-  theme,
-  wallets: getWallets(),
-  chains: supportedChains,
-  connect: {
-    autoConnectLastWallet: true, // this option required to be able to properly disconnect wallet
-    removeWhereIsMyWalletWarning: true,
-  },
-
-  containerElements: {
-    // by some reason web3Modal cannot attach itself if we not provide element for it
-    // but any other element other than body causes hidration errors
-    // and also many styles in modal depend on this property,
-    // so adding it breaks styles.
-    // also stlyes cannot be fixed, because they in shadow dom
-    // this is why we use JS based fix for modal styling
-    connectModal: 'body',
-  },
-  accountCenter: {
-    desktop: {
-      enabled: false,
+export function initWeb3Onboard() {
+  return init({
+    theme,
+    wallets: getWallets(),
+    chains: supportedChains,
+    connect: {
+      autoConnectLastWallet: true, // this option required to be able to properly disconnect wallet
+      removeWhereIsMyWalletWarning: true,
     },
-    mobile: {
-      enabled: false,
+    accountCenter: {
+      desktop: {
+        enabled: false,
+      },
+      mobile: {
+        enabled: false,
+      },
     },
-  },
-  appMetadata: {
-    name: 'Eonian DAO',
-    icon: `
+    appMetadata: {
+      name: 'Eonian DAO',
+      icon: `
         <svg
           width="24"
           height="24"
@@ -76,11 +67,12 @@ export default init({
           />
         </svg>
     `,
-    description: 'Decentralized and secure protocol for passive investments with peace of mind.',
-    gettingStartedGuide: dappUrl, // The url to a getting started guide for app
-    explore: dappUrl, // The url that points to more information about app
-  },
-})
+      description: 'Decentralized and secure protocol for passive investments with peace of mind.',
+      gettingStartedGuide: dappUrl, // The url to a getting started guide for app
+      explore: dappUrl, // The url that points to more information about app
+    },
+  })
+}
 
 function getWallets(): InitOptions['wallets'] {
   const wallets = [injectedModule()]
@@ -102,28 +94,3 @@ function getWallets(): InitOptions['wallets'] {
 export const supportedChainsIds = supportedChains.map(chain => ChainId.parse(chain.id))
 
 export const defaultChain = chains[ChainId.getByName(process.env.NEXT_PUBLIC_DEFAULT_CHAIN_NAME)]!
-
-// the only way to fix styles in shadow dom
-// based on https://github.com/blocknative/web3-onboard/blob/main/packages/core/src/views/shared/Modal.svelte#L21
-export function fixModalStyling(attempt = 1, maxAttempts = 10) {
-  return () => {
-    const shadowRoot = document.querySelector('onboard-v2')?.shadowRoot
-    if (shadowRoot) {
-      shadowRoot.querySelector('section')?.setAttribute('style', 'position: fixed;')
-      shadowRoot.querySelector('section > div')?.setAttribute('style', 'width: 100vw; height: 100vh; height: 100dvh;')
-      shadowRoot.querySelector('section > div > div')?.setAttribute('style', 'position: absolute; width: initial;')
-      shadowRoot.querySelector('section > div > div > div')?.setAttribute('style', 'width: initial;')
-      shadowRoot.querySelector('section > div > div > div > div')?.setAttribute('style', 'max-width: initial;')
-      // querySelector in such format is important. Unfortunatly it only way to reference correct elements
-      return
-    }
-
-    if (attempt < maxAttempts) {
-      console.warn('Cannot find shadow onboard-v2 root, will try again...')
-      setTimeout(fixModalStyling(attempt + 1, maxAttempts), 1000)
-      return
-    }
-
-    console.error('Cannot find shadow onboard-v2 root, will stop trying')
-  }
-}
