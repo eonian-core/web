@@ -3,7 +3,7 @@ import type { useSetChain } from '@web3-onboard/react'
 import type { Chain as W3OChain } from '@web3-onboard/common'
 import type { ConnectOptions, DisconnectOptions, EIP1193Provider, WalletState } from '@web3-onboard/core'
 import { useCallback, useEffect, useMemo } from 'react'
-import { defaultChain, fixModalStyling } from '../../../web3-onboard'
+import { defaultChain } from '../../../web3-onboard'
 import type { Chain, Wallet } from './types'
 import { WalletStatus } from './types'
 import {
@@ -138,10 +138,7 @@ export function useConnect(
  */
 export async function connect(onboardConnect: (options?: ConnectOptions) => Promise<WalletState[]>): Promise<boolean> {
   try {
-    const connectPromise = onboardConnect()
-    setTimeout(fixModalStyling(), 100) // will fix modal styling before waiting for connect
-
-    const [wallet] = await connectPromise
+    const [wallet] = await onboardConnect()
     const walletLabel = wallet?.label
     if (!walletLabel)
       return false
