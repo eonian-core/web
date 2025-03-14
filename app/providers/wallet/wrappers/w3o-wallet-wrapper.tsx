@@ -114,7 +114,8 @@ export function getProvider(provider: EIP1193Provider): ethers.BrowserProvider {
   return new ethers.BrowserProvider(provider, 'any')
 }
 
-export function useConnect(chain: Chain | null,
+export function useConnect(
+  chain: Chain | null,
   chains: Chain[],
   setOnboardChain: ChainArgs[1],
   onboardConnect: (options?: ConnectOptions) => Promise<WalletState[]>) {
@@ -150,7 +151,7 @@ export async function connect(onboardConnect: (options?: ConnectOptions) => Prom
   return true
 }
 
-/**
+/*
  * Changes the current active chain if necessary.
  * Selects the last active network or fallbacks to the default value.
  * @returns "True" if the chain was successfully changed.

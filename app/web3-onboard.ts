@@ -32,25 +32,26 @@ const supportedChains = Object.values(chains).filter(chain => !!chain.rpcUrl)
 
 const dappUrl = 'https://eonian.finance/'
 
-export default init({
-  theme,
-  wallets: getWallets(),
-  chains: supportedChains,
-  connect: {
-    autoConnectLastWallet: true, // this option required to be able to properly disconnect wallet
-    removeWhereIsMyWalletWarning: true,
-  },
-  accountCenter: {
-    desktop: {
-      enabled: false,
+export function initWeb3Onboard() {
+  return init({
+    theme,
+    wallets: getWallets(),
+    chains: supportedChains,
+    connect: {
+      autoConnectLastWallet: true, // this option required to be able to properly disconnect wallet
+      removeWhereIsMyWalletWarning: true,
     },
-    mobile: {
-      enabled: false,
+    accountCenter: {
+      desktop: {
+        enabled: false,
+      },
+      mobile: {
+        enabled: false,
+      },
     },
-  },
-  appMetadata: {
-    name: 'Eonian DAO',
-    icon: `
+    appMetadata: {
+      name: 'Eonian DAO',
+      icon: `
         <svg
           width="24"
           height="24"
@@ -66,11 +67,12 @@ export default init({
           />
         </svg>
     `,
-    description: 'Decentralized and secure protocol for passive investments with peace of mind.',
-    gettingStartedGuide: dappUrl, // The url to a getting started guide for app
-    explore: dappUrl, // The url that points to more information about app
-  },
-})
+      description: 'Decentralized and secure protocol for passive investments with peace of mind.',
+      gettingStartedGuide: dappUrl, // The url to a getting started guide for app
+      explore: dappUrl, // The url that points to more information about app
+    },
+  })
+}
 
 function getWallets(): InitOptions['wallets'] {
   const wallets = [injectedModule()]

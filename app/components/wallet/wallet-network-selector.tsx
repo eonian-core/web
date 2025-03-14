@@ -22,18 +22,18 @@ function WalletNetworkSelector() {
     <Dropdown>
       <DropdownTrigger>
         <Button size="sm" className={styles.network} variant='light'>
-          {chain!.icon}
+          {chain?.icon}
         </Button>
       </DropdownTrigger>
       <DropdownMenu
         disallowEmptySelection
         selectionMode="single"
-        selectedKeys={[String(chain!.id)]}
+        selectedKeys={[String(chain?.id)]}
         onSelectionChange={handleSelectionChanged}
       >
         {chains.map(chain => (
-          <DropdownItem key={chain.id} startContent={chain.icon}>
-            {chain.name}
+          <DropdownItem key={chain?.id} startContent={chain?.icon}>
+            {chain?.name}
           </DropdownItem>
         ))}
       </DropdownMenu>

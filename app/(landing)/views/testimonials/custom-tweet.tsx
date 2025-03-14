@@ -7,12 +7,10 @@ import {
   TweetInReplyTo,
   TweetInfo,
   TweetMedia,
-  TweetNotFound,
   TweetSkeleton,
   type TwitterComponents,
   enrichTweet,
 } from 'react-tweet'
-import { Suspense } from 'react'
 import { getTweet } from './get-tweet'
 
 interface Props {
@@ -20,20 +18,16 @@ interface Props {
 }
 
 export default function CustomTweet({ id }: Props) {
-  return (
-    <Suspense fallback={<TweetSkeleton />}>
-      <CustomTweetLoader id={id} />
-    </Suspense>
-  )
-}
-
-async function CustomTweetLoader({ id }: Props) {
   try {
-    const tweet = await getTweet(id)
-    return tweet ? <TweetComponent tweet={tweet} /> : <TweetNotFound />
+    const tweet = getTweet(id)
+
+    if (tweet)
+      return <TweetComponent tweet={tweet} />
+
+    return <TweetSkeleton />
   }
   catch (error) {
-    return <TweetNotFound error={error} />
+    return <TweetSkeleton />
   }
 }
 
@@ -44,6 +38,7 @@ interface TweetComponentProps {
 
 function TweetComponent({ tweet: simpleTweet, components }: TweetComponentProps) {
   const tweet = enrichTweet(simpleTweet)
+
   return (
     <TweetContainer>
       <TweetHeader tweet={tweet} components={components} />

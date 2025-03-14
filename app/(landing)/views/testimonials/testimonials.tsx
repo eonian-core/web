@@ -9,7 +9,6 @@ import Container from '../../../components/contrainer/container'
 import { showEarn } from '../../../features'
 import styles from './testimonials.module.scss'
 import CustomTweet from './custom-tweet'
-import StaticContent from './static-content'
 import { useTrackIsInView } from '@/analytics/use-track-in-view'
 
 export default function Testimonials({ children }: React.PropsWithChildren) {
@@ -55,7 +54,7 @@ function TestimonialsList({ className, testimonials }: { className: string; test
   return <ul className={className}>
     {testimonials.map((child, index) => (
       <li className={styles.tweetContainer} key={index} data-index={index}>
-        <StaticContent>{child}</StaticContent>
+        {child}
       </li>
     ))}
   </ul>

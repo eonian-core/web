@@ -5,6 +5,7 @@ import React from 'react'
 import { Card, CardBody } from '@nextui-org/react'
 import { useAppSelector } from '../../../store/hooks'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
+import type { Chain } from '../../../providers/wallet/wrappers/types'
 import { WalletStatus } from '../../../providers/wallet/wrappers/types'
 import { FormActionStep } from '../../../store/slices/vaultActionSlice'
 import { getActiveStepSelector } from '../../../store'
@@ -53,7 +54,7 @@ function useHasPendingTransactions() {
   return activeStep !== null && activeStep !== FormActionStep.DONE
 }
 
-function useVaultChain() {
+function useVaultChain(): Chain | undefined {
   const { chains } = useWalletWrapperContext()
   const { chainId } = useVaultContext()
   return React.useMemo(() => chains.find(chain => chain.id === chainId)!, [chains, chainId])
