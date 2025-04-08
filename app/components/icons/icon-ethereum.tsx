@@ -10,7 +10,7 @@ function IconEthereum({ noBackground, ...restProps }: Props) {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" {...restProps}>
       <g fill="none" fillRule="evenodd">
         {!noBackground && <circle cx="16" cy="16" r="16" fill="#627EEA" />}
-          <g fill={noBackground ? 'currentColor' : '#FFF'} fillRule="nonzero">
+        <g fill={noBackground ? 'currentColor' : '#FFF'} fillRule="nonzero">
           <path fillOpacity=".602" d="M16.498 4v8.87l7.497 3.35z" />
           <path d="M16.498 4L9 16.22l7.498-3.35z" />
           <path fillOpacity=".602" d="M16.498 21.968v6.027L24 17.616z" />

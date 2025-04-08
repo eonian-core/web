@@ -11,8 +11,8 @@ export function VaultAction({ symbol }: { symbol: TokenSymbol }) {
     return null
 
   return (
-        <TokenAction
-        href={`/earn/${chainName}/${vault.symbol}`}
+    <TokenAction
+      href={`/earn/${chainName}/${vault.symbol}`}
       >Save</TokenAction>
   )
 }

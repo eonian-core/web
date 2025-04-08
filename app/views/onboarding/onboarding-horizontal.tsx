@@ -12,18 +12,18 @@ export function OnboardingHorizontal({ completed }: OnboardingHorizontalProps) {
   const active = useActiveStep(completed)
 
   return (
-        <div className={styles.horizontal}>
-            <ul>
-                {ONBOARDING_STEPS_ORDER.map((step, index) => (
-                    <OnboardingItem
-                        key={step}
-                        currentStep={step}
-                        last={index === ONBOARDING_STEPS_ORDER.length - 1}
-                        {...{ active, completed }}
+    <div className={styles.horizontal}>
+      <ul>
+        {ONBOARDING_STEPS_ORDER.map((step, index) => (
+          <OnboardingItem
+            key={step}
+            currentStep={step}
+            last={index === ONBOARDING_STEPS_ORDER.length - 1}
+            {...{ active, completed }}
                     />
-                ))}
-            </ul>
-        </div>
+        ))}
+      </ul>
+    </div>
   )
 }
 
@@ -38,14 +38,14 @@ function OnboardingItem({ currentStep, active, completed, last }: OnboardingItem
   const currentStepCompleted = completed.includes(currentStep)
   const currentStepActive = currentStep === active
   return (
-        <li className={clsx(styles.item, {
-          [styles.completed]: currentStepCompleted,
-          [styles.active]: currentStepActive && !currentStepCompleted,
-        })}>
-            <div>
-                <OnboardingIcon completed={currentStepCompleted} active={currentStepActive}>{currentStep}</OnboardingIcon>
-            </div>
-            {!last && <div className={styles.line}></div>}
-        </li>
+    <li className={clsx(styles.item, {
+      [styles.completed]: currentStepCompleted,
+      [styles.active]: currentStepActive && !currentStepCompleted,
+    })}>
+      <div>
+        <OnboardingIcon completed={currentStepCompleted} active={currentStepActive}>{currentStep}</OnboardingIcon>
+      </div>
+      {!last && <div className={styles.line}></div>}
+    </li>
   )
 }

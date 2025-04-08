@@ -8,7 +8,7 @@ export function ContentSkeleton() {
       <div className={clsx(styles.onboardingBar, styles.placeholder)}></div>
       <div className={styles.container}>
         <section className={styles.middle}>
-            <FormSkeleton />
+          <FormSkeleton />
         </section>
       </div>
     </div>

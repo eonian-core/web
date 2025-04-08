@@ -14,37 +14,37 @@ import { CircleSkeleton } from '@/components/loader/skeleton-loader'
 export function FormSkeleton() {
   return (
     <div className={clsx(styles.container, styles.disableAnimation)}>
-        <Card>
-            <FormHeaderBody>
-                <TabButton>Save</TabButton>
-                <TabButton>Withdraw</TabButton>
-            </FormHeaderBody>
+      <Card>
+        <FormHeaderBody>
+          <TabButton>Save</TabButton>
+          <TabButton>Withdraw</TabButton>
+        </FormHeaderBody>
 
-            <CardBody className={styles.fragment}>
-                <RawFormInput
-                    label={'Wallet'}
-                    className={stylesInput.input}
-                    placeholder={'0'}
-                    inputStart={<WalletInputIcon />}
-                    price={<span>$0</span>}
-                    preview
+        <CardBody className={styles.fragment}>
+          <RawFormInput
+            label={'Wallet'}
+            className={stylesInput.input}
+            placeholder={'0'}
+            inputStart={<WalletInputIcon />}
+            price={<span>$0</span>}
+            preview
                     >0</RawFormInput>
 
-                <ArrowDividerBody />
+          <ArrowDividerBody />
 
-                <RawFormInput
-                    label={'Savings Account'}
-                    placeholder={'0'}
-                    inputStart={<CircleSkeleton height={24} width={24} />}
-                    price={<span>$0</span>}
-                    preview
+          <RawFormInput
+            label={'Savings Account'}
+            placeholder={'0'}
+            inputStart={<CircleSkeleton height={24} width={24} />}
+            price={<span>$0</span>}
+            preview
                     >0</RawFormInput>
 
-                <FormButtonBody>
-                    <Spinner color="current" size="md" />
-                </FormButtonBody>
-            </CardBody>
-        </Card>
+          <FormButtonBody>
+            <Spinner color="current" size="md" />
+          </FormButtonBody>
+        </CardBody>
+      </Card>
     </div>
   )
 }

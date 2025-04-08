@@ -48,11 +48,11 @@ export function Onboading({ initialSteps, horizontal, onButtonClick, ...props }:
     return <OnboardingHorizontal {...{ completed }} />
 
   return (<OnboardingBody
-        completed={completed}
-        placeholder={`${placeholderDisplayValue} ${vault?.asset.symbol}`}
-        linkEmail={openLinkEmailDrawer}
-        {...props}
-    />)
+    completed={completed}
+    placeholder={`${placeholderDisplayValue} ${vault?.asset.symbol}`}
+    linkEmail={openLinkEmailDrawer}
+    {...props}
+  />)
 }
 
 export interface CalcCompletedStepsOptions {

@@ -52,7 +52,7 @@ function SubHeader({ formAction, value, vaultBalanceBN, ...props }: SubHeaderPro
       {...props}
       value={value > vaultBalance ? vaultBalance : value}
     >
-     After withdraw of
+      After withdraw of
     </SubHeaderBody>
   )
 }

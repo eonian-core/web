@@ -17,20 +17,20 @@ interface RenderArgs {
 
 export const FormInput: React.FC<FormInputProps> = ({ name, rules, errorMessage, ...props }) => {
   return (
-        <Controller
-            name={name}
-            control={props.control}
-            rules={rules}
-            render={({ field, fieldState }: RenderArgs) => (
-                <Input
-                    {...props}
-                    isRequired={!!rules?.required}
-                    isInvalid={!!fieldState.error}
-                    errorMessage={fieldState.error ? errorMessage : undefined}
-                    value={field.value as string}
-                    onChange={field.onChange}
+    <Controller
+      name={name}
+      control={props.control}
+      rules={rules}
+      render={({ field, fieldState }: RenderArgs) => (
+        <Input
+          {...props}
+          isRequired={!!rules?.required}
+          isInvalid={!!fieldState.error}
+          errorMessage={fieldState.error ? errorMessage : undefined}
+          value={field.value as string}
+          onChange={field.onChange}
                 />
-            )}
+      )}
         ></Controller>
   )
 }

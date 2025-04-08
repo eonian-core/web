@@ -11,86 +11,86 @@ export interface DefinedTokenProps extends PropsWithChildren<Omit<TokenProps, 't
 
 export function EthToken({ children, ...props }: DefinedTokenProps) {
   return <Token token="ETH" {...props}>
-        <TokenHeader>Ethereum Vault</TokenHeader>
+    <TokenHeader>Ethereum Vault</TokenHeader>
 
-        <Tags>
-            <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
-            <Tag bordered>Blue-chip</Tag>
-            <Tag bordered>Save and Forget</Tag>
-        </Tags>
+    <Tags>
+      <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
+      <Tag bordered>Blue-chip</Tag>
+      <Tag bordered>Save and Forget</Tag>
+    </Tags>
 
-        {children}
-    </Token>
+    {children}
+  </Token>
 }
 
 export function BtcToken({ children, ...props }: DefinedTokenProps) {
   return <Token token="BTCB" {...props}>
-        <TokenHeader>Bitcoin Vault</TokenHeader>
+    <TokenHeader>Bitcoin Vault</TokenHeader>
 
-        <Tags>
-            <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
-            <Tag bordered>Blue-chip</Tag>
-            <Tag bordered>Save and Forget</Tag>
-        </Tags>
+    <Tags>
+      <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
+      <Tag bordered>Blue-chip</Tag>
+      <Tag bordered>Save and Forget</Tag>
+    </Tags>
 
-        {children}
-    </Token>
+    {children}
+  </Token>
 }
 
 export function BnbToken({ children, ...props }: DefinedTokenProps) {
   return <Token token="BNB" {...props}>
-        <TokenHeader>BNB Vault</TokenHeader>
+    <TokenHeader>BNB Vault</TokenHeader>
 
-        <Tags>
-            <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
-            <Tag bordered>Blue-chip</Tag>
-            <Tag bordered>Save and Forget</Tag>
-        </Tags>
+    <Tags>
+      <Tag icon={<IconShieldHeart />}>Free Insurance</Tag>
+      <Tag bordered>Blue-chip</Tag>
+      <Tag bordered>Save and Forget</Tag>
+    </Tags>
 
-        {children}
-    </Token>
+    {children}
+  </Token>
 }
 
 export function UsdtToken({ children, ...props }: DefinedTokenProps) {
   return <Token token="USDT" {...props}>
-        <TokenHeader>Tether Vault</TokenHeader>
+    <TokenHeader>Tether Vault</TokenHeader>
 
-        <Tags>
-            <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
-            <Tag bordered>Stable</Tag>
-            <Tag bordered>Free Insurance</Tag>
-        </Tags>
+    <Tags>
+      <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
+      <Tag bordered>Stable</Tag>
+      <Tag bordered>Free Insurance</Tag>
+    </Tags>
 
-        {children}
-    </Token>
+    {children}
+  </Token>
 }
 
 export function UsdcToken({ children, ...props }: DefinedTokenProps) {
   return <Token token="USDC" {...props}>
-        <TokenHeader>USD Coin Vault</TokenHeader>
+    <TokenHeader>USD Coin Vault</TokenHeader>
 
-        <Tags>
-            <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
-          <Tag bordered>Stable</Tag>
-          <Tag bordered>Free Insurance</Tag>
-        </Tags>
+    <Tags>
+      <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
+      <Tag bordered>Stable</Tag>
+      <Tag bordered>Free Insurance</Tag>
+    </Tags>
 
-        {children}
-    </Token>
+    {children}
+  </Token>
 }
 
 export function DaiToken({ children, ...props }: DefinedTokenProps) {
   return <Token token="DAI" {...props}>
-        <TokenHeader>DAI Vault</TokenHeader>
+    <TokenHeader>DAI Vault</TokenHeader>
 
-        <Tags>
-            <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
-            <Tag bordered>Stable</Tag>
-            <Tag bordered>Free Insurance</Tag>
-        </Tags>
+    <Tags>
+      <Tag icon={<IconPalmTree />}>Earn Passively</Tag>
+      <Tag bordered>Stable</Tag>
+      <Tag bordered>Free Insurance</Tag>
+    </Tags>
 
-        {children}
-    </Token>
+    {children}
+  </Token>
 }
 
 type TokenComponentMap = {

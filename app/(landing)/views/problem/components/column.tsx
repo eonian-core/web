@@ -7,8 +7,8 @@ interface ColumnProps {
 
 export const Column: React.FC<ColumnProps> = ({ children }) => {
   return (
-        <div className={styles.column}>
-            {children}
-        </div>
+    <div className={styles.column}>
+      {children}
+    </div>
   )
 }
