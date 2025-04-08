@@ -33,15 +33,15 @@ export function SuggestChainFlow({ close }: SuggestChainFlowProps) {
     <>
       {!isChainSubmited
         ? (
-        <SuggestChainForm
-          error={<SuggestionFormError error={chainError} />}
-          onSubmit={handleChainSubmit}
+          <SuggestChainForm
+            error={<SuggestionFormError error={chainError} />}
+            onSubmit={handleChainSubmit}
         />
           )
         : (
-        <SimpleEmailForm
-          error={<SimpleEmailFormError error={emailError} />}
-          onSubmit={handleEmailSubmit}
+          <SimpleEmailForm
+            error={<SimpleEmailFormError error={emailError} />}
+            onSubmit={handleEmailSubmit}
         />
           )}
     </>

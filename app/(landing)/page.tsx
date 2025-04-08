@@ -43,8 +43,8 @@ import {
   YearlyReturns,
 } from '../components/vault-card/token'
 import { AwardNumber, AwardText } from '../components/award-text/award-text'
-import ContentV1_2 from './content/en-v1.2.mdx'
-import ContentV1_1 from './content/en-v1.1.mdx'
+import ContentV1_2_A from './content/en-v1.2.a.mdx'
+import ContentV1_2_B from './content/en-v1.2.b.mdx'
 import ContentV1 from './content/en-v1.mdx'
 import HeroButton from './views/hero/button-group/hero-button'
 import HeroButtonGroup from './views/hero/button-group/hero-button-group'
@@ -89,8 +89,10 @@ import { JoinOthersWrapper } from './views/hero/join-others/join-others-wrapper'
 import { Audits, AuditsItem } from './views/audits/audits'
 import { VaultCard } from '@/components/vault-card/vault-card'
 import { VaultAction } from '@/components/vault-card/vault-action'
-import { FeatureFlags, useFlag, useIsTestForFlag } from '@/experiments/feature-flags'
+import type { FlagValue } from '@/experiments/feature-flags'
+import { FeatureFlags, useFlag } from '@/experiments/feature-flags'
 import { useTrackScroll } from '@/analytics/use-track-scroll'
+import IconCalendar from '@/components/icons/icon-calendar'
 
 const components = {
   Hero,
@@ -177,27 +179,29 @@ const components = {
   AwardNumber,
   Audits,
   AuditsItem,
+  IconCalendar,
 }
 
 export default function Home() {
   useTrackScroll()
 
-  const shouldShowCopyV1_1 = useIsTestForFlag(FeatureFlags.LANDING_HERO_COPY_V1_1)
   const flag = useFlag(FeatureFlags.LANDING_HERO_COPY_V1_2)
-
-  let content: React.ReactNode
-  if (shouldShowCopyV1_1)
-    content = <ContentV1_1 />
-  else if (flag === 'testA')
-    content = <ContentV1_2 />
-  else
-    content = <ContentV1 />
 
   return (
     <main className={styles.main}>
       <MDXProvider components={components}>
-        {content}
+        <Content flag={flag} />
       </MDXProvider>
     </main>
   )
+}
+
+function Content({ flag }: { flag: FlagValue | undefined }) {
+  if (flag === 'testA')
+    return <ContentV1_2_A />
+
+  if (flag === 'testB')
+    return <ContentV1_2_B />
+
+  return <ContentV1 />
 }

@@ -36,8 +36,8 @@ export function ApolloSsrProvider({ children }: PropsWithChildren) {
   const { chainId } = useChainContext()
   // TODO: can not work when switching chains, need check
   return (
-        <ApolloNextAppProvider makeClient={ssrClientMakers[chainId]}>
-            {children}
-        </ApolloNextAppProvider>
+    <ApolloNextAppProvider makeClient={ssrClientMakers[chainId]}>
+      {children}
+    </ApolloNextAppProvider>
   )
 }

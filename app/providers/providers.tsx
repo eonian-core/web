@@ -20,22 +20,22 @@ interface Props {
 
 export default function Providers({ children }: Props) {
   return (
-      <ThemesProvider>
-        <ReduxProvider store={store}>
-          <WalletWrapperProvider>
-            <AuthProvider>
-              <ChainProvider>
-                <ApolloSsrProvider>
-                  <WalletLinkingProvider>
-                    <SuggestTokenProvider>
-                      <SuggestChainProvider>{children}</SuggestChainProvider>
-                    </SuggestTokenProvider>
-                  </WalletLinkingProvider>
-                </ApolloSsrProvider>
-              </ChainProvider>
-            </AuthProvider>
-          </WalletWrapperProvider>
-        </ReduxProvider>
-      </ThemesProvider>
+    <ThemesProvider>
+      <ReduxProvider store={store}>
+        <WalletWrapperProvider>
+          <AuthProvider>
+            <ChainProvider>
+              <ApolloSsrProvider>
+                <WalletLinkingProvider>
+                  <SuggestTokenProvider>
+                    <SuggestChainProvider>{children}</SuggestChainProvider>
+                  </SuggestTokenProvider>
+                </WalletLinkingProvider>
+              </ApolloSsrProvider>
+            </ChainProvider>
+          </AuthProvider>
+        </WalletWrapperProvider>
+      </ReduxProvider>
+    </ThemesProvider>
   )
 }

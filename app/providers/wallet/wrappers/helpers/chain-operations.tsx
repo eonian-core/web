@@ -13,13 +13,13 @@ export function getChainNativeToken(id: ChainId): string | null {
   return tokenLookupMap[id]
 }
 
-export function getChainNativeTokenTutorialLink(id: ChainId): string {
+export function getChainNativeTokenTutorialLink(id: ChainId | undefined): string {
   const linkLookupMap: Record<ChainId, string | null> = {
     [ChainId.BSC_MAINNET]: 'https://www.binance.com/en/how-to-buy/bnb',
     [ChainId.SEPOLIA]: 'https://blog.chain.link/sepolia-eth/',
     [ChainId.UNKNOWN]: null,
   }
-  return linkLookupMap[id] ?? 'https://portfolio.metamask.io/buy/build-quote'
+  return (id && linkLookupMap[id]) ?? 'https://portfolio.metamask.io/buy/build-quote'
 }
 
 export function getChainIcon(id: ChainId, iconSize: number): React.ReactNode {

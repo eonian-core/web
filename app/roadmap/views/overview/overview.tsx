@@ -10,24 +10,24 @@ export function Overview({ children }: PropsWithChildren) {
   const isLaptopOrSmaller = useIsLaptopOrSmaller()
 
   return (
-        <Container className={styles.pageContainer}>
-            <div className={styles.overview}>
+    <Container className={styles.pageContainer}>
+      <div className={styles.overview}>
 
-                <FadeInImage
-                    className={styles.imageContainer}
-                    delay={!isLaptopOrSmaller ? 0.1 : 0.7}
-                    amount={0.1}
-                    fadeUpInitial='20%'
-                    src={rocketPic}
-                    alt="Futuristic launching to orbit"
+        <FadeInImage
+          className={styles.imageContainer}
+          delay={!isLaptopOrSmaller ? 0.1 : 0.7}
+          amount={0.1}
+          fadeUpInitial='20%'
+          src={rocketPic}
+          alt="Futuristic launching to orbit"
                 />
 
-                <FadeInList className={styles.content} initialDelay={!isLaptopOrSmaller ? 0.2 : 0.1} delay={0.1} amount={0.1}>
-                    {children}
-                </FadeInList>
+        <FadeInList className={styles.content} initialDelay={!isLaptopOrSmaller ? 0.2 : 0.1} delay={0.1} amount={0.1}>
+          {children}
+        </FadeInList>
 
-            </div>
-        </Container>
+      </div>
+    </Container>
   )
 }
 

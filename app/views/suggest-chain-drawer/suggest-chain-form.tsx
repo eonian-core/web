@@ -11,7 +11,7 @@ export function SuggestChainForm(props: OneInputFormProps) {
 
       <SimpleFormInput
         type="text"
-        placeholder="Poligon, Airbitrum, ..."
+        placeholder="Polygon, Arbitrum, ..."
         labelPlacement="inside"
         rules={{ required: true }}
         errorMessage={<span>Please enter what chains do you use?</span>}
@@ -33,10 +33,10 @@ export function SuggestionFormError({ error }: FormErrorProps) {
     return null
 
   return (
-      <BaseFormError>
-        <h4>😥 Error during saving your suggestion</h4>
-        <p>Please share it with us on <a href={socialsMap.en.Discord.href}>Discord</a> or <a href={socialsMap.en.Telegram.href}>Telegram</a>.</p>
-        <p>We want to hear it!</p>
-      </BaseFormError>
+    <BaseFormError>
+      <h4>😥 Error during saving your suggestion</h4>
+      <p>Please share it with us on <a href={socialsMap.en.Discord.href}>Discord</a> or <a href={socialsMap.en.Telegram.href}>Telegram</a>.</p>
+      <p>We want to hear it!</p>
+    </BaseFormError>
   )
 }

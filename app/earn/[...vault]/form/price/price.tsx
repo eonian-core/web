@@ -21,8 +21,8 @@ export function Price({ children: value, vault }: PriceProps) {
     return <>{useApprox ? '≈ ' : ''}{formatUSD(valueUSD)}</>
 
   return (
-        <CompactNumber value={amountInUSD} decimals={decimals} fractionDigits={2} hideTooltip childrenAtStart>
-            <>≈ $</>
-        </CompactNumber>
+    <CompactNumber value={amountInUSD} decimals={decimals} fractionDigits={2} hideTooltip childrenAtStart>
+      <>≈ $</>
+    </CompactNumber>
   )
 }

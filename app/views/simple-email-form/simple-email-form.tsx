@@ -37,10 +37,10 @@ export function SimpleEmailFormError({ error }: FormErrorProps) {
     return null
 
   return (
-      <BaseFormError>
-        <h4>😥 Error during saving your email</h4>
-        <p>Please share it with us on <a href={socialsMap.en.Discord.href}>Discord</a> or <a href={socialsMap.en.Telegram.href}>Telegram</a>.</p>
-        <p>We want to hear about you!</p>
-      </BaseFormError>
+    <BaseFormError>
+      <h4>😥 Error during saving your email</h4>
+      <p>Please share it with us on <a href={socialsMap.en.Discord.href}>Discord</a> or <a href={socialsMap.en.Telegram.href}>Telegram</a>.</p>
+      <p>We want to hear about you!</p>
+    </BaseFormError>
   )
 }

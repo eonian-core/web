@@ -14,17 +14,17 @@ export const useAppearMarkContext = () => useContext(AppearMarkContext)
 
 export function AppearMarkProvider({ children, isVisible }: PropsWithChildren & AppearMarkContextProps) {
   return <AppearMarkContext.Provider value={{ isVisible }}>
-        {children}
-    </AppearMarkContext.Provider>
+    {children}
+  </AppearMarkContext.Provider>
 }
 
 export function AppearMarkOnScroll(props: AppearMarkProps) {
   const { isVisible } = useFadeInListContext()
 
   return (
-        <AppearMarkContext.Provider value={{ isVisible }}>
-            <AppearMark {...props}/>
-        </AppearMarkContext.Provider>
+    <AppearMarkContext.Provider value={{ isVisible }}>
+      <AppearMark {...props}/>
+    </AppearMarkContext.Provider>
   )
 }
 
@@ -48,16 +48,16 @@ export function AppearMark({ children, delay = 1.5, speed = 1 }: AppearMarkProps
   }
 
   return (
-        <mark>
-            <TypeAnimation
+    <mark>
+      <TypeAnimation
             // eh, library do not export required types
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            speed={speed as any}
-            sequence={[
-              content as string,
-            ]}
-            cursor={false}
+        speed={speed as any}
+        sequence={[
+          content as string,
+        ]}
+        cursor={false}
             />
-        </mark>
+    </mark>
   )
 }

@@ -8,10 +8,10 @@ import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 export function HeaderSkeleton() {
   return (
     <header className={styles.container}>
-        <VaultTitleSkeleton />
-        <PriceChartSkeleton />
-        <OneLineSkeleton width={200} height={32}/>
-        <ActionsSkeleton />
+      <VaultTitleSkeleton />
+      <PriceChartSkeleton />
+      <OneLineSkeleton width={200} height={32}/>
+      <ActionsSkeleton />
     </header>
   )
 }

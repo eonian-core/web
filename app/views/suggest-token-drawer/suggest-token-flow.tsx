@@ -29,18 +29,18 @@ export function SuggestTokenFlow({ close }: SuggestTokenFlowProps) {
   }, [updateEmail, uuid, close])
 
   return (<>
-      {!isTokenSubmited
-        ? (
-          <SuggestTokenForm
-            onSubmit={handleTokenSubmit}
-            error={<SuggestionFormError error={tokenError} />}
+    {!isTokenSubmited
+      ? (
+        <SuggestTokenForm
+          onSubmit={handleTokenSubmit}
+          error={<SuggestionFormError error={tokenError} />}
           />
-          )
-        : (
-          <SimpleEmailForm
-            onSubmit={handleEmailSubmit}
-            error={<SimpleEmailFormError error={emailError} />}
+        )
+      : (
+        <SimpleEmailForm
+          onSubmit={handleEmailSubmit}
+          error={<SimpleEmailFormError error={emailError} />}
           />
-          )}
+        )}
   </>)
 }

@@ -9,9 +9,9 @@ export function HealthyLabel({ children, showValue = false }: PropsWithChildren<
       {showValue
         ? children
         : (
-        <ExternalLink href="/security" icon={<IconExternal size="0.75rem" />} iconAtEnd>
-          Healthy
-        </ExternalLink>
+          <ExternalLink href="/security" icon={<IconExternal size="0.75rem" />} iconAtEnd>
+            Healthy
+          </ExternalLink>
           )}
     </span>
   )

@@ -76,15 +76,6 @@
       margin-top: calc(-1 * var(--w) / 4);
       animation: appearFrom07 1s ease-out;
     }
-
-    &::after {
-      background: var(--accent-glow);
-      width: 50rem;
-      height: 10rem;
-      z-index: -1;
-      bottom: 0rem;
-      animation: shine 5s ease-in-out infinite;
-    }
   }
 
   & > p {

@@ -44,7 +44,7 @@ export default async function Page({ params }: Params) {
 
   const [chainName, vaultSymbol] = vaultRoute
   const chainId = ChainId.getByName(chainName)
-  const vault = await getVaultBySimbol(chainId, vaultSymbol)
+  const vault = await getVaultByChainAndSymbol(chainId, vaultSymbol)
   const symbol = getAssetSymbol(vault)
 
   const currentPrice = convertToUsd(vault.asset.price)
@@ -57,7 +57,7 @@ export default async function Page({ params }: Params) {
   )
 }
 
-async function getVaultBySimbol(chainId: ChainId, vaultSymbol: string) {
+async function getVaultByChainAndSymbol(chainId: ChainId, vaultSymbol: string) {
   const client = getProtocolRscClient(chainId)
   const { data } = await getVaultBySymbol(client, vaultSymbol)
   const vault = data.vaults[0]
