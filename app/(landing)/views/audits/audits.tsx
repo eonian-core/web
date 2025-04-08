@@ -6,9 +6,9 @@ import IconShieldLockFill from '@/components/icons/icon-shield-lock-fill'
 
 export function Audits({ children }: PropsWithChildren) {
   return (
-        <div className={styles.audits}>
-            {children}
-        </div>
+    <div className={styles.audits}>
+      {children}
+    </div>
   )
 }
 
@@ -18,19 +18,19 @@ export interface AuditsItemProps extends PropsWithChildren {
 
 export function AuditsItem({ children, type }: AuditsItemProps) {
   return (
-        <div className={styles.auditsItem}>
-            {type === 'heart'
-              ? (
-                <IconShieldHeart />
-                )
-              : type === 'check'
-                ? (
-                <IconShieldFillCheck />
-                  )
-                : (
-                <IconShieldLockFill />
-                  )}
-            {children}
-        </div>
+    <div className={styles.auditsItem}>
+      {type === 'heart'
+        ? (
+          <IconShieldHeart />
+          )
+        : type === 'check'
+          ? (
+            <IconShieldFillCheck />
+            )
+          : (
+            <IconShieldLockFill />
+            )}
+      {children}
+    </div>
   )
 }

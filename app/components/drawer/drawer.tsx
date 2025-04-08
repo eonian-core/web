@@ -23,12 +23,12 @@ export function Drawer({ desktopPosition = 'right', desktopSize = 'lg', ...props
   const isTabletOrSmaller = useIsTabletOrSmaller()
 
   return (<MantineDrawer
-        position={isTabletOrSmaller ? 'bottom' : desktopPosition}
-        offset={isTabletOrSmaller ? 5 : 10}
-        radius={isTabletOrSmaller ? 'md' : 'lg'}
-        overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
-        size={isTabletOrSmaller ? '90%' : desktopSize}
-        className={styles.drawer}
-        {...props}
-    />)
+    position={isTabletOrSmaller ? 'bottom' : desktopPosition}
+    offset={isTabletOrSmaller ? 5 : 10}
+    radius={isTabletOrSmaller ? 'md' : 'lg'}
+    overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
+    size={isTabletOrSmaller ? '90%' : desktopSize}
+    className={styles.drawer}
+    {...props}
+  />)
 }

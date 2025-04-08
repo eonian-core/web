@@ -18,7 +18,7 @@ export const SuggestTokenProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <SuggestTokenContext.Provider value={{ opened, open, close }}>
-        <SuggestTokenDrawer {...{ opened, onClose: close }} />
+      <SuggestTokenDrawer {...{ opened, onClose: close }} />
       {children}
     </SuggestTokenContext.Provider>
   )
@@ -34,10 +34,10 @@ export function useSuggestTokenContext(): SuggestTokenContextProps {
 
 export function SuggestTokenDrawer(props: { opened: boolean; onClose: () => void }) {
   return (
-      <Drawer {...props}>
-        <div className={styles.formWrapper}>
-          <SuggestTokenFlow close={props.onClose}/>
-        </div>
-      </Drawer>
+    <Drawer {...props}>
+      <div className={styles.formWrapper}>
+        <SuggestTokenFlow close={props.onClose}/>
+      </div>
+    </Drawer>
   )
 }

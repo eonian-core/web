@@ -49,17 +49,17 @@ export function genWrapper(state: Partial<VaultUserSlice> = {}, vault: Partial<V
     }, [setPureWalletState])
 
     return (
-            <Provider store={store}>
-                <WalletWrapperContext.Provider value={{ ...walletState, setWalletState } as any}>
-                    <VaultContext.Provider value={{
-                      inputValue: undefined,
-                      formAction: FormAction.DEPOSIT,
-                      ...vault,
-                    } as VaultContextType}>
-                        {children}
-                    </VaultContext.Provider>
-                </WalletWrapperContext.Provider>
-            </Provider>
+      <Provider store={store}>
+        <WalletWrapperContext.Provider value={{ ...walletState, setWalletState } as any}>
+          <VaultContext.Provider value={{
+            inputValue: undefined,
+            formAction: FormAction.DEPOSIT,
+            ...vault,
+          } as VaultContextType}>
+            {children}
+          </VaultContext.Provider>
+        </WalletWrapperContext.Provider>
+      </Provider>
     )
   }
 

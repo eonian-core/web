@@ -32,8 +32,8 @@ export function CSPostHogProvider({ children, bootstrap }: CSPostHogProviderProp
   }
 
   return (
-      <PostHogProvider client={posthog}>
-        {children}
-      </PostHogProvider>
+    <PostHogProvider client={posthog}>
+      {children}
+    </PostHogProvider>
   )
 }

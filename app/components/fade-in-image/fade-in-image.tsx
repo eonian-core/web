@@ -14,9 +14,9 @@ export interface FadeInImageProps extends Omit<FadeInProps, 'children'> {
 /** Image with Fade In animation and base background gradient template */
 export function FadeInImage({ className, src, alt, ...props }: FadeInImageProps) {
   return <FadeIn
-        className={clsx(styles.container, className)}
-        {...props}
+    className={clsx(styles.container, className)}
+    {...props}
         >
-        <Image src={src} alt={alt} placeholder="blur" />
-    </FadeIn>
+    <Image src={src} alt={alt} placeholder="blur" />
+  </FadeIn>
 }

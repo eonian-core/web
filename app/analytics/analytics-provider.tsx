@@ -14,18 +14,18 @@ const PostHogPageView = dynamic(() => import('./posthog-page-view-tracker'), {
 
 export function InHeadAnalytics() {
   return (
-        <>
-            <Clarity />
-            <GoogleTagHead />
-        </>
+    <>
+      <Clarity />
+      <GoogleTagHead />
+    </>
   )
 }
 
 export function AfterHeadAnalytics() {
   return (
-        <>
-            <GoogleAnalytics />
-        </>
+    <>
+      <GoogleAnalytics />
+    </>
   )
 }
 
@@ -35,13 +35,13 @@ export function AroundBodyProviderAnalytics(props: CSPostHogProviderProps) {
 
 export function InBodyProviderAnalytics({ children }: PropsWithChildren) {
   return (
-        <>
-            <GoogleTagFooter />
-            <PostHogPageView />
+    <>
+      <GoogleTagFooter />
+      <PostHogPageView />
 
-            <MonitoringProvider>
-                {children}
-            </MonitoringProvider>
-        </>
+      <MonitoringProvider>
+        {children}
+      </MonitoringProvider>
+    </>
   )
 }

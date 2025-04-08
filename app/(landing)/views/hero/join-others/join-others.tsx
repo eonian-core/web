@@ -54,11 +54,11 @@ export function JoinOthers({ children, href }: JoinOthersProps) {
   const visibleAvatars = indexes.map(i => avatarsWithRefs[i])
 
   return (
-      <div className={styles.container} onClick={clickHandler}>
-        <TransitionGroup className={styles.avatars}>
-          {visibleAvatars.map(({ avatar, ref }, index) => {
-            return (
-              <CSSTransition
+    <div className={styles.container} onClick={clickHandler}>
+      <TransitionGroup className={styles.avatars}>
+        {visibleAvatars.map(({ avatar, ref }, index) => {
+          return (
+            <CSSTransition
               key={avatar.src}
               nodeRef={ref}
               timeout={500}
@@ -87,11 +87,11 @@ export function JoinOthers({ children, href }: JoinOthersProps) {
                 }}
               />
             </CSSTransition>
-            )
-          })}
-        </TransitionGroup>
-        <span>{children}</span>
-      </div>
+          )
+        })}
+      </TransitionGroup>
+      <span>{children}</span>
+    </div>
 
   )
 }

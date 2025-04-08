@@ -18,7 +18,7 @@ export const SuggestChainProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <SuggestChainContext.Provider value={{ opened, open, close }}>
-        <SuggestChainDrawer {...{ opened, onClose: close }} />
+      <SuggestChainDrawer {...{ opened, onClose: close }} />
       {children}
     </SuggestChainContext.Provider>
   )
@@ -34,10 +34,10 @@ export function useSuggestChainContext(): SuggestChainContextProps {
 
 export function SuggestChainDrawer(props: { opened: boolean; onClose: () => void }) {
   return (
-      <Drawer {...props}>
-        <div className={styles.formWrapper}>
-          <SuggestChainFlow close={props.onClose}/>
-        </div>
-      </Drawer>
+    <Drawer {...props}>
+      <div className={styles.formWrapper}>
+        <SuggestChainFlow close={props.onClose}/>
+      </div>
+    </Drawer>
   )
 }

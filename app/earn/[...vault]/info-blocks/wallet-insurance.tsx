@@ -87,8 +87,8 @@ function WalletInsuranceBase({ children: description, status }: WalletInsuranceB
         </InfoItem>
       </InfoBlockList>
 
-    <InfoBlockDescription>{description}</InfoBlockDescription>
-  </CommonInfoBlock>
+      <InfoBlockDescription>{description}</InfoBlockDescription>
+    </CommonInfoBlock>
   )
 }
 

@@ -17,5 +17,5 @@ export const NetworkSelector: React.FC = () => {
 
     <Button bordered dark round onClick={open} icon={chain?.icon} iconPosition='left'>{chain?.name}</Button>
 
-    </div>)
+  </div>)
 }

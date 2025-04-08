@@ -55,17 +55,17 @@ export function OneInputForm({
   const fullFormDisabled = loading || success || disabled
 
   return (
-        <form
-            className={clsx(styles.form, className)}
-            onSubmit={handleSubmit(onSubmit) as FormEventHandler<any>}
-            {...props}
+    <form
+      className={clsx(styles.form, className)}
+      onSubmit={handleSubmit(onSubmit) as FormEventHandler<any>}
+      {...props}
         >
-            <OneInputFormContext.Provider value={{ control, formState, success, loading, disabled: fullFormDisabled }}>
-                {children}
+      <OneInputFormContext.Provider value={{ control, formState, success, loading, disabled: fullFormDisabled }}>
+        {children}
 
-                {error}
-            </OneInputFormContext.Provider>
-        </form>
+        {error}
+      </OneInputFormContext.Provider>
+    </form>
   )
 }
 
@@ -75,21 +75,21 @@ export interface FormHeaderProps extends React.DetailedHTMLProps<React.HTMLAttri
 
 export function FormHeader({ className, success, ...props }: FormHeaderProps) {
   return (
-        <div className={clsx(styles.header, className, { [styles.success]: success })} {...props} />
+    <div className={clsx(styles.header, className, { [styles.success]: success })} {...props} />
   )
 }
 
 export function SimpleFormInput({ className, ...props }: Omit<FormInputProps, 'name' | 'control'>) {
   const { control, disabled } = useOneFormContext()
   return (
-        <FormInput
-            data-autofocus
-            variant="bordered"
-            className={clsx(styles.input, className)}
-            name="input"
-            control={control}
-            disabled={disabled}
-            {...props}
+    <FormInput
+      data-autofocus
+      variant="bordered"
+      className={clsx(styles.input, className)}
+      name="input"
+      control={control}
+      disabled={disabled}
+      {...props}
         />
   )
 }
@@ -97,14 +97,14 @@ export function SimpleFormInput({ className, ...props }: Omit<FormInputProps, 'n
 export function Submit({ className, ...props }: ButtonProps) {
   const { success, formState, disabled } = useOneFormContext()
   return (
-        <Button
-            gradient
-            wide
-            size="lg"
-            className={clsx(styles.button, { [styles.success]: success }, className)}
-            type="submit"
-            disabled={!formState.isValid || disabled}
-            {...props}
+    <Button
+      gradient
+      wide
+      size="lg"
+      className={clsx(styles.button, { [styles.success]: success }, className)}
+      type="submit"
+      disabled={!formState.isValid || disabled}
+      {...props}
         />
   )
 }
@@ -115,9 +115,9 @@ export function FrictionRemover({ className, ...props }: React.DetailedHTMLProps
 
 export function BaseFormError({ children }: PropsWithChildren) {
   return (
-        <div className={styles.error}>
-            {children}
-        </div>
+    <div className={styles.error}>
+      {children}
+    </div>
   )
 }
 
@@ -131,8 +131,8 @@ export function FormError({ error }: FormErrorProps) {
 
   return (
     <BaseFormError>
-        <h4>Error during request, please try again</h4>
-        <p>{((error || {}) as Error).message}</p>
+      <h4>Error during request, please try again</h4>
+      <p>{((error || {}) as Error).message}</p>
     </BaseFormError>
   )
 }
