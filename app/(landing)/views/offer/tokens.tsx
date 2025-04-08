@@ -8,19 +8,19 @@ import { CardSkeleton } from '@/components/vault-card/card-skeleton'
 
 export default function Tokens({ children }: PropsWithChildren) {
   return (
-        <Suspense fallback={(
-            <div className={styles.tokens}>
-                <CardSkeleton />
-                <CardSkeleton />
-                <CardSkeleton />
-            </div>
+    <Suspense fallback={(
+      <div className={styles.tokens}>
+        <CardSkeleton />
+        <CardSkeleton />
+        <CardSkeleton />
+      </div>
         )}>
-            <TokensProvider>
-                <TokensBody>
-                    {children}
-                </TokensBody>
-            </TokensProvider>
-        </Suspense>
+      <TokensProvider>
+        <TokensBody>
+          {children}
+        </TokensBody>
+      </TokensProvider>
+    </Suspense>
   )
 }
 
@@ -28,8 +28,8 @@ function TokensProvider({ children }: PropsWithChildren) {
   const vaults = useVaultsForCurrentChain()
 
   return (
-        <VaultsProvider currentChainVaults={vaults}>
-            {children}
-        </VaultsProvider>
+    <VaultsProvider currentChainVaults={vaults}>
+      {children}
+    </VaultsProvider>
   )
 }

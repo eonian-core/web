@@ -16,12 +16,12 @@ export interface OnboardingIconProps {
 
 export function OnboardingIcon({ active, ...props }: OnboardingIconProps) {
   return (
-        <div className={clsx(styles.wrapper, {
-          [styles.active]: active && !props.completed,
-          [styles.completed]: props.completed,
-        })}>
-            <OnboardingIconBody {...props}/>
-        </div>
+    <div className={clsx(styles.wrapper, {
+      [styles.active]: active && !props.completed,
+      [styles.completed]: props.completed,
+    })}>
+      <OnboardingIconBody {...props}/>
+    </div>
   )
 }
 

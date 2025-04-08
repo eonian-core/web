@@ -15,14 +15,14 @@ export interface ArrowDividerBodyProps {
 /** Minimal logic, will be dispalyed in skeleton */
 export function ArrowDividerBody({ children: picker, reverse, onClick }: ArrowDividerBodyProps) {
   return (
-        <div className={clsx(styles.divider, { [styles.withPicker]: picker })}>
-            {picker}
-        <Divider />
-        <div onClick={onClick} className={clsx(styles.arrow, 'bg-content1', {
-          [styles.reverse]: reverse,
-        })}>
-            <IconArrowRightShort width={size} height={size} />
-        </div>
+    <div className={clsx(styles.divider, { [styles.withPicker]: picker })}>
+      {picker}
+      <Divider />
+      <div onClick={onClick} className={clsx(styles.arrow, 'bg-content1', {
+        [styles.reverse]: reverse,
+      })}>
+        <IconArrowRightShort width={size} height={size} />
+      </div>
     </div>
   )
 }

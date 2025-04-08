@@ -25,10 +25,10 @@ export function MenuItem({ className, ...props }: LinkWithIconProps) {
     >
       {isExternal
         ? (
-        <ExternalLink icon={<IconExternal size="1em" />} iconAtEnd {...props} />
+          <ExternalLink icon={<IconExternal size="1em" />} iconAtEnd {...props} />
           )
         : (
-        <InternalLink {...props} />
+          <InternalLink {...props} />
           )}
     </li>
   )

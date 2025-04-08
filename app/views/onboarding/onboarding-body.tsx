@@ -40,59 +40,59 @@ export function OnboardingBody({ completed, placeholder, linkEmail, show, showHe
     [styles.show]: show,
     [styles.withBackground]: withBackground,
   })}>
-        {showHeader && <h3>Onboarding</h3>}
-        <div className={styles.list}>
-            <ul>
-                <OnboardingItem
-                    currentStep={OnboardingStep.AssetChosen}
-                    title="Choose Cryptocurrency"
-                    {...{ active, completed }}
+    {showHeader && <h3>Onboarding</h3>}
+    <div className={styles.list}>
+      <ul>
+        <OnboardingItem
+          currentStep={OnboardingStep.AssetChosen}
+          title="Choose Cryptocurrency"
+          {...{ active, completed }}
                 >
-                    <p>Choose the cryptocurrency you want to invest in</p>
-                </OnboardingItem>
+          <p>Choose the cryptocurrency you want to invest in</p>
+        </OnboardingItem>
 
-                <OnboardingItem
-                    currentStep={OnboardingStep.AmountEntered}
-                    title="Enter Amount"
-                    {...{ active, completed }}
+        <OnboardingItem
+          currentStep={OnboardingStep.AmountEntered}
+          title="Enter Amount"
+          {...{ active, completed }}
                 >
-                    <p>Choose how much do you want to save in vault and insure.{havePlaceholder ? ` For example, ${placeholder}.` : ''}</p>
-                </OnboardingItem>
+          <p>Choose how much do you want to save in vault and insure.{havePlaceholder ? ` For example, ${placeholder}.` : ''}</p>
+        </OnboardingItem>
 
-                <OnboardingItem
-                    currentStep={OnboardingStep.WalletConnected}
-                    title="Connect Wallet"
-                    {...{ active, completed }}
+        <OnboardingItem
+          currentStep={OnboardingStep.WalletConnected}
+          title="Connect Wallet"
+          {...{ active, completed }}
                 >
-                    <p>Securely connect your crypto wallet to interact with blockchain.</p>
-                    <OnboadingActions>
-                        <WrapperLink withIcon href="https://ethereum.org/en/wallets/find-wallet/#main-content">Get Wallet</WrapperLink>
-                    </OnboadingActions>
-                </OnboardingItem>
+          <p>Securely connect your crypto wallet to interact with blockchain.</p>
+          <OnboadingActions>
+            <WrapperLink withIcon href="https://ethereum.org/en/wallets/find-wallet/#main-content">Get Wallet</WrapperLink>
+          </OnboadingActions>
+        </OnboardingItem>
 
-                <OnboardingItem
-                    currentStep={OnboardingStep.TramsactionsApproved}
-                    title="Approve Transactions"
-                    {...{ active, completed }}
+        <OnboardingItem
+          currentStep={OnboardingStep.TramsactionsApproved}
+          title="Approve Transactions"
+          {...{ active, completed }}
                 >
-                    <p>Sign allowance and deposit transactions. Two-step deposit process ensure security of assets.</p>
-                </OnboardingItem>
+          <p>Sign allowance and deposit transactions. Two-step deposit process ensure security of assets.</p>
+        </OnboardingItem>
 
-                <OnboardingItem
-                    currentStep={OnboardingStep.EmailLinked}
-                    title="Link Recovery Email"
-                    {...{ active, completed }}
+        <OnboardingItem
+          currentStep={OnboardingStep.EmailLinked}
+          title="Link Recovery Email"
+          {...{ active, completed }}
                 >
-                    <p>Connect your email to savings account to be able to recover them in case of your wallet hack.</p>
+          <p>Connect your email to savings account to be able to recover them in case of your wallet hack.</p>
 
-                    <OnboadingActions>
-                        <Button bordered round size="sm" onClick={linkEmail}>Link email</Button>
-                        <WrapperLink withIcon href="https://docs.eonian.finance/basics/how-eonian-works">How It Works</WrapperLink>
-                    </OnboadingActions>
-                </OnboardingItem>
-            </ul>
-        </div>
+          <OnboadingActions>
+            <Button bordered round size="sm" onClick={linkEmail}>Link email</Button>
+            <WrapperLink withIcon href="https://docs.eonian.finance/basics/how-eonian-works">How It Works</WrapperLink>
+          </OnboadingActions>
+        </OnboardingItem>
+      </ul>
     </div>
+  </div>
 }
 
 export function useActiveStep(completed: Array<OnboardingStep>): OnboardingStep {
@@ -122,27 +122,27 @@ function OnboardingItem({ currentStep, children, title, completed, active }: Onb
   const currentStepCompleted = completed.includes(currentStep)
   const currentStepActive = currentStep === active
   return (
-        <li className={clsx(styles.item, {
-          [styles.completed]: currentStepCompleted,
-          [styles.active]: currentStepActive && !currentStepCompleted,
-        })}>
-            <div className={styles.icon}>
-                <OnboardingIcon completed={currentStepCompleted} active={currentStepActive}>{currentStep}</OnboardingIcon>
-                <div className={styles.line}></div>
-            </div>
+    <li className={clsx(styles.item, {
+      [styles.completed]: currentStepCompleted,
+      [styles.active]: currentStepActive && !currentStepCompleted,
+    })}>
+      <div className={styles.icon}>
+        <OnboardingIcon completed={currentStepCompleted} active={currentStepActive}>{currentStep}</OnboardingIcon>
+        <div className={styles.line}></div>
+      </div>
 
-            <div className={styles.itemContent}>
-                <h4>{title}</h4>
-                <div className={styles.itemDescription}>
-                    {children}
-                </div>
-            </div>
-        </li>
+      <div className={styles.itemContent}>
+        <h4>{title}</h4>
+        <div className={styles.itemDescription}>
+          {children}
+        </div>
+      </div>
+    </li>
   )
 }
 
 export function OnboadingActions({ children }: { children: ReactNode }) {
   return <div className={styles.actions}>
-        {children}
-    </div>
+    {children}
+  </div>
 }

@@ -41,11 +41,11 @@ export function ApproachAwards({ children }: PropsWithChildren) {
 
   return (
     <FadeInList
-        className={styles.awards}
-        delay={!isLaptopOrSmaller ? 0.3 : 0.7}
-        amount={0.1}
+      className={styles.awards}
+      delay={!isLaptopOrSmaller ? 0.3 : 0.7}
+      amount={0.1}
       >
-        {children}
+      {children}
     </FadeInList>
   )
 }

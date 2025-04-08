@@ -6,8 +6,8 @@ export const chartHeight = 128
 
 export function PriceChartSkeleton() {
   return (
-        <div className={styles.container}>
-            <ChartSkeleton width={chartWidth} height={chartHeight}/>
-        </div>
+    <div className={styles.container}>
+      <ChartSkeleton width={chartWidth} height={chartHeight}/>
+    </div>
   )
 }

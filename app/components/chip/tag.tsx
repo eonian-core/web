@@ -10,6 +10,6 @@ export interface TagProps extends PropsWithChildren {
 // TODO: merge with our chip and remove dublicated code
 export function Tag({ children, className }: TagProps) {
   return <Chip variant="bordered" size="sm" className={clsx(styles.tag, className)}>
-        {children}
-    </Chip>
+    {children}
+  </Chip>
 }

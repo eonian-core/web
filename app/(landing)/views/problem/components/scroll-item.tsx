@@ -24,15 +24,15 @@ export function ScrollItem({
   translateY = { from: [0, 1], to: [0, 0] },
 }: React.PropsWithChildren<ItemProps>) {
   return (
-        <motion.div style={{
-          opacity: useTransformConfig(progress, opacity),
-          scale: useTransformConfig(progress, scale),
-          translateY: useTransformConfig(progress, translateY),
-        }}
-            className={clsx(className, 'top-0 left-0 w-full h-full')}
+    <motion.div style={{
+      opacity: useTransformConfig(progress, opacity),
+      scale: useTransformConfig(progress, scale),
+      translateY: useTransformConfig(progress, translateY),
+    }}
+      className={clsx(className, 'top-0 left-0 w-full h-full')}
         >
-            {children}
-        </motion.div>
+      {children}
+    </motion.div>
   )
 }
 
