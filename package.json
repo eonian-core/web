@@ -68,7 +68,7 @@
     "lodash.debounce": "^4.0.8",
     "logrocket": "^5.0.1",
     "luxon": "^3.5.0",
-    "next": "^14.2.8",
+    "next": "^14.2.27",
     "posthog-js": "^1.194.1",
     "posthog-node": "^4.2.1",
     "react": "^18.3.1",

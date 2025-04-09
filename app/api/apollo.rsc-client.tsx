@@ -21,6 +21,9 @@ function registerProtocolClient(chainId: ChainId) {
 const rscProtocolClientGetters: Record<Exclude<ChainId, ChainId.UNKNOWN>, ReturnType<typeof registerApolloClient>['getClient']> = {
   [ChainId.BSC_MAINNET]: registerProtocolClient(ChainId.BSC_MAINNET),
   [ChainId.SEPOLIA]: registerProtocolClient(ChainId.SEPOLIA),
+  [ChainId.ZEN_CHAIN_TESTNET]: () => {
+    throw new Error('ZenChain is not supported yet')
+  },
 }
 
 export function getProtocolRscClient(chainId: ChainId) {

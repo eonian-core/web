@@ -14,16 +14,11 @@ const isExist = Object.values<string>(ChainEnvironment).includes(NEXT_PUBLIC_ENV
 if (!isExist)
   throw new Error('Unknown chain environment')
 
-export interface GraphQLEndpointsMap {
-  [ChainId.BSC_MAINNET]: string
-  [ChainId.SEPOLIA]: string
-  [ChainId.UNKNOWN]: undefined
-}
-
-export const GraphQLEndpoints: GraphQLEndpointsMap = {
+export const GraphQLEndpoints: Record<ChainId, string | undefined> = {
   [ChainId.BSC_MAINNET]: requireEnv('NEXT_PUBLIC_BSC_GRAPH_URL', process.env.NEXT_PUBLIC_BSC_GRAPH_URL),
   // Optional variable
   [ChainId.SEPOLIA]: requireEnv('NEXT_PUBLIC_SEPOLIA_GRAPH_URL', process.env.NEXT_PUBLIC_SEPOLIA_GRAPH_URL || 'http://localhost:4000/'),
+  [ChainId.ZEN_CHAIN_TESTNET]: undefined,
   [ChainId.UNKNOWN]: undefined,
 }
 
