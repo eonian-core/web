@@ -1,5 +1,5 @@
 import React from 'react'
-import { AccordionItem as NextAccordionItem } from '@nextui-org/react'
+import { AccordionItem as NextAccordionItem } from '@heroui/react'
 import { useToId } from '../heading/to-id'
 
 interface Props {

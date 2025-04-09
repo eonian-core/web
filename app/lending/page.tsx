@@ -1,25 +1,17 @@
 import { redirect } from 'next/navigation'
-import { Suspense } from 'react'
-import { showEarn } from '../features'
+import dynamic from 'next/dynamic'
+import { showLending } from '../features'
+import SkeletonPage from './skeleton-page'
 
-import styles from './page.module.scss'
-import PageLoader from '@/components/page-loader/page-loader'
+// Dynamically import Content with SSR disabled
+const DynamicInnerPage = dynamic(() => import('./content'), {
+  ssr: false,
+  loading: () => <SkeletonPage />,
+})
 
 export default function Page() {
-  if (!showEarn)
+  if (!showLending)
     redirect('/')
 
-  return (
-    <Suspense fallback={<PageLoader />}>
-      <InnerPage />
-    </Suspense>
-  )
-}
-
-async function InnerPage() {
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  return (
-    <div className={styles.page}>
-    </div>
-  )
+  return <DynamicInnerPage />
 }
