@@ -4,8 +4,8 @@ import type { Metadata } from 'next'
 import { overrideMetadata } from '../meta'
 import styles from './layout.module.scss'
 
-export default function EarnLayout({ children }: React.PropsWithChildren) {
+export default function LendingLayout({ children }: React.PropsWithChildren) {
   return <main className={styles.main}>{children}</main>
 }
 
-export const metadata: Metadata = overrideMetadata('Earn', 'Eonain Earn Application')
+export const metadata: Metadata = overrideMetadata('Lending', 'Eonain Lending Application')

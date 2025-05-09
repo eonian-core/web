@@ -4,7 +4,7 @@ import { showLending } from '../features'
 import SkeletonPage from './skeleton-page'
 
 // Dynamically import Content with SSR disabled
-const DynamicInnerPage = dynamic(() => import('./content'), {
+const DynamicInnerPage = dynamic(() => import('./LendingContent'), {
   ssr: false,
   loading: () => <SkeletonPage />,
 })
