@@ -1,18 +1,14 @@
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
-import type { Vault } from '../../api'
-import { getProtocolRscClient, getVaultBySymbol, getVaultsSymbols } from '../../api'
-import { ChainId } from '../../providers/wallet/wrappers/helpers'
-import { defaultChain } from '../../web3-onboard'
+import { ChainId, getMulticallAddress } from '../../providers/wallet/wrappers/helpers'
 import { showEarn } from '../../features'
-import { InterestRateSide, InterestRateType } from '../../api/protocol/gql/graphql'
-import type { Scalars } from '../../api/protocol/gql/graphql'
 
 import { TokenGradient } from './header/token-gradient'
 import { PageContent } from './page-content'
 import SkeletonPage from './skeleton-page'
 import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 import { convertToUsd } from '@/finances/usd'
+import { fetchVaultsViaMulticall } from '@/api/protocol/vaults/multicall/fetch-vaults-via-multicall'
 
 export const revalidate = 10
 
@@ -33,12 +29,10 @@ export async function generateStaticParams(): Promise<RouteSegment[]> {
   // const client = getProtocolRscClient(chainId)
   // const { data } = await getVaultsSymbols(client)
   // return data.vaults.map(({ symbol }) => ({ vault: [ChainId.getName(chainId).toLowerCase(), symbol] }))
-  return Promise.resolve([
-    { vault: ['bsc_mainnet', 'eonBTCB'] },
-    { vault: ['bsc_mainnet', 'eonWETH'] },
-    { vault: ['bsc_mainnet', 'eonUSDC'] },
-    { vault: ['bsc_mainnet', 'eonUSDT'] },
-  ])
+
+  const chainId = ChainId.BSC_MAINNET
+  const vaults = await getVaultsByChain(chainId)
+  return vaults.map(vault => ({ vault: [ChainId.getName(chainId).toLowerCase(), vault.symbol] }))
 }
 
 export default async function Page({ params }: Params) {
@@ -71,59 +65,12 @@ async function getVaultByChainAndSymbol(chainId: ChainId, vaultSymbol: string) {
   // const vault = data.vaults[0]
   // if (!vault)
   //   throw new Error(`Vault with symbol "${vaultSymbol}" not found`)
+  const vaults = await getVaultsByChain(chainId)
+  return vaults.find(vault => vault.symbol === vaultSymbol)!
+}
 
-  // eslint-disable-next-line no-console
-  console.log('getVaultByChainAndSymbol', chainId, vaultSymbol)
-  const dummyId = '0x0000000000000000000000000000000000000000' as Scalars['Bytes']
-
-  return Promise.resolve({
-    address: '0x0000000000000000000000000000000000000000',
-    asset: {
-      address: '0x0000000000000000000000000000000000000000',
-      name: 'Dummy Asset',
-      symbol: 'DUMMY',
-      decimals: 18,
-      price: {
-        value: BigInt(0),
-        decimals: 18,
-        id: dummyId,
-        __typename: 'Price',
-      },
-      id: dummyId,
-      __typename: 'Token',
-    },
-    debtRatio: BigInt(0),
-    decimals: 18,
-    fundAssets: BigInt(0),
-    fundAssetsUSD: BigInt(0),
-    id: dummyId,
-    lastReportTimestamp: BigInt(0),
-    maxBps: BigInt(10000),
-    name: 'Dummy Vault',
-    rates: [
-      {
-        perBlock: BigInt(0),
-        apy: {
-          yearly: BigInt(0),
-          monthly: BigInt(0),
-          weekly: BigInt(0),
-          daily: BigInt(0),
-          decimals: 18,
-          id: dummyId,
-          __typename: 'RewardAPY',
-        },
-        side: InterestRateSide.Lender,
-        type: InterestRateType.Variable,
-        id: dummyId,
-        __typename: 'InterestRate',
-      },
-    ],
-    symbol: vaultSymbol,
-    totalAssets: BigInt(0),
-    totalDebt: BigInt(0),
-    totalSupply: BigInt(0),
-    totalUtilisationRate: BigInt(0),
-    version: '1.0.0',
-    __typename: 'Vault',
-  } satisfies Vault)
+async function getVaultsByChain(chainId: ChainId) {
+  const multicallAddress = getMulticallAddress(chainId)
+  const vaults = await fetchVaultsViaMulticall(chainId, multicallAddress)
+  return vaults
 }
