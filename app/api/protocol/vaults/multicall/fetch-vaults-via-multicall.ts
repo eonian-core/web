@@ -69,10 +69,19 @@ export async function fetchVaultsViaMulticall(chainId: ChainId, multicallAddress
 
     // Make another multicall request to fetch data of the underlying assets
     const tokenAddresses = intermediateVaultModels.map(model => model.asset)
+
+    // eslint-disable-next-line no-console
+    console.log('fetchVaultsViaMulticall tokenAddresses', tokenAddresses.length)
     const tokenAssets = await fetchAssetsViaMulticall(chainId, multicallAddress, tokenAddresses)
 
+    // eslint-disable-next-line no-console
+    console.log('fetchVaultsViaMulticall tokenAssets', tokenAssets.length)
+
     // Convert collected data into complete vault models
-    return intermediateVaultModels.map(model => createVault(chainId, model, tokenAssets))
+    const result = intermediateVaultModels.map(model => createVault(chainId, model, tokenAssets))
+    // eslint-disable-next-line no-console
+    console.log('fetchVaultsViaMulticall result', result.length)
+    return result
   }
   catch (error) {
     console.error('fetchVaultsViaMulticall', error)
