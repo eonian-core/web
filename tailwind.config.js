@@ -1,11 +1,11 @@
 /* eslint-disable import/no-anonymous-default-export */
-const { nextui } = require('@nextui-org/react')
+const { heroui } = require('@heroui/react')
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     // Breakpoints taken from screen.scss
@@ -19,7 +19,7 @@ export default {
     },
   },
   darkMode: 'class',
-  plugins: [nextui({
+  plugins: [heroui({
     themes: {
       dark: {
         // This plugin doesn't allow to specify custom properties for theme overrides, so the only way is to inline the values.

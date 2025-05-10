@@ -1,4 +1,4 @@
-import { Tooltip } from '@nextui-org/react'
+import { Tooltip } from '@heroui/react'
 import type { PropsWithChildren } from 'react'
 import clsx from 'clsx'
 import styles from './percentage-price-change.module.scss'

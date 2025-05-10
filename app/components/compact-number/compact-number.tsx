@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react'
 import React, { useMemo } from 'react'
-import { Tooltip } from '@nextui-org/react'
+import { Tooltip } from '@heroui/react'
 import { useAppSelector } from '../../store/hooks'
 import { toStringNumberFromDecimals } from '../../shared'
 import type { FractionPartView } from '@/finances/humanize'

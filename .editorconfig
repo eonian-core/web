@@ -13,7 +13,7 @@ insert_final_newline = true
 [*.{js,py}]
 charset = utf-8
 
-# 4 space indentation
 [*.py, *.js, *.ts, *.tsx, *.css, *.scss, *.json, *.yaml, *.yml, *.scss, *.css]
 indent_style = space
 indent_size = 2
+quote_style = single

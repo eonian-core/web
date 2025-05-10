@@ -20,6 +20,12 @@ const chains: Partial<Record<ChainId, InitOptions['chains'][0]>> = {
     label: 'Sepolia - Testnet',
     rpcUrl: getRPCEndpoint(ChainId.SEPOLIA),
   },
+  [ChainId.ZEN_CHAIN_TESTNET]: {
+    id: ChainId.toHex(ChainId.ZEN_CHAIN_TESTNET),
+    token: 'ZTC',
+    label: 'ZenChain - Testnet',
+    rpcUrl: getRPCEndpoint(ChainId.ZEN_CHAIN_TESTNET),
+  },
   [ChainId.BSC_MAINNET]: {
     id: ChainId.toHex(ChainId.BSC_MAINNET),
     token: 'BNB',

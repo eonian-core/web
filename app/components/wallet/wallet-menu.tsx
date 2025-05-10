@@ -1,7 +1,7 @@
 'use client'
 
-import type { MenuItemProps, PopoverProps } from '@nextui-org/react'
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import type { MenuItemProps, PopoverProps } from '@heroui/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
 import { useAuth0 } from '@auth0/auth0-react'
 import { usePathname } from 'next/navigation'
 import React from 'react'

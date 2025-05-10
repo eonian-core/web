@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { Card, CardBody } from '@nextui-org/react'
+import { Card, CardBody } from '@heroui/react'
 import { useAppSelector } from '../../../store/hooks'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import type { Chain } from '../../../providers/wallet/wrappers/types'

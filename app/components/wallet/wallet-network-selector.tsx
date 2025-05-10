@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
 import React from 'react'
 
 import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-provider'

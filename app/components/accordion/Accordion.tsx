@@ -1,6 +1,6 @@
 import React from 'react'
-import type { AccordionProps, Selection } from '@nextui-org/react'
-import { AccordionItem, Accordion as NextAccordion } from '@nextui-org/react'
+import type { AccordionProps, Selection } from '@heroui/react'
+import { AccordionItem, Accordion as NextAccordion } from '@heroui/react'
 import { toId } from '../heading/to-id'
 import { useLocationHash } from './use-location-hash'
 

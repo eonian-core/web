@@ -3,7 +3,7 @@
 import type { PropsWithChildren } from 'react'
 import { toast } from 'react-toastify'
 import React, { useCallback, useState } from 'react'
-import { Spinner } from '@nextui-org/react'
+import { Spinner } from '@heroui/react'
 
 import { useWalletWrapperContext } from '../../../../providers/wallet/wallet-wrapper-provider'
 import type { Chain } from '../../../../providers/wallet/wrappers/types'

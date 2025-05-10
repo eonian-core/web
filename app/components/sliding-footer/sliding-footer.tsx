@@ -27,7 +27,7 @@ const SlidingFooter: React.FC<SlidingFooterProps> = ({ children, footer }) => {
 
   return (
     <>
-      <div className={styles.content} style={{ marginBottom: `${margin}px` }}>
+      <div className={styles.content} style={{ marginBottom: `${margin}px` }} id="sliding-content">
         {children}
 
         <LandingOnlyRadial />

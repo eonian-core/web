@@ -1,7 +1,7 @@
 'use client'
 
 import type { FC, PropsWithChildren } from 'react'
-import { Progress } from '@nextui-org/react'
+import { Progress } from '@heroui/react'
 
 import clsx from 'clsx'
 import { createContext, useContext } from 'react'

@@ -1,4 +1,4 @@
-import { Chip } from '@nextui-org/react'
+import { Chip } from '@heroui/react'
 import type { PropsWithChildren } from 'react'
 import clsx from 'clsx'
 import styles from './tag.module.scss'

@@ -1,4 +1,4 @@
-import { Spacer, Tooltip } from '@nextui-org/react'
+import { Spacer, Tooltip } from '@heroui/react'
 import type { Vault } from '../../api'
 import CompactNumber from '../compact-number/compact-number'
 import { useAppSelector } from '../../store/hooks'

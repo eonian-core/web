@@ -1,4 +1,4 @@
-import { Button } from '@nextui-org/react'
+import { Button } from '@heroui/react'
 import clsx from 'clsx'
 import styles from './actions.module.scss'
 import IconExternal from '@/components/icons/icon-external'

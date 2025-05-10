@@ -1,4 +1,4 @@
-import { Tooltip } from '@nextui-org/react'
+import { Tooltip } from '@heroui/react'
 import type { FC } from 'react'
 import styles from './display-symbol.module.scss'
 import type { TokenSymbol } from '@/types'

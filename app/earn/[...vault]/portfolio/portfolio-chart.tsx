@@ -1,7 +1,7 @@
 'use client'
 
 import { useLayoutEffect, useRef, useState } from 'react'
-import { Spacer, Tooltip } from '@nextui-org/react'
+import { Spacer, Tooltip } from '@heroui/react'
 import { useVaultDeposit } from '../hooks/use-vault-deposit-change'
 import { useVaultContext } from '../hooks/use-vault-context'
 import styles from './portfolio-chart.module.scss'

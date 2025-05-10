@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { CardHeader } from '@nextui-org/react'
+import { CardHeader } from '@heroui/react'
 import type { PropsWithChildren } from 'react'
 import styles from './form-header.module.scss'
 

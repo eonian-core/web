@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { Divider } from '@nextui-org/react'
+import { Divider } from '@heroui/react'
 import styles from './arrow-divider.module.scss'
 import IconArrowRightShort from '@/components/icons/icon-arrow-right-short'
 
