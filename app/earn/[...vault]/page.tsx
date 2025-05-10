@@ -29,10 +29,16 @@ interface Params {
  * FIXME: For the alpha release, we can only use the default chain (BSC).
  */
 export async function generateStaticParams(): Promise<RouteSegment[]> {
-  const chainId = ChainId.parse(defaultChain.id)
-  const client = getProtocolRscClient(chainId)
-  const { data } = await getVaultsSymbols(client)
-  return data.vaults.map(({ symbol }) => ({ vault: [ChainId.getName(chainId).toLowerCase(), symbol] }))
+  // const chainId = ChainId.parse(defaultChain.id)
+  // const client = getProtocolRscClient(chainId)
+  // const { data } = await getVaultsSymbols(client)
+  // return data.vaults.map(({ symbol }) => ({ vault: [ChainId.getName(chainId).toLowerCase(), symbol] }))
+  return Promise.resolve([
+    { vault: ['bsc_mainnet', 'eonBTCB'] },
+    { vault: ['bsc_mainnet', 'eonWETH'] },
+    { vault: ['bsc_mainnet', 'eonUSDC'] },
+    { vault: ['bsc_mainnet', 'eonUSDT'] },
+  ])
 }
 
 export default async function Page({ params }: Params) {
