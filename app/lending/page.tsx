@@ -1,12 +1,16 @@
 import { redirect } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import { Spinner } from '@heroui/react'
 import { showLending } from '../features'
-import SkeletonPage from './skeleton-page'
 
 // Dynamically import Content with SSR disabled
 const DynamicInnerPage = dynamic(() => import('./LendingContent'), {
   ssr: false,
-  loading: () => <SkeletonPage />,
+  loading: () => (
+    <div className="grid place-items-center pt-36 bg-transparent">
+      <Spinner color="primary" size="lg" />
+    </div>
+  ),
 })
 
 export default function Page() {

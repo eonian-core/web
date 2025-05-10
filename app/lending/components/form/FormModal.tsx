@@ -1,5 +1,5 @@
 import { Divider, Modal, ModalBody, ModalContent, ModalFooter, Tab, Tabs } from '@heroui/react'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useScreenWidth } from '../../hooks/useScreenWidth'
 import type { FormData } from '../../LendingState'
 import { useLendingState } from '../../LendingState'
@@ -18,6 +18,15 @@ export function FormModal() {
   const { screenLTE } = useScreenWidth()
 
   const { isOpen, onClose } = useModalState()
+  const [isRendered, setRendered] = useState(false)
+
+  useEffect(() => {
+    if (isOpen)
+      setRendered(true)
+  }, [isOpen])
+
+  if (!isRendered)
+    return null
 
   return (
     <Modal
@@ -26,11 +35,19 @@ export function FormModal() {
       onClose={onClose}
       placement={screenLTE('laptop') ? 'bottom' : 'center'}
       classNames={{
-        wrapper: `z-5 ${MODAL_WRAPPER_SELECTOR}`,
-        backdrop: `z-5 ${MODAL_BACKDROP_SELECTOR}`,
+        wrapper: `${MODAL_WRAPPER_SELECTOR} z-5`,
+        backdrop: `${MODAL_BACKDROP_SELECTOR} z-5`,
       }}
       hideCloseButton={true}
       isDismissable={false}
+      shouldBlockScroll={false}
+      motionProps={{
+        onAnimationComplete: () => {
+          if (!isOpen)
+            setRendered(false)
+        },
+      }}
+      portalContainer={document.getElementById('sliding-content')!}
     >
       {formData && <InnerContent formData={formData} onClose={onClose} />}
     </Modal>
@@ -136,6 +153,29 @@ function useModalState(): { isOpen: boolean; onClose: () => void } {
       window.removeEventListener('mouseup', handleMouseUp)
     }
   }, [onClose])
+
+  // Add effect to handle scroll prevention
+  useEffect(() => {
+    if (!formData)
+      return
+
+    const preventScroll = (e: Event) => {
+      e.preventDefault()
+    }
+
+    // Prevent scroll on window
+    window.addEventListener('scroll', preventScroll, { passive: false })
+    // Prevent wheel events
+    window.addEventListener('wheel', preventScroll, { passive: false })
+    // Prevent touch events
+    window.addEventListener('touchmove', preventScroll, { passive: false })
+
+    return () => {
+      window.removeEventListener('scroll', preventScroll)
+      window.removeEventListener('wheel', preventScroll)
+      window.removeEventListener('touchmove', preventScroll)
+    }
+  }, [formData])
 
   return { isOpen: !!formData, onClose }
 }
