@@ -35,6 +35,8 @@ interface IntermediateVaultModel {
  * @returns List of vaults deployed on the specified chain.
  */
 export async function fetchVaultsViaMulticall(chainId: ChainId, multicallAddress: string): Promise<Vault[]> {
+  // eslint-disable-next-line no-console
+  console.log('fetchVaultsViaMulticall', chainId, multicallAddress, getRPCEndpoint(chainId))
   const vaults = vaultToAddressLookupMap[chainId]
   if (!vaults)
     return []
