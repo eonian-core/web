@@ -45,39 +45,26 @@ export async function fetchVaultsViaMulticall(chainId: ChainId, multicallAddress
   if (requests.length === 0)
     return []
 
-  // eslint-disable-next-line no-console
-  console.log('fetchVaultsViaMulticall', requests.length)
-  try {
-    const provider = new JsonRpcProvider(getRPCEndpoint(chainId))
-    const multicall = new Multicall(multicallAddress, provider, requests)
-    const responses = await multicall.makeRequest()
-    // eslint-disable-next-line no-console
-    console.log('fetchVaultsViaMulticall responses', responses.length)
+  const provider = new JsonRpcProvider(getRPCEndpoint(chainId))
+  const multicall = new Multicall(multicallAddress, provider, requests)
+  const responses = await multicall.makeRequest()
 
-    // Map sequence of the raw responses to intermediate vaults state
-    const intermediateVaultModels = _.chain(responses)
-      .chunk(createVaultRequests('-').length)
-      .map((responses, index) => mapResponseToIntermediateVaultModel(vaults[index], responses))
-      .compact()
-      .value()
+  // Map sequence of the raw responses to intermediate vaults state
+  const intermediateVaultModels = _.chain(responses)
+    .chunk(createVaultRequests('-').length)
+    .map((responses, index) => mapResponseToIntermediateVaultModel(vaults[index], responses))
+    .compact()
+    .value()
 
-    // eslint-disable-next-line no-console
-    console.log('fetchVaultsViaMulticall intermediateVaultModels', intermediateVaultModels.length)
-
-    if (intermediateVaultModels.length === 0)
-      return []
-
-    // Make another multicall request to fetch data of the underlying assets
-    const tokenAddresses = intermediateVaultModels.map(model => model.asset)
-    const tokenAssets = await fetchAssetsViaMulticall(chainId, multicallAddress, tokenAddresses)
-
-    // Convert collected data into complete vault models
-    return intermediateVaultModels.map(model => createVault(chainId, model, tokenAssets))
-  }
-  catch (error) {
-    console.error('fetchVaultsViaMulticall', error)
+  if (intermediateVaultModels.length === 0)
     return []
-  }
+
+  // Make another multicall request to fetch data of the underlying assets
+  const tokenAddresses = intermediateVaultModels.map(model => model.asset)
+  const tokenAssets = await fetchAssetsViaMulticall(chainId, multicallAddress, tokenAddresses)
+
+  // Convert collected data into complete vault models
+  return intermediateVaultModels.map(model => createVault(chainId, model, tokenAssets))
 }
 
 /**
