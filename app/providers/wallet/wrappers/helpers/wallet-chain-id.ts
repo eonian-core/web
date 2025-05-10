@@ -1,5 +1,4 @@
 export enum ChainId {
-  SEPOLIA = 11155111,
   BSC_MAINNET = 56,
   UNKNOWN = -1,
 }

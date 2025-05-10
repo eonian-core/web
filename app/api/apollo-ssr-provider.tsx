@@ -21,7 +21,6 @@ function makeSsrClientFactory(chainId: ChainId): () => ApolloClient<any> {
 
 const ssrClientMakers: Record<ChainId, () => ApolloClient<any>> = {
   [ChainId.BSC_MAINNET]: makeSsrClientFactory(ChainId.BSC_MAINNET),
-  [ChainId.SEPOLIA]: makeSsrClientFactory(ChainId.SEPOLIA),
   [ChainId.UNKNOWN]: (): ApolloClient<any> => {
     throw new Error('Unknown chain id')
   },

@@ -13,5 +13,5 @@ export function calculateAPY(interestRatePerBlock: bigint | number, decimals: nu
 
 export function calculateAPYAsBN(interestRatePerBlock: bigint, decimals: number, blocksPerDay: number): bigint {
   const mantissa = 10 ** decimals
-  return BigInt(calculateAPY(interestRatePerBlock, decimals, blocksPerDay) * mantissa)
+  return BigInt(Math.floor(calculateAPY(interestRatePerBlock, decimals, blocksPerDay) * mantissa))
 }

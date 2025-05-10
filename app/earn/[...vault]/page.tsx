@@ -1,9 +1,6 @@
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
-import type { Vault } from '../../api'
-import { getProtocolRscClient, getVaultBySymbol, getVaultsSymbols } from '../../api'
-import { ChainId } from '../../providers/wallet/wrappers/helpers'
-import { defaultChain } from '../../web3-onboard'
+import { ChainId, getMulticallAddress } from '../../providers/wallet/wrappers/helpers'
 import { showEarn } from '../../features'
 
 import { TokenGradient } from './header/token-gradient'
@@ -11,6 +8,7 @@ import { PageContent } from './page-content'
 import SkeletonPage from './skeleton-page'
 import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
 import { convertToUsd } from '@/finances/usd'
+import { fetchVaultsViaMulticall } from '@/api/protocol/vaults/multicall/fetch-vaults-via-multicall'
 
 export const revalidate = 10
 
@@ -27,10 +25,14 @@ interface Params {
  * FIXME: For the alpha release, we can only use the default chain (BSC).
  */
 export async function generateStaticParams(): Promise<RouteSegment[]> {
-  const chainId = ChainId.parse(defaultChain.id)
-  const client = getProtocolRscClient(chainId)
-  const { data } = await getVaultsSymbols(client)
-  return data.vaults.map(({ symbol }) => ({ vault: [ChainId.getName(chainId).toLowerCase(), symbol] }))
+  // const chainId = ChainId.parse(defaultChain.id)
+  // const client = getProtocolRscClient(chainId)
+  // const { data } = await getVaultsSymbols(client)
+  // return data.vaults.map(({ symbol }) => ({ vault: [ChainId.getName(chainId).toLowerCase(), symbol] }))
+
+  const chainId = ChainId.BSC_MAINNET
+  const vaults = await getVaultsByChain(chainId)
+  return vaults.map(vault => ({ vault: [ChainId.getName(chainId).toLowerCase(), vault.symbol] }))
 }
 
 export default async function Page({ params }: Params) {
@@ -58,11 +60,17 @@ export default async function Page({ params }: Params) {
 }
 
 async function getVaultByChainAndSymbol(chainId: ChainId, vaultSymbol: string) {
-  const client = getProtocolRscClient(chainId)
-  const { data } = await getVaultBySymbol(client, vaultSymbol)
-  const vault = data.vaults[0]
-  if (!vault)
-    throw new Error(`Vault with symbol "${vaultSymbol}" not found`)
+  // const client = getProtocolRscClient(chainId)
+  // const { data } = await getVaultBySymbol(client, vaultSymbol)
+  // const vault = data.vaults[0]
+  // if (!vault)
+  //   throw new Error(`Vault with symbol "${vaultSymbol}" not found`)
+  const vaults = await getVaultsByChain(chainId)
+  return vaults.find(vault => vault.symbol === vaultSymbol)!
+}
 
-  return vault as Vault
+async function getVaultsByChain(chainId: ChainId) {
+  const multicallAddress = getMulticallAddress(chainId)
+  const vaults = await fetchVaultsViaMulticall(chainId, multicallAddress)
+  return vaults
 }

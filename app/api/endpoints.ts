@@ -16,14 +16,11 @@ if (!isExist)
 
 export interface GraphQLEndpointsMap {
   [ChainId.BSC_MAINNET]: string
-  [ChainId.SEPOLIA]: string
   [ChainId.UNKNOWN]: undefined
 }
 
 export const GraphQLEndpoints: GraphQLEndpointsMap = {
   [ChainId.BSC_MAINNET]: requireEnv('NEXT_PUBLIC_BSC_GRAPH_URL', process.env.NEXT_PUBLIC_BSC_GRAPH_URL),
-  // Optional variable
-  [ChainId.SEPOLIA]: requireEnv('NEXT_PUBLIC_SEPOLIA_GRAPH_URL', process.env.NEXT_PUBLIC_SEPOLIA_GRAPH_URL || 'http://localhost:4000/'),
   [ChainId.UNKNOWN]: undefined,
 }
 
