@@ -48,12 +48,8 @@ export async function fetchAssetsViaMulticall(
 
   // Fetch prices from CoinGecko. Could be temporary approach.
   // We can use multicall to get prices from on-chain (using Uniswap TWAP for example), but it's more difficult.
-
-  // eslint-disable-next-line no-console
-  console.log('fetchAssetsViaMulticall intermediateAssetModels', intermediateAssetModels.length)
   const prices = await fetchPrices(intermediateAssetModels)
-  // eslint-disable-next-line no-console
-  console.log('fetchAssetsViaMulticall prices', prices)
+
   return intermediateAssetModels.map(model => createAssetToken(model, prices))
 }
 
@@ -81,8 +77,6 @@ async function fetchPrices(intermediateAssetModels: IntermediateAssetModel[]): P
     if (!TokenOrder.includes(symbol))
       throw new Error(`Cannot fetch price for unknown symbol: ${symbol}`)
   })
-  // eslint-disable-next-line no-console
-  console.log('fetchPrices symbols', symbols)
   const price = await getCurrentPriceOfTokens(symbols)
   return _.mapValues(price, (value, tokenSymbol): Price => {
     const decimals = 8
