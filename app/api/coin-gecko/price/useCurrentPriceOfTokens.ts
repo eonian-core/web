@@ -5,7 +5,10 @@ import { usePromise } from '@/api/use-promise'
 import { getVercelHostPrefix } from '@/api/endpoints'
 
 export async function getCurrentPriceOfTokens(symbols: TokenSymbol[]): Promise<TokenToPrice> {
-  const response: Response = await fetch(`${getVercelHostPrefix()}/api/coin-gecko/price?symbols=${symbols.join()}`, {
+  const url = `${getVercelHostPrefix()}/api/coin-gecko/price?symbols=${symbols.join()}`
+  // eslint-disable-next-line no-console
+  console.log('getCurrentPriceOfTokens', url)
+  const response: Response = await fetch(url, {
     next: {
       revalidate: PRICE_CACHE_TIMEOUT_SECONDS,
     },
