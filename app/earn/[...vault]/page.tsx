@@ -5,6 +5,8 @@ import { getProtocolRscClient, getVaultBySymbol, getVaultsSymbols } from '../../
 import { ChainId } from '../../providers/wallet/wrappers/helpers'
 import { defaultChain } from '../../web3-onboard'
 import { showEarn } from '../../features'
+import { InterestRateSide, InterestRateType } from '../../api/protocol/gql/graphql'
+import type { Scalars } from '../../api/protocol/gql/graphql'
 
 import { TokenGradient } from './header/token-gradient'
 import { PageContent } from './page-content'
@@ -58,11 +60,64 @@ export default async function Page({ params }: Params) {
 }
 
 async function getVaultByChainAndSymbol(chainId: ChainId, vaultSymbol: string) {
-  const client = getProtocolRscClient(chainId)
-  const { data } = await getVaultBySymbol(client, vaultSymbol)
-  const vault = data.vaults[0]
-  if (!vault)
-    throw new Error(`Vault with symbol "${vaultSymbol}" not found`)
+  // const client = getProtocolRscClient(chainId)
+  // const { data } = await getVaultBySymbol(client, vaultSymbol)
+  // const vault = data.vaults[0]
+  // if (!vault)
+  //   throw new Error(`Vault with symbol "${vaultSymbol}" not found`)
 
-  return vault as Vault
+  // eslint-disable-next-line no-console
+  console.log('getVaultByChainAndSymbol', chainId, vaultSymbol)
+  const dummyId = '0x0000000000000000000000000000000000000000' as Scalars['Bytes']
+
+  return Promise.resolve({
+    address: '0x0000000000000000000000000000000000000000',
+    asset: {
+      address: '0x0000000000000000000000000000000000000000',
+      name: 'Dummy Asset',
+      symbol: 'DUMMY',
+      decimals: 18,
+      price: {
+        value: BigInt(0),
+        decimals: 18,
+        id: dummyId,
+        __typename: 'Price',
+      },
+      id: dummyId,
+      __typename: 'Token',
+    },
+    debtRatio: BigInt(0),
+    decimals: 18,
+    fundAssets: BigInt(0),
+    fundAssetsUSD: BigInt(0),
+    id: dummyId,
+    lastReportTimestamp: BigInt(0),
+    maxBps: BigInt(10000),
+    name: 'Dummy Vault',
+    rates: [
+      {
+        perBlock: BigInt(0),
+        apy: {
+          yearly: BigInt(0),
+          monthly: BigInt(0),
+          weekly: BigInt(0),
+          daily: BigInt(0),
+          decimals: 18,
+          id: dummyId,
+          __typename: 'RewardAPY',
+        },
+        side: InterestRateSide.Lender,
+        type: InterestRateType.Variable,
+        id: dummyId,
+        __typename: 'InterestRate',
+      },
+    ],
+    symbol: vaultSymbol,
+    totalAssets: BigInt(0),
+    totalDebt: BigInt(0),
+    totalSupply: BigInt(0),
+    totalUtilisationRate: BigInt(0),
+    version: '1.0.0',
+    __typename: 'Vault',
+  } satisfies Vault)
 }
