@@ -20,7 +20,6 @@ function registerProtocolClient(chainId: ChainId) {
 
 const rscProtocolClientGetters: Record<Exclude<ChainId, ChainId.UNKNOWN>, ReturnType<typeof registerApolloClient>['getClient']> = {
   [ChainId.BSC_MAINNET]: registerProtocolClient(ChainId.BSC_MAINNET),
-  [ChainId.SEPOLIA]: registerProtocolClient(ChainId.SEPOLIA),
 }
 
 export function getProtocolRscClient(chainId: ChainId) {

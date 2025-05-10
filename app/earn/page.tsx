@@ -25,7 +25,7 @@ async function InnerPage() {
   const vaults = await fetchVaultsViaMulticall(ChainId.BSC_MAINNET, multicallAddress)
   return (
     <div className={styles.page}>
-      <VaultsProvider vaultsByChain={{ [ChainId.BSC_MAINNET]: vaults, [ChainId.SEPOLIA]: [], [ChainId.UNKNOWN]: [] }}>
+      <VaultsProvider vaultsByChain={{ [ChainId.BSC_MAINNET]: vaults, [ChainId.UNKNOWN]: [] }}>
         <VaultGrid />
       </VaultsProvider>
     </div>
