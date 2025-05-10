@@ -2,34 +2,33 @@ import type { PropsWithChildren } from 'react'
 import { Suspense } from 'react'
 import TokensBody from './tokens-body'
 import styles from './offer.module.scss'
-import { useVaultsForCurrentChain } from '@/api/protocol/vaults/use-vaults'
 import { VaultsProvider } from '@/api/protocol/vaults/vaults-context'
 import { CardSkeleton } from '@/components/vault-card/card-skeleton'
+import { getVaultsByChain } from '@/api/protocol/vaults/multicall/fetch-vaults-via-multicall'
+import { ChainId } from '@/providers/wallet/wrappers/helpers'
 
 export default function Tokens({ children }: PropsWithChildren) {
   return (
-        <Suspense fallback={(
-            <div className={styles.tokens}>
-                <CardSkeleton />
-                <CardSkeleton />
-                <CardSkeleton />
-            </div>
-        )}>
-            <TokensProvider>
-                <TokensBody>
-                    {children}
-                </TokensBody>
-            </TokensProvider>
-        </Suspense>
+    <Suspense
+      fallback={
+        <div className={styles.tokens}>
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </div>
+      }
+    >
+      <TokensProvider>
+        <TokensBody>{children}</TokensBody>
+      </TokensProvider>
+    </Suspense>
   )
 }
 
-function TokensProvider({ children }: PropsWithChildren) {
-  const vaults = useVaultsForCurrentChain()
+const promise = getVaultsByChain(ChainId.BSC_MAINNET)
 
-  return (
-        <VaultsProvider currentChainVaults={vaults}>
-            {children}
-        </VaultsProvider>
-  )
+async function TokensProvider({ children }: PropsWithChildren) {
+  const vaults = await promise
+
+  return <VaultsProvider currentChainVaults={vaults}>{children}</VaultsProvider>
 }

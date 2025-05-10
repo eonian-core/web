@@ -4,7 +4,7 @@ import { InterestRateSide, InterestRateType, type Token, type Vault } from '../.
 import { fetchAssetsViaMulticall } from './fetch-assets-via-multicall'
 import { Multicall } from '@/shared'
 import type { MulticallRequest, MulticallResponse } from '@/shared'
-import { ChainId, getRPCEndpoint } from '@/providers/wallet/wrappers/helpers'
+import { ChainId, getMulticallAddress, getRPCEndpoint } from '@/providers/wallet/wrappers/helpers'
 import VaultABI from '@/shared/web3/abi/Vault.json'
 import { getBlocksPerDay } from '@/shared/web3/blocks-per-day'
 import { calculateAPYAsBN } from '@/finances/apy'
@@ -28,13 +28,19 @@ interface IntermediateVaultModel {
   address: string
 }
 
+export async function getVaultsByChain(chainId: ChainId) {
+  const multicallAddress = getMulticallAddress(chainId)
+  const vaults = await fetchVaultsViaMulticall(chainId, multicallAddress)
+  return vaults
+}
+
 /**
  * Performs several multicall requests to fetch vaults data from the chain.
  * @param chainId Current chain id.
  * @param multicallAddress Multicall contract for the specified chain.
  * @returns List of vaults deployed on the specified chain.
  */
-export async function fetchVaultsViaMulticall(chainId: ChainId, multicallAddress: string): Promise<Vault[]> {
+async function fetchVaultsViaMulticall(chainId: ChainId, multicallAddress: string): Promise<Vault[]> {
   const vaults = vaultToAddressLookupMap[chainId]
   if (!vaults)
     return []

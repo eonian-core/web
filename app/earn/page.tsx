@@ -6,8 +6,8 @@ import styles from './page.module.scss'
 import { VaultGrid } from './components/vault-grid'
 import SkeletonPage from './skeleton-page'
 import { VaultsProvider } from '@/api/protocol/vaults/vaults-context'
-import { fetchVaultsViaMulticall } from '@/api/protocol/vaults/multicall/fetch-vaults-via-multicall'
-import { ChainId, getMulticallAddress } from '@/providers/wallet/wrappers/helpers'
+import { getVaultsByChain } from '@/api/protocol/vaults/multicall/fetch-vaults-via-multicall'
+import { ChainId } from '@/providers/wallet/wrappers/helpers'
 
 export default function Page() {
   if (!showEarn)
@@ -21,8 +21,7 @@ export default function Page() {
 }
 
 async function InnerPage() {
-  const multicallAddress = getMulticallAddress(ChainId.BSC_MAINNET)
-  const vaults = await fetchVaultsViaMulticall(ChainId.BSC_MAINNET, multicallAddress)
+  const vaults = await getVaultsByChain(ChainId.BSC_MAINNET)
   return (
     <div className={styles.page}>
       <VaultsProvider vaultsByChain={{ [ChainId.BSC_MAINNET]: vaults, [ChainId.UNKNOWN]: [] }}>
