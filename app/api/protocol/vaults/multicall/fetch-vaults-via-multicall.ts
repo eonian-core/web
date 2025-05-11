@@ -26,6 +26,13 @@ interface IntermediateVaultModel {
   decimals: number
   fundAssets: bigint
   address: string
+  debtRatio: bigint
+  lastReportTimestamp: bigint
+  maxBps: bigint
+  totalAssets: bigint
+  totalDebt: bigint
+  totalSupply: bigint
+  version: string
 }
 
 export async function getVaultsByChain(chainId: ChainId) {
@@ -81,16 +88,14 @@ function createVault(chainId: ChainId, intermediateVaultModel: IntermediateVault
     name: intermediateVaultModel.name,
     symbol: intermediateVaultModel.symbol,
     asset: tokenAssets.find(token => token.address === intermediateVaultModel.asset)!,
-    debtRatio: 0n,
+    debtRatio: intermediateVaultModel.debtRatio,
     fundAssets: intermediateVaultModel.fundAssets,
-    fundAssetsUSD: 0n,
-    lastReportTimestamp: 0n,
-    maxBps: 0n,
-    totalAssets: 0n,
-    totalDebt: 0n,
-    totalSupply: 0n,
-    totalUtilisationRate: 0n,
-    version: 'unknown',
+    lastReportTimestamp: intermediateVaultModel.lastReportTimestamp,
+    maxBps: intermediateVaultModel.maxBps,
+    totalAssets: intermediateVaultModel.totalAssets,
+    totalDebt: intermediateVaultModel.totalDebt,
+    totalSupply: intermediateVaultModel.totalSupply,
+    version: intermediateVaultModel.version,
     rates: [
       {
         perBlock: intermediateVaultModel.interestRatePerBlock,
@@ -128,6 +133,13 @@ function createVaultRequests(vaultAddress: string): MulticallRequest[] {
     createVaultRequest(vaultAddress, 'interestRatePerBlock', []),
     createVaultRequest(vaultAddress, 'decimals', []),
     createVaultRequest(vaultAddress, 'fundAssets', []),
+    createVaultRequest(vaultAddress, 'debtRatio', []),
+    createVaultRequest(vaultAddress, 'lastReportTimestamp', []),
+    createVaultRequest(vaultAddress, 'MAX_BPS', []),
+    createVaultRequest(vaultAddress, 'totalAssets', []),
+    createVaultRequest(vaultAddress, 'totalDebt', []),
+    createVaultRequest(vaultAddress, 'totalSupply', []),
+    createVaultRequest(vaultAddress, 'version', []),
   ]
 }
 
@@ -162,5 +174,12 @@ function mapResponseToIntermediateVaultModel(
     interestRatePerBlock: data[3] as bigint,
     decimals: Number(data[4]),
     fundAssets: data[5] as bigint,
+    debtRatio: data[6] as bigint,
+    lastReportTimestamp: data[7] as bigint,
+    maxBps: data[8] as bigint,
+    totalAssets: data[9] as bigint,
+    totalDebt: data[10] as bigint,
+    totalSupply: data[11] as bigint,
+    version: String(data[12]),
   }
 }

@@ -39,7 +39,6 @@ export interface Vault {
   debtRatio: bigint
   decimals: number
   fundAssets: bigint
-  fundAssetsUSD: bigint
   lastReportTimestamp: bigint
   maxBps: bigint
   name: string
@@ -48,6 +47,5 @@ export interface Vault {
   totalAssets: bigint
   totalDebt: bigint
   totalSupply: bigint
-  totalUtilisationRate: bigint
   version: string
 }
