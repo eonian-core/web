@@ -1,19 +1,18 @@
 'use client'
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useMemo } from 'react'
-import type { Vault } from '../gql/graphql'
-import type { VaultsByChain } from './fetch-vaults'
 import { useFetchPositionInfo } from './use-fetch-position-info'
 import { getAssetSymbol } from './get-asset-symbol'
 import { useChainContext } from '@/shared/web3/chain-context'
-import type { TokenSymbol } from '@/types'
+import type { TokenSymbol, Vault } from '@/types'
+import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 
 export type VaultBySymbol = {
   [key in TokenSymbol]: Vault
 }
 
 export interface VaultsContextState {
-  vaultsByChain?: VaultsByChain
+  vaultsByChain?: Record<ChainId, Vault[]>
   /** Current chain vaults */
   vaults: VaultBySymbol
 }
@@ -29,7 +28,7 @@ export function useVaultsContext(): VaultsContextState {
 }
 
 export interface VaultsProviderProps {
-  vaultsByChain?: VaultsByChain
+  vaultsByChain?: Record<ChainId, Vault[]>
   /** Allow to specify only current chain vaults */
   currentChainVaults?: Array<Vault>
 }

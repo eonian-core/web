@@ -1,12 +1,11 @@
 import { JsonRpcProvider } from 'ethers'
 import _ from 'lodash'
-import type { Price, Token } from '../../gql/graphql'
 import { Multicall } from '@/shared'
 import type { MulticallRequest, MulticallResponse } from '@/shared'
 import { type ChainId, getRPCEndpoint } from '@/providers/wallet/wrappers/helpers'
 import ERC20ABI from '@/shared/web3/abi/ERC20.json'
 import { getCurrentPriceOfTokens } from '@/api/coin-gecko/price/useCurrentPriceOfTokens'
-import type { TokenSymbol } from '@/types'
+import type { Price, Token, TokenSymbol } from '@/types'
 import { TokenOrder } from '@/types'
 
 interface IntermediateAssetModel {
@@ -59,7 +58,6 @@ export async function fetchAssetsViaMulticall(
  */
 function createAssetToken(intermediateAssetModel: IntermediateAssetModel, prices: Partial<Record<TokenSymbol, Price>>): Token {
   return {
-    id: intermediateAssetModel.symbol,
     address: intermediateAssetModel.address,
     decimals: intermediateAssetModel.decimals,
     name: intermediateAssetModel.name,
@@ -78,10 +76,9 @@ async function fetchPrices(intermediateAssetModels: IntermediateAssetModel[]): P
       throw new Error(`Cannot fetch price for unknown symbol: ${symbol}`)
   })
   const price = await getCurrentPriceOfTokens(symbols)
-  return _.mapValues(price, (value, tokenSymbol): Price => {
+  return _.mapValues(price, (value): Price => {
     const decimals = 8
     return {
-      id: tokenSymbol,
       decimals,
       value: BigInt(Math.floor(value! * (10 ** decimals))),
     }

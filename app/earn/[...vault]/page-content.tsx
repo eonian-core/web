@@ -4,8 +4,7 @@ import { VaultProvider } from './hooks/use-vault-context'
 import { Header } from './header/header'
 import { Content } from './content/content'
 import styles from './page.module.scss'
-import type { Vault } from '@/api'
-import type { TokenSymbol } from '@/types'
+import type { TokenSymbol, Vault } from '@/types'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 
 interface Props {

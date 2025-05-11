@@ -1,6 +1,5 @@
 import { JsonRpcProvider } from 'ethers'
 import _ from 'lodash'
-import { InterestRateSide, InterestRateType, type Token, type Vault } from '../../gql/graphql'
 import { fetchAssetsViaMulticall } from './fetch-assets-via-multicall'
 import { Multicall } from '@/shared'
 import type { MulticallRequest, MulticallResponse } from '@/shared'
@@ -8,6 +7,7 @@ import { ChainId, getMulticallAddress, getRPCEndpoint } from '@/providers/wallet
 import VaultABI from '@/shared/web3/abi/Vault.json'
 import { getBlocksPerDay } from '@/shared/web3/blocks-per-day'
 import { calculateAPYAsBN } from '@/finances/apy'
+import type { Token, Vault } from '@/types'
 
 const vaultToAddressLookupMap: Partial<Record<ChainId, string[]>> = {
   [ChainId.BSC_MAINNET]: [
@@ -81,7 +81,6 @@ function createVault(chainId: ChainId, intermediateVaultModel: IntermediateVault
     name: intermediateVaultModel.name,
     symbol: intermediateVaultModel.symbol,
     asset: tokenAssets.find(token => token.address === intermediateVaultModel.asset)!,
-    id: intermediateVaultModel.symbol,
     debtRatio: 0n,
     fundAssets: intermediateVaultModel.fundAssets,
     fundAssetsUSD: 0n,
@@ -94,12 +93,8 @@ function createVault(chainId: ChainId, intermediateVaultModel: IntermediateVault
     version: 'unknown',
     rates: [
       {
-        id: '',
         perBlock: intermediateVaultModel.interestRatePerBlock,
-        side: InterestRateSide.Lender,
-        type: InterestRateType.Variable,
         apy: {
-          id: '',
           daily: computeAPY(chainId, intermediateVaultModel, 365),
           weekly: computeAPY(chainId, intermediateVaultModel, 52),
           monthly: computeAPY(chainId, intermediateVaultModel, 12),

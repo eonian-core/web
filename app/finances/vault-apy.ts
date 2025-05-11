@@ -1,7 +1,6 @@
 import { calculateVaultAPY } from './apy'
-import type { Vault } from '@/api'
+import type { TokenSymbol, Vault } from '@/types'
 import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
-import type { TokenSymbol } from '@/types'
 
 /**
  * Based on year of returns from staging environment,

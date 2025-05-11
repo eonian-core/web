@@ -2,12 +2,12 @@ import type { PropsWithChildren } from 'react'
 import { createContext, useContext, useState } from 'react'
 import { useNumberInputValue } from './use-number-input-value'
 import { coinsPlaceholders, usePlaceholderAnimation } from './use-placeholder-animation'
-import type { Vault } from '@/api'
 import { FormAction } from '@/store/slices/vaultActionSlice'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 import { getAssetSymbol } from '@/api/protocol/vaults/get-asset-symbol'
+import type { Vault } from '@/types'
 
 export interface VaultContextType {
   inputValue?: bigint

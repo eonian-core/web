@@ -1,8 +1,8 @@
 import { ethers } from 'ethers'
 import CompactNumber from '@/components/compact-number/compact-number'
-import type { Vault } from '@/api'
 import { getAmountInUSD } from '@/finances/humanize'
 import { formatUSD } from '@/finances/humanize/format-currency'
+import type { Vault } from '@/types'
 
 interface PriceProps {
   vault: Vault

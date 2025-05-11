@@ -23,11 +23,8 @@
     "test:watch": "npm run jest -- --watchAll",
     "test:ci": "npm run jest --ci",
     "jest": "node --experimental-vm-modules --experimental-specifier-resolution=node ./node_modules/.bin/jest",
-    "mock": "concurrently -c \"auto\" \"npm:mock:protocol\" \"npm:mock:wallet-linking\"",
-    "mock:protocol": "tsx ./graphql/mocks/protocol-mock.ts",
     "mock:wallet-linking": "tsx ./graphql/mocks/wallet-linking-mock.ts",
-    "gen:gql-types": "npm run gen:gql:protocol && npm run gen:gql:wallet-linking",
-    "gen:gql:protocol": "graphql-codegen --config ./graphql/protocol/codegen.ts",
+    "gen:gql-types": "npm run gen:gql:wallet-linking",
     "gen:gql:wallet-linking": "graphql-codegen --config ./graphql/wallet-linking/codegen.ts",
     "release-logrocket": "node release-logrocket.cjs",
     "postinstall": "cp .hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit",
@@ -40,7 +37,6 @@
   },
   "dependencies": {
     "@apollo/client": "3.10.4",
-    "@apollo/experimental-nextjs-app-support": "0.10.1",
     "@auth0/auth0-react": "^2.1.1",
     "@mantine/core": "7.12.2",
     "@mantine/hooks": "7.12.2",
@@ -92,7 +88,6 @@
   "devDependencies": {
     "@apollo/server": "^4.9.3",
     "@eonian/eslint-config": "^0.0.7",
-    "@eonian/graphql-typescript-scalar-type-policies": "^1.0.6",
     "@graphql-codegen/cli": "3.3.0",
     "@graphql-codegen/client-preset": "3.0.0",
     "@graphql-codegen/schema-ast": "^4.0.0",
