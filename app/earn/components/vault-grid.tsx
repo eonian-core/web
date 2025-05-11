@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 
 import styles from './vault-grid.module.scss'
 import { NetworkSelector } from './network-selector'

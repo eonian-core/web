@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
-import { ChainId, getMulticallAddress } from '../../providers/wallet/wrappers/helpers'
+import { ChainId } from '../../providers/wallet/wrappers/helpers'
 import { showEarn } from '../../features'
 
 import { TokenGradient } from './header/token-gradient'

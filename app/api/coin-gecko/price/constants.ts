@@ -1,1 +1,0 @@
-export const PRICE_CACHE_TIMEOUT_SECONDS = 600

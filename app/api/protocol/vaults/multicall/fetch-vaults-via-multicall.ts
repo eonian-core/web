@@ -1,22 +1,15 @@
 import { JsonRpcProvider } from 'ethers'
 import _ from 'lodash'
 import { fetchAssetsViaMulticall } from './fetch-assets-via-multicall'
+import { getVaultAddresses } from './addresses'
 import { Multicall } from '@/shared'
 import type { MulticallRequest, MulticallResponse } from '@/shared'
-import { ChainId, getMulticallAddress, getRPCEndpoint } from '@/providers/wallet/wrappers/helpers'
+import type { ChainId } from '@/providers/wallet/wrappers/helpers'
+import { getMulticallAddress, getRPCEndpoint } from '@/providers/wallet/wrappers/helpers'
 import VaultABI from '@/shared/web3/abi/Vault.json'
 import { getBlocksPerDay } from '@/shared/web3/blocks-per-day'
 import { calculateAPYAsBN } from '@/finances/apy'
 import type { Token, Vault } from '@/types'
-
-const vaultToAddressLookupMap: Partial<Record<ChainId, string[]>> = {
-  [ChainId.BSC_MAINNET]: [
-    '0x03A49bc893bBBEec9181b02C2D6abD6eb8e10311', // ETH
-    '0x33C29951844aAa19524F51177cF725D6A0D720d4', // BTCB
-    '0xaBfCaA1c65d78C2f1D51fd796290029f976192B3', // USDT
-    '0x5340f5a1B7b847Ae71865D2D7B200dc8a06a9ffC', // USDC
-  ],
-}
 
 interface IntermediateVaultModel {
   name: string
@@ -48,7 +41,7 @@ export async function getVaultsByChain(chainId: ChainId) {
  * @returns List of vaults deployed on the specified chain.
  */
 async function fetchVaultsViaMulticall(chainId: ChainId, multicallAddress: string): Promise<Vault[]> {
-  const vaults = vaultToAddressLookupMap[chainId]
+  const vaults = getVaultAddresses(chainId)
   if (!vaults)
     return []
 
