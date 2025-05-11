@@ -1,5 +1,4 @@
-import { Spacer, Tooltip } from '@heroui/react'
-import type { Vault } from '../../api'
+import { Spacer, Tooltip } from '@nextui-org/react'
 import CompactNumber from '../compact-number/compact-number'
 import { useAppSelector } from '../../store/hooks'
 import { toStringNumberFromDecimals } from '../../shared'
@@ -8,6 +7,7 @@ import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-p
 import { WalletStatus } from '../../providers/wallet/wrappers/types'
 import { OneLineSkeleton } from '../loader/skeleton-loader'
 import { toUSDValue } from '@/finances/humanize'
+import type { Vault } from '@/types'
 
 export interface VaultUserBalanceProps {
   vault: Vault
@@ -20,13 +20,15 @@ export function VaultUserBalance({ vault }: VaultUserBalanceProps) {
   if (walletStatus === WalletStatus.CONNECTING || isLoading || error)
     return <OneLineSkeleton />
 
-  return <Value
-    symbol={vault.asset.symbol}
-    balance={vaultBalances[vault.address] ?? 0n}
-    decimals={vault.asset.decimals}
-    price={vault.asset.price.value}
-    priceDecimals={vault.asset.price.decimals}
-  />
+  return (
+    <Value
+      symbol={vault.asset.symbol}
+      balance={vaultBalances[vault.address] ?? 0n}
+      decimals={vault.asset.decimals}
+      price={vault.asset.price.value}
+      priceDecimals={vault.asset.price.decimals}
+    />
+  )
 }
 
 export interface ValueProps {
@@ -41,20 +43,9 @@ function Value({ balance, decimals, price, symbol, priceDecimals }: ValueProps) 
   const valueAccurate = toStringNumberFromDecimals(balance, decimals)
   const valueUSDAccurate = toStringNumberFromDecimals(toUSDValue(balance, decimals, price), priceDecimals)
   return (
-    <Tooltip content={<TooltipContent
-      value={valueAccurate}
-      valueUSD={valueUSDAccurate}
-      symbol={symbol}
-      />
-      }>
+    <Tooltip content={<TooltipContent value={valueAccurate} valueUSD={valueUSDAccurate} symbol={symbol} />}>
       <div>
-        <CompactNumber
-          value={balance}
-          decimals={decimals}
-          fractionDigits={2}
-          hideTooltip
-          childrenAtStart={false}
-        />
+        <CompactNumber value={balance} decimals={decimals} fractionDigits={2} hideTooltip childrenAtStart={false} />
       </div>
     </Tooltip>
   )

@@ -1,10 +1,10 @@
 import { useEffect, useMemo } from 'react'
-import type { Vault } from '../../../api'
 import { useWalletWrapperContext } from '../../../providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '../../../providers/wallet/wrappers/types'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { fetchVaultUserData, reset } from '../../../store/slices/vaultUserSlice'
 import { useRefetch } from './use-refetch'
+import type { Vault } from '@/types'
 
 interface VaultUserInfoParams {
   autoUpdateInterval?: number

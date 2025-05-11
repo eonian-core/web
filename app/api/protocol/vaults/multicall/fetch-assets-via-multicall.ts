@@ -1,13 +1,11 @@
 import { JsonRpcProvider } from 'ethers'
 import _ from 'lodash'
-import type { Price, Token } from '../../gql/graphql'
+import { fetchPricesViaMulticall } from './fetch-prices-via-multicall'
 import { Multicall } from '@/shared'
 import type { MulticallRequest, MulticallResponse } from '@/shared'
 import { type ChainId, getRPCEndpoint } from '@/providers/wallet/wrappers/helpers'
 import ERC20ABI from '@/shared/web3/abi/ERC20.json'
-import { getCurrentPriceOfTokens } from '@/api/coin-gecko/price/useCurrentPriceOfTokens'
-import type { TokenSymbol } from '@/types'
-import { TokenOrder } from '@/types'
+import type { Price, Token, TokenSymbol } from '@/types'
 
 interface IntermediateAssetModel {
   name: string
@@ -46,46 +44,25 @@ export async function fetchAssetsViaMulticall(
   if (intermediateAssetModels.length === 0)
     return []
 
-  // Fetch prices from CoinGecko. Could be temporary approach.
-  // We can use multicall to get prices from on-chain (using Uniswap TWAP for example), but it's more difficult.
-  const prices = await fetchPrices(intermediateAssetModels)
+  const tokenSymbols = intermediateAssetModels.map(model => model.symbol as TokenSymbol)
+  const prices = await fetchPricesViaMulticall(chainId, multicallAddress, tokenSymbols)
 
-  return intermediateAssetModels.map(model => createAssetToken(model, prices))
+  const tokens = intermediateAssetModels.map((model, index) => createAssetToken(model, prices[index]))
+  return tokens
 }
 
 /**
  * Enriches intermediate state of the asset with price data.
  * Returns completed ERC20 token model (@see {@link Token})
  */
-function createAssetToken(intermediateAssetModel: IntermediateAssetModel, prices: Partial<Record<TokenSymbol, Price>>): Token {
+function createAssetToken(intermediateAssetModel: IntermediateAssetModel, price: Price): Token {
   return {
-    id: intermediateAssetModel.symbol,
     address: intermediateAssetModel.address,
     decimals: intermediateAssetModel.decimals,
     name: intermediateAssetModel.name,
     symbol: intermediateAssetModel.symbol,
-    price: prices[intermediateAssetModel.symbol as TokenSymbol]!,
+    price,
   }
-}
-
-/**
- * Fetches price data from CoinGecko.
- */
-async function fetchPrices(intermediateAssetModels: IntermediateAssetModel[]): Promise<Partial<Record<TokenSymbol, Price>>> {
-  const symbols = intermediateAssetModels.map(asset => asset.symbol) as TokenSymbol[]
-  symbols.forEach((symbol) => {
-    if (!TokenOrder.includes(symbol))
-      throw new Error(`Cannot fetch price for unknown symbol: ${symbol}`)
-  })
-  const price = await getCurrentPriceOfTokens(symbols)
-  return _.mapValues(price, (value, tokenSymbol): Price => {
-    const decimals = 8
-    return {
-      id: tokenSymbol,
-      decimals,
-      value: BigInt(Math.floor(value! * (10 ** decimals))),
-    }
-  })
 }
 
 function mapResponseToIntermediateAssetModel(address: string, responses: MulticallResponse<unknown>[]): IntermediateAssetModel | null {

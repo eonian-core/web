@@ -3,8 +3,8 @@ import clsx from 'clsx'
 import type { MouseEventHandler } from 'react'
 import styles from './balance.module.scss'
 import CompactNumber from '@/components/compact-number/compact-number'
-import type { Vault } from '@/api'
 import { FractionPartView } from '@/finances/humanize'
+import type { Vault } from '@/types'
 
 interface Props {
   balance: bigint

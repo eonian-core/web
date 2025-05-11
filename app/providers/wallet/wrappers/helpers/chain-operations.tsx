@@ -7,7 +7,6 @@ import type { TokenSymbol } from '@/types'
 
 export function getChainNativeToken(id: ChainId): string | null {
   const tokenLookupMap: Record<ChainId, string | null> = {
-    [ChainId.SEPOLIA]: 'ETH',
     [ChainId.BSC_MAINNET]: 'BNB',
     [ChainId.ZEN_CHAIN_TESTNET]: 'ZTC',
     [ChainId.UNKNOWN]: null,
@@ -18,7 +17,6 @@ export function getChainNativeToken(id: ChainId): string | null {
 export function getChainNativeTokenTutorialLink(id: ChainId | undefined): string {
   const linkLookupMap: Record<ChainId, string | null> = {
     [ChainId.BSC_MAINNET]: 'https://www.binance.com/en/how-to-buy/bnb',
-    [ChainId.SEPOLIA]: 'https://blog.chain.link/sepolia-eth/',
     [ChainId.ZEN_CHAIN_TESTNET]: 'https://faucet.zenchain.io/',
     [ChainId.UNKNOWN]: null,
   }
@@ -27,7 +25,6 @@ export function getChainNativeTokenTutorialLink(id: ChainId | undefined): string
 
 export function getChainIcon(id: ChainId, iconSize: number): React.ReactNode {
   const iconLookupMap: Record<ChainId, TokenSymbol | React.ReactNode> = {
-    [ChainId.SEPOLIA]: 'ETH',
     [ChainId.BSC_MAINNET]: 'BNB',
     [ChainId.ZEN_CHAIN_TESTNET]: <IconZTC width={iconSize} height={iconSize} />,
     [ChainId.UNKNOWN]: null,
@@ -44,8 +41,6 @@ export function getChainIcon(id: ChainId, iconSize: number): React.ReactNode {
 
 export function getChainExplorer(id: ChainId): string | null {
   switch (id) {
-    case ChainId.SEPOLIA:
-      return 'https://sepolia.etherscan.io'
     case ChainId.BSC_MAINNET:
       return 'https://bscscan.com'
     case ChainId.ZEN_CHAIN_TESTNET:
@@ -62,7 +57,6 @@ export function getChainExplorer(id: ChainId): string | null {
  */
 export function getMulticallAddress(id: ChainId): string {
   switch (id) {
-    case ChainId.SEPOLIA:
     case ChainId.BSC_MAINNET:
     case ChainId.ZEN_CHAIN_TESTNET:
       return '0xcA11bde05977b3631167028862bE2a173976CA11'
@@ -78,8 +72,6 @@ export function getMulticallAddress(id: ChainId): string {
  */
 export function getRPCEndpoint(id: ChainId): string | undefined {
   switch (id) {
-    case ChainId.SEPOLIA:
-      return process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL
     case ChainId.BSC_MAINNET:
       return process.env.NEXT_PUBLIC_BSC_MAINNET_RPC_URL || 'https://bsc-dataseed1.binance.org/'
     case ChainId.ZEN_CHAIN_TESTNET:
