@@ -46,14 +46,14 @@ export function PercentPicker({ children, balance }: { children: Array<number>; 
 
   return (
     <div className={styles.percentPicker}>
-        {children.map(option => (
-            <PercentOption
-                key={option}
-                {...{ currentPercent, balance }}
-                decimals={vault.asset.decimals}
+      {children.map(option => (
+        <PercentOption
+          key={option}
+          {...{ currentPercent, balance }}
+          decimals={vault.asset.decimals}
             >{option}</PercentOption>
-        ),
-        )}
+      ),
+      )}
     </div>
   )
 }
@@ -95,8 +95,8 @@ export function PercentOption({ children: option, currentPercent, balance, decim
   const optionN = usePercentToBigInt(option)
 
   return (
-        <Button className={clsx(styles.option, { [styles.active]: optionN <= currentPercent })} size="sm" variant="flat" onClick={onClick}>
-            {option * 100}%
-        </Button>
+    <Button className={clsx(styles.option, { [styles.active]: optionN <= currentPercent })} size="sm" variant="flat" onClick={onClick}>
+      {option * 100}%
+    </Button>
   )
 }

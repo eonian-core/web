@@ -6,9 +6,9 @@ import styles from './form-header.module.scss'
 /** Minimal logic, will be used in skeleton */
 export function FormHeaderBody({ children }: PropsWithChildren) {
   return (
-        <CardHeader className={styles.header}>
-            {children}
-        </CardHeader>
+    <CardHeader className={styles.header}>
+      {children}
+    </CardHeader>
   )
 }
 
@@ -21,14 +21,14 @@ interface TabButtonProps {
 
 export function TabButton({ action, currentAction, children, onClick }: TabButtonProps) {
   return (
-        <span
-            data-key={action}
-            onClick={onClick}
-            className={clsx(styles.button, {
-              [styles.buttonActive]: currentAction === action,
-            })}
+    <span
+      data-key={action}
+      onClick={onClick}
+      className={clsx(styles.button, {
+        [styles.buttonActive]: currentAction === action,
+      })}
         >
-            {children}
-        </span>
+      {children}
+    </span>
   )
 }

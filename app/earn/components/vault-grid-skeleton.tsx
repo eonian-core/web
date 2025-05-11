@@ -3,12 +3,12 @@ import { CardSkeleton } from '@/components/vault-card/card-skeleton'
 
 export function VaultGridSkeleton() {
   return <div className={styles.cards}>
-        <CardSkeleton />
-        <CardSkeleton />
-        <CardSkeleton />
+    <CardSkeleton />
+    <CardSkeleton />
+    <CardSkeleton />
 
-        <CardSkeleton />
-        <CardSkeleton />
-        <CardSkeleton />
-    </div>
+    <CardSkeleton />
+    <CardSkeleton />
+    <CardSkeleton />
+  </div>
 }

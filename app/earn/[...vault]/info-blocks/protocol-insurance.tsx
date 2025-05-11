@@ -4,9 +4,9 @@ import IconShieldHeart from '@/components/icons/icon-shield-heart'
 export function ProtocolInsurance() {
   return (
     <CommonInfoBlock>
-    <InfoBlockTitle>Protocol Insurance</InfoBlockTitle>
+      <InfoBlockTitle>Protocol Insurance</InfoBlockTitle>
 
-    <InfoBlockList>
+      <InfoBlockList>
         <InfoItem>
           <InfoItemIcon><IconShieldHeart /></InfoItemIcon>
           <InfoItemTitle>Savings Account Vault</InfoItemTitle>

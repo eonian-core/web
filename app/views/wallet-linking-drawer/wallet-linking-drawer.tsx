@@ -18,7 +18,7 @@ export const WalletLinkingProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <WalletLinkingContext.Provider value={{ opened, open, close }}>
-        <WalletLinkingDrawer {...{ opened, onClose: close }} />
+      <WalletLinkingDrawer {...{ opened, onClose: close }} />
       {children}
     </WalletLinkingContext.Provider>
   )
@@ -34,10 +34,10 @@ export function useWalletLinkingContext(): WalletLinkingContextProps {
 
 export function WalletLinkingDrawer(props: { opened: boolean; onClose: () => void }) {
   return (
-      <Drawer title={'Recovery email'} {...props}>
-        <div className={styles.formWrapper}>
-          <LinkRecoveryEmailFlow close={props.onClose}/>
-        </div>
-      </Drawer>
+    <Drawer title={'Recovery email'} {...props}>
+      <div className={styles.formWrapper}>
+        <LinkRecoveryEmailFlow close={props.onClose}/>
+      </div>
+    </Drawer>
   )
 }

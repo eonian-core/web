@@ -40,24 +40,24 @@ export function VaultGrid() {
       {maxIsVisible <= 0
         ? <VaultGridSkeleton />
         : (
-        <div className={styles.cards}>
-          {sorted.map((vault, i) => (
-            <VaultCard
-              symbol={getAssetSymbol(vault)}
-              key={vault.address}
-              style={buildFadeInAnitionStyles(maxIsVisible > i, fadeInDuration)}
+          <div className={styles.cards}>
+            {sorted.map((vault, i) => (
+              <VaultCard
+                symbol={getAssetSymbol(vault)}
+                key={vault.address}
+                style={buildFadeInAnitionStyles(maxIsVisible > i, fadeInDuration)}
             >
-              <TokenAction
-                href={`/earn/${chainName}/${vault.symbol}`}
+                <TokenAction
+                  href={`/earn/${chainName}/${vault.symbol}`}
               >Save</TokenAction>
-            </VaultCard>
-          ))}
+              </VaultCard>
+            ))}
 
-          <ComingSoonBNBVaults maxIsVisible={maxIsVisible - sorted.length} />
-        </div>
+            <ComingSoonBNBVaults maxIsVisible={maxIsVisible - sorted.length} />
+          </div>
           )}
 
-        <SuggestTokenButton />
+      <SuggestTokenButton />
     </div>
   )
 }

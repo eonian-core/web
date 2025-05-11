@@ -37,13 +37,13 @@ export interface LinkCardProps extends CommonCardProps {
 /** Card component which primarly wraps block with header and text as card  */
 export function LinkCard({ href, children, disabled = false }: LinkCardProps) {
   return <a
-  href={href}
-  className={clsx(styles.card, { [styles.disabled]: disabled })}
-  target="_blank"
-  rel="noopener noreferrer"
+    href={href}
+    className={clsx(styles.card, { [styles.disabled]: disabled })}
+    target="_blank"
+    rel="noopener noreferrer"
 >
-  <H3Context.Provider value={{ isExternalLink: false }}>{children}</H3Context.Provider>
-</a>
+    <H3Context.Provider value={{ isExternalLink: false }}>{children}</H3Context.Provider>
+  </a>
 }
 
 export interface ButtonCardProps extends CommonCardProps {

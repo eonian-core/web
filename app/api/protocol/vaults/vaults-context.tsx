@@ -44,12 +44,12 @@ export const VaultsProvider: React.FC<PropsWithChildren<VaultsProviderProps>> = 
   useFetchPositionInfo(chainId, vaultsForChain)
 
   return (
-        <VaultsContext.Provider value={{
-          vaultsByChain,
-          vaults,
-        }}>
-            {children}
-        </VaultsContext.Provider>
+    <VaultsContext.Provider value={{
+      vaultsByChain,
+      vaults,
+    }}>
+      {children}
+    </VaultsContext.Provider>
   )
 }
 

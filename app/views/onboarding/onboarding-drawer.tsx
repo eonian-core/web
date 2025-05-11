@@ -9,15 +9,15 @@ export function OnboardingDrawer(props: { opened: boolean; onClose: () => void }
   }, [props.onClose])
 
   return (
-        <Drawer
-            title={'Onboarding'}
-            desktopPosition='left'
-            desktopSize='sm'
-            {...props}
+    <Drawer
+      title={'Onboarding'}
+      desktopPosition='left'
+      desktopSize='sm'
+      {...props}
         >
-            <div className={styles.container}>
-                <Onboading show onButtonClick={handleButtonClick}/>
-            </div>
-        </Drawer>
+      <div className={styles.container}>
+        <Onboading show onButtonClick={handleButtonClick}/>
+      </div>
+    </Drawer>
   )
 }
