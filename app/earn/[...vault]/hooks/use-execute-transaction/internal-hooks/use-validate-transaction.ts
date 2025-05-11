@@ -2,9 +2,9 @@ import React from 'react'
 import { toast } from 'react-toastify'
 
 import { FormAction } from '../../../../../store/slices/vaultActionSlice'
-import type { Vault } from '../../../../../api'
 import { toStringNumberFromDecimals } from '../../../../../shared'
 import { useAppSelector } from '../../../../../store/hooks'
+import type { Vault } from '@/types'
 
 export function useValidateTransaction() {
   const { walletBalanceBN, vaultBalanceBN, assetDecimals } = useAppSelector(state => state.vaultUser)

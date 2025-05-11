@@ -1,4 +1,4 @@
-import type { Vault } from '@/api'
+import type { Vault } from '@/types'
 
 export function toUSDValue(amount: bigint, decimals: number, price: bigint): bigint {
   const mantissa = 10n ** BigInt(decimals)

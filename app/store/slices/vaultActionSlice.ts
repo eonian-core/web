@@ -2,10 +2,10 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { UpdateOptions } from 'react-toastify'
 import { toast } from 'react-toastify'
-import type { Vault } from '../../api'
 import { createVaultActionToast } from '../../earn/[...vault]/components/vault-action-toast/vault-action-toast'
 import { parseError } from '../../shared'
 import { FormAction, FormActionStep } from './types'
+import type { Vault } from '@/types'
 
 const TOAST_ID = 'vault-action-toast'
 

@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useMemo } from 'react'
-import type { Vault } from '../../api'
 
 import styles from './vault-grid.module.scss'
 import { NetworkSelector } from './network-selector'
 import { Header } from './header'
 import { VaultGridSkeleton } from './vault-grid-skeleton'
+import type { Vault } from '@/types'
 import { TokenOrder } from '@/types'
 import { VaultCard } from '@/components/vault-card/vault-card'
 import { Distribution, TokenAction, TokenApy, TokenFees, TokenFooter, TokenGrowth, TokenState, TokenStats, YearlyReturns } from '@/components/vault-card/token'

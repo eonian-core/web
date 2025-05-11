@@ -8,7 +8,6 @@ import ThemesProvider from './themes'
 import { WalletWrapperProvider } from './wallet/wallet-wrapper-provider'
 import { AuthProvider } from './auth'
 import { ChainProvider } from '@/shared/web3/chain-context'
-import { ApolloSsrProvider } from '@/api/apollo-ssr-provider'
 import { WalletLinkingProvider } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
 import { SuggestTokenProvider } from '@/views/suggest-token-drawer/suggest-token-drawer'
 import { SuggestChainProvider } from '@/views/suggest-chain-drawer/suggest-chain-drawer'
@@ -25,13 +24,11 @@ export default function Providers({ children }: Props) {
         <WalletWrapperProvider>
           <AuthProvider>
             <ChainProvider>
-              <ApolloSsrProvider>
-                <WalletLinkingProvider>
-                  <SuggestTokenProvider>
-                    <SuggestChainProvider>{children}</SuggestChainProvider>
-                  </SuggestTokenProvider>
-                </WalletLinkingProvider>
-              </ApolloSsrProvider>
+              <WalletLinkingProvider>
+                <SuggestTokenProvider>
+                  <SuggestChainProvider>{children}</SuggestChainProvider>
+                </SuggestTokenProvider>
+              </WalletLinkingProvider>
             </ChainProvider>
           </AuthProvider>
         </WalletWrapperProvider>

@@ -1,11 +1,10 @@
 import React from 'react'
-import type { Vault } from '../../../../api'
 import { useAppDispatch } from '../../../../store/hooks'
 import { FormAction, stopVaultAction } from '../../../../store/slices/vaultActionSlice'
 import { useValidateTransaction } from './internal-hooks'
-
 import { useDepositTransaction } from './use-deposit-transaction'
 import { useWithdrawTransaction } from './use-withdraw-transaction'
+import type { Vault } from '@/types'
 
 export function useExecuteTransaction() {
   const dispatch = useAppDispatch()

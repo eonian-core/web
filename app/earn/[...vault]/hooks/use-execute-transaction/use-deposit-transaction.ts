@@ -1,11 +1,11 @@
 import React from 'react'
 
-import type { Vault } from '../../../../api'
 import { approveERC20 } from '../../../../shared'
 import { deposit } from '../../../../shared/web3/transactions/vault'
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks'
 import { FormAction, prepareVaultAction } from '../../../../store/slices/vaultActionSlice'
 import { useWriteTransactionSender } from './internal-hooks'
+import type { Vault } from '@/types'
 
 export function useDepositTransaction() {
   const dispatch = useAppDispatch()
