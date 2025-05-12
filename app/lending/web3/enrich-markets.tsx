@@ -126,6 +126,7 @@ function getIcon(symbol: string): React.ReactNode {
     case 'ETH':
       return <IconEthereum />
     case 'USDT':
+    case 'ptUSD':
       return <IconTether />
     default:
       return <IconEthereum />
