@@ -24,7 +24,7 @@ async function InnerPage() {
   const vaults = await getVaultsByChain(ChainId.BSC_MAINNET)
   return (
     <div className={styles.page}>
-      <VaultsProvider vaultsByChain={{ [ChainId.BSC_MAINNET]: vaults, [ChainId.UNKNOWN]: [] }}>
+      <VaultsProvider vaultsByChain={{ [ChainId.BSC_MAINNET]: vaults, [ChainId.UNKNOWN]: [], [ChainId.ZEN_CHAIN_TESTNET]: [] }}>
         <VaultGrid />
       </VaultsProvider>
     </div>

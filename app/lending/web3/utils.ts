@@ -13,7 +13,6 @@ const SECONDS_PER_YEAR = 31536000
 const SECONDS_PER_BLOCK: Record<ChainId, number> = {
   [ChainId.BSC_MAINNET]: 3.0,
   [ChainId.ZEN_CHAIN_TESTNET]: 6.0,
-  [ChainId.SEPOLIA]: 0,
   [ChainId.UNKNOWN]: 0,
 }
 
