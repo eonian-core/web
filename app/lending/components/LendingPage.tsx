@@ -1,4 +1,4 @@
-import { Skeleton, Spinner } from '@heroui/react'
+import { Spinner } from '@heroui/react'
 import { useCallback, useEffect, useState } from 'react'
 import { useColumnsWithValues } from '../hooks/useColumnsWithValues'
 import { useLendingState } from '../LendingState'
