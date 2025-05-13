@@ -1,4 +1,5 @@
 export enum ChainId {
+  ZEN_CHAIN_TESTNET = 8408,
   BSC_MAINNET = 56,
   UNKNOWN = -1,
 }

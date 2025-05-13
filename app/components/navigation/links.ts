@@ -7,6 +7,7 @@ export const links = [
   ResourcesLinks.Community,
   ResourcesLinks.Security,
   ResourcesLinks.Earn,
+  ResourcesLinks.Lending,
   ResourcesLinks.Docs,
 ].filter(({ isEnabled }) => isEnabled)
 

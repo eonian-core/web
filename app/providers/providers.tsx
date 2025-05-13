@@ -19,10 +19,10 @@ interface Props {
 
 export default function Providers({ children }: Props) {
   return (
-    <ThemesProvider>
-      <ReduxProvider store={store}>
-        <WalletWrapperProvider>
-          <AuthProvider>
+    <AuthProvider>
+      <ThemesProvider>
+        <ReduxProvider store={store}>
+          <WalletWrapperProvider>
             <ChainProvider>
               <WalletLinkingProvider>
                 <SuggestTokenProvider>
@@ -30,9 +30,9 @@ export default function Providers({ children }: Props) {
                 </SuggestTokenProvider>
               </WalletLinkingProvider>
             </ChainProvider>
-          </AuthProvider>
-        </WalletWrapperProvider>
-      </ReduxProvider>
-    </ThemesProvider>
+          </WalletWrapperProvider>
+        </ReduxProvider>
+      </ThemesProvider>
+    </AuthProvider>
   )
 }

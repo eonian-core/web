@@ -1,4 +1,4 @@
-import { Spacer, Tooltip } from '@nextui-org/react'
+import { Spacer, Tooltip } from '@heroui/react'
 import CompactNumber from '../compact-number/compact-number'
 import { useAppSelector } from '../../store/hooks'
 import { toStringNumberFromDecimals } from '../../shared'

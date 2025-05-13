@@ -14,6 +14,12 @@ const theme: ThemingMap = {
 }
 
 const chains: Partial<Record<ChainId, InitOptions['chains'][0]>> = {
+  [ChainId.ZEN_CHAIN_TESTNET]: {
+    id: ChainId.toHex(ChainId.ZEN_CHAIN_TESTNET),
+    token: 'ZTC',
+    label: 'ZenChain - Testnet',
+    rpcUrl: getRPCEndpoint(ChainId.ZEN_CHAIN_TESTNET),
+  },
   [ChainId.BSC_MAINNET]: {
     id: ChainId.toHex(ChainId.BSC_MAINNET),
     token: 'BNB',
