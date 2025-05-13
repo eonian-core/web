@@ -2,7 +2,7 @@ import { Skeleton, Spinner } from '@heroui/react'
 import { useCallback, useEffect, useState } from 'react'
 import { useColumnsWithValues } from '../hooks/useColumnsWithValues'
 import { useLendingState } from '../LendingState'
-import { useScreenWidth } from '../hooks/useScreenWidth'
+import { useIsMobileOrSmaller } from '../../components/resize-hooks/screens'
 import { AssetTable } from './AssetTable'
 import { MarketStats } from './market-stats/MarketStats'
 import { Header } from './Header'
@@ -16,8 +16,7 @@ export function LendingPage() {
 
   const [loading, columns] = useColumnsWithValues()
   const { setFormData, markets, fetching } = useLendingState()
-  const { screenLTE } = useScreenWidth()
-  const isMobileLayout = screenLTE('mobile')
+  const isMobileLayout = useIsMobileOrSmaller()
 
   const handleSupply = useCallback((index: number) => setFormData({ tab: FormTab.SUPPLY, market: markets[index] }), [setFormData, markets])
   const handleBorrow = useCallback((index: number) => setFormData({ tab: FormTab.BORROW, market: markets[index] }), [setFormData, markets])

@@ -1,6 +1,6 @@
 import { Divider, Modal, ModalBody, ModalContent, ModalFooter, Tab, Tabs } from '@heroui/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useScreenWidth } from '../../hooks/useScreenWidth'
+import { useIsLaptopOrSmaller } from '../../../components/resize-hooks/screens'
 import type { FormData } from '../../LendingState'
 import { useLendingState } from '../../LendingState'
 import { useNumberInputValue } from '../../hooks/useNumberInputValue'
@@ -15,7 +15,7 @@ const MODAL_WRAPPER_SELECTOR = 'modal-wrapper-selector'
 
 export function FormModal() {
   const { formData } = useLendingState()
-  const { screenLTE } = useScreenWidth()
+  const isLaptopOrSmaller = useIsLaptopOrSmaller()
 
   const { isOpen, onClose } = useModalState()
   const [isRendered, setRendered] = useState(false)
@@ -33,7 +33,7 @@ export function FormModal() {
       className="lending-styles"
       isOpen={isOpen}
       onClose={onClose}
-      placement={screenLTE('laptop') ? 'bottom' : 'center'}
+      placement={isLaptopOrSmaller ? 'bottom' : 'center'}
       classNames={{
         wrapper: `${MODAL_WRAPPER_SELECTOR} z-5`,
         backdrop: `${MODAL_BACKDROP_SELECTOR} z-5`,

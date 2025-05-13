@@ -1,7 +1,7 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
 import IconDotsVertical from '../../components/icons/icon-dots-vertical'
 import type { ColumnKey } from '../hooks/useColumns'
-import { useScreenWidth } from '../hooks/useScreenWidth'
+import { useIsLaptopOrSmaller } from '../../components/resize-hooks/screens'
 
 export interface RowColumnData {
   key: ColumnKey
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export function AssetRow({ onWithdraw = () => { }, onRepay = () => { }, onBorrow = () => { }, onSupply = () => { }, columns = [] }: Props) {
-  const { screenLTE } = useScreenWidth()
+  const isLaptopOrSmaller = useIsLaptopOrSmaller()
 
   return (
     <tr className="border-b border-default-700 hover:bg-default-750 transition-colors">
@@ -46,8 +46,8 @@ export function AssetRow({ onWithdraw = () => { }, onRepay = () => { }, onBorrow
     const standaloneKeys = ['Supply', 'Borrow']
     const dropdownKeys = ['Withdraw', 'Repay']
 
-    const standaloneButtons = keys.filter(button => (screenLTE('laptop') ? false : standaloneKeys.includes(button)))
-    const dropdownButtons = keys.filter(button => (screenLTE('laptop') ? true : dropdownKeys.includes(button)))
+    const standaloneButtons = keys.filter(button => (isLaptopOrSmaller ? false : standaloneKeys.includes(button)))
+    const dropdownButtons = keys.filter(button => (isLaptopOrSmaller ? true : dropdownKeys.includes(button)))
 
     return (
       <>

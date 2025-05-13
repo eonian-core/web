@@ -1,6 +1,6 @@
 import { useLendingState } from '../LendingState'
 import { FormTab } from '../components/form/types'
-import { useScreenWidth } from './useScreenWidth'
+import { useIsLaptopOrSmaller } from '../../components/resize-hooks/screens'
 
 interface AvailableBalance {
   balanceInUnderlying: bigint
@@ -11,7 +11,8 @@ interface AvailableBalance {
 
 export function useAvailableBalanceByTab(): AvailableBalance {
   const { formData } = useLendingState()
-  const { screenGTE } = useScreenWidth()
+  const isLaptopOrSmaller = useIsLaptopOrSmaller()
+  const isLargerThanLaptop = !isLaptopOrSmaller
 
   if (!formData || !formData.market) {
     return {
@@ -44,14 +45,14 @@ export function useAvailableBalanceByTab(): AvailableBalance {
       return {
         balanceInUnderlying: availableForBorrowBalanceInUnderlying,
         balanceInUnderlyingDisplay: `${displayValues.availableForBorrowBalanceInUnderlying} ${symbol}`,
-        label: screenGTE('laptop') ? 'Available to borrow' : 'Available',
+        label: isLargerThanLaptop ? 'Available to borrow' : 'Available',
         isEnoughToCoverAll: (value: bigint) => availableForBorrowBalanceInUnderlying >= value,
       }
     case FormTab.WITHDRAW:
       return {
         balanceInUnderlying: supplyBalanceInUnderlying,
         balanceInUnderlyingDisplay: `${displayValues.supplyBalanceInUnderlying} ${symbol}`,
-        label: screenGTE('laptop') ? 'Available to withdraw' : 'Available',
+        label: isLargerThanLaptop ? 'Available to withdraw' : 'Available',
         isEnoughToCoverAll: (value: bigint) => supplyBalanceInUnderlying >= value,
       }
     case FormTab.REPAY:
