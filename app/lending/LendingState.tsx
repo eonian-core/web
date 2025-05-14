@@ -61,7 +61,7 @@ export function LendingStateProvider({ children }: LendingStateProviderProps) {
   const markets = useMarkets(chainId, wallet?.address)
   const [formData, setFormData] = useState<FormData | null>(null)
 
-  const { doFormAction, isActionPending } = useFormAction(formData, markets.fetch)
+  const { doFormAction, isActionPending } = useFormAction(formData, chainId, markets.fetch)
 
   const formDataWithPosition = useMemo(() => {
     if (!formData)

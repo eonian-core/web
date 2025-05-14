@@ -1,5 +1,6 @@
 import { Contract, ethers } from 'ethers'
 import MarketABI from './abi/MarketABI.json'
+import ComptrollerABI from './abi/ComptrollerABI.json'
 import ERC20ABI from '@/shared/web3/abi/ERC20.json'
 
 export async function approveERC20(
@@ -50,5 +51,22 @@ export async function repay(
 ) {
   const market = new Contract(marketAddress, MarketABI, signer)
   const response = (await market.repayBorrow(amount)) as ethers.TransactionResponse
+  return response.wait()
+}
+
+export async function enterMarkets(
+  signer: ethers.JsonRpcSigner,
+  comptrollerAddress: string,
+) {
+  const comptroller = new Contract(comptrollerAddress, ComptrollerABI, signer)
+
+  // Get all markets from the comptroller
+  const marketsResult = await comptroller.getAllMarkets() as string[]
+
+  // Convert to regular array to avoid read-only properties issue
+  const markets = [...marketsResult]
+
+  // Enter all markets
+  const response = await comptroller.enterMarkets(markets) as ethers.TransactionResponse
   return response.wait()
 }

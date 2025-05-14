@@ -8,6 +8,7 @@ export enum ToastActionType {
   REPAY = 'repay',
   WITHDRAW = 'withdraw',
   APPROVE = 'approve',
+  ENTER_MARKETS = 'enter-markets',
 }
 
 export enum ToastActionStatus {
@@ -85,6 +86,17 @@ const toastData: Record<ToastActionType, Record<ToastActionStatus, ToastData>> =
     [ToastActionStatus.ERROR]: {
       title: () => 'Approve transaction failed',
       description: (amount: string, symbol: string) => `Something went wrong while approving ${amount} ${symbol}`,
+    },
+  },
+  [ToastActionType.ENTER_MARKETS]: {
+    [ToastActionStatus.PENDING]: {
+      title: () => 'Entering markets...',
+    },
+    [ToastActionStatus.SUCCESS]: {
+      title: () => 'Markets entered successfully',
+    },
+    [ToastActionStatus.ERROR]: {
+      title: () => 'Something went wrong while entering markets',
     },
   },
 }
