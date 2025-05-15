@@ -2,12 +2,14 @@ import { useCallback, useState } from 'react'
 import { ethers } from 'ethers'
 import type { CreateToastOptions } from '../components/toast'
 import { ToastActionStatus, ToastActionType, createToast } from '../components/toast'
-import { approveERC20, borrow, repay, supply, withdraw } from '../web3/send-market-tx'
+import { approveERC20, borrow, enterMarkets, repay, supply, withdraw } from '../web3/send-market-tx'
 import { FormTab } from '../components/form/types'
 import type { FormData } from '../LendingState'
 import { differenceFactorScaled } from '../web3/utils'
+import AddressBook from '../web3/address-book.json'
 import type { NumberInputValue } from './useNumberInputValue'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
+import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 
 const formAction: Record<FormTab, (signer: ethers.JsonRpcSigner, marketAddress: string, amount: bigint) => Promise<ethers.TransactionReceipt | null>> = {
   [FormTab.SUPPLY]: supply,
@@ -23,7 +25,7 @@ const formActionStatus: Record<FormTab, ToastActionType> = {
   [FormTab.WITHDRAW]: ToastActionType.WITHDRAW,
 }
 
-export function useFormAction(formData: FormData | null, refresh: () => Promise<void>) {
+export function useFormAction(formData: FormData | null, chainId: ChainId, refresh: () => Promise<void>) {
   const { provider } = useWalletWrapperContext()
   const [isPending, setIsPending] = useState(false)
 
@@ -48,6 +50,14 @@ export function useFormAction(formData: FormData | null, refresh: () => Promise<
     }
 
     setIsPending(true)
+
+    if (formData.tab === FormTab.SUPPLY) {
+      const success = await enterMarketsIfNeeded(signer, formData, chainId)
+      if (!success) {
+        setIsPending(false)
+        return false
+      }
+    }
 
     const amount = getInputAmount(formData, inputData.value)
 
@@ -81,6 +91,33 @@ export function useFormAction(formData: FormData | null, refresh: () => Promise<
   }, [formData, provider, refresh])
 
   return { doFormAction: handleFormAction, isActionPending: isPending }
+}
+
+async function enterMarketsIfNeeded(signer: ethers.JsonRpcSigner, formData: FormData, chainId: ChainId): Promise<boolean> {
+  if (formData.market.userPosition.isEntered)
+    return true
+
+  const options: CreateToastOptions = {
+    type: ToastActionType.ENTER_MARKETS,
+    amount: '0',
+    symbol: formData.market.symbol,
+    status: ToastActionStatus.PENDING,
+  }
+  try {
+    createToast(options)
+    const addresses = (AddressBook as unknown as Record<ChainId, { comptroller: string }>)[chainId]
+    if (!addresses)
+      throw new Error(`No addresses found for chainId: ${chainId}`)
+
+    await enterMarkets(signer, addresses.comptroller)
+    createToast({ ...options, status: ToastActionStatus.SUCCESS })
+    return true
+  }
+  catch (error) {
+    console.error(error)
+    createToast({ ...options, status: ToastActionStatus.ERROR })
+    return false
+  }
 }
 
 async function approveIfNeeded(signer: ethers.JsonRpcSigner, formData: FormData, amount: bigint, amountToDisplay: string): Promise<boolean> {
