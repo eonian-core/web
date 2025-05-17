@@ -1,6 +1,7 @@
 import { ethers, formatUnits } from 'ethers'
 import type { MarketRaw } from './types'
-import { ChainId } from '@/providers/wallet/wrappers/helpers'
+import type { ChainId } from '@/providers/wallet/wrappers/helpers'
+import { getBlocksPerDay } from '@/shared/web3/blocks-per-day'
 
 const formatterNumber = Intl.NumberFormat('en-US', { style: 'decimal', maximumFractionDigits: 2 })
 const formatterUSD = Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })
@@ -10,14 +11,13 @@ const tinyNumberMaxFractionDigits = 7
 const formatterNumberSmall = Intl.NumberFormat('en-US', { style: 'decimal', minimumFractionDigits: 1, maximumFractionDigits: tinyNumberMaxFractionDigits })
 
 const SECONDS_PER_YEAR = 31536000
-const SECONDS_PER_BLOCK: Record<ChainId, number> = {
-  [ChainId.BSC_MAINNET]: 3.0,
-  [ChainId.ZEN_CHAIN_TESTNET]: 6.0,
-  [ChainId.UNKNOWN]: 0,
-}
+const SECONDS_PER_DAY = SECONDS_PER_YEAR / 365
 
 export function getSecondsPerBlock(chainId: ChainId): number {
-  return SECONDS_PER_BLOCK[chainId]
+  const blocksPerDay = getBlocksPerDay(chainId)
+  if (blocksPerDay === 0)
+    return 0
+  return SECONDS_PER_DAY / blocksPerDay
 }
 
 export function getBlocksPerYear(chainId: ChainId): number {
