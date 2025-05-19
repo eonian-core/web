@@ -10,6 +10,7 @@ import { FormModal } from './form/FormModal'
 import { FormTab } from './form/types'
 import { MobileMarketList } from './mobile/MobileMarketList'
 import SkeletonPage from './SkeletonPage'
+import styles from './LendingPage.module.scss'
 
 interface ContentProps {
   isMobileLayout?: boolean
@@ -65,39 +66,31 @@ export function LendingPage() {
       return <SkeletonPage columns={columns.length} />
 
     return (
-      <div className="grid place-items-center pt-36 bg-transparent">
+      <div className={styles.loadingContainer}>
         <Spinner color="primary" size="lg" />
       </div>
     )
   }
 
   return (
-    <div className="py-8 max-w-7xl mx-auto px-4 bg-transparent">
+    <div className={styles.container}>
       <Header />
 
-      <div className="flex flex-col gap-3">
+      <div className={styles.contentSection}>
         <MarketStats />
-        <div className="text-lg font-semibold text-foreground-50">{<TableTitle fetching={fetching} />}</div>
-        <Content
-          isMobileLayout={isMobileLayout}
-          columns={columns}
-          onSupply={handleSupply}
-          onBorrow={handleBorrow}
-          onWithdraw={handleWithdraw}
-          onRepay={handleRepay}
-        />
+        {fetching
+          ? <Spinner color="primary" size="sm" />
+          : <Content
+              isMobileLayout={isMobileLayout}
+              columns={columns}
+              onSupply={handleSupply}
+              onBorrow={handleBorrow}
+              onWithdraw={handleWithdraw}
+              onRepay={handleRepay}
+          />}
       </div>
 
       <FormModal />
-    </div>
-  )
-}
-
-function TableTitle({ fetching }: { fetching: boolean }) {
-  return (
-    <div className="inline-flex items-center gap-2">
-      <span>Markets</span>
-      {fetching && <Spinner color="primary" size="sm" />}
     </div>
   )
 }
