@@ -51,8 +51,6 @@ function Content({
 }
 
 export function LendingPage() {
-  const { skeleton } = useTestSkeleton(false)
-
   const [loading, columns] = useColumnsWithValues()
   const { setFormData, markets, fetching } = useLendingState()
   const isMobileLayout = useIsMobileOrSmaller()
@@ -62,7 +60,7 @@ export function LendingPage() {
   const handleWithdraw = useCallback((index: number) => setFormData({ tab: FormTab.WITHDRAW, market: markets[index] }), [setFormData, markets])
   const handleRepay = useCallback((index: number) => setFormData({ tab: FormTab.REPAY, market: markets[index] }), [setFormData, markets])
 
-  if (loading || skeleton) {
+  if (loading) {
     if (!isMobileLayout)
       return <SkeletonPage columns={columns.length} />
 
@@ -102,21 +100,4 @@ function TableTitle({ fetching }: { fetching: boolean }) {
       {fetching && <Spinner color="primary" size="sm" />}
     </div>
   )
-}
-
-function useTestSkeleton(enabled: boolean) {
-  const [skeleton, setSkeleton] = useState(false)
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 's' && enabled)
-        setSkeleton(prev => !prev)
-    }
-    window.addEventListener('keydown', handler)
-    return () => {
-      window.removeEventListener('keydown', handler)
-    }
-  }, [enabled])
-
-  return { skeleton, setSkeleton }
 }
