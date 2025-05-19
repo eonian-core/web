@@ -1,7 +1,7 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
-import IconDotsVertical from '../../components/icons/icon-dots-vertical'
+import clsx from 'clsx'
 import type { ColumnKey } from '../hooks/useColumns'
-import { useIsLaptopOrSmaller } from '../../components/resize-hooks/screens'
+import { ActionButtons } from './ActionButtons'
+import styles from './AssetRow.module.scss'
 
 export interface RowColumnData {
   key: ColumnKey
@@ -9,7 +9,7 @@ export interface RowColumnData {
   value: React.ReactNode
 }
 
-interface Props {
+interface AssetRowProps {
   onWithdraw?: () => void
   onRepay?: () => void
   onBorrow?: () => void
@@ -17,60 +17,29 @@ interface Props {
   columns?: RowColumnData[]
 }
 
-export function AssetRow({ onWithdraw = () => { }, onRepay = () => { }, onBorrow = () => { }, onSupply = () => { }, columns = [] }: Props) {
-  const isLaptopOrSmaller = useIsLaptopOrSmaller()
-
+export function AssetRow({ onWithdraw = () => { }, onRepay = () => { }, onBorrow = () => { }, onSupply = () => { }, columns = [] }: AssetRowProps) {
   return (
-    <tr className="border-b border-default-700 hover:bg-default-750 transition-colors">
+    <tr className={styles.row}>
       {columns.map((column, index) => (
-        <td key={column.key} className="p-3">
-          <div className={`flex items-center ${index === 0 ? 'justify-start' : 'justify-center'}`}>{column.value}</div>
+        <td key={column.key} className={styles.cell}>
+          <div className={clsx(
+            styles.cellContent,
+            index === 0 ? styles.start : styles.center,
+          )}>
+            {column.value}
+          </div>
         </td>
       ))}
-      <td className="p-3 text-right laptop:min-w-[176px]">
-        <div className="flex items-center justify-end gap-2">{renderActionButtons()}</div>
+      <td className={styles.actions}>
+        <div className={styles.content}>
+          <ActionButtons
+            onWithdraw={onWithdraw}
+            onRepay={onRepay}
+            onBorrow={onBorrow}
+            onSupply={onSupply}
+          />
+        </div>
       </td>
     </tr>
   )
-
-  // eslint-disable-next-line no-restricted-syntax
-  function renderActionButtons() {
-    const buttons: Record<string, () => void> = {
-      Supply: onSupply,
-      Borrow: onBorrow,
-      Withdraw: onWithdraw,
-      Repay: onRepay,
-    }
-
-    const keys = Object.keys(buttons)
-    const standaloneKeys = ['Supply', 'Borrow']
-    const dropdownKeys = ['Withdraw', 'Repay']
-
-    const standaloneButtons = keys.filter(button => (isLaptopOrSmaller ? false : standaloneKeys.includes(button)))
-    const dropdownButtons = keys.filter(button => (isLaptopOrSmaller ? true : dropdownKeys.includes(button)))
-
-    return (
-      <>
-        {standaloneButtons.map(button => (
-          <Button key={button} color="primary" variant="solid" size="sm" onPress={buttons[button]}>
-            {button}
-          </Button>
-        ))}
-        <Dropdown>
-          <DropdownTrigger>
-            <Button isIconOnly size="sm" variant="solid" color="primary" className="z-0">
-              <IconDotsVertical className="text-foreground-50" />
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu aria-label="Asset actions">
-            {dropdownButtons.map(button => (
-              <DropdownItem key={button} onPress={buttons[button]}>
-                {button}
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
-      </>
-    )
-  }
 }
