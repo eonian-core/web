@@ -24,7 +24,6 @@ export function AssetRow({ onWithdraw = () => { }, onRepay = () => { }, onBorrow
         <td key={column.key} className={styles.cell}>
           <div className={clsx(
             styles.cellContent,
-            index === 0 ? styles.start : styles.center,
           )}>
             {column.value}
           </div>

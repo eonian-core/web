@@ -17,8 +17,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
 
-    &:first-child {
+.cell:first-child {
+    .cellContent {
         justify-content: flex-start;
     }
 }
