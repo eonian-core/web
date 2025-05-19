@@ -1,14 +1,20 @@
+import styles from './IconCell.module.scss'
+
 interface Props {
   icon: React.ReactNode
+  name: string
   symbol: string
 }
 
-export function IconCell({ icon, symbol }: Props) {
+export function IconCell({ icon, name, symbol }: Props) {
   return (
-    <td className="p-3">
-      <div className="flex items-center gap-2 flex-col mobile:flex-row">
-        <div className="w-8 h-8 rounded-full flex-shrink-0">{icon}</div>
-        <span className="text-sm font-semibold text-foreground-50">{symbol}</span>
+    <td className={styles.cell}>
+      <div className={styles.container}>
+        <div className={styles.icon}>{icon}</div>
+        <div className={styles.content}>
+          <span className={styles.name}>{name}</span>
+          <span className={styles.symbol}>{symbol}</span>
+        </div>
       </div>
     </td>
   )

@@ -10,10 +10,48 @@ import { FormModal } from './form/FormModal'
 import { FormTab } from './form/types'
 import { MobileMarketList } from './mobile/MobileMarketList'
 import SkeletonPage from './SkeletonPage'
+import styles from './LendingPage.module.scss'
+
+interface ContentProps {
+  isMobileLayout?: boolean
+  columns: any[]
+  onSupply: (index: number) => void
+  onBorrow: (index: number) => void
+  onWithdraw: (index: number) => void
+  onRepay: (index: number) => void
+}
+
+function Content({
+  isMobileLayout,
+  columns,
+  onSupply,
+  onBorrow,
+  onWithdraw,
+  onRepay,
+}: ContentProps) {
+  if (isMobileLayout) {
+    return (
+      <MobileMarketList
+        onSupply={onSupply}
+        onBorrow={onBorrow}
+        onWithdraw={onWithdraw}
+        onRepay={onRepay}
+      />
+    )
+  }
+
+  return (
+    <AssetTable
+      columns={columns}
+      onSupply={onSupply}
+      onBorrow={onBorrow}
+      onWithdraw={onWithdraw}
+      onRepay={onRepay}
+    />
+  )
+}
 
 export function LendingPage() {
-  const { skeleton } = useTestSkeleton(false)
-
   const [loading, columns] = useColumnsWithValues()
   const { setFormData, markets, fetching } = useLendingState()
   const isMobileLayout = useIsMobileOrSmaller()
@@ -23,77 +61,36 @@ export function LendingPage() {
   const handleWithdraw = useCallback((index: number) => setFormData({ tab: FormTab.WITHDRAW, market: markets[index] }), [setFormData, markets])
   const handleRepay = useCallback((index: number) => setFormData({ tab: FormTab.REPAY, market: markets[index] }), [setFormData, markets])
 
-  if (loading || skeleton) {
+  if (loading) {
     if (!isMobileLayout)
-      return <SkeletonPage columns={columns} />
+      return <SkeletonPage columns={columns.length} />
 
     return (
-      <div className="grid place-items-center pt-36 bg-transparent">
+      <div className={styles.loadingContainer}>
         <Spinner color="primary" size="lg" />
       </div>
     )
   }
 
   return (
-    <div className="py-8 max-w-7xl mx-auto px-4 bg-transparent">
+    <div className={styles.container}>
       <Header />
 
-      <div className="flex flex-col gap-3">
+      <div className={styles.contentSection}>
         <MarketStats />
-        <div className="text-lg font-semibold text-foreground-50">{<TableTitle fetching={fetching} />}</div>
-        {renderContent()}
+        {fetching
+          ? <Spinner color="primary" size="sm" />
+          : <Content
+              isMobileLayout={isMobileLayout}
+              columns={columns}
+              onSupply={handleSupply}
+              onBorrow={handleBorrow}
+              onWithdraw={handleWithdraw}
+              onRepay={handleRepay}
+          />}
       </div>
 
       <FormModal />
     </div>
   )
-
-  // eslint-disable-next-line no-restricted-syntax
-  function renderContent() {
-    if (isMobileLayout) {
-      return (
-        <MobileMarketList
-          onSupply={handleSupply}
-          onBorrow={handleBorrow}
-          onWithdraw={handleWithdraw}
-          onRepay={handleRepay}
-        />
-      )
-    }
-    return (
-      <AssetTable
-        columns={columns}
-        onSupply={handleSupply}
-        onBorrow={handleBorrow}
-        onWithdraw={handleWithdraw}
-        onRepay={handleRepay}
-      />
-    )
-  }
-}
-
-function TableTitle({ fetching }: { fetching: boolean }) {
-  return (
-    <div className="inline-flex items-center gap-2">
-      <span>Markets</span>
-      {fetching && <Spinner color="primary" size="sm" />}
-    </div>
-  )
-}
-
-function useTestSkeleton(enabled: boolean) {
-  const [skeleton, setSkeleton] = useState(false)
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 's' && enabled)
-        setSkeleton(prev => !prev)
-    }
-    window.addEventListener('keydown', handler)
-    return () => {
-      window.removeEventListener('keydown', handler)
-    }
-  }, [enabled])
-
-  return { skeleton, setSkeleton }
 }

@@ -13,8 +13,22 @@ export interface ColumnWithValues {
   contentOfCells: React.ReactNode[]
 }
 
+const HumanReadableName: Record<string, string | undefined> = {
+  USDC: 'USD Coin',
+  USDT: 'Tether',
+  DAI: 'Dai Stablecoin',
+  WETH: 'Ether',
+  WBTC: 'Bitcoin',
+  ptETH: 'Ether',
+  ptBTC: 'Bitcoin',
+  zUSDC: 'USD Coin',
+  ptUSDT: 'Tether',
+  ptUSD: 'Tether',
+  ptDAI: 'Dai Stablecoin',
+}
+
 const columnToContent: Record<ColumnKey, (market: Market) => React.ReactNode> = {
-  asset: market => <IconCell icon={market.icon} symbol={market.underlyingSymbol} />,
+  asset: market => <IconCell icon={market.icon} name={HumanReadableName[market.underlyingSymbol] || market.name} symbol={market.underlyingSymbol} />,
   utilizationRate: market => <UtilizationRateCell rate={calculateUtilizationRate(market)} />,
   supplyAPY: market => <DefaultCell value={market.displayValues.supplyAPY} />,
   borrowAPY: market => <DefaultCell value={market.displayValues.borrowAPY} />,

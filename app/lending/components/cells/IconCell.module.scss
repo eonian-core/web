@@ -1,0 +1,40 @@
+@import '../../../screen.scss';
+
+.cell {
+  padding: 0.75rem;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-direction: column;
+  
+  @media (min-width: $screen-tablet) {
+    flex-direction: row;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--foreground-50);
+} 
+
+.symbol {
+  font-size: 0.75rem; /* text-xs */
+  color: var(--foreground-600);
+}

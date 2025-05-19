@@ -1,0 +1,42 @@
+@import '../../screen.scss';
+
+.row {
+    border-bottom: 1px solid var(--color-default-700);
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: var(--color-default-750);
+    }
+}
+
+.cell {
+    padding: 0.75rem;
+}
+
+.cellContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell:first-child {
+    .cellContent {
+        justify-content: flex-start;
+    }
+}
+
+.actions {
+    padding: 0.75rem;
+    text-align: right;
+
+    @media (min-width: $screen-laptop) {
+        min-width: 176px;
+    }
+
+    .content {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.5rem;
+    }
+}

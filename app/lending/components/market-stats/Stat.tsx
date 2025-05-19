@@ -1,18 +1,17 @@
-import { cn } from '@heroui/react'
+import clsx from 'clsx'
+import styles from './Stat.module.scss'
 
 interface StatProps {
   label: string
   value: React.ReactNode
-  center?: boolean
-  valueClasses?: string
-  labelClasses?: string
+  big?: boolean
 }
 
-export function Stat({ label, value, center = true, valueClasses, labelClasses }: StatProps) {
+export function Stat({ label, value, big }: StatProps) {
   return (
-    <div className={cn('flex flex-col', center && 'items-center')}>
-      <div className={cn('text-xs text-foreground-300', labelClasses)}>{label}</div>
-      <div className={cn('text-lg font-bold text-foreground-50', valueClasses)}>{value}</div>
+    <div className={clsx(styles.container, { [styles.big]: big })}>
+      <div className={clsx(styles.label)}>{label}</div>
+      <div className={clsx(styles.value)}>{value}</div>
     </div>
   )
 }

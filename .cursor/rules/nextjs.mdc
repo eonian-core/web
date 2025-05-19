@@ -1,7 +1,6 @@
 ---
 description: 
 globs: 
-alwaysApply: true
 ---
 
   You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI and Tailwind.
@@ -23,7 +22,7 @@ alwaysApply: true
   - Use functional components with TypeScript interfaces.
   
   Syntax and Formatting
-  - Use the "function" keyword for pure functions.
+  - Prefer use of the "const" keyword for pure functions.
   - Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
   - Use declarative JSX.
   

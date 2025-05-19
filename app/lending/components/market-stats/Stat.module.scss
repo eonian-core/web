@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+}
+
+.label {
+  font-size: var(--font-size-300);
+  color: var(--foreground-300, #a1a1aa); // text-foreground-300
+}
+
+.value {
+  font-size: var(--font-size-750);
+  font-weight: 700; // font-bold
+  color: var(--foreground-50, #fafafa); // text-foreground-50
+} 
+
+.big {
+
+  .value {
+    font-size: var(--font-size-900);
+  }
+}

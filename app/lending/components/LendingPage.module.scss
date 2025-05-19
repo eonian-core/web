@@ -1,0 +1,25 @@
+// Main SCSS module for the LendingPage component
+
+.container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  max-width: 80rem; // max-w-7xl
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: transparent;
+}
+
+.contentSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.loadingContainer {
+  display: grid;
+  place-items: center;
+  padding-top: 9rem; // pt-36
+  background-color: transparent;
+} 
