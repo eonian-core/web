@@ -1,8 +1,7 @@
 import { Skeleton } from '@heroui/react'
-import type { ColumnWithValues } from '../hooks/useColumnsWithValues'
 
 interface Props {
-  columns: ColumnWithValues[]
+  columns: number
 }
 
 export default function SkeletonPage({ columns }: Props) {
@@ -35,7 +34,7 @@ export default function SkeletonPage({ columns }: Props) {
 
       {/* Table header skeleton */}
       <div className="flex mb-3 gap-2">
-        {columns.map((_, i) => (
+        {Array.from({ length: columns }).map((_, i) => (
           <Skeleton key={i} classNames={{ base: 'h-5 flex-1' }} />
         ))}
         <Skeleton classNames={{ base: 'h-5 w-24' }} />

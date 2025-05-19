@@ -11,6 +11,45 @@ import { FormTab } from './form/types'
 import { MobileMarketList } from './mobile/MobileMarketList'
 import SkeletonPage from './SkeletonPage'
 
+interface ContentProps {
+  isMobileLayout?: boolean
+  columns: any[]
+  onSupply: (index: number) => void
+  onBorrow: (index: number) => void
+  onWithdraw: (index: number) => void
+  onRepay: (index: number) => void
+}
+
+function Content({
+  isMobileLayout,
+  columns,
+  onSupply,
+  onBorrow,
+  onWithdraw,
+  onRepay,
+}: ContentProps) {
+  if (isMobileLayout) {
+    return (
+      <MobileMarketList
+        onSupply={onSupply}
+        onBorrow={onBorrow}
+        onWithdraw={onWithdraw}
+        onRepay={onRepay}
+      />
+    )
+  }
+
+  return (
+    <AssetTable
+      columns={columns}
+      onSupply={onSupply}
+      onBorrow={onBorrow}
+      onWithdraw={onWithdraw}
+      onRepay={onRepay}
+    />
+  )
+}
+
 export function LendingPage() {
   const { skeleton } = useTestSkeleton(false)
 
@@ -41,35 +80,19 @@ export function LendingPage() {
       <div className="flex flex-col gap-3">
         <MarketStats />
         <div className="text-lg font-semibold text-foreground-50">{<TableTitle fetching={fetching} />}</div>
-        {renderContent()}
-      </div>
-
-      <FormModal />
-    </div>
-  )
-
-  // eslint-disable-next-line no-restricted-syntax
-  function renderContent() {
-    if (isMobileLayout) {
-      return (
-        <MobileMarketList
+        <Content
+          isMobileLayout={isMobileLayout}
+          columns={columns}
           onSupply={handleSupply}
           onBorrow={handleBorrow}
           onWithdraw={handleWithdraw}
           onRepay={handleRepay}
         />
-      )
-    }
-    return (
-      <AssetTable
-        columns={columns}
-        onSupply={handleSupply}
-        onBorrow={handleBorrow}
-        onWithdraw={handleWithdraw}
-        onRepay={handleRepay}
-      />
-    )
-  }
+      </div>
+
+      <FormModal />
+    </div>
+  )
 }
 
 function TableTitle({ fetching }: { fetching: boolean }) {
