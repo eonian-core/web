@@ -1,21 +1,22 @@
-import { Button } from '@heroui/react'
 import { useLendingState } from '../LendingState'
+import styles from './Header.module.scss'
 import { getChainIcon } from '@/providers/wallet/wrappers/helpers'
+import { NetworkSelectorBody } from '@/earn/components/network-selector'
+import { H2, H3 } from '@/components/heading/heading'
+
+function emptyFunction() {}
 
 export function Header() {
   const { chainId, chainName } = useLendingState()
   return (
-    <div className="flex flex-col justify-start items-start mb-12 gap-6 mobile:flex-row mobile:justify-between mobile:items-center">
+    <div className={styles.container}>
       <div>
-        <h1 className="text-3xl font-medium text-foreground-50">Supply to Borrow</h1>
-        <p className="text-foreground-300 mt-1">Supply collateral to earn yield and borrow against it</p>
+        <H2>Supply to Borrow</H2>
+        <H3>Supply collateral to earn yield and borrow against it</H3>
       </div>
-      <Button variant="solid" size="md">
-        <div className="flex items-center gap-2">
-          {getChainIcon(chainId, 16)}
-          {chainName}
-        </div>
-      </Button>
+      <NetworkSelectorBody onClick={emptyFunction} icon={getChainIcon(chainId, 16)} disabled>
+        {chainName}
+      </NetworkSelectorBody>
     </div>
   )
 }
