@@ -25,7 +25,7 @@ export function LendingPage() {
 
   if (loading || skeleton) {
     if (!isMobileLayout)
-      return <SkeletonPage columns={columns} />
+      return <SkeletonPage columns={columns.length} />
 
     return (
       <div className="grid place-items-center pt-36 bg-transparent">
