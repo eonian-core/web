@@ -11,6 +11,7 @@ import { FormTab } from './form/types'
 import { MobileMarketList } from './mobile/MobileMarketList'
 import SkeletonPage from './SkeletonPage'
 import styles from './LendingPage.module.scss'
+import { HealthyLabel } from '@/earn/[...vault]/form/healthy-label/healthy-label'
 
 interface ContentProps {
   isMobileLayout?: boolean
@@ -78,16 +79,20 @@ export function LendingPage() {
 
       <div className={styles.contentSection}>
         <MarketStats />
-        {fetching
-          ? <Spinner color="primary" size="sm" />
-          : <Content
-              isMobileLayout={isMobileLayout}
-              columns={columns}
-              onSupply={handleSupply}
-              onBorrow={handleBorrow}
-              onWithdraw={handleWithdraw}
-              onRepay={handleRepay}
-          />}
+        <Content
+          isMobileLayout={isMobileLayout}
+          columns={columns}
+          onSupply={handleSupply}
+          onBorrow={handleBorrow}
+          onWithdraw={handleWithdraw}
+          onRepay={handleRepay}
+        />
+
+        <div className={styles.status}>
+          <HealthyLabel showValue>
+            <span>{fetching ? 'Updating...' : 'Latest'}</span>
+          </HealthyLabel>
+        </div>
       </div>
 
       <FormModal />
