@@ -3,6 +3,7 @@ import { useWalletWrapperContext } from '../../providers/wallet/wallet-wrapper-p
 
 import styles from './network-selector.module.scss'
 import { useChainContext } from '@/shared/web3/chain-context'
+import type { ButtonProps } from '@/components/button/button'
 import Button from '@/components/button/button'
 import { useSuggestChainContext } from '@/views/suggest-chain-drawer/suggest-chain-drawer'
 
@@ -13,9 +14,15 @@ export const NetworkSelector: React.FC = () => {
 
   const { open } = useSuggestChainContext()
 
-  return (<div className={styles.wrapper}>
+  return (
+    <NetworkSelectorBody onClick={open} icon={chain?.icon}>{chain?.name}</NetworkSelectorBody>
+  )
+}
 
-    <Button bordered dark round onClick={open} icon={chain?.icon} iconPosition='left'>{chain?.name}</Button>
-
-  </div>)
+export function NetworkSelectorBody({ children, ...props }: ButtonProps) {
+  return (
+    <div className={styles.wrapper}>
+      <Button {...props} bordered dark round iconPosition='left'>{children}</Button>
+    </div>
+  )
 }

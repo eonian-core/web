@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
 import IconDownOpen from '../../components/icons/icon-down-open'
 import ExternalLink from '../../components/links/external-link'
 import type { SocialLink } from '../../socials'

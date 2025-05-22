@@ -1,5 +1,4 @@
-import type { Vault } from '../gql/graphql'
-import type { TokenSymbol } from '@/types'
+import type { TokenSymbol, Vault } from '@/types'
 import { TokenOrder } from '@/types'
 
 export function getAssetSymbol(vault: Vault): TokenSymbol {

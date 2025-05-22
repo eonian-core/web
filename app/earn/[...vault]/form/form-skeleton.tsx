@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Card, CardBody, Spinner } from '@nextui-org/react'
+import { Card, CardBody, Spinner } from '@heroui/react'
 import clsx from 'clsx'
 import styles from './form.module.scss'
 import { ArrowDividerBody } from './arrow-divider/arrow-divider-body'

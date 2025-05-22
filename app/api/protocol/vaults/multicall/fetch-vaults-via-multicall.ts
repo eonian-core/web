@@ -1,22 +1,15 @@
 import { JsonRpcProvider } from 'ethers'
 import _ from 'lodash'
-import { InterestRateSide, InterestRateType, type Token, type Vault } from '../../gql/graphql'
 import { fetchAssetsViaMulticall } from './fetch-assets-via-multicall'
+import { getVaultAddresses } from './addresses'
 import { Multicall } from '@/shared'
 import type { MulticallRequest, MulticallResponse } from '@/shared'
-import { ChainId, getRPCEndpoint } from '@/providers/wallet/wrappers/helpers'
+import type { ChainId } from '@/providers/wallet/wrappers/helpers'
+import { getMulticallAddress, getRPCEndpoint } from '@/providers/wallet/wrappers/helpers'
 import VaultABI from '@/shared/web3/abi/Vault.json'
 import { getBlocksPerDay } from '@/shared/web3/blocks-per-day'
 import { calculateAPYAsBN } from '@/finances/apy'
-
-const vaultToAddressLookupMap: Partial<Record<ChainId, string[]>> = {
-  [ChainId.BSC_MAINNET]: [
-    '0x03A49bc893bBBEec9181b02C2D6abD6eb8e10311', // ETH
-    '0x33C29951844aAa19524F51177cF725D6A0D720d4', // BTCB
-    '0xaBfCaA1c65d78C2f1D51fd796290029f976192B3', // USDT
-    '0x5340f5a1B7b847Ae71865D2D7B200dc8a06a9ffC', // USDC
-  ],
-}
+import type { Token, Vault } from '@/types'
 
 interface IntermediateVaultModel {
   name: string
@@ -26,6 +19,19 @@ interface IntermediateVaultModel {
   decimals: number
   fundAssets: bigint
   address: string
+  debtRatio: bigint
+  lastReportTimestamp: bigint
+  maxBps: bigint
+  totalAssets: bigint
+  totalDebt: bigint
+  totalSupply: bigint
+  version: string
+}
+
+export async function getVaultsByChain(chainId: ChainId) {
+  const multicallAddress = getMulticallAddress(chainId)
+  const vaults = await fetchVaultsViaMulticall(chainId, multicallAddress)
+  return vaults
 }
 
 /**
@@ -34,8 +40,8 @@ interface IntermediateVaultModel {
  * @param multicallAddress Multicall contract for the specified chain.
  * @returns List of vaults deployed on the specified chain.
  */
-export async function fetchVaultsViaMulticall(chainId: ChainId, multicallAddress: string): Promise<Vault[]> {
-  const vaults = vaultToAddressLookupMap[chainId]
+async function fetchVaultsViaMulticall(chainId: ChainId, multicallAddress: string): Promise<Vault[]> {
+  const vaults = getVaultAddresses(chainId)
   if (!vaults)
     return []
 
@@ -75,25 +81,18 @@ function createVault(chainId: ChainId, intermediateVaultModel: IntermediateVault
     name: intermediateVaultModel.name,
     symbol: intermediateVaultModel.symbol,
     asset: tokenAssets.find(token => token.address === intermediateVaultModel.asset)!,
-    id: intermediateVaultModel.symbol,
-    debtRatio: 0n,
+    debtRatio: intermediateVaultModel.debtRatio,
     fundAssets: intermediateVaultModel.fundAssets,
-    fundAssetsUSD: 0n,
-    lastReportTimestamp: 0n,
-    maxBps: 0n,
-    totalAssets: 0n,
-    totalDebt: 0n,
-    totalSupply: 0n,
-    totalUtilisationRate: 0n,
-    version: 'unknown',
+    lastReportTimestamp: intermediateVaultModel.lastReportTimestamp,
+    maxBps: intermediateVaultModel.maxBps,
+    totalAssets: intermediateVaultModel.totalAssets,
+    totalDebt: intermediateVaultModel.totalDebt,
+    totalSupply: intermediateVaultModel.totalSupply,
+    version: intermediateVaultModel.version,
     rates: [
       {
-        id: '',
         perBlock: intermediateVaultModel.interestRatePerBlock,
-        side: InterestRateSide.Lender,
-        type: InterestRateType.Variable,
         apy: {
-          id: '',
           daily: computeAPY(chainId, intermediateVaultModel, 365),
           weekly: computeAPY(chainId, intermediateVaultModel, 52),
           monthly: computeAPY(chainId, intermediateVaultModel, 12),
@@ -127,6 +126,13 @@ function createVaultRequests(vaultAddress: string): MulticallRequest[] {
     createVaultRequest(vaultAddress, 'interestRatePerBlock', []),
     createVaultRequest(vaultAddress, 'decimals', []),
     createVaultRequest(vaultAddress, 'fundAssets', []),
+    createVaultRequest(vaultAddress, 'debtRatio', []),
+    createVaultRequest(vaultAddress, 'lastReportTimestamp', []),
+    createVaultRequest(vaultAddress, 'MAX_BPS', []),
+    createVaultRequest(vaultAddress, 'totalAssets', []),
+    createVaultRequest(vaultAddress, 'totalDebt', []),
+    createVaultRequest(vaultAddress, 'totalSupply', []),
+    createVaultRequest(vaultAddress, 'version', []),
   ]
 }
 
@@ -161,5 +167,12 @@ function mapResponseToIntermediateVaultModel(
     interestRatePerBlock: data[3] as bigint,
     decimals: Number(data[4]),
     fundAssets: data[5] as bigint,
+    debtRatio: data[6] as bigint,
+    lastReportTimestamp: data[7] as bigint,
+    maxBps: data[8] as bigint,
+    totalAssets: data[9] as bigint,
+    totalDebt: data[10] as bigint,
+    totalSupply: data[11] as bigint,
+    version: String(data[12]),
   }
 }

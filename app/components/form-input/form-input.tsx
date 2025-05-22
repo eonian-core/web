@@ -1,5 +1,5 @@
-import type { InputProps } from '@nextui-org/react'
-import { Input } from '@nextui-org/react'
+import type { InputProps } from '@heroui/react'
+import { Input } from '@heroui/react'
 import type { Control, ControllerFieldState, ControllerRenderProps, RegisterOptions, UseFormStateReturn } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 

@@ -1,0 +1,38 @@
+// Main market stats container styles
+.statsContainer {
+  display: flex;
+  margin-bottom: 1rem; // mb-4
+  flex-wrap: wrap;
+  gap: 1rem; // gap-4
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+// Right side group of stats
+.statsGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; // gap-4
+}
+
+// Divider styling
+.divider {
+  display: none;
+  
+  @media (min-width: 768px) {
+    display: block;
+  }
+}
+
+// Borrow capacity container
+.borrowCapacity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; // gap-2
+}
+
+// Donut chart sizing
+.donutChart {
+  width: 5.25rem; // w-84 (assuming 84px)
+  height: 2rem; // h-8
+} 

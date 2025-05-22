@@ -5,6 +5,7 @@ export const showFaq = process.env.NEXT_PUBLIC_FEATURE_FAQ_PAGE === 'true'
 export const showMission = process.env.NEXT_PUBLIC_FEATURE_MISSION_PAGE === 'true'
 export const showSecurity = process.env.NEXT_PUBLIC_FEATURE_SECURITY_PAGE === 'true'
 export const showEarn = process.env.NEXT_PUBLIC_FEATURE_EARN_PAGE === 'true'
+export const showLending = process.env.NEXT_PUBLIC_FEATURE_LENDING_PAGE === 'true'
 export const showTOS = process.env.NEXT_PUBLIC_FEATURE_TOS_PAGE === 'true'
 export const showPrivacyPolicy = process.env.NEXT_PUBLIC_FEATURE_PP_PAGE === 'true'
 export const showDocs = process.env.NEXT_PUBLIC_FEATURE_DOCS_PAGE === 'true'
@@ -23,6 +24,7 @@ const resources = {
   Community: { href: '/community', label: 'Community', isEnabled: showCommunity },
   Security: { href: '/security', label: 'Security', isEnabled: showSecurity },
   Earn: { href: '/earn', label: 'Save', isEnabled: showEarn },
+  Lending: { href: '/lending', label: 'Lend', isEnabled: showLending },
   FAQ: { href: '/faq', label: 'FAQ', isEnabled: showFaq },
   Docs: {
     href: 'https://eonian-1.gitbook.io/eonian-docs',

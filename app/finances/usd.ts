@@ -1,4 +1,4 @@
-import type { Price } from '@/api/protocol/gql/graphql'
+import type { Price } from '@/types'
 
 export function convertToUsd(price: Price): number {
   return bigFloatToInt(price.value, price.decimals, 1000)
