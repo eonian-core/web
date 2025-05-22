@@ -1,6 +1,6 @@
 import { JsonRpcProvider } from 'ethers'
 import { useEffect } from 'react'
-import type { Vault } from '../gql/graphql'
+import type { Vault } from '@/types'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import type { ChainId } from '@/providers/wallet/wrappers/helpers'
 import { getRPCEndpoint } from '@/providers/wallet/wrappers/helpers'

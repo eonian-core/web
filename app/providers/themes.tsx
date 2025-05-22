@@ -7,7 +7,7 @@ import '@mantine/core/styles/global.css'
 // import '@mantine/core/styles.css';
 
 import React from 'react'
-import { NextUIProvider } from '@nextui-org/react'
+import { HeroUIProvider } from '@heroui/react'
 import { MantineProvider } from '@mantine/core'
 
 interface Props {
@@ -16,11 +16,11 @@ interface Props {
 
 function NextThemeProvider({ children }: Props) {
   return (
-    <NextUIProvider>
+    <HeroUIProvider>
       <MantineProvider forceColorScheme="dark">
         {children}
       </MantineProvider>
-    </NextUIProvider>
+    </HeroUIProvider>
   )
 }
 

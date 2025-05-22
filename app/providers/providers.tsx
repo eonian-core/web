@@ -8,7 +8,6 @@ import ThemesProvider from './themes'
 import { WalletWrapperProvider } from './wallet/wallet-wrapper-provider'
 import { AuthProvider } from './auth'
 import { ChainProvider } from '@/shared/web3/chain-context'
-import { ApolloSsrProvider } from '@/api/apollo-ssr-provider'
 import { WalletLinkingProvider } from '@/views/wallet-linking-drawer/wallet-linking-drawer'
 import { SuggestTokenProvider } from '@/views/suggest-token-drawer/suggest-token-drawer'
 import { SuggestChainProvider } from '@/views/suggest-chain-drawer/suggest-chain-drawer'
@@ -20,22 +19,20 @@ interface Props {
 
 export default function Providers({ children }: Props) {
   return (
-    <ThemesProvider>
-      <ReduxProvider store={store}>
-        <WalletWrapperProvider>
-          <AuthProvider>
+    <AuthProvider>
+      <ThemesProvider>
+        <ReduxProvider store={store}>
+          <WalletWrapperProvider>
             <ChainProvider>
-              <ApolloSsrProvider>
-                <WalletLinkingProvider>
-                  <SuggestTokenProvider>
-                    <SuggestChainProvider>{children}</SuggestChainProvider>
-                  </SuggestTokenProvider>
-                </WalletLinkingProvider>
-              </ApolloSsrProvider>
+              <WalletLinkingProvider>
+                <SuggestTokenProvider>
+                  <SuggestChainProvider>{children}</SuggestChainProvider>
+                </SuggestTokenProvider>
+              </WalletLinkingProvider>
             </ChainProvider>
-          </AuthProvider>
-        </WalletWrapperProvider>
-      </ReduxProvider>
-    </ThemesProvider>
+          </WalletWrapperProvider>
+        </ReduxProvider>
+      </ThemesProvider>
+    </AuthProvider>
   )
 }

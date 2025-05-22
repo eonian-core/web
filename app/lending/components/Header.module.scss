@@ -1,0 +1,25 @@
+@import '../../screen.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+  gap: 1.5rem;
+
+  h2 {
+    margin-bottom: var(--margin-100);
+  }
+
+  h3 {
+    font-size: var(--font-size-600);
+    margin-bottom: 0;
+  }
+  
+  @media (min-width: $screen-tablet) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+} 
