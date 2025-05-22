@@ -3,7 +3,7 @@
 .container {
   padding-top: 2rem;
   padding-bottom: 2rem;
-  max-width: 80rem; // max-w-7xl
+  max-width: 1024px; // max-w-7xl
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
@@ -27,7 +27,7 @@
 .status {
   display: flex;
   justify-content: center;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 
   span {
     color: var(--color-success-500);
