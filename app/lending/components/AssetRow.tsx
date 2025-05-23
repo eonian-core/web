@@ -32,10 +32,10 @@ export function AssetRow({ onWithdraw = () => { }, onRepay = () => { }, onBorrow
       <td className={styles.actions}>
         <div className={styles.content}>
           <ActionButtons
+            onSupply={onSupply}
+            onBorrow={onBorrow}
             onWithdraw={onWithdraw}
             onRepay={onRepay}
-            onBorrow={onBorrow}
-            onSupply={onSupply}
           />
         </div>
       </td>

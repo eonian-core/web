@@ -1,6 +1,8 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Button as HeroButton } from '@heroui/react'
 import IconDotsVertical from '../../components/icons/icon-dots-vertical'
 import { useIsLaptopOrSmaller } from '../../components/resize-hooks/screens'
+import styles from './ActionButtons.module.scss'
+import Button from '@/components/button/button'
 
 export interface ActionButtonsProps {
   [key: string]: () => void
@@ -30,15 +32,16 @@ export function ActionButtons(props: ActionButtonsProps) {
   return (
     <>
       {standaloneButtons.map(button => (
-        <Button key={button} color="primary" variant="solid" size="sm" onPress={props[button]}>
+        <Button key={button} bordered dark round size="sm" onClick={props[button]}>
           {buttonLabels[button]}
         </Button>
       ))}
-      <Dropdown>
+      <Dropdown backdrop="blur">
         <DropdownTrigger>
-          <Button isIconOnly size="sm" variant="solid" color="primary" className="z-0">
+          {/** heroui Dropdown work only with HeroButton */}
+          <HeroButton size="sm" color="default" variant="ghost" isIconOnly radius="full" className={styles.dots}>
             <IconDotsVertical className="text-foreground-50" />
-          </Button>
+          </HeroButton>
         </DropdownTrigger>
         <DropdownMenu aria-label="Asset actions">
           {dropdownButtons.map(button => (
