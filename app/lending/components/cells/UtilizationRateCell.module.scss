@@ -1,0 +1,21 @@
+.cell {
+  padding: 0.75rem; // p-3
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; // gap-2
+}
+
+.chartWrapper {
+  position: relative;
+  width: 2rem; // w-8
+  height: 2rem; // h-8
+}
+
+.percentageText {
+  font-size: 0.875rem; // text-sm
+  font-weight: 600; // font-semibold
+  color: var(--foreground-50); // Assuming text-foreground-50 maps to a CSS variable
+} 

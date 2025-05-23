@@ -20,14 +20,12 @@ const buttonLabels: Record<string, string> = {
 }
 
 export function ActionButtons(props: ActionButtonsProps) {
-  const isLaptopOrSmaller = useIsLaptopOrSmaller()
-
   const keys = Object.keys(props)
   const standaloneKeys = ['onSupply', 'onBorrow']
   const dropdownKeys = ['onWithdraw', 'onRepay']
 
-  const standaloneButtons = keys.filter(button => (isLaptopOrSmaller ? false : standaloneKeys.includes(button)))
-  const dropdownButtons = keys.filter(button => (isLaptopOrSmaller ? true : dropdownKeys.includes(button)))
+  const standaloneButtons = keys.filter(button => (standaloneKeys.includes(button)))
+  const dropdownButtons = keys.filter(button => (dropdownKeys.includes(button)))
 
   return (
     <>

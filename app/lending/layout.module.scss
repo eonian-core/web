@@ -10,6 +10,11 @@
   max-width: var(--max-width);
   padding: calc(var(--navigation-height) * 2) var(--width-gap);
 
+  @media (max-width: $screen-tablet) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   @media (max-width: $screen-mobile) {
     padding: 0;
     padding-top: var(--navigation-height);

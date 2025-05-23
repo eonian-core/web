@@ -29,7 +29,7 @@ export function AssetRow({ onWithdraw = () => { }, onRepay = () => { }, onBorrow
           </div>
         </td>
       ))}
-      <td className={styles.actions}>
+      <div className={styles.actions}>
         <div className={styles.content}>
           <ActionButtons
             onSupply={onSupply}
@@ -38,7 +38,7 @@ export function AssetRow({ onWithdraw = () => { }, onRepay = () => { }, onBorrow
             onRepay={onRepay}
           />
         </div>
-      </td>
+      </div>
     </tr>
   )
 }

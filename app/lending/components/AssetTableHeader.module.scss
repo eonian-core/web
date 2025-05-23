@@ -12,7 +12,8 @@
     font-weight: 500; // font-medium equivalent
     text-align: center;
 
-    &:first-child {
+    &:nth-child(1),
+    &:nth-child(2) {
       text-align: left;
       padding-left: 1.5rem;
     }

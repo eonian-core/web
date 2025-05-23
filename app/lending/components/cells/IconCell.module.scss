@@ -10,7 +10,7 @@
   gap: 0.5rem;
   flex-direction: column;
   
-  @media (min-width: $screen-tablet) {
+  @media (min-width: $screen-mobile) {
     flex-direction: row;
   }
 }
