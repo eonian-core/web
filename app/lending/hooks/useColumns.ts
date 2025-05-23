@@ -29,18 +29,14 @@ export function useColumns() {
   const { status } = useWalletWrapperContext()
   const isConnected = status === WalletStatus.CONNECTED
 
-  const isTabletOrSmaller = useIsTabletOrSmaller()
-
   return React.useMemo(() => {
     const columns = isConnected ? CONNECTED_COLUMNS : COLUMNS
 
-    let keys = Object.keys(columns)
-    if (isTabletOrSmaller)
-      keys = keys.filter(key => key !== 'utilizationRate')
+    const keys = Object.keys(columns)
 
     return keys.map(key => ({
       key: key as ColumnKey,
       label: columns[key as keyof typeof columns],
     }))
-  }, [isConnected, isTabletOrSmaller])
+  }, [isConnected])
 }
