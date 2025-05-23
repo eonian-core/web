@@ -42,12 +42,12 @@
     height: 100%;
     opacity: 0;
     animation: animatedBackground 5s ease forwards;
-    
+
     // (!) Fallback for browsers that don't support CSS relative color functions
     // This "linear-gradient" function is a part of "postcss-easing-gradients" plugin,
     // so color should be static and inlined (no CSS variables allowed).
     // We need this plugin to stretch the single color to the whole smooth gradient.
-    background: linear-gradient(in oklch to bottom, #f79533, ease-in-out, transparent);
+    background: linear-gradient(in oklch to bottom, var(--color-lending-gradient), ease-in-out, transparent);
 
     @supports (color: hsl(from white h s l)) {
       background: linear-gradient(
@@ -57,7 +57,19 @@
         rgb(from var(--color-lending-gradient) r g b / 12%) 75%,
         transparent 87%
       );
+
+      @media (max-width: $screen-mobile) {
+        background: linear-gradient(
+          180deg,
+          var(--color-lending-mobile-gradient) 0%,
+          rgb(from var(--color-lending-mobile-gradient) r g b / 50%) 50%,
+          rgb(from var(--color-lending-mobile-gradient) r g b / 12%) 75%,
+          transparent 87%
+        );
+      }
     }
+
+    
 
     z-index: 100;
   }
