@@ -5,7 +5,17 @@ import { overrideMetadata } from '../meta'
 import styles from './layout.module.scss'
 
 export default function LendingLayout({ children }: React.PropsWithChildren) {
-  return <main className={styles.main}>{children}</main>
+  return <main className={styles.main}>
+    <BackgroundGradient />
+    {children}
+  </main>
 }
 
 export const metadata: Metadata = overrideMetadata('Lending', 'Eonain Lending Application')
+
+export function BackgroundGradient() {
+  return (
+    <div className={styles.backgroundGradient}>
+    </div>
+  )
+}
