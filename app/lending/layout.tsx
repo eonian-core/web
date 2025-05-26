@@ -13,7 +13,7 @@ export default function LendingLayout({ children }: React.PropsWithChildren) {
 
 export const metadata: Metadata = overrideMetadata('Lending', 'Eonain Lending Application')
 
-export function BackgroundGradient() {
+function BackgroundGradient() {
   return (
     <div className={styles.backgroundGradient}>
     </div>
