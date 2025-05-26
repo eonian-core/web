@@ -1,6 +1,5 @@
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Button as HeroButton } from '@heroui/react'
 import IconDotsVertical from '../../components/icons/icon-dots-vertical'
-import { useIsLaptopOrSmaller } from '../../components/resize-hooks/screens'
 import styles from './ActionButtons.module.scss'
 import Button from '@/components/button/button'
 

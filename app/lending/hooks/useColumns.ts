@@ -1,5 +1,4 @@
 import React from 'react'
-import { useIsTabletOrSmaller } from '../../components/resize-hooks/screens'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 
