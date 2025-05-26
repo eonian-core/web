@@ -1,0 +1,9 @@
+.dots {
+    padding: 0 7px;
+    position: relative;
+    border: 1px solid var(--color-text-600);
+
+    svg {
+        transform: rotate(90deg);
+    }
+}

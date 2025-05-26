@@ -1,14 +1,24 @@
-// Main SCSS module for the LendingPage component
+@import '../../screen.scss';
 
 .container {
   padding-top: 2rem;
   padding-bottom: 2rem;
-  max-width: 80rem; // max-w-7xl
+  max-width: 1024px; // max-w-7xl
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
   background-color: transparent;
+
+  @media (max-width: $screen-tablet) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  @media (max-width: $screen-mobile) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 .contentSection {
@@ -23,3 +33,14 @@
   padding-top: 9rem; // pt-36
   background-color: transparent;
 } 
+
+.status {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+
+  span {
+    color: var(--color-success-500);
+    font-size: var(--font-size-400);
+  }
+}

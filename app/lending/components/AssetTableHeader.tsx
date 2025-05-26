@@ -17,9 +17,6 @@ export function AssetTableHeader({ columns }: AssetTableHeaderProps) {
             {column.label}
           </th>
         ))}
-        <th className={styles.actionCell}>
-          {/* Intentionally empty - actions in rows */}
-        </th>
       </tr>
     </thead>
   )

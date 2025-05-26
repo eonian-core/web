@@ -10,7 +10,7 @@
   gap: 0.5rem;
   flex-direction: column;
   
-  @media (min-width: $screen-tablet) {
+  @media (min-width: $screen-mobile) {
     flex-direction: row;
   }
 }
@@ -18,7 +18,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .icon {
@@ -29,7 +29,7 @@
 }
 
 .name {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--foreground-50);
 } 
@@ -37,4 +37,5 @@
 .symbol {
   font-size: 0.75rem; /* text-xs */
   color: var(--foreground-600);
+  text-align: start;
 }

@@ -1,7 +1,7 @@
 // Main market stats container styles
 .statsContainer {
   display: flex;
-  margin-bottom: 1rem; // mb-4
+  margin-bottom: var(--margin-700); // mb-4
   flex-wrap: wrap;
   gap: 1rem; // gap-4
   justify-content: space-between;

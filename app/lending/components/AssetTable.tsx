@@ -4,6 +4,7 @@ import type { ColumnWithValues } from '../hooks/useColumnsWithValues'
 import type { RowColumnData } from './AssetRow'
 import { AssetRow } from './AssetRow'
 import { AssetTableHeader } from './AssetTableHeader'
+import styles from './AssetTable.module.scss'
 
 interface AssetTableProps {
   columns: ColumnWithValues[]
@@ -33,9 +34,9 @@ export function AssetTable({ columns, onWithdraw, onRepay, onBorrow, onSupply }:
   }, [columns])
 
   return (
-    <Card className="w-full bg-default-800 border border-default-700 shadow-xl rounded-xl overflow-hidden">
-      <CardBody className="px-0 py-0">
-        <table className="w-full">
+    <Card className={styles.card}>
+      <CardBody className={styles.cardBody}>
+        <table>
           <AssetTableHeader columns={columns} />
           <tbody>
             {rows.map((rowData, index) => (
@@ -46,7 +47,7 @@ export function AssetTable({ columns, onWithdraw, onRepay, onBorrow, onSupply }:
                 onBorrow={() => onBorrow(index)}
                 onSupply={() => onSupply(index)}
                 columns={rowData}
-                />
+                  />
             ),
             )}
           </tbody>
