@@ -1,5 +1,6 @@
 import { useLendingState } from '../../LendingState'
 import { MobileMarketCard } from './MobileMarketCard'
+import styles from './MobileMarketList.module.scss'
 
 interface Props {
   onWithdraw: (rowIndex: number) => void
@@ -12,7 +13,7 @@ export function MobileMarketList({ onWithdraw, onRepay, onBorrow, onSupply }: Pr
   const { markets } = useLendingState()
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className={styles.marketListContainer}>
       {markets.map((market, index) => (
         <MobileMarketCard
           key={market.address}

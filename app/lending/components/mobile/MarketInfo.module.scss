@@ -1,0 +1,30 @@
+.marketInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; // Corresponds to gap-1
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem; // Corresponds to gap-2
+}
+
+.infoItemLabel {
+  font-size: 0.875rem; // Corresponds to text-sm
+  color: var(--color-text-400); // Corresponds to text-foreground-500
+}
+
+.infoItemValue {
+  font-size: 1rem; // Corresponds to text-md (assuming 1rem)
+  font-weight: var(--font-semibold);
+  color: var(--color-text-300); // Corresponds to text-foreground-50
+}
+
+.infoItemSymbol {
+  font-size: 0.875rem; // Corresponds to text-sm
+  font-weight: var(--font-medium);
+  color: var(--color-text-400); // Corresponds to text-foreground-500
+} 

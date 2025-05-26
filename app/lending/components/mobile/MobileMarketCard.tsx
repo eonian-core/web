@@ -5,6 +5,8 @@ import { CardWithAPY } from './CardWithAPY'
 import { UtilizationRateLine } from './UtilizationRateLine'
 import { MarketInfo } from './MarketInfo'
 import { CardActions } from './CardActions'
+import styles from './MobileMarketCard.module.scss'
+import { HumanReadableTokenName } from '@/lending/hooks/HumanReadableTokenName'
 
 interface Props {
   market: Market
@@ -18,19 +20,20 @@ interface Props {
 export function MobileMarketCard({ market, onWithdraw, onRepay, onBorrow, onSupply }: Props) {
   return (
     <Card>
-      <CardHeader className="z-0">
-        <div className="flex flex-row gap-4 items-center justify-between">
-          <div className="w-10 h-10">{market.icon}</div>
-          <div className="flex flex-col gap-0.5">
-            <div className="text-md text-foreground-50">{market.name}</div>
-            <div className="text-sm text-foreground-500">{market.underlyingSymbol}</div>
+      <CardHeader className={styles.cardHeader}>
+        <div className={styles.headerContent}>
+          <div className={styles.iconContainer}>{market.icon}</div>
+          <div className={styles.textContainer}>
+            <div className={styles.marketName}>{HumanReadableTokenName[market.underlyingSymbol] || market.name}</div>
+            <div className={styles.underlyingSymbol}>{market.underlyingSymbol}</div>
           </div>
         </div>
       </CardHeader>
-      <CardBody className="flex flex-col gap-4">
-        <div className="flex flex-row gap-4 items-center">
-          <CardWithAPY apy={market.displayValues.supplyAPY} title="Supply APY" />
-          <CardWithAPY apy={market.displayValues.borrowAPY} title="Borrow APY" />
+      <CardBody className={styles.cardBody}>
+        <div className={styles.apyContainer}>
+          <CardWithAPY apy={market.displayValues.supplyAPY}>Supply APY</CardWithAPY>
+          <div className={styles.divider}>{' '}</div>
+          <CardWithAPY apy={market.displayValues.borrowAPY}>Borrow APY</CardWithAPY>
         </div>
         <UtilizationRateLine rate={calculateUtilizationRate(market)} />
         <MarketInfo market={market} />

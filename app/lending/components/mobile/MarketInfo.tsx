@@ -1,4 +1,5 @@
 import type { Market } from '../../web3/types'
+import styles from './MarketInfo.module.scss'
 import { useWalletWrapperContext } from '@/providers/wallet/wallet-wrapper-provider'
 import { WalletStatus } from '@/providers/wallet/wrappers/types'
 
@@ -24,7 +25,7 @@ export function MarketInfo({ market }: Props) {
   const info = isConnected ? CONNECTED_INFO : DEFAULT_INFO
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className={styles.marketInfoContainer}>
       {Object.entries(info).map(([key, [label, value]]) => (
         <InfoItem key={key} label={label} value={value(market)} symbol={market.underlyingSymbol} />
       ))}
@@ -34,11 +35,11 @@ export function MarketInfo({ market }: Props) {
 
 function InfoItem({ label, value, symbol }: { label: string; value: string; symbol: string }) {
   return (
-    <div className="flex flex-row items-center justify-between gap-2">
-      <div className="text-sm text-foreground-500">{label}</div>
-      <div className="text-md text-foreground-50">
+    <div className={styles.infoItem}>
+      <div className={styles.infoItemLabel}>{label}</div>
+      <div className={styles.infoItemValue}>
         {value}&nbsp;
-        <span className="text-sm text-foreground-500">{symbol}</span>
+        <span className={styles.infoItemSymbol}>{symbol}</span>
       </div>
     </div>
   )
