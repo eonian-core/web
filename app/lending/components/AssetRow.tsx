@@ -19,7 +19,7 @@ interface AssetRowProps {
 
 export function AssetRow({ onWithdraw = () => { }, onRepay = () => { }, onBorrow = () => { }, onSupply = () => { }, columns = [] }: AssetRowProps) {
   return (
-    <tr className={styles.row}>
+    <tr className={styles.row} onClick={onSupply}>
       {columns.map((column, index) => (
         <td key={column.key} className={styles.cell}>
           <div className={clsx(
