@@ -1,17 +1,15 @@
-import { Card, CardBody } from '@heroui/react'
+import styles from './CardWithAPY.module.scss'
 
 interface Props {
   apy: string
-  title: string
+  children: React.ReactNode
 }
 
-export function CardWithAPY({ apy, title }: Props) {
+export function CardWithAPY({ apy, children }: Props) {
   return (
-    <Card className="flex-1">
-      <CardBody>
-        <div className="text-sm text-foreground-500">{title}</div>
-        <div className="text-lg text-foreground-50">{apy}</div>
-      </CardBody>
-    </Card>
+    <div className={styles.card}>
+      <div className={styles.title}>{children}</div>
+      <div className={styles.apy}>{apy}</div>
+    </div>
   )
 }

@@ -1,5 +1,7 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Button as HeroButton } from '@heroui/react'
+import styles from './CardActions.module.scss'
 import IconDotsVertical from '@/components/icons/icon-dots-vertical'
+import Button from '@/components/button/button'
 
 interface Props {
   onSupply: () => void
@@ -10,18 +12,18 @@ interface Props {
 
 export function CardActions({ onSupply, onBorrow, onWithdraw, onRepay }: Props) {
   return (
-    <div className="flex flex-row gap-2">
-      <Button color="primary" variant="solid" size="md" onPress={onSupply} className="flex-1">
+    <div className={styles.cardActionsContainer}>
+      <Button gradient round size="md" onClick={onSupply} className={styles.actionButton}>
         Supply
       </Button>
-      <Button color="primary" variant="solid" size="md" onPress={onBorrow} className="flex-1">
+      <Button bordered dark round size="md" onClick={onBorrow} className={styles.actionButton}>
         Borrow
       </Button>
-      <Dropdown className="flex-1">
+      <Dropdown className={styles.dropdownContainer} backdrop="blur">
         <DropdownTrigger>
-          <Button isIconOnly size="md" variant="solid" color="primary" className="z-0">
-            <IconDotsVertical className="text-foreground-50" />
-          </Button>
+          <HeroButton color="default" variant="ghost" isIconOnly radius="full" size="md" className={styles.iconButton}>
+            <IconDotsVertical className={styles.iconInButton} />
+          </HeroButton>
         </DropdownTrigger>
         <DropdownMenu aria-label="Asset actions">
           <DropdownItem onPress={onWithdraw} key="Withdraw">

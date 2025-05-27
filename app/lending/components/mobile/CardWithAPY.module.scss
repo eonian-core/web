@@ -1,0 +1,20 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: fit-content;
+}
+
+.title {
+  font-size: var(--font-size-300); /* text-sm */
+  line-height: 1rem;
+  color: var(--color-text-400); /* text-foreground-500 */
+  width: fit-content;
+}
+
+.apy {
+  font-size: var(--font-size-800); /* text-lg */
+  font-weight: var(--font-bold);
+  color: var(--foreground-50); /* text-foreground-50 */
+  width: fit-content;
+} 

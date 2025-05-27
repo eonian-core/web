@@ -1,0 +1,49 @@
+.utilizationRateLine {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem; // mb-2
+}
+
+.label {
+  font-size: 0.875rem; // text-sm
+  color: var(--color-text-300); // text-foreground-500 (assuming CSS variables)
+}
+
+.percentage {
+  font-size: 1rem; // text-md
+  font-weight: 500; // font-medium
+  color: var(--color-text-50); // text-foreground-50 (assuming CSS variables)
+}
+
+.track {
+  position: relative;
+  height: 0.25rem; // h-1
+  width: 100%;
+  background-color: var(--color-dark-300); // bg-foreground-800 (assuming CSS variables)
+  border-radius: 9999px; // rounded-full
+}
+
+.filled {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 0.25rem; // h-1
+  background-color: var(--color-primary-400); // bg-primary-400 (assuming CSS variables)
+  border-radius: 9999px; // rounded-full
+}
+
+.marker {
+  position: absolute;
+  top: 0;
+  // left: calc(percentage - 0px) needs to be dynamic
+  width: 2px;
+  height: 8px;
+  background-color: white; // bg-white
+  transform: translateY(-2px);
+} 

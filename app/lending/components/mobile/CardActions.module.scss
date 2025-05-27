@@ -1,0 +1,27 @@
+/* CardActions.module.scss */
+
+.cardActionsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem; /* Assuming gap-2 (Tailwind) is 8px or 0.5rem */
+  margin-top: 1rem;
+}
+
+.actionButton {
+  flex: 1;
+}
+
+.dropdownContainer {
+  flex: 1;
+}
+
+.iconButton {
+  transform: rotate(90deg);
+  border: 1px solid var(--color-text-600);
+}
+
+.iconInButton {
+  /* Placeholder for text-foreground-50. You'll need to define this color. */
+  /* Example: color: #A0A0A0; or var(--your-custom-color-variable) */
+  color: var(--foreground-50, #71717a); /* Using a common gray as a fallback */
+}
