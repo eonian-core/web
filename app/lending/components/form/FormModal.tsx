@@ -35,8 +35,8 @@ export function FormModal() {
       onClose={onClose}
       placement={isLaptopOrSmaller ? 'bottom' : 'center'}
       classNames={{
-        wrapper: `${MODAL_WRAPPER_SELECTOR} z-5`,
-        backdrop: `${MODAL_BACKDROP_SELECTOR} z-5`,
+        wrapper: `${MODAL_WRAPPER_SELECTOR} z-10`,
+        backdrop: `${MODAL_BACKDROP_SELECTOR} z-10`,
       }}
       hideCloseButton={true}
       isDismissable={false}

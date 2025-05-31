@@ -9,7 +9,7 @@ const queryClient = new QueryClient()
 
 export default function LendingContent() {
   return (
-    <div className="lending-styles bg-gradient-to-br from-default-950 via-default-900 to-default-950 text-foreground-50">
+    <div className="lending-styles">
       <QueryClientProvider client={queryClient}>
         <LendingStateProvider>
           <LendingPage />
