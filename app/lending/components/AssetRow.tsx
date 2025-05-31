@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import type { ColumnKey } from '../hooks/useColumns'
 import { ActionButtons } from './ActionButtons'
 import styles from './AssetRow.module.scss'
+import { OneLineSkeleton } from '@/components/loader/skeleton-loader'
 
 export interface RowColumnData {
   key: ColumnKey
@@ -40,5 +41,25 @@ export function AssetRow({ onWithdraw = () => { }, onRepay = () => { }, onBorrow
         </div>
       </div>
     </tr>
+  )
+}
+
+export function AssetRowSkeleton({ columns }: { columns: number }) {
+  return (
+    <tr className={styles.row}>
+      {Array.from({ length: columns }).map((_, index) => (
+        <CellSkeleton key={index} />
+      ))}
+    </tr>
+  )
+}
+
+export function CellSkeleton() {
+  return (
+    <td className={styles.cell}>
+      <div className={styles.cellContent}>
+        <OneLineSkeleton />
+      </div>
+    </td>
   )
 }

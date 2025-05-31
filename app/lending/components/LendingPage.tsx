@@ -9,8 +9,8 @@ import { Header } from './Header'
 import { FormModal } from './form/FormModal'
 import { FormTab } from './form/types'
 import { MobileMarketList } from './mobile/MobileMarketList'
-import SkeletonPage from './SkeletonPage'
 import styles from './LendingPage.module.scss'
+import { LendingPageSkeleton } from './LendingPage.skeleton'
 import { HealthyLabel } from '@/earn/[...vault]/form/healthy-label/healthy-label'
 
 interface ContentProps {
@@ -64,7 +64,7 @@ export function LendingPage() {
 
   if (loading) {
     if (!isMobileLayout)
-      return <SkeletonPage columns={columns.length} />
+      return <LendingPageSkeleton />
 
     return (
       <div className={styles.loadingContainer}>

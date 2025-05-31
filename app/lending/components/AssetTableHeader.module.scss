@@ -36,3 +36,34 @@
     }
   }
 } 
+
+.skeleton {
+  .cell {
+    padding-left: 0;
+    text-align: center;
+
+    .cellContent {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &:nth-child(1),
+    &:nth-child(2) {
+      text-align: left;
+      .cellContent {
+        justify-content: flex-start;
+      }
+    }
+    
+    &:nth-child(1) {
+      padding-left: 0.75rem;
+    }
+
+    &:nth-child(2) {
+      padding-left: 0;
+    }
+
+
+  }
+}
