@@ -62,16 +62,8 @@ export function LendingPage() {
   const handleWithdraw = useCallback((index: number) => setFormData({ tab: FormTab.WITHDRAW, market: markets[index] }), [setFormData, markets])
   const handleRepay = useCallback((index: number) => setFormData({ tab: FormTab.REPAY, market: markets[index] }), [setFormData, markets])
 
-  if (loading) {
-    if (!isMobileLayout)
-      return <LendingPageSkeleton />
-
-    return (
-      <div className={styles.loadingContainer}>
-        <Spinner color="primary" size="lg" />
-      </div>
-    )
-  }
+  if (loading)
+    return <LendingPageSkeleton />
 
   return (
     <div className={styles.container}>

@@ -1,7 +1,7 @@
 import { Card, CardBody, CardHeader } from '@heroui/react'
 import type { Market } from '../../web3/types'
 import { calculateUtilizationRate } from '../../web3/calculate-utilization-rate'
-import { CardWithAPY } from './CardWithAPY'
+import { ApyStat } from './ApyStat'
 import { UtilizationRateLine } from './UtilizationRateLine'
 import { MarketInfo } from './MarketInfo'
 import { CardActions } from './CardActions'
@@ -31,9 +31,9 @@ export function MobileMarketCard({ market, onWithdraw, onRepay, onBorrow, onSupp
       </CardHeader>
       <CardBody className={styles.cardBody}>
         <div className={styles.apyContainer}>
-          <CardWithAPY apy={market.displayValues.supplyAPY}>Supply APY</CardWithAPY>
+          <ApyStat apy={market.displayValues.supplyAPY}>Supply APY</ApyStat>
           <div className={styles.divider}>{' '}</div>
-          <CardWithAPY apy={market.displayValues.borrowAPY}>Borrow APY</CardWithAPY>
+          <ApyStat apy={market.displayValues.borrowAPY}>Borrow APY</ApyStat>
         </div>
         <UtilizationRateLine rate={calculateUtilizationRate(market)} />
         <MarketInfo market={market} />
