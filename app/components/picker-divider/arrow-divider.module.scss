@@ -1,9 +1,14 @@
 .divider {
     position: relative;
     margin: var(--margin-600) 0;
+    margin-bottom: 0;
 
     &.withPicker {
         margin-top: var(--margin-100);
+    }
+
+    &.withBottomMargin {
+        margin-bottom: var(--margin-600);
     }
 }
 

@@ -1,13 +1,13 @@
 import { Divider, Modal, ModalBody, ModalContent, ModalFooter, Tab, Tabs } from '@heroui/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useIsLaptopOrSmaller } from '../../../components/resize-hooks/screens'
+import { useIsLaptopOrSmaller, useIsMobileOrSmaller } from '../../../components/resize-hooks/screens'
 import type { FormData } from '../../LendingState'
 import { useLendingState } from '../../LendingState'
 import { useNumberInputValue } from '../../hooks/useNumberInputValue'
 import { FormTab } from './types'
 import { FormInput } from './FormInput'
 import { FormButton } from './FormButton'
-import { FormSlider } from './FormSlider'
+import { FormPicker, FormSlider } from './FormSlider'
 import { FormPreview } from './FormPreview'
 import styles from './FormModal.module.scss'
 
@@ -35,6 +35,7 @@ export function FormModal() {
       isOpen={isOpen}
       onClose={onClose}
       placement={isLaptopOrSmaller ? 'bottom' : 'center'}
+      backdrop={isLaptopOrSmaller ? 'opaque' : 'blur'}
       classNames={{
         wrapper: `${MODAL_WRAPPER_SELECTOR} ${styles.modalWrapper}`,
         backdrop: `${MODAL_BACKDROP_SELECTOR} ${styles.modalBackdrop}`,
@@ -62,7 +63,7 @@ function InnerContent({ formData, onClose }: { formData: FormData; onClose: () =
       <ModalBody>
         <FormTabs />
         <FormInput formData={formData} inputData={inputData} />
-        <FormSlider inputData={inputData} />
+        <FormPicker inputData={inputData} />
         <FormPreview formData={formData} inputData={inputData} />
       </ModalBody>
       <ModalFooter>

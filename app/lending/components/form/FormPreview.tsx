@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import clsx from 'clsx'
 import type { NumberInputValue } from '../../hooks/useNumberInputValue'
 import type { FormData } from '../../LendingState'
 import { useLendingState } from '../../LendingState'
@@ -21,26 +20,28 @@ export function FormPreview({ formData, inputData }: Props) {
     <div className={styles.formPreview}>
       <PreviewItem
         label="Borrow Capacity Used"
-        value={<DifferentiatePercentWithColor value={userStatistics.borrowCapacityUsed} template="borrow-capacity-used" />}
         newValue={
           hasValue ? <DifferentiatePercentWithColor value={previewValues.borrowCapacityUsed} template="borrow-capacity-used" /> : undefined
         }
-      />
+      >
+        <DifferentiatePercentWithColor value={userStatistics.borrowCapacityUsed} template="borrow-capacity-used" />
+      </PreviewItem>
       <PreviewItem
         label="Net APY"
-        value={userStatistics.displayValues.netAPY}
         newValue={hasValue ? formatAPY(previewValues.netAPY) : undefined}
-      />
+      >
+        <span className={styles.previewItemValue}>{userStatistics.displayValues.netAPY}</span>
+      </PreviewItem>
     </div>
   )
 }
 
-function PreviewItem({ label, value, newValue }: { label: string; value: ReactNode; newValue?: ReactNode }) {
+function PreviewItem({ label, children, newValue }: { label: string; children: ReactNode; newValue?: ReactNode }) {
   return (
     <div className={styles.previewItem}>
       <span className={styles.previewItemLabel}>{label}</span>
       <div className={styles.previewItemValueDisplay}>
-        <span className={styles.previewItemValue}>{value}</span>
+        <span className={styles.previewItemValue}>{children}</span>
         {newValue && (
           <>
             <span className={styles.previewItemArrow}>→</span>
