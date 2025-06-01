@@ -1,5 +1,6 @@
 import { Divider } from '@heroui/react'
 import type { PropsWithChildren } from 'react'
+import clsx from 'clsx'
 import { useLendingState } from '../../LendingState'
 import { DonutChart } from '../charts/DonutChart'
 import { DifferentiatePercentWithColor, getDifferentiateColorForTemplate } from '../misc/DifferentiatePercentWithColor'
@@ -34,6 +35,8 @@ function CommonMarketStats() {
 function PersonalizedMarketStats() {
   const { userStatistics } = useLendingState()
   const { totalCashInUSD, totalBorrowInUSD, totalSupplyInUSD, netAPY } = userStatistics.displayValues
+  const rawNetAPY = +(netAPY.slice(0, -1))
+
   return (
     <div className={styles.statsContainer}>
       <Stat value={totalCashInUSD} big>
@@ -44,7 +47,10 @@ function PersonalizedMarketStats() {
         <Divider orientation="vertical" className={styles.divider} />
         <Stat value={totalBorrowInUSD}>Borrowed</Stat>
         <Divider orientation="vertical" className={styles.divider} />
-        <Stat value={<ValueWrapper value={userStatistics.netAPY}>{netAPY}</ValueWrapper>}>
+        <Stat value={<ValueWrapper value={userStatistics.netAPY}>{netAPY}</ValueWrapper>} className={clsx({
+          [styles.positiveApy]: rawNetAPY > 0,
+          [styles.negativeApy]: rawNetAPY < 0,
+        })}>
           Net APY
         </Stat>
         <Divider orientation="vertical" className={styles.divider} />
