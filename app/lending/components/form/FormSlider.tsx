@@ -1,7 +1,9 @@
-import { Slider, cn } from '@heroui/react'
+import { Slider } from '@heroui/react'
+import clsx from 'clsx'
 import { useCallback, useMemo } from 'react'
 import type { NumberInputValue } from '../../hooks/useNumberInputValue'
 import { useAvailableBalanceByTab } from '../../hooks/useAvailableBalanceByTab'
+import styles from './FormSlider.module.scss'
 
 interface Props {
   inputData: NumberInputValue
@@ -49,22 +51,22 @@ export function FormSlider({ inputData }: Props) {
   }, [sliderValue, handleChange])
 
   return (
-    <div className="px-3">
+    <div className={styles.formSliderContainer}>
       <Slider
         value={sliderValue}
         minValue={0}
         maxValue={100}
-        className="max-w-md"
+        className={styles.sliderWrapper}
         color="primary"
         onChange={handleChange}
         size="sm"
         classNames={{
-          endContent: 'absolute left-0 top-0 h-full w-full -z-20',
+          endContent: styles.sliderEndContent,
         }}
         endContent={markElements.map(mark => mark.trackMark)}
         showTooltip
       />
-      <div className="w-full relative">{markElements.map(mark => mark.markLabel)}</div>
+      <div className={styles.markLabelsContainer}>{markElements.map(mark => mark.markLabel)}</div>
     </div>
   )
 }
@@ -82,10 +84,10 @@ function SliderTrackMarkLabel({
 }) {
   const align = useMemo(() => {
     if (value === 0)
-      return 'justify-start'
+      return styles.markLabelAlignStart
     if (value === 100)
-      return 'justify-end'
-    return 'justify-center'
+      return styles.markLabelAlignEnd
+    return styles.markLabelAlignCenter
   }, [value])
 
   if (value === 0)
@@ -95,14 +97,14 @@ function SliderTrackMarkLabel({
 
   return (
     <div
-      className={cn(
-        'absolute w-0 text-sm flex items-center justify-end cursor-pointer',
+      className={clsx(
+        styles.markLabelBase,
         align,
-        isActive ? 'text-foreground-200' : 'text-foreground-700',
+        isActive ? styles.markLabelActive : styles.markLabelInactive,
       )}
       style={{ left: offset }}
     >
-      <div className="hover:text-foreground-200" onClick={() => onValueChange(value)}>
+      <div className={styles.markLabelText} onClick={() => onValueChange(value)}>
         {value}%
       </div>
     </div>
@@ -111,11 +113,11 @@ function SliderTrackMarkLabel({
 
 function SliderTrackMark({ passed, offset }: { passed: boolean; offset: string }) {
   return (
-    <div className="absolute top-1/2 -translate-y-1/2 w-0 flex items-center justify-center" style={{ left: offset }}>
+    <div className={styles.trackMarkContainer} style={{ left: offset }}>
       <div
-        className={cn(
-          'min-w-[8px] min-h-[8px] w-[8px] h-[8px] rounded-full',
-          passed ? 'bg-[hsl(var(--heroui-primary))]' : 'bg-[hsl(var(--heroui-default-300)/0.5)]',
+        className={clsx(
+          styles.trackMarkDot,
+          passed ? styles.trackMarkDotPassed : styles.trackMarkDotNotPassed,
         )}
       />
     </div>

@@ -1,0 +1,40 @@
+.formPreview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--margin-50);
+  margin-top: var(--margin-400);
+  padding: var(--padding-100);
+  border: 1px solid hsl(var(--heroui-default-700));
+  border-radius: var(--border-radius-450);
+}
+
+.previewItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.previewItemLabel {
+  font-size: var(--font-size-300);
+  color: var(--color-text-500);
+}
+
+.previewItemValueDisplay {
+  display: flex;
+  align-items: center;
+  gap: var(--margin-50);
+}
+
+.previewItemValue {
+  font-size: var(--font-size-300);
+  color: var(--color-text-50);
+}
+
+.previewItemArrow {
+  font-size: var(--font-size-300);
+  color: var(--color-text-600);
+}
+
+.previewItemNewValue {
+  font-size: var(--font-size-300);
+  color: var(--color-text-50);
+} 
