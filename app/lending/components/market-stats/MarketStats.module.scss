@@ -27,12 +27,12 @@
 // Borrow capacity container
 .borrowCapacity {
   display: flex;
-  align-items: center;
-  gap: 0.5rem; // gap-2
+  justify-content: flex-start;
 }
 
 // Donut chart sizing
 .donutChart {
-  width: 5.25rem; // w-84 (assuming 84px)
+  width: 2rem; // w-84 (assuming 84px)
   height: 2rem; // h-8
+  margin-right: 0.5rem;
 } 
