@@ -1,0 +1,15 @@
+/* SCSS styles for FormModal */ 
+
+.modalWrapper {
+  z-index: 10;
+}
+
+.modalBackdrop {
+  z-index: 10;
+}
+
+.formTabsContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+} 

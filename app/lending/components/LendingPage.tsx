@@ -1,4 +1,3 @@
-import { Spinner } from '@heroui/react'
 import { useCallback } from 'react'
 import { useColumnsWithValues } from '../hooks/useColumnsWithValues'
 import { useLendingState } from '../LendingState'
@@ -9,8 +8,8 @@ import { Header } from './Header'
 import { FormModal } from './form/FormModal'
 import { FormTab } from './form/types'
 import { MobileMarketList } from './mobile/MobileMarketList'
-import SkeletonPage from './SkeletonPage'
 import styles from './LendingPage.module.scss'
+import { LendingPageSkeleton } from './LendingPage.skeleton'
 import { HealthyLabel } from '@/earn/[...vault]/form/healthy-label/healthy-label'
 
 interface ContentProps {
@@ -62,16 +61,8 @@ export function LendingPage() {
   const handleWithdraw = useCallback((index: number) => setFormData({ tab: FormTab.WITHDRAW, market: markets[index] }), [setFormData, markets])
   const handleRepay = useCallback((index: number) => setFormData({ tab: FormTab.REPAY, market: markets[index] }), [setFormData, markets])
 
-  if (loading) {
-    if (!isMobileLayout)
-      return <SkeletonPage columns={columns.length} />
-
-    return (
-      <div className={styles.loadingContainer}>
-        <Spinner color="primary" size="lg" />
-      </div>
-    )
-  }
+  if (loading)
+    return <LendingPageSkeleton />
 
   return (
     <div className={styles.container}>

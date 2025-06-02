@@ -9,13 +9,14 @@ const size = 24
 export interface ArrowDividerBodyProps {
   children?: React.ReactNode
   reverse?: boolean
+  withBottomMargin?: boolean
   onClick?: () => void
 }
 
 /** Minimal logic, will be dispalyed in skeleton */
-export function ArrowDividerBody({ children: picker, reverse, onClick }: ArrowDividerBodyProps) {
+export function ArrowDividerBody({ children: picker, reverse, onClick, withBottomMargin }: ArrowDividerBodyProps) {
   return (
-    <div className={clsx(styles.divider, { [styles.withPicker]: picker })}>
+    <div className={clsx(styles.divider, { [styles.withPicker]: picker, [styles.withBottomMargin]: withBottomMargin })}>
       {picker}
       <Divider />
       <div onClick={onClick} className={clsx(styles.arrow, 'bg-content1', {

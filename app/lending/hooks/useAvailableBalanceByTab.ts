@@ -1,6 +1,5 @@
 import { useLendingState } from '../LendingState'
 import { FormTab } from '../components/form/types'
-import { useIsLaptopOrSmaller } from '../../components/resize-hooks/screens'
 
 interface AvailableBalance {
   balanceInUnderlying: bigint
@@ -11,8 +10,6 @@ interface AvailableBalance {
 
 export function useAvailableBalanceByTab(): AvailableBalance {
   const { formData } = useLendingState()
-  const isLaptopOrSmaller = useIsLaptopOrSmaller()
-  const isLargerThanLaptop = !isLaptopOrSmaller
 
   if (!formData || !formData.market) {
     return {
@@ -38,28 +35,28 @@ export function useAvailableBalanceByTab(): AvailableBalance {
       return {
         balanceInUnderlying: walletBalanceInUnderlying,
         balanceInUnderlyingDisplay: `${displayValues.walletBalanceInUnderlying} ${symbol}`,
-        label: 'Wallet balance',
+        label: 'Wallet',
         isEnoughToCoverAll: (value: bigint) => walletBalanceInUnderlying >= value,
       }
     case FormTab.BORROW:
       return {
         balanceInUnderlying: availableForBorrowBalanceInUnderlying,
         balanceInUnderlyingDisplay: `${displayValues.availableForBorrowBalanceInUnderlying} ${symbol}`,
-        label: isLargerThanLaptop ? 'Available to borrow' : 'Available',
+        label: 'Limit',
         isEnoughToCoverAll: (value: bigint) => availableForBorrowBalanceInUnderlying >= value,
       }
     case FormTab.WITHDRAW:
       return {
         balanceInUnderlying: supplyBalanceInUnderlying,
         balanceInUnderlyingDisplay: `${displayValues.supplyBalanceInUnderlying} ${symbol}`,
-        label: isLargerThanLaptop ? 'Available to withdraw' : 'Available',
+        label: 'Balance',
         isEnoughToCoverAll: (value: bigint) => supplyBalanceInUnderlying >= value,
       }
     case FormTab.REPAY:
       return {
         balanceInUnderlying: borrowBalanceInUnderlying,
         balanceInUnderlyingDisplay: `${displayValues.borrowBalanceInUnderlying} ${symbol}`,
-        label: 'Borrow balance',
+        label: 'Borrowed',
         isEnoughToCoverAll: (value: bigint) => walletBalanceInUnderlying >= value, // Wallet balance is used for repayment
       }
   }

@@ -44,3 +44,19 @@
     font-size: var(--font-size-400);
   }
 }
+
+.skeletonDesktop {
+  display: none;
+
+  @media (min-width: $screen-mobile) {
+    display: flex;
+  }
+}
+
+.skeletonMobile { 
+  display: none;
+
+  @media (max-width: $screen-mobile) {
+    display: flex;
+  }
+}

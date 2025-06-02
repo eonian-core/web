@@ -7,8 +7,9 @@ import { useNumberInputValue } from '../../hooks/useNumberInputValue'
 import { FormTab } from './types'
 import { FormInput } from './FormInput'
 import { FormButton } from './FormButton'
-import { FormSlider } from './FormSlider'
+import { FormPicker } from './FormSlider'
 import { FormPreview } from './FormPreview'
+import styles from './FormModal.module.scss'
 
 const MODAL_BACKDROP_SELECTOR = 'backdrop-selector'
 const MODAL_WRAPPER_SELECTOR = 'modal-wrapper-selector'
@@ -34,9 +35,10 @@ export function FormModal() {
       isOpen={isOpen}
       onClose={onClose}
       placement={isLaptopOrSmaller ? 'bottom' : 'center'}
+      backdrop={isLaptopOrSmaller ? 'opaque' : 'blur'}
       classNames={{
-        wrapper: `${MODAL_WRAPPER_SELECTOR} z-5`,
-        backdrop: `${MODAL_BACKDROP_SELECTOR} z-5`,
+        wrapper: `${MODAL_WRAPPER_SELECTOR} ${styles.modalWrapper}`,
+        backdrop: `${MODAL_BACKDROP_SELECTOR} ${styles.modalBackdrop}`,
       }}
       hideCloseButton={true}
       isDismissable={false}
@@ -61,7 +63,7 @@ function InnerContent({ formData, onClose }: { formData: FormData; onClose: () =
       <ModalBody>
         <FormTabs />
         <FormInput formData={formData} inputData={inputData} />
-        <FormSlider inputData={inputData} />
+        <FormPicker inputData={inputData} />
         <FormPreview formData={formData} inputData={inputData} />
       </ModalBody>
       <ModalFooter>
@@ -73,27 +75,11 @@ function InnerContent({ formData, onClose }: { formData: FormData; onClose: () =
 
 function FormTabs() {
   const { formData, setFormData } = useLendingState()
+  if (!formData)
+    return null
 
   return (
-    <div className="flex items-center">
-      {renderTabs([
-        { key: FormTab.SUPPLY, title: 'Supply' },
-        { key: FormTab.WITHDRAW, title: 'Withdraw' },
-      ])}
-      <Divider orientation="vertical" className="h-6" />
-      {renderTabs([
-        { key: FormTab.BORROW, title: 'Borrow' },
-        { key: FormTab.REPAY, title: 'Repay' },
-      ])}
-    </div>
-  )
-
-  // eslint-disable-next-line no-restricted-syntax
-  function renderTabs(tabs: Array<{ key: FormTab; title: string }>) {
-    if (!formData)
-      return null
-
-    return (
+    <div className={styles.formTabsContainer}>
       <Tabs
         variant="underlined"
         selectedKey={formData.tab}
@@ -101,12 +87,17 @@ function FormTabs() {
         size="lg"
         fullWidth
       >
-        {tabs.map(tab => (
+        {[
+          { key: FormTab.SUPPLY, title: 'Supply' },
+          { key: FormTab.WITHDRAW, title: 'Withdraw' },
+          { key: FormTab.BORROW, title: 'Borrow' },
+          { key: FormTab.REPAY, title: 'Repay' },
+        ].map(tab => (
           <Tab key={tab.key} title={tab.title} />
         ))}
       </Tabs>
-    )
-  }
+    </div>
+  )
 }
 
 function useModalState(): { isOpen: boolean; onClose: () => void } {

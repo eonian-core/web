@@ -25,3 +25,13 @@
   /* Example: color: #A0A0A0; or var(--your-custom-color-variable) */
   color: var(--foreground-50, #71717a); /* Using a common gray as a fallback */
 }
+
+.skeleton {
+  .actionButton {
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

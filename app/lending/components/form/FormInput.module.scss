@@ -1,0 +1,87 @@
+.formInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--margin-50);
+  margin-bottom: 0;
+}
+
+.amountRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-300);
+  color: var(--color-text-500);
+}
+
+.maxButton {
+  color: var(--color-text-500);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-text-300);
+  }
+}
+
+.balanceLabel {
+  font-weight: var(--font-medium);
+}
+
+.inputWrapperInner {
+  padding: 0;
+  background-color: transparent;
+  border: transparent;
+  border-radius: var(--border-radius-500);
+
+  &:hover {
+    background-color: transparent !important;
+  }
+
+  &:focus-within {
+    background-color: transparent !important;
+  }
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+}
+
+.inputField {
+  font-size: var(--font-size-900);
+  background-color: transparent;
+  outline: none;
+  border: none;
+  width: 100%;
+  color: var(--color-text-100);
+}
+
+.tokenSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--margin-100);
+}
+
+.tokenIconWrapper {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tokenIconOpacity {
+  opacity: 0.75;
+}
+
+.tokenSymbolWithValue {
+  color: var(--color-text-300);
+}
+
+.tokenSymbolDefault {
+  color: var(--color-text-500);
+}
+
+.valueInUSD {
+  font-size: var(--font-size-300);
+  color: var(--color-text-500);
+} 

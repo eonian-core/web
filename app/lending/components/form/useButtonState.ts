@@ -16,10 +16,10 @@ const labels: Record<FormTab, string> = {
 }
 
 const pendingLabels: Record<FormTab, string> = {
-  [FormTab.SUPPLY]: 'Supplying...',
-  [FormTab.WITHDRAW]: 'Withdrawing...',
-  [FormTab.BORROW]: 'Borrowing...',
-  [FormTab.REPAY]: 'Repaying...',
+  [FormTab.SUPPLY]: 'Confirm in Wallet',
+  [FormTab.WITHDRAW]: 'Confirm in Wallet',
+  [FormTab.BORROW]: 'Confirm in Wallet',
+  [FormTab.REPAY]: 'Confirm in Wallet',
 }
 
 export enum ButtonStateType {

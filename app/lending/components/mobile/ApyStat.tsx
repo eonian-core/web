@@ -1,11 +1,11 @@
-import styles from './CardWithAPY.module.scss'
+import styles from './ApyStat.module.scss'
 
 interface Props {
   apy: string
   children: React.ReactNode
 }
 
-export function CardWithAPY({ apy, children }: Props) {
+export function ApyStat({ apy, children }: Props) {
   return (
     <div className={styles.card}>
       <div className={styles.title}>{children}</div>
