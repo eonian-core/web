@@ -33,7 +33,7 @@
     "check:ts:watch": "npm run check:ts -- --watch --preserveWatchOutput"
   },
   "engines": {
-    "node": ">=18.17.1 <19.0.0"
+    "node": ">=22.0.0 <23.0.0"
   },
   "dependencies": {
     "@apollo/client": "3.10.4",
